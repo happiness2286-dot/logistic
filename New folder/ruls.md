@@ -1,0 +1,3 @@
+Đây là nguyên tắc cố định, agent LUÔN tuân theo, hoặc tuân theo có điều kiện. Tôi hay ví Rule giống như "hiến pháp" của agent — một khi đã quy định, agent không được phép làm trái, dù người dùng có quên nhắc.
+không tự ý xóa các file trong thư mục được cấp quyền truy cập, chỉ được xóa các file chỉ định khi có yêu cầu 
+khi muốn làm gì không chắc chắn phải hỏi ý kiến người dùng trước mặc định là không dc làm.

@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mini App Báo Cáo Sản Lượng GCCK 2026</title>
+    <link rel="stylesheet" href="css/styles.css?v=20260824_2130">
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="app-header">
+        <div class="brand">
+            <div class="brand-icon">⚙️</div>
+            <div class="brand-text">
+                <h1>HỆ THỐNG GCCK 2026</h1>
+                <p>Nhà Máy Gia Công Cơ Khí Hiện Đại</p>
+            </div>
+        </div>
+
+        <div class="user-badge" id="userHeaderBadge">
+            <span>👤</span>
+            <span id="currentUserNameLabel" style="font-weight: 700;">Chưa đăng nhập</span>
+            <span id="currentUserRoleTag" class="user-tag">Worker</span>
+            <button id="btnOpenChangePass" class="logout-btn" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; border-color: rgba(245, 158, 11, 0.4); display: none;">🔑 Đổi Mật Khẩu</button>
+            <button id="btnLogout" class="logout-btn">Đăng Xuất</button>
+        </div>
+    </header>
+
+    <!-- Top Role Tabs Switcher -->
+    <div class="role-tabs">
+        <button id="workerTabBtn" class="role-tab-btn active">
+            📱 BÁO CÁO CÔNG NHÂN
+        </button>
+        <button id="adminTabBtn" class="role-tab-btn">
+            🛡️ QUẢN TRỊ ADMIN
+        </button>
+    </div>
+
+    <!-- MAIN WORKER SECTION -->
+    <main id="workerSection" class="container">
+        
+        <!-- Piece Rate Wage Display Banner -->
+        <div id="wageBanner" class="wage-banner">
+            <div>
+                <div class="wage-title">💰 LƯƠNG KHOÁN TẠM TÍNH LƯỢT NÀY</div>
+                <div id="wageCurrentAmount" class="wage-amount">0 VNĐ</div>
+            </div>
+            <div style="text-align: right;">
+                <div class="wage-title">📊 TÍCH LŨY HÔM NAY</div>
+                <div id="wageDailyAccumulated" style="font-size: 16px; font-weight: 700; color: #60a5fa;">0 VNĐ</div>
+            </div>
+        </div>
+
+        <!-- Method Selector (QR vs Tap) -->
+        <div class="method-selector">
+            <button id="methodTapBtn" class="method-btn active">
+                <span class="icon">📑</span>
+                <span>CHỌN & TÍCH DỄ DÙNG</span>
+            </button>
+            <button id="methodQrBtn" class="method-btn">
+                <span class="icon">📷</span>
+                <span>QUÉT MÃ QR CỰC NHANH</span>
+            </button>
+        </div>
+
+        <!-- QR Code Camera Scanner Banner (Shown when QR Mode active) -->
+        <div id="qrBannerBox" class="qr-scanner-box" style="display: none;">
+            <div class="qr-icon">📱📷</div>
+            <h3 style="font-size: 16px; margin-bottom: 4px;">CHẠM ĐỂ MỞ CAMERA QUÉT MÃ QR</h3>
+            <p style="font-size: 12px; color: #94a3b8;">Quét Tem phôi / Thẻ PO / Thẻ máy để tự điền 100% dữ liệu</p>
+        </div>
+
+        <!-- Production Report Form -->
+        <div id="manualFormBox" class="card">
+            <div class="card-title" style="display: flex; justify-content: space-between; align-items: center;">
+                <span>1. THÔNG TIN SẢN PHẨM & NGUYÊN CÔNG</span>
+                <button id="btnForceSyncData" style="background: rgba(59, 130, 246, 0.2); border: 1px solid rgba(59, 130, 246, 0.4); color: #60a5fa; font-size: 11px; padding: 4px 10px; border-radius: 20px; cursor: pointer; font-weight: 600;">
+                    🔄 Nạp dữ liệu mới
+                </button>
+            </div>
+
+            <!-- Date Picker Field -->
+            <div class="form-group">
+                <label class="form-label">📅 Ngày báo cáo / Ngày làm (*)</label>
+                <input type="date" id="reportDateInput" class="form-input">
+            </div>
+
+            <!-- Customer Cascade -->
+            <div class="form-group">
+                <label class="form-label">Khách hàng (*)</label>
+                <select id="customerSelect" class="form-select">
+                    <option value="">-- Chọn Khách hàng --</option>
+                </select>
+            </div>
+
+            <!-- Product Cascade -->
+            <div class="form-group">
+                <label class="form-label">Tên Sản phẩm (*)</label>
+                <select id="productSelect" class="form-select">
+                    <option value="">-- Chọn Sản phẩm (Vui lòng chọn KH trước) --</option>
+                </select>
+            </div>
+
+            <!-- Machine Selection -->
+            <div class="form-group">
+                <label class="form-label">Máy gia công thực hiện (*)</label>
+                <select id="machineSelect" class="form-select">
+                    <option value="">-- Chọn Máy gia công --</option>
+                </select>
+            </div>
+
+            <!-- Operation Cascade -->
+            <div class="form-group">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <label class="form-label" style="margin-bottom: 0;">Công đoạn / Nguyên công (*)</label>
+                    <span id="wipStockBadge" class="wip-badge" style="display: none;">📦 Phôi khả dụng: <strong id="wipStockCount">0</strong></span>
+                </div>
+                <select id="operationSelect" class="form-select">
+                    <option value="">-- Chọn Nguyên công (Vui lòng chọn SP trước) --</option>
+                </select>
+                <!-- Operation Container Pills for Quick Touch Selection on Mobile -->
+                <div id="operationContainer" class="pill-grid" style="margin-top: 10px; display: grid; grid-template-columns: repeat(auto-fill, minmax(135px, 1fr)); gap: 8px;"></div>
+            </div>
+
+            <!-- Custom Operation Input (Show when worker selects '__CUSTOM_OP__') -->
+            <div id="customOperationBox" class="form-group" style="display: none; margin-top: 10px; background: rgba(96, 165, 250, 0.08); padding: 12px; border-radius: 8px; border: 1px dashed rgba(96, 165, 250, 0.4);">
+                <label class="form-label" style="color: #60a5fa; font-weight: 700; margin-bottom: 6px;">
+                    ✏️ NHẬP TÊN NGUYÊN CÔNG BỔ SUNG / THỦ CÔNG (*)
+                </label>
+                <input type="text" id="customOperationInput" class="form-input" placeholder="Ví dụ: NC7: Doạ lỗ tinh, NC8: Mài mặt, NC9: Bo góc R3, NC10: Đột dấu...">
+                <p style="font-size: 11px; color: #94a3b8; margin-top: 4px;">*Dùng khi sản phẩm có nhiều nguyên công hơn (NC7, NC8...) hoặc nguyên công mới chưa có trong danh mục.</p>
+            </div>
+
+            <!-- Material / Consumable Selection -->
+            <div class="card-title" style="margin-top: 24px;">
+                <span>2. DỤNG CỤ & VẬT TƯ TIÊU HAO</span>
+                <span class="icon-badge">BƯỚC 2/3</span>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 10px;">
+                <div class="form-group">
+                    <label class="form-label">Loại Chip Dao / Material</label>
+                    <select id="materialSelect" class="form-select">
+                        <option value="">-- Chọn Dao cụ / Vật tư --</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Số lượng tiêu hao (<span id="materialUnitLabel">Cạnh</span>)</label>
+                    <input type="number" id="qtyMatInput" class="form-input" value="0" min="0">
+                </div>
+            </div>
+
+            <!-- Tool Wear Alert Banner -->
+            <div id="toolWearAlert" class="tool-alert-box" style="display: none;">
+                <span>⚠️</span>
+                <span><strong>CẢNH BÁO MÒN DAO:</strong> Chip dao hiện tại tại máy đã đến ngưỡng mòn. Gợi ý xoay/thay cạnh chip mới!</span>
+            </div>
+
+            <!-- Output Quantities -->
+            <div class="card-title" style="margin-top: 24px;">
+                <span>3. GHI NHẬN SẢN LƯỢNG NGÀY</span>
+                <span class="icon-badge">BƯỚC 3/3</span>
+            </div>
+
+            <div class="qty-grid">
+                <!-- SL ĐẠT -->
+                <div class="qty-card success">
+                    <div class="qty-title">SL ĐẠT (OK)</div>
+                    <div class="qty-control">
+                        <button class="btn-qty minus" onclick="adjustQty('qtyDatInput', -1)">-</button>
+                        <input type="number" id="qtyDatInput" class="qty-val-input" value="1" min="0">
+                        <button class="btn-qty plus success" onclick="adjustQty('qtyDatInput', 1)">+</button>
+                    </div>
+                </div>
+
+                <!-- SL XỬ LÝ -->
+                <div class="qty-card warning">
+                    <div class="qty-title">SL XỬ LÝ (REWORK)</div>
+                    <div class="qty-control">
+                        <button class="btn-qty minus" onclick="adjustQty('qtyXuLyInput', -1)">-</button>
+                        <input type="number" id="qtyXuLyInput" class="qty-val-input" value="0" min="0">
+                        <button class="btn-qty plus warning" onclick="adjustQty('qtyXuLyInput', 1)">+</button>
+                    </div>
+                </div>
+
+                <!-- SL HỦY -->
+                <div class="qty-card danger">
+                    <div class="qty-title">SL HỦY (SCRAP)</div>
+                    <div class="qty-control">
+                        <button class="btn-qty minus" onclick="adjustQty('qtyHuyInput', -1)">-</button>
+                        <input type="number" id="qtyHuyInput" class="qty-val-input" value="0" min="0">
+                        <button class="btn-qty plus danger" onclick="adjustQty('qtyHuyInput', 1)">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Note Box for Rework -->
+            <div id="xuLyNoteBox" class="form-group" style="display: none;">
+                <label class="form-label" style="color: var(--warning);">Mô tả Phương án Xử lý / Sửa chữa</label>
+                <input type="text" id="xuLyNoteInput" class="form-input" placeholder="Ví dụ: Vát lại cạnh, chạy lại vạt góc...">
+            </div>
+
+            <!-- Note Box for Scrap -->
+            <div id="huyNoteBox" class="form-group" style="display: none;">
+                <label class="form-label" style="color: var(--danger);">Mô tả Lý do Hủy phế phẩm</label>
+                <input type="text" id="huyNoteInput" class="form-input" placeholder="Ví dụ: Âm kích thước lỗ, mẻ phôi, lỗi lập trình...">
+            </div>
+
+            <!-- Product Photo Capture Box (Always available for completed products) -->
+            <div id="productPhotoUploadSection" class="form-group" style="margin-top: 20px;">
+                <label class="form-label" style="color: #34d399;">📷 CHỤP ẢNH SẢN PHẨM / THÀNH PHẨM (TÙY CHỌN)</label>
+                <div class="photo-upload-box" onclick="document.getElementById('productPhotoFileInput').click()" style="border-color: rgba(52, 211, 153, 0.4); background: rgba(16, 185, 129, 0.05);">
+                    <span style="font-size: 26px;">📦📷</span>
+                    <p style="font-size: 13px; color: #34d399; margin-top: 4px; font-weight: 600;">Chạm vào đây để mở Camera chụp ảnh sản phẩm hoàn thiện</p>
+                    <p style="font-size: 11px; color: var(--text-muted);">Tự động tải file lên Google Drive & dán link vào Google Sheet</p>
+                    <input type="file" id="productPhotoFileInput" accept="image/*" capture="environment" style="display: none;">
+                </div>
+                <div id="productPhotoPreviewGrid" class="photo-preview-grid"></div>
+            </div>
+
+            <!-- Photo Capture Box for Rework / Scrap -->
+            <div id="photoUploadSection" class="form-group" style="display: none;">
+                <label class="form-label" style="color: #60a5fa;">📷 CHỤP ẢNH BẢN VẼ / VẾT HỎNG PHẾ PHẨM</label>
+                <div class="photo-upload-box" onclick="document.getElementById('photoFileInput').click()">
+                    <span style="font-size: 24px;">📷</span>
+                    <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">Chạm vào đây để mở Camera chụp ảnh phế phẩm</p>
+                    <input type="file" id="photoFileInput" accept="image/*" capture="environment" style="display: none;">
+                </div>
+                <div id="photoPreviewGrid" class="photo-preview-grid"></div>
+            </div>
+
+            <!-- Incident / Downtime -->
+            <div class="form-group" style="margin-top: 20px;">
+                <label class="form-label">Thời gian phát sinh / Dừng máy (Phút)</label>
+                <div class="pill-grid">
+                    <button class="pill-btn" data-min="15">15 Phút</button>
+                    <button class="pill-btn" data-min="30">30 Phút</button>
+                    <button class="pill-btn" data-min="45">45 Phút</button>
+                    <button class="pill-btn" data-min="60">60 Phút</button>
+                </div>
+
+                <div class="timer-box">
+                    <div>
+                        <span style="font-size: 12px; color: var(--text-muted);">Hoặc Bấm Giờ Trực Tiếp:</span>
+                        <div id="timerDisplay" class="timer-display">00:00</div>
+                    </div>
+                    <button id="btnStartTimer" class="btn-timer start">BẮT ĐẦU TIMER</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Ghi chú chi tiết phát sinh (Nếu có)</label>
+                <input type="text" id="downtimeNoteInput" class="form-input" placeholder="Nhập nguyên nhân dừng máy (Chờ phôi, hỏng dao, sự cố máy...)">
+            </div>
+
+            <!-- Submit Button -->
+            <button id="btnSubmitLog" class="btn-submit">
+                <span>✅ GHI NHẬN SẢN LƯỢNG</span>
+            </button>
+        </div>
+
+    </main>
+
+    <!-- ADMIN SECTION -->
+    <main id="adminSection" class="container" style="display: none;">
+        
+        <!-- Dashboard Overview Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon green">✅</div>
+                <div class="stat-info">
+                    <h4 id="statTotalDat">0</h4>
+                    <p>Tổng SL Đạt (OK)</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon orange">🛠️</div>
+                <div class="stat-info">
+                    <h4 id="statTotalXuLy">0</h4>
+                    <p>Tổng SL Xử lý (Rework)</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon red">🗑️</div>
+                <div class="stat-info">
+                    <h4 id="statTotalHuy">0</h4>
+                    <p>Tổng SL Hủy (Scrap)</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon blue">⏱️</div>
+                <div class="stat-info">
+                    <h4 id="statTotalDowntime">0 phút</h4>
+                    <p>Tổng Thời Gian Dừng Máy</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order & Delivery Management Card -->
+        <div class="card" style="border-color: rgba(245, 158, 11, 0.5); background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(67, 34, 0, 0.3));">
+            <div class="card-title" style="color: #fbbf24; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+                <span>📦 BẢNG QUẢN LÝ ĐƠN HÀNG & TIẾN ĐỘ GIAO HÀNG REALTIME</span>
+                <span class="icon-badge" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24;">PO & DELIVERY</span>
+            </div>
+            
+            <p style="font-size: 12px; color: #cbd5e1; margin-bottom: 16px;">
+                *Đối soát Tiến độ Sản Xuất (SL Đạt cộng dồn) vs Tiến độ Giao Hàng (SL Đã Xuất Kho). Tự động tính số nợ hàng và cảnh báo trễ hạn.
+            </p>
+
+            <!-- Form Thêm Đơn Hàng PO Mới -->
+            <div style="background: rgba(30, 41, 59, 0.7); padding: 14px; border-radius: 12px; border: 1px solid rgba(245, 158, 11, 0.25); margin-bottom: 16px;">
+                <h4 style="font-size: 13px; color: #fbbf24; margin-bottom: 10px;">➕ TẠO ĐƠN HÀNG / PO MỚI</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; align-items: end;">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label class="form-label" style="font-size: 11px;">Mã PO / Đơn Hàng (*)</label>
+                        <input type="text" id="orderPoInput" class="form-input" placeholder="Ví dụ: PO-2026-0801" style="padding: 6px 10px; font-size: 12px;">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label class="form-label" style="font-size: 11px;">Khách Hàng (*)</label>
+                        <select id="orderCustomerSelect" class="form-select" style="padding: 6px 10px; font-size: 12px;">
+                            <option value="">-- Chọn Khách Hàng --</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label class="form-label" style="font-size: 11px;">Tên Sản Phẩm (*)</label>
+                        <select id="orderProductSelect" class="form-select" style="padding: 6px 10px; font-size: 12px;">
+                            <option value="">-- Chọn Sản Phẩm --</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label class="form-label" style="font-size: 11px;">SL Đặt Hàng (*)</label>
+                        <input type="number" id="orderQtyPlanInput" class="form-input" placeholder="Ví dụ: 1000" min="1" style="padding: 6px 10px; font-size: 12px;">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label class="form-label" style="font-size: 11px;">Hạn Giao (Deadline) (*)</label>
+                        <input type="date" id="orderDeadlineInput" class="form-input" style="padding: 6px 10px; font-size: 12px;">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label class="form-label" style="font-size: 11px;">Ghi Chú</label>
+                        <input type="text" id="orderNoteInput" class="form-input" placeholder="Đợt 1 giao trước..." style="padding: 6px 10px; font-size: 12px;">
+                    </div>
+                    <div>
+                        <button id="btnSaveOrder" class="btn-submit" style="padding: 8px 12px; font-size: 12px; background: linear-gradient(135deg, #f59e0b, #d97706); height: 35px; justify-content: center; width: 100%;">
+                            💾 LƯU PO MỚI
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table Don Hang & Giao Hang -->
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Mã PO</th>
+                            <th>Khách Hàng</th>
+                            <th>Sản Phẩm</th>
+                            <th>SL Đặt Hàng</th>
+                            <th>Đã Gia Công</th>
+                            <th>SL Đã Giao</th>
+                            <th>SL Còn Nợ</th>
+                            <th>Hạn Giao</th>
+                            <th>Trạng Thái</th>
+                            <th>Thao Tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orderTableTbody">
+                        <!-- Populated dynamically by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- User Accounts Management Card -->
+        <div class="card">
+            <div class="card-title">
+                <span>👥 QUẢN LÝ TÀI KHOẢN ĐĂNG NHẬP (ADMIN & CÔNG NHÂN)</span>
+                <span class="icon-badge">USER MGMT</span>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 16px; margin-bottom: 16px;">
+                <div style="background: rgba(15,23,42,0.8); padding: 14px; border-radius: 12px; border: 1px solid var(--border-color);">
+                    <h4 style="font-size: 14px; margin-bottom: 10px; color: #60a5fa;">Tạo / Đổi Mật Khẩu Tài Khoản</h4>
+                    <div class="form-group" style="margin-bottom: 10px;">
+                        <label class="form-label">Tên Đăng Nhập / Mã NV</label>
+                        <input type="text" id="newUsernameInput" class="form-input" placeholder="Ví dụ: hoangha">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 10px;">
+                        <label class="form-label">Họ và Tên Hiển Thị</label>
+                        <input type="text" id="newFullNameInput" class="form-input" placeholder="Ví dụ: Hoàng Ngọc Hà">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 10px;">
+                        <label class="form-label">Mật khẩu / Mã PIN</label>
+                        <input type="password" id="newPasswordInput" class="form-input" placeholder="Mật khẩu hoặc PIN 4 số">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 12px;">
+                        <label class="form-label">Vai Trò</label>
+                        <select id="newRoleSelect" class="form-select">
+                            <option value="worker">Công Nhân (Worker)</option>
+                            <option value="admin">Quản Trị Viên (Admin)</option>
+                        </select>
+                    </div>
+                    <button id="btnSaveUser" class="btn-submit" style="padding: 10px; font-size: 14px;">💾 LƯU TÀI KHOẢN</button>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Mã NV</th>
+                                <th>Tên Đăng Nhập</th>
+                                <th>Họ & Tên</th>
+                                <th>Vai Trò</th>
+                                <th>Mật Khẩu</th>
+                                <th>Thao Tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="userTableTbody">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW MASTER DATA MANAGEMENT CARD -->
+        <div class="card" style="border-color: rgba(96, 165, 250, 0.4);">
+            <div class="card-title" style="color: #60a5fa;">
+                <span>⚙️ QUẢN LÝ & CẬP NHẬT DANH MỤC MASTER (SẢN PHẨM MỚI, NGUYÊN CÔNG, LƯƠNG KHOÁN, CHIP DAO)</span>
+                <span class="icon-badge" style="background: rgba(96, 165, 250, 0.2); color: #60a5fa;">MASTER DATA</span>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <!-- Column 1: Add New Product & Operations Form -->
+                <div style="background: rgba(15,23,42,0.8); padding: 16px; border-radius: 12px; border: 1px solid var(--border-color);">
+                    <h4 style="font-size: 14px; margin-bottom: 12px; color: #34d399;">➕ THÊM SẢN PHẨM MỚI (NHẬP NHIỀU NGUYÊN CÔNG CÙNG LÚC)</h4>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Tên Khách Hàng (*)</label>
+                        <input type="text" id="masterCustomerInput" list="masterCustomerList" class="form-input" placeholder="Ví dụ: Win-Win hoặc UCC (chọn gợi ý hoặc gõ mới)..." autocomplete="off">
+                        <datalist id="masterCustomerList"></datalist>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Tên Sản Phẩm Mới (*)</label>
+                        <input type="text" id="masterProductInput" list="masterProductList" class="form-input" placeholder="Ví dụ: Trục Khuỷu Động Cơ Φ250 (chọn gợi ý hoặc gõ mới)..." autocomplete="off">
+                        <datalist id="masterProductList"></datalist>
+                    </div>
+
+                    <div class="form-group">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                            <label class="form-label" style="margin-bottom: 0;">Cụm Danh Sách Nhiều Nguyên Công (Tên NC | Định Mức Giây | Lương Khoán VNĐ)</label>
+                        </div>
+
+                        <!-- Quick Operation Suggestions & Add Bar -->
+                        <div style="background: rgba(30, 41, 59, 0.7); padding: 10px; border-radius: 8px; border: 1px solid rgba(52, 211, 153, 0.25); margin-bottom: 8px;">
+                            <div style="font-size: 11px; color: #34d399; font-weight: 600; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center;">
+                                <span>💡 GỢI Ý & CHÈN NHANH NGUYÊN CÔNG:</span>
+                                <button type="button" id="btnClearMultiOps" style="background: transparent; border: none; color: #f87171; font-size: 11px; cursor: pointer; padding: 0;">🧹 Xóa tất cả</button>
+                            </div>
+                            
+                            <!-- Preset Quick Chips -->
+                            <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px;" id="quickPresetChips">
+                                <button type="button" class="preset-chip" data-template="NC1: Tiện thô phay mặt | 2700 | 35000">+ NC1: Tiện thô</button>
+                                <button type="button" class="preset-chip" data-template="NC2: Phay CNC rãnh | 3600 | 45000">+ NC2: Phay CNC</button>
+                                <button type="button" class="preset-chip" data-template="NC3: Khoan 8 lỗ tâm | 1800 | 25000">+ NC3: Khoan lỗ</button>
+                                <button type="button" class="preset-chip" data-template="NC4: Mài hoàn thiện | 2400 | 30000">+ NC4: Mài</button>
+                                <button type="button" class="preset-chip" data-template="NC5: Doạ lỗ tinh | 1800 | 25000">+ NC5: Doạ lỗ</button>
+                                <button type="button" class="preset-chip" data-template="NC6: Cắt rãnh kẹp | 2100 | 28000">+ NC6: Cắt rãnh</button>
+                                <button type="button" class="preset-chip" data-template="NC7: Vát mép góc R | 1500 | 20000">+ NC7: Vát mép</button>
+                                <button type="button" class="preset-chip" data-template="NC8: Tiện tinh ren | 2700 | 35000">+ NC8: Tiện ren</button>
+                                <button type="button" class="preset-chip" data-template="NC9: Mài mặt đầu | 1800 | 25000">+ NC9: Mài mặt</button>
+                                <button type="button" class="preset-chip" data-template="NC10: Đột dấu kiểm tra | 1200 | 18000">+ NC10: Đột dấu</button>
+                                <button type="button" class="preset-chip highlight" id="btnInsertSampleCluster">+ ⚡ Nạp Cụm 4 NC Mẫu</button>
+                                <button type="button" class="preset-chip highlight" id="btnInsertSampleCluster10" style="background: linear-gradient(135deg, #059669, #0284c7); color: #fff;">+ ⚡ Nạp Cụm 10 NC Mẫu (Tối Đa)</button>
+                            </div>
+
+                            <!-- Single Line Fast Builder -->
+                            <div style="display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 6px; align-items: center;">
+                                <div>
+                                    <input type="text" id="quickOpNameInput" list="masterOpNameList" class="form-input" style="padding: 6px 8px; font-size: 11px;" placeholder="Tên Nguyên Công (gõ hoặc chọn gợi ý)..." autocomplete="off">
+                                    <datalist id="masterOpNameList"></datalist>
+                                </div>
+                                <input type="number" id="quickOpTimeInput" class="form-input" style="padding: 6px 8px; font-size: 11px;" placeholder="Giây" value="2700" min="1" title="Định mức thời gian (giây)">
+                                <input type="number" id="quickOpWageInput" class="form-input" style="padding: 6px 8px; font-size: 11px;" placeholder="Lương (VNĐ)" value="35000" min="0" title="Đơn giá lương khoán (VNĐ)">
+                                <button type="button" id="btnAddQuickOpLine" class="btn-submit" style="padding: 6px 10px; font-size: 11px; background: #059669; white-space: nowrap; height: 100%;">
+                                    ➕ Chèn
+                                </button>
+                            </div>
+                        </div>
+
+                        <textarea id="masterMultiOpsInput" class="form-input" rows="4" style="font-family: monospace; font-size: 12px;" placeholder="Nhập mỗi nguyên công 1 dòng theo cú pháp:
+NC1: Tiện thô phay mặt | 2700 | 35000
+NC2: Phay CNC rãnh | 3600 | 45000
+NC3: Khoan 8 lỗ tâm | 1800 | 25000
+NC4: Mài hoàn thiện | 2400 | 30000"></textarea>
+                        <p style="font-size: 11px; color: #94a3b8; margin-top: 4px;">
+                            *Mẹo: Nhấn các thẻ gợi ý ở trên hoặc gõ đơn giản để tự động chèn dòng vào khung danh sách.
+                        </p>
+                    </div>
+
+                    <button id="btnSaveMasterItem" class="btn-submit" style="padding: 10px; font-size: 14px; background: linear-gradient(135deg, #10b981, #059669);">
+                        ➕ LƯU TOÀN BỘ CỤM NGUYÊN CÔNG CHO SẢN PHẨM MỚI
+                    </button>
+                </div>
+
+                <!-- Column 2: Import Master Data from Excel / Cloud -->
+                <div style="background: rgba(15,23,42,0.8); padding: 16px; border-radius: 12px; border: 1px solid var(--border-color); display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <h4 style="font-size: 14px; color: #fbbf24; margin: 0;">📥 NẠP DANH MỤC TỪ FILE EXCEL</h4>
+                            <button id="btnDownloadTemplate" class="pill-btn" style="background: rgba(251, 191, 36, 0.15); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.4); font-size: 11px;">
+                                📄 TẢI FILE EXCEL MẪU
+                            </button>
+                        </div>
+                        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 14px;">
+                            Bấm nút <strong>"📄 TẢI FILE EXCEL MẪU"</strong> ở trên để lấy Mẫu quy trình chuẩn. Cán bộ Kỹ thuật điền danh sách sản phẩm & nguyên công mới, sau đó chọn file nạp bên dưới.
+                        </p>
+
+                        <div class="form-group">
+                            <label class="form-label">Chọn File Excel Cập Nhật (.xlsx, .xlsm)</label>
+                            <input type="file" id="masterExcelFileInput" accept=".xlsx, .xlsm, .xls" class="form-input" style="padding: 8px;">
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 16px;">
+                        <button id="btnImportMasterExcel" class="btn-excel" style="width: 100%; justify-content: center; padding: 12px;">
+                            📥 NẠP TỰ ĐỘNG CẢI TIẾN DANH MỤC MỚI TỪ FILE EXCEL
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Google Sheets Integration Config Box -->
+        <div class="card" style="border-color: rgba(16, 185, 129, 0.4); background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(6, 78, 59, 0.3));">
+            <div class="card-title" style="color: #34d399;">
+                <span>🔗 CẤU HÌNH KẾT NỐI GOOGLE SHEETS REALTIME</span>
+                <span class="icon-badge" style="background: rgba(16, 185, 129, 0.2); color: #34d399;">FREE CLOUD DB</span>
+            </div>
+            <div class="form-group">
+                <label class="form-label" style="color: var(--text-muted);">Google Apps Script Web App URL</label>
+                <div style="display: flex; gap: 8px;">
+                    <input type="text" id="googleScriptUrlInput" class="form-input" placeholder="https://script.google.com/macros/s/AKfycb.../exec" style="flex: 1;">
+                    <button id="btnSaveGoogleUrl" class="btn-excel" style="white-space: nowrap;">💾 LƯU KẾT NỐI</button>
+                </div>
+                <p style="font-size: 11px; color: #94a3b8; margin-top: 6px;">
+                    *Nhập Web App URL sau khi triển khai Apps Script. Dữ liệu báo cáo của công nhân sẽ tự động đồng bộ lên Google Sheets ngay lập tức.
+                </p>
+            </div>
+        </div>
+
+        <!-- Realtime WIP Progress Tracking Card -->
+        <div class="card">
+            <div class="card-title" style="display: flex; justify-content: space-between; align-items: center;">
+                <span>📊 BẢNG QUẢN LÝ TIẾN ĐỘ WIP & % HOÀN THÀNH SẢN PHẨM (TRỌNG SỐ ĐỊNH MỨC)</span>
+                <span class="icon-badge" style="background: rgba(96, 165, 250, 0.2); color: #60a5fa;">REALTIME WIP</span>
+            </div>
+            <p style="font-size: 12px; color: #94a3b8; margin-bottom: 12px;">
+                *Tính toán % hoàn thành tổng thể sản phẩm theo định mức thời gian (s) từng công đoạn. Tự động nhảy số liệu khi công nhân báo cáo.
+            </p>
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Khách Hàng</th>
+                            <th>Sản Phẩm & Quy Trình</th>
+                            <th>Định Mức Tổng</th>
+                            <th>Tiến Độ Công Đoạn Đã Hoàn Thành</th>
+                            <th>% Hoàn Thành Tổng Thể</th>
+                            <th>Trạng Thái</th>
+                        </tr>
+                    </thead>
+                    <tbody id="wipProgressTbody">
+                        <!-- Populated dynamically by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- History Log Table -->
+        <div class="card">
+            <div class="card-title">
+                <span>📋 NHẬT KÝ BÁO CÁO SẢN LƯỢNG DỮ LIỆU THỜI GIAN THỰC</span>
+                <button id="btnExportExcel" class="btn-excel">
+                    <span>📥 XUẤT EXCEL BÁO CÁO NGÀY</span>
+                </button>
+            </div>
+
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Công nhân</th>
+                            <th>Khách hàng</th>
+                            <th>Sản phẩm</th>
+                            <th>Công đoạn</th>
+                            <th>Máy</th>
+                            <th>SL Đạt</th>
+                            <th>SL Xử lý</th>
+                            <th>SL Hủy</th>
+                            <th>Lương khoán</th>
+                            <th>Vật tư</th>
+                            <th>Phát sinh</th>
+                            <th>Hình ảnh</th>
+                            <th>Ngày</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyLogTbody">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- User Login Modal Window -->
+    <div id="loginModal" class="modal-overlay active">
+        <div class="modal-card auth-box" id="loginCard">
+            <div class="auth-header">
+                <div style="font-size: 40px;">🔑</div>
+                <h2>ĐĂNG NHẬP HỆ THỐNG GCCK 2026</h2>
+                <p style="font-size: 12px; color: var(--text-muted);">Vui lòng nhập Tên đăng nhập và Mật khẩu cá nhân</p>
+            </div>
+
+            <!-- Inline Error Alert Notification Banner -->
+            <div id="loginErrorAlert" class="auth-error-alert" style="display: none;">
+                <span>⚠️</span>
+                <span>Tên đăng nhập hoặc Mật khẩu không chính xác! Vui lòng kiểm tra lại.</span>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Tên Đăng Nhập / Mã NV (*)</label>
+                <input type="text" id="loginUsername" class="form-input" placeholder="Ví dụ: hoangha hoặc admin">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Mật Khẩu / Mã PIN (*)</label>
+                <input type="password" id="loginPassword" class="form-input" placeholder="Mật khẩu hoặc PIN (Mặc định: 1234)">
+            </div>
+
+            <button id="btnLoginSubmit" class="btn-submit">
+                <span>🔐 ĐĂNG NHẬP HỆ THỐNG</span>
+            </button>
+        </div>
+    </div>
+
+
+    <!-- Change Password Modal Window -->
+    <div id="changePassModal" class="modal-overlay">
+        <div class="modal-card auth-box">
+            <button class="modal-close" id="btnCloseChangePass">✕</button>
+            <div class="auth-header">
+                <div style="font-size: 36px;">🔑</div>
+                <h2>ĐỔI MẬT KHẨU CÁ NHÂN</h2>
+                <p style="font-size: 12px; color: var(--text-muted);">Cập nhật mật khẩu đăng nhập hệ thống của bạn</p>
+            </div>
+
+            <!-- Inline Error Alert -->
+            <div id="changePassAlert" class="auth-error-alert" style="display: none;">
+                <span>⚠️</span>
+                <span id="changePassAlertMsg">Vui lòng kiểm tra lại thông tin!</span>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Mật Khẩu Hiện Tại (*)</label>
+                <input type="password" id="oldPasswordInput" class="form-input" placeholder="Nhập mật khẩu đang sử dụng">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Mật Khẩu Mới (*)</label>
+                <input type="password" id="changeNewPasswordInput" class="form-input" placeholder="Nhập mật khẩu mới tùy chọn">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Xác Nhận Mật Khẩu Mới (*)</label>
+                <input type="password" id="confirmNewPasswordInput" class="form-input" placeholder="Nhập lại mật khẩu mới lần nữa">
+            </div>
+
+            <button id="btnSubmitChangePass" class="btn-submit" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                <span>💾 CẬP NHẬT MẬT KHẨU MỚI</span>
+            </button>
+        </div>
+    </div>
+
+
+    <!-- QR Code Scanner Modal -->
+    <div id="qrModal" class="modal-overlay">
+        <div class="modal-card">
+            <button class="modal-close" onclick="window.QRModule.closeScannerModal()">✕</button>
+            <h3 style="font-size: 16px; margin-bottom: 12px; text-align: center;">📷 QUÉT MÃ QR THẺ PHÔI / MÁY</h3>
+
+            <div class="qr-camera-frame">
+                <video id="qrVideo" style="width: 100%; height: 100%; object-fit: cover;"></video>
+                <div class="qr-laser-line"></div>
+            </div>
+
+            <div id="qrSimulatedSelect" style="margin-top: 16px; text-align: center;">
+                <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">Thử nghiệm mẫu Quick QR Scan:</p>
+                <button class="pill-btn" onclick="window.handleQRScannedData('UCC|492537-1|UCC-20260819|G/c Tiện NC1')" style="margin: 4px;">
+                    Mẫu 1: UCC - 492537-1
+                </button>
+                <button class="pill-btn" onclick="window.handleQRScannedData('XM Đại Phú|Đĩa búa 2000x2200 (Đĩa 1 bên Φ750 moay ơ 265/195 dày 88)|DP-PO-01|Gia công tiện hoàn thiện')" style="margin: 4px;">
+                    Mẫu 2: XM Đại Phú - Đĩa Búa
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delivery Update Modal Window -->
+    <div id="deliveryModal" class="modal-overlay">
+        <div class="modal-card auth-box">
+            <button class="modal-close" id="btnCloseDeliveryModal">✕</button>
+            <div class="auth-header">
+                <div style="font-size: 36px;">🚚</div>
+                <h2>CẬP NHẬT XUẤT GIAO HÀNG</h2>
+                <p style="font-size: 12px; color: var(--text-muted);" id="deliveryModalSubTitle">Mã PO: -- | Sản Phẩm: --</p>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Mã PO / Đơn Hàng</label>
+                <input type="text" id="deliveryPoDisplay" class="form-input" readonly style="background: rgba(255,255,255,0.05); color: #fbbf24; font-weight: 700;">
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div class="form-group">
+                    <label class="form-label">SL Đã Gia Công (Đạt)</label>
+                    <input type="text" id="deliveryProducedDisplay" class="form-input" readonly style="background: rgba(255,255,255,0.05); color: #34d399; font-weight: 700;">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">SL Đã Giao Hiện Tại</label>
+                    <input type="text" id="deliveryCurrentDeliveredDisplay" class="form-input" readonly style="background: rgba(255,255,255,0.05); color: #60a5fa; font-weight: 700;">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" style="color: #fbbf24;">📦 Số Lượng Giao Đợt Này (*)</label>
+                <input type="number" id="deliveryQtyAddInput" class="form-input" placeholder="Ví dụ: 100" min="1" style="font-size: 16px; font-weight: 700;">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Ngày Giao Hàng (*)</label>
+                <input type="date" id="deliveryDateInput" class="form-input">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Ghi Chú Đợt Giao (Phiếu Xuất Kho / Xe Giao)</label>
+                <input type="text" id="deliveryNoteInput" class="form-input" placeholder="Ví dụ: Giao đợt 2 qua xe tải 14C-123.45">
+            </div>
+
+            <button id="btnSubmitDelivery" class="btn-submit" style="background: linear-gradient(135deg, #10b981, #059669);">
+                <span>✅ XÁC NHẬN GIAO HÀNG & CẬP NHẬT TRẠNG THÁI</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="js/data.js?v=20260824_2130"></script>
+    <script src="js/qr-scanner.js?v=20260824_2130"></script>
+    <script src="js/app.js?v=20260824_2130"></script>
+
+</body>
+</html>

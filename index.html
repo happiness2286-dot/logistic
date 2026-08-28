@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>XSMB AI Prediction 2026 - Mini App Phân Tích XSMB</title>
+    <link rel="stylesheet" href="style.css?v=20260827">
+</head>
+<body>
+
+    <!-- APP HEADER -->
+    <header class="app-header">
+        <div class="brand">
+            <div class="brand-logo">🔮</div>
+            <div class="brand-info">
+                <h1>XSMB AI PREDICTION 2026</h1>
+                <p>Hệ Thống Phân Tích & Quản Lý Rủi Ro Cương Vị AI</p>
+            </div>
+        </div>
+
+        <div class="header-status">
+            <div class="status-badge">
+                <span class="pulse-dot"></span>
+                <span>SYNC 100% (2026)</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- NAVIGATION TABS WRAPPER -->
+    <div class="nav-tabs-wrapper">
+        <div class="nav-tabs">
+            <button class="tab-btn active" data-tab="tab-frame3d">
+                <span>🎯</span> DÀN KHUNG NUÔI 3N
+            </button>
+            <button class="tab-btn" data-tab="tab-top20">
+                <span>👑</span> TOP 20 & BỘ LỌC 2D
+            </button>
+            <button class="tab-btn" data-tab="tab-top3dd">
+                <span>🔥</span> TOP 3 ĐẦU/ĐUÔI & ĐIỂM PHỤC HỒI
+            </button>
+            <button class="tab-btn" data-tab="tab-cang3d4d">
+                <span>🔮</span> TOP 3D & 4D
+            </button>
+            <button class="tab-btn" data-tab="tab-stats">
+                <span>📊</span> THỐNG KÊ G7 & MỐC KHUNG
+            </button>
+        </div>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <main class="container">
+
+        <!-- HERO DASHBOARD BANNER -->
+        <div class="hero-banner">
+            <div class="hero-meta">
+                <h2>🎯 KỲ DỰ ĐOÁN: <span id="heroLastDate" style="color: #67E8F9;">Đang nạp...</span></h2>
+                <p>Cập nhật tự động từ mketqua.net & Ma trận Lucky26 VIP</p>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-box">
+                    <div class="stat-value" id="heroTotalDays">235 Kỳ</div>
+                    <div class="stat-label">Dữ Liệu Năm 2026</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" style="color: #34D399;" id="heroFrameRate">87.50%</div>
+                    <div class="stat-label">Tỷ Lệ Trúng Khung 3N</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" style="color: #FBBF24;" id="heroN2N3Rate">44.53%</div>
+                    <div class="stat-label">Siêu Lọc 28Số N2/N3</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 1: DÀN KHUNG NUÔI 3 NGÀY & SIÊU LỌC -->
+        <section id="tab-frame3d" class="tab-content active">
+            
+            <!-- Card 1: Dàn Gốc N1 (60 Số) -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="icon">🚀</span>
+                        <span>DÀN GỐC N1 (60 SỐ) - ĐÁNH NGÀY 1</span>
+                    </div>
+                    <button class="btn btn-gold" id="btnCopyN1">
+                        <span>📋</span> COPY DÀN 60 SỐ
+                    </button>
+                </div>
+                <p style="font-size: 12px; color: #94A3B8; margin-bottom: 12px;">
+                    Tập hợp 60 số có điểm Đồng Thuận Super-Score cao nhất ghép từ Top 3 vị trí G7 hiệu quả nhất. (<span id="countN1Label" style="color: #67E8F9; font-weight:700;">60 số</span>)
+                </p>
+                <div class="number-grid" id="gridN1Numbers">
+                    <!-- Dynamic Numbers -->
+                </div>
+            </div>
+
+            <!-- Card 2: Dàn Siêu Lọc N2 & N3 (28 Số) -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="icon">⚡</span>
+                        <span>DÀN SIÊU LỌC N2 & N3 (28 SỐ - KHI N1 TRƯỢT)</span>
+                    </div>
+                    <button class="btn" id="btnCopyN2">
+                        <span>📋</span> COPY DÀN 28 SỐ
+                    </button>
+                </div>
+                <p style="font-size: 12px; color: #94A3B8; margin-bottom: 12px;">
+                    Áp dụng quy tắc Đảo Chiều Đầu Lớn/Nhỏ (5-9 vs 0-4) + N1 Hit Matrix. Tỷ lệ ăn N2/N3 khi N1 trượt đạt <strong>44.53%</strong>. (<span id="countN2Label" style="color: #FBBF24; font-weight:700;">28 số</span>)
+                </p>
+                <div class="number-grid" id="gridN2Numbers">
+                    <!-- Dynamic Numbers -->
+                </div>
+
+                <div style="margin-top: 14px; padding: 10px 14px; background: rgba(255, 255, 255, 0.03); border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 13px; font-weight: 600; color: #E2E8F0;">🎲 CẶP SONG THỦ LÔ RƠI (N2/N3):</span>
+                    <span style="font-size: 16px; font-weight: 800; color: #34D399;" id="stlPairLabel">---</span>
+                </div>
+            </div>
+
+            <!-- Card 3: Nhật Ký Kiểm Chứng Khung 3 Ngày (235 Kỳ) -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="icon">📜</span>
+                        <span>LỊCH SỬ KIỂM CHỨNG NUÔI KHUNG 3 NGÀY (20 KỲ GẦN NHẤT)</span>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>Khung STT</th>
+                                <th>Ngày Bắt Đầu</th>
+                                <th>N1 (Gốc 60Số)</th>
+                                <th>N2 (Siêu Lọc 28Số)</th>
+                                <th>N3 (Siêu Lọc 28Số)</th>
+                                <th>Song Thủ Lô Rơi</th>
+                                <th>Kết Quả Khung</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbodyFrameHistory">
+                            <!-- Dynamic Table Rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: TOP 20 & BỘ LỌC 2D LIVE -->
+        <section id="tab-top20" class="tab-content">
+            
+            <!-- Bộ Lọc 2D Live Interactive Tool -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="icon">🎛️</span>
+                        <span>BỘ LỌC 2D THÔNG MINH LIVE (CHẠM & TỔNG)</span>
+                    </div>
+                    <button class="btn" id="btnCopyFiltered2D">
+                        <span>📋</span> COPY DÀN LỌC
+                    </button>
+                </div>
+
+                <div class="filter-box">
+                    <div class="filter-group">
+                        <label class="filter-label">🎯 LỌC THEO CHẠM (Ví dụ: 2358)</label>
+                        <input type="text" id="filterChamInput" class="filter-input" placeholder="Nhập các Chạm (mặc định: 0123456789)">
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">📐 LỌC THEO TỔNG (Ví dụ: 1267)</label>
+                        <input type="text" id="filterTongInput" class="filter-input" placeholder="Nhập các Tổng (mặc định: 0123456789)">
+                    </div>
+                </div>
+
+                <p style="font-size: 12px; color: #94A3B8; margin-bottom: 12px;">
+                    Kết quả lọc ma trận 100 số theo Chạm & Tổng đã chọn: (<span id="count2DFiltered" style="color: #67E8F9; font-weight:700;">100 số</span>)
+                </p>
+                <div class="number-grid" id="grid2DFiltered">
+                    <!-- Dynamic Numbers -->
+                </div>
+            </div>
+
+            <!-- Top 20 Super-Score Cards -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="icon">👑</span>
+                        <span>TOP 20 DỰ ĐOÁN ĐỒNG THUẬN SUPER-SCORE</span>
+                    </div>
+                    <button class="btn btn-gold" id="btnCopyTop20">
+                        <span>📋</span> COPY TOP 20
+                    </button>
+                </div>
+                <div class="number-grid" id="gridTop20Cards" style="grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));">
+                    <!-- Dynamic Cards -->
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: TOP 3 ĐẦU / TOP 3 ĐUÔI & ĐIỂM PHỤC HỒI -->
+        <section id="tab-top3dd" class="tab-content">
+            
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="icon">🔥</span>
+                        <span>TOP 3 ĐẦU & TOP 3 ĐUÔI VÀ DÀN 9 SỐ GHÉP</span>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 16px;">
+                    <div style="background: rgba(30, 41, 59, 0.6); padding: 16px; border-radius: 12px; border: 1px solid var(--border-color);">
+                        <div style="font-size: 12px; color: #94A3B8; font-weight: 700;">TOP 3 ĐẦU DỰ ĐOÁN (ĐỘNG 30N + PHỤC HỒI)</div>
+                        <div style="font-size: 24px; font-weight: 800; color: #67E8F9; margin: 6px 0;" id="lblTop3Head">Đầu 2 - Đầu 1 - Đầu 3</div>
+                        <div style="font-size: 11px; color: #34D399;">Tỷ lệ ăn 1N: <strong id="rateHead1N">28.63%</strong> | 3N: <strong id="rateHead3N">69.83%</strong></div>
+                    </div>
+
+                    <div style="background: rgba(30, 41, 59, 0.6); padding: 16px; border-radius: 12px; border: 1px solid var(--border-color);">
+                        <div style="font-size: 12px; color: #94A3B8; font-weight: 700;">TOP 3 ĐUÔI DỰ ĐOÁN (ĐỘNG 30N + PHỤC HỒI)</div>
+                        <div style="font-size: 24px; font-weight: 800; color: #FBBF24; margin: 6px 0;" id="lblTop3Tail">Đuôi 3 - Đuôi 7 - Đuôi 8</div>
+                        <div style="font-size: 11px; color: #34D399;">Tỷ lệ ăn 1N: <strong id="rateTail1N">25.64%</strong> | 3N: <strong id="rateTail3N">61.64%</strong></div>
+                    </div>
+                </div>
+
+                <div class="card-header" style="margin-top: 10px;">
+                    <div class="card-title" style="font-size: 14px;">
+                        <span>🎲 DÀN 9 SỐ GHÉP (ĐẦU x ĐUÔI)</span>
+                    </div>
+                    <button class="btn" id="btnCopyDan9">📋 COPY 9 SỐ</button>
+                </div>
+                <div class="number-grid" id="gridDan9Numbers">
+                    <!-- Dynamic Numbers -->
+                </div>
+            </div>
+
+            <!-- Card: Bảng Điểm Phục Hồi & Trừ Bão Hòa Chi Tiết -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="icon">📈</span>
+                        <span>BẢNG PHÂN TÍCH ĐIỂM TRỪ BÃỎ HÒA & ĐIỂM PHỤC HỒI NỔ LẠI (0-9)</span>
+                    </div>
+                </div>
+                <p style="font-size: 12px; color: #94A3B8; margin-bottom: 12px;">
+                    Đơn vị tính: <strong>Trừ Bão Hòa</strong> (Khi nổ 1-3 ngày trước) | <strong>Điểm Phục Hồi 🔥 (+4.5đ)</strong> (Cho các Đầu/Đuôi từng nổ mạnh nay ở ngưỡng nén ngày thứ 4 - 7 của chu kỳ gan).
+                </p>
+
+                <div class="table-responsive">
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>Chữ Số</th>
+                                <th>Loại</th>
+                                <th>Tần Suất 30N</th>
+                                <th>Nhịp Gan (Ngày)</th>
+                                <th>Trừ Bão Hòa</th>
+                                <th>Điểm Phục Hồi 🔥</th>
+                                <th>Tổng Điểm AI</th>
+                                <th>Trạng Thái Nhịp</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbodyRecoveryScoring">
+                            <!-- Dynamic Rows for 0-9 Heads & Tails -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- TAB 4: TOP 3D & 4D -->
+        <section id="tab-cang3d4d" class="tab-content">
+            
+            <!-- Summary Stats for 3D & 4D -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 16px;">
+                <div style="background: rgba(30, 41, 59, 0.6); padding: 16px; border-radius: 12px; border: 1px solid var(--border-color);">
+                    <div style="font-size: 12px; color: #94A3B8; font-weight: 700;">TỶ LỆ TRÚNG BA CÀNG (3D TOP 20)</div>
+                    <div style="font-size: 24px; font-weight: 800; color: #FBBF24; margin: 6px 0;" id="stat3DRate">7.69%</div>
+                    <div style="font-size: 11px; color: #34D399;">Đã trúng <strong id="stat3DHits">18/234</strong> kỳ (Ghép Top Càng 0,2,4,5,7 x Top20 2D)</div>
+                </div>
+
+                <div style="background: rgba(30, 41, 59, 0.6); padding: 16px; border-radius: 12px; border: 1px solid var(--border-color);">
+                    <div style="font-size: 12px; color: #94A3B8; font-weight: 700;">TỶ LỆ TRÚNG BỐN CÀNG (4D TOP 20)</div>
+                    <div style="font-size: 24px; font-weight: 800; color: #C084FC; margin: 6px 0;" id="stat4DRate">1.71%</div>
+                    <div style="font-size: 11px; color: #34D399;">Đã trúng <strong id="stat4DHits">4/234</strong> kỳ (Ghép Top Càng 0,2 x Top 3D)</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="icon">🔮</span>
+                        <span>TOP 20 BA CÀNG (3D) MẠNH NHẤT</span>
+                    </div>
+                    <button class="btn btn-gold" id="btnCopy3D">📋 COPY TOP 20 3D</button>
+                </div>
+                <div class="number-grid" id="grid3DList" style="grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));">
+                    <!-- Dynamic 3D Numbers -->
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="icon">✨</span>
+                        <span>TOP 20 BỐN CÀNG (4D) MẠNH NHẤT</span>
+                    </div>
+                    <button class="btn" id="btnCopy4D">📋 COPY TOP 20 4D</button>
+                </div>
+                <div class="number-grid" id="grid4DList" style="grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));">
+                    <!-- Dynamic 4D Numbers -->
+                </div>
+            </div>
+
+            <!-- Card: Nhật Ký Kiểm Chứng Lịch Sử 3D & 4D -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="icon">📜</span>
+                        <span>LỊCH SỬ KIỂM CHỨNG 3D & 4D NĂM 2026 (20 KỲ GẦN NHẤT)</span>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Ngày Quay</th>
+                                <th>Giải Đặc Biệt</th>
+                                <th>Thực Tế 3D (3 Càng)</th>
+                                <th>Kết Quả 3D</th>
+                                <th>Thực Tế 4D (4 Càng)</th>
+                                <th>Kết Quả 4D</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody3D4DHistory">
+                            <!-- Dynamic Table Rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 5: THỐNG KÊ G7 & MỐC KHUNG -->
+        <section id="tab-stats" class="tab-content">
+            
+            <!-- High Confidence Burst Prediction Card -->
+            <div class="card" style="border: 1px solid rgba(245, 158, 11, 0.4); background: linear-gradient(180deg, rgba(245, 158, 11, 0.08) 0%, rgba(15, 23, 42, 0.85) 100%);">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="icon">🎯</span>
+                        <span>DỰ ĐOÁN DÀN NỔ HỎA LỰC THEO THỨ (TỶ LỆ 85.3% - 97%)</span>
+                    </div>
+                    <button class="btn btn-gold" id="btnCopyDowBurst">📋 COPY 20 SỐ HỎA LỰC</button>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-bottom: 14px;">
+                    <div style="background: rgba(30, 41, 59, 0.7); padding: 12px; border-radius: 10px; border: 1px solid var(--border-color);">
+                        <div style="font-size: 11px; color: #94A3B8; font-weight: 700;">KỲ DỰ ĐOÁN TIẾP THEO</div>
+                        <div style="font-size: 20px; font-weight: 800; color: #67E8F9;" id="lblDowNextDay">Thứ Sáu</div>
+                        <div style="font-size: 11px; color: #34D399;">Vị trí G7 phong độ: <span id="lblDowG7Pos" style="font-weight: 700;">G7.1 & G7.4</span></div>
+                    </div>
+                    
+                    <div style="background: rgba(30, 41, 59, 0.7); padding: 12px; border-radius: 10px; border: 1px solid var(--border-color);">
+                        <div style="font-size: 11px; color: #94A3B8; font-weight: 700;">TỔNG ÉP HẠ & CHẠM ƯU TIÊN</div>
+                        <div style="font-size: 14px; font-weight: 800; color: #FBBF24; margin-top: 2px;" id="lblDowTargetSums">Tổng 8, 1, 3, 6</div>
+                        <div style="font-size: 11px; color: #94A3B8;">Chạm chính: <span id="lblDowChamSet" style="color: #67E8F9; font-weight:700;">0, 1, 2, 3, 5, 6, 7, 8</span></div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 12px;">
+                    <div style="font-size: 13px; font-weight: 700; color: #FBBF24; margin-bottom: 8px;">⚡ DÀN 20 SỐ NỔ HỎA LỰC MẠNH NHẤT DỰ ĐOÁN TIẾP THEO:</div>
+                    <div class="number-grid" id="gridDowBurst20">
+                        <!-- Dynamic 20 Burst Numbers -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Window Selection Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="icon">🗓️</span>
+                        <span>PHÂN TÍCH VỊ TRÍ G7 THEO CÁC MỐC KHUNG THỜI GIAN</span>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap;" id="windowSelectorBtns">
+                    <button class="btn btn-gold window-btn active" data-window="30">🚀 Khung 30 Ngày</button>
+                    <button class="btn btn-secondary window-btn" data-window="60">🔥 Khung 60 Ngày</button>
+                    <button class="btn btn-secondary window-btn" data-window="90">🔮 Khung 90 Ngày</button>
+                    <button class="btn btn-secondary window-btn" data-window="all">📊 Toàn Bộ 2026 (235 Kỳ)</button>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 12px;" id="gridG7RankingCards">
+                    <!-- Dynamic G7 Ranking Cards -->
+                </div>
+            </div>
+
+            <!-- Performance By DOW Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="icon">📊</span>
+                        <span>HIỆU SUẤT VỊ TRÍ G7 THEO CÁC THỨ TRONG TUẦN (2026)</span>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>Thứ Trong Tuần</th>
+                                <th>Số Kỳ Đánh Giá</th>
+                                <th>Vị Trí G7 Nổ Mạnh</th>
+                                <th>Tỷ Lệ Ăn Chạm (%)</th>
+                                <th>Tỷ Lệ Ép Hạ Dàn (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbodyDowStats">
+                            <!-- Dynamic Rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="app.js?v=20260827_4"></script>
+</body>
+</html>
