@@ -182,6 +182,11 @@ def crawl_xsmb():
                 g7_3 = g7_3_match.group(1).strip() if g7_3_match else ""
                 g7_4 = g7_4_match.group(1).strip() if g7_4_match else ""
                 
+                raw_prizes = re.findall(r'id="rs_\d+_\d+"[^>]*>(\d+)</div>', block)
+                if not raw_prizes:
+                    raw_prizes = re.findall(r'id="rs_\d+_\d+"[^>]*data-sofar="(\d+)"', block)
+                all_lo = [p[-2:] for p in raw_prizes if len(p) >= 2]
+
                 if date_str and db:
                     results.append({
                         'date': date_str,
@@ -190,7 +195,8 @@ def crawl_xsmb():
                         'g7_1': g7_1,
                         'g7_2': g7_2,
                         'g7_3': g7_3,
-                        'g7_4': g7_4
+                        'g7_4': g7_4,
+                        'all_lo': all_lo
                     })
                     
             results_2026 = [r for r in results if '2026' in r['date']]
@@ -267,6 +273,10 @@ def analyze_all(data_2026):
         'cham_hits': 0,
         'goc_hits': 0,
         'inter_hits': 0,
+        'stl_goc_hits': 0,
+        'stl_goc_total_nhay': 0,
+        'goc_lo_total_nhay': 0,
+        'inter_lo_total_nhay': 0,
         'total_evals': total_evals_2026
     }
     adv_daily_records = []
@@ -278,6 +288,9 @@ def analyze_all(data_2026):
         dow_code = dt.weekday() if dt else 0
         
         next_de = next_row['de']
+        next_lo_list = next_row.get('all_lo', [next_de] if next_de else [])
+        next_lo_counts = Counter(next_lo_list)
+        
         next_de_int = int(next_de) if next_de.isdigit() else -1
         next_de_tens = next_de_int // 10
         next_de_units = next_de_int % 10
@@ -293,6 +306,13 @@ def analyze_all(data_2026):
         t_goc = (head_g7_1 + tail_g7_4) % 10
         b_goc = get_bong(t_goc)
         goc_hit = (next_de_tong in (t_goc, b_goc))
+        
+        # STL Cầu Ghép Góc (Lô)
+        stl_p1 = f"{head_g7_1}{tail_g7_4}"
+        stl_p2 = f"{tail_g7_4}{head_g7_1}"
+        stl_goc_pair_str = f"{stl_p1} - {stl_p2}" if stl_p1 != stl_p2 else stl_p1
+        stl_nhay = next_lo_counts[stl_p1] + (next_lo_counts[stl_p2] if stl_p2 != stl_p1 else 0)
+        stl_goc_hit = stl_nhay > 0
         
         # Intersected Set (Algo 4)
         all_sums = set()
@@ -311,10 +331,22 @@ def analyze_all(data_2026):
                 inter_set.add(f"{num:02d}")
                 
         inter_hit = (next_de in inter_set)
+        inter_lo_nhay = sum(next_lo_counts[n] for n in inter_set)
+        
+        set_20_goc = set()
+        for num in range(100):
+            d_sum = (num // 10 + num % 10) % 10
+            if d_sum in (t_goc, b_goc):
+                set_20_goc.add(f"{num:02d}")
+        goc_lo_nhay = sum(next_lo_counts[n] for n in set_20_goc)
         
         if cham_hit: overall_adv_stats['cham_hits'] += 1
         if goc_hit: overall_adv_stats['goc_hits'] += 1
         if inter_hit: overall_adv_stats['inter_hits'] += 1
+        if stl_goc_hit: overall_adv_stats['stl_goc_hits'] += 1
+        overall_adv_stats['stl_goc_total_nhay'] += stl_nhay
+        overall_adv_stats['goc_lo_total_nhay'] += goc_lo_nhay
+        overall_adv_stats['inter_lo_total_nhay'] += inter_lo_nhay
         
         adv_daily_records.append({
             'stt': idx + 1,
@@ -332,7 +364,11 @@ def analyze_all(data_2026):
             'next_de': next_de,
             'hit_cham': "TRÚNG" if cham_hit else "KHÔNG",
             'hit_goc': "TRÚNG" if goc_hit else "KHÔNG",
-            'hit_inter': "TRÚNG" if inter_hit else "KHÔNG"
+            'hit_inter': "TRÚNG" if inter_hit else "KHÔNG",
+            'stl_goc_pair': stl_goc_pair_str,
+            'hit_stl_goc': f"{stl_nhay} nháy 🎯" if stl_nhay > 0 else "0 nháy",
+            'hit_goc_lo': f"{goc_lo_nhay} nháy",
+            'hit_inter_lo': f"{inter_lo_nhay} nháy"
         })
 
     for dow_code in range(7):
@@ -1218,6 +1254,41 @@ def analyze_all(data_2026):
             'result_4d': "TRÚNG 🎯" if hit_4d else "TRƯỢT ❌"
         })
 
+    latest_day = chrono[-1]
+    g71_num = latest_day['g7_1']
+    g74_num = latest_day['g7_4']
+    h_71 = g71_num[0] if g71_num and g71_num[0].isdigit() else "0"
+    t_74 = g74_num[1] if len(g74_num) > 1 and g74_num[1].isdigit() else "0"
+    p1_next = f"{h_71}{t_74}"
+    p2_next = f"{t_74}{h_71}"
+    stl_goc_next = f"{p1_next} - {p2_next}" if p1_next != p2_next else p1_next
+
+    top4_lo = []
+    for item in top_20_consensus[:4]:
+        top4_lo.append({
+            'number': item['number'],
+            'score': round(item['score'], 1),
+            'source': 'G7 & Ma Trận Consensus'
+        })
+    
+    goc_nums = [p1_next]
+    if p2_next != p1_next: goc_nums.append(p2_next)
+    for g_n in goc_nums:
+        if not any(x['number'] == g_n for x in top4_lo):
+            top4_lo.append({'number': g_n, 'score': 90.0, 'source': 'Cầu Ghép Góc (G7.1 + G7.4)'})
+
+    tot_ev = max(overall_adv_stats['total_evals'], 1)
+    g7_lo_predictions = {
+        'stl_goc_next': stl_goc_next,
+        'btl_goc_next': p1_next,
+        'stl_goc_hits': overall_adv_stats['stl_goc_hits'],
+        'stl_goc_rate': round(overall_adv_stats['stl_goc_hits'] / tot_ev * 100, 2),
+        'stl_goc_total_nhay': overall_adv_stats['stl_goc_total_nhay'],
+        'goc_lo_total_nhay': overall_adv_stats['goc_lo_total_nhay'],
+        'inter_lo_total_nhay': overall_adv_stats['inter_lo_total_nhay'],
+        'top_lo_g7_moc_chung': top4_lo[:4]
+    }
+
     summary = {
         'total_days': len(chrono),
         'last_date': chrono[-1]['date'],
@@ -1233,6 +1304,7 @@ def analyze_all(data_2026):
         'overall_adv_stats': overall_adv_stats,
         'overall_g7_stats': overall_g7_stats,
         'adv_daily_records': adv_daily_records,
+        'g7_lo_predictions': g7_lo_predictions,
         'suggested_g7_cham': sorted(list(suggested_g7_cham)),
         'suggested_sums': sorted(list(suggested_sums)),
         'top_20_consensus': top_20_consensus,
@@ -1570,8 +1642,15 @@ def export_excel(data_2026, summary, filename='Thong_Ke_G7_Va_Top20_XSMB_2026.xl
             'Danh Sách Dàn Giao Thoa': rec['dan_str']
         })
 
+    g7_lo_p = summary.get('g7_lo_predictions', {})
+    stl_goc_str = g7_lo_p.get('stl_goc_next', '')
+    stl_goc_hits = g7_lo_p.get('stl_goc_hits', 0)
+    stl_goc_rate = g7_lo_p.get('stl_goc_rate', 0.0)
+    stl_goc_nhay = g7_lo_p.get('stl_goc_total_nhay', 0)
+
     sheet_dow_corner_rows = [
-        {'Thành Phần Cầu Ghép Góc': 'Cầu Ghép Góc (Head 7.1 + Tail 7.4)', 'Thuật Toán & Cách Tính': 'Tổng (G7.1[0] + G7.4[1]) mod 10 & Bóng', 'Số Lần Nổ N1 2026': '96 lần', 'Tỷ Lệ Trúng (%)': '42.67%', 'Đánh Giá Ưu Điểm': 'Độc lập với G7 đơn, nổ cực mạnh Thứ 2 (50%) & Thứ 7 (48.5%)'},
+        {'Thành Phần Cầu Ghép Góc': 'Song Thủ Lô Cầu Ghép Góc (Móc Ghép G7.1 + G7.4)', 'Thuật Toán & Cách Tính': f"Ghép G7.1[0] và G7.4[1] -> Cặp Lô {stl_goc_str}", 'Số Lần Nổ N1 2026': f"{stl_goc_hits} lần ({stl_goc_nhay} nháy)", 'Tỷ Lệ Trúng (%)': f"{stl_goc_rate}%", 'Đánh Giá Ưu Điểm': 'Cầu Lô Móc Chung cực chuẩn, xuất hiện nháy đều đặn'},
+        {'Thành Phần Cầu Ghép Góc': 'Cầu Ghép Góc Đề (Head 7.1 + Tail 7.4)', 'Thuật Toán & Cách Tính': 'Tổng (G7.1[0] + G7.4[1]) mod 10 & Bóng', 'Số Lần Nổ N1 2026': '96 lần', 'Tỷ Lệ Trúng (%)': '42.67%', 'Đánh Giá Ưu Điểm': 'Độc lập với G7 đơn, nổ cực mạnh Thứ 2 (50%) & Thứ 7 (48.5%)'},
         {'Thành Phần Cầu Ghép Góc': 'Tích Hợp Chạm G7 Ngày', 'Thuật Toán & Cách Tính': 'Bắt chữ số G7.1-G7.4 + Bóng dương', 'Số Lần Nổ N1 2026': '189 lần', 'Tỷ Lệ Trúng (%)': '84.70%', 'Đánh Giá Ưu Điểm': 'Độ phủ rộng, giữ tỷ lệ trúng khung 3N 87.00%'}
     ]
 
@@ -1600,9 +1679,27 @@ def export_excel(data_2026, summary, filename='Thong_Ke_G7_Va_Top20_XSMB_2026.xl
     sheet_adv_rows.append({'STT': 'TT 2', 'Ngày Quay': 'Thuật toán 2: Màng Lọc Chạm G7 (Độ Phủ Cao)', 'G7.1': 'G7.1-G7.4', 'G7.2': '---', 'G7.3': '---', 'G7.4': '---', 'Tập Chạm G7': '~50-60 con (6-7 chữ số chạm)', 'Tổng/Bóng G7': f"{summary['overall_adv_stats']['cham_hits']} / {tot_evals_2026} ngày", 'Tổng/Bóng Cầu Ghép Góc': f"{tot_cham_pct:.1f}%", 'Dàn Giao Thoa (Chạm x Tổng)': 'Độ phủ 84.7%. Màng lọc bắt buộc để hạ dàn nguyên liệu', 'Số Đề Hôm Sau': '---', 'Kết Quả Chạm G7': '---', 'Kết Quả Cầu Ghép Góc': '---', 'Kết Quả Dàn Giao Thoa': '---'})
     sheet_adv_rows.append({'STT': 'TT 3', 'Ngày Quay': 'Thuật toán 3: Cầu Ghép Góc (Đầu G7.1 + Đuôi G7.4)', 'G7.1': 'G7.1[0]', 'G7.2': '---', 'G7.3': '---', 'G7.4': 'G7.4[1]', 'Tập Chạm G7': '20 con (2 bộ Tổng/Bóng)', 'Tổng/Bóng G7': f"{summary['overall_adv_stats']['goc_hits']} / {tot_evals_2026} ngày", 'Tổng/Bóng Cầu Ghép Góc': f"{tot_goc_pct:.1f}%", 'Dàn Giao Thoa (Chạm x Tổng)': 'Cầu độc lập hiệu quả cao, nổ mạnh Thứ Hai & Thứ Bảy (~29%)', 'Số Đề Hôm Sau': '---', 'Kết Quả Chạm G7': '---', 'Kết Quả Cầu Ghép Góc': '---', 'Kết Quả Dàn Giao Thoa': '---'})
     sheet_adv_rows.append({'STT': 'TT 4', 'Ngày Quay': 'Thuật toán 4: Dàn Giao Thoa Ép Cầu [Chạm x Tổng]', 'G7.1': 'G7.1-G7.4', 'G7.2': '---', 'G7.3': '---', 'G7.4': '---', 'Tập Chạm G7': '~48 con (Giao giữa Chạm G7 & Tổng G7)', 'Tổng/Bóng G7': f"{summary['overall_adv_stats']['inter_hits']} / {tot_evals_2026} ngày", 'Tổng/Bóng Cầu Ghép Góc': f"{tot_inter_pct:.1f}%", 'Dàn Giao Thoa (Chạm x Tổng)': 'Ép dàn cực đỉnh (~48 con) giữ tỷ lệ ăn 42.8%, nổ 56.2% Thứ Năm', 'Số Đề Hôm Sau': '---', 'Kết Quả Chạm G7': '---', 'Kết Quả Cầu Ghép Góc': '---', 'Kết Quả Dàn Giao Thoa': '---'})
-    sheet_adv_rows.append({'STT': 'BẢNG 2', 'Ngày Quay': 'NHẬT KÝ KIỂM CHỨNG TỰ ĐỘNG THỰC TẾ 2026', 'G7.1': '---', 'G7.2': '---', 'G7.3': '---', 'G7.4': '---', 'Tập Chạm G7': '---', 'Tổng/Bóng G7': '---', 'Tổng/Bóng Cầu Ghép Góc': '---', 'Dàn Giao Thoa (Chạm x Tổng)': '---', 'Số Đề Hôm Sau': '---', 'Kết Quả Chạm G7': '---', 'Kết Quả Cầu Ghép Góc': '---', 'Kết Quả Dàn Giao Thoa': '---'})
+    sheet_adv_rows.append({'STT': 'BẢNG 2', 'Ngày Quay': 'NHẬT KÝ KIỂM CHỨNG TỰ ĐỘNG THỰC TẾ 2026', 'G7.1': '---', 'G7.2': '---', 'G7.3': '---', 'G7.4': '---', 'Tập Chạm G7': '---', 'Tổng/Bóng G7': '---', 'Tổng/Bóng Cầu Ghép Góc': '---', 'Dàn Giao Thoa (Chạm x Tổng)': '---', 'Số Đề Hôm Sau': '---', 'Kết Quả Chạm G7': '---', 'Kết Quả Cầu Ghép Góc': '---', 'Kết Quả Dàn Giao Thoa': '---', 'Song Thủ Lô Cầu Ghép Góc': '---', 'KQ Lô Cầu Ghép Góc': '---', 'KQ Lô Dàn Giao Thoa': '---'})
     for rec in summary.get('adv_daily_records', []):
-        sheet_adv_rows.append({'STT': rec['stt'], 'Ngày Quay': f"{rec['date']} ({rec['dow_name']})", 'G7.1': rec['g7_1'], 'G7.2': rec['g7_2'], 'G7.3': rec['g7_3'], 'G7.4': rec['g7_4'], 'Tập Chạm G7': rec['chams'], 'Tổng/Bóng G7': rec['sums'], 'Tổng/Bóng Cầu Ghép Góc': rec['corner_sum'], 'Dàn Giao Thoa (Chạm x Tổng)': rec['inter_size'], 'Số Đề Hôm Sau': rec['next_de'], 'Kết Quả Chạm G7': rec['hit_cham'], 'Kết Quả Cầu Ghép Góc': rec['hit_goc'], 'Kết Quả Dàn Giao Thoa': rec['hit_inter']})
+        sheet_adv_rows.append({
+            'STT': rec['stt'],
+            'Ngày Quay': f"{rec['date']} ({rec['dow_name']})",
+            'G7.1': rec['g7_1'],
+            'G7.2': rec['g7_2'],
+            'G7.3': rec['g7_3'],
+            'G7.4': rec['g7_4'],
+            'Tập Chạm G7': rec['chams'],
+            'Tổng/Bóng G7': rec['sums'],
+            'Tổng/Bóng Cầu Ghép Góc': rec['corner_sum'],
+            'Dàn Giao Thoa (Chạm x Tổng)': rec['inter_size'],
+            'Số Đề Hôm Sau': rec['next_de'],
+            'Kết Quả Chạm G7': rec['hit_cham'],
+            'Kết Quả Cầu Ghép Góc': rec['hit_goc'],
+            'Kết Quả Dàn Giao Thoa': rec['hit_inter'],
+            'Song Thủ Lô Cầu Ghép Góc': rec.get('stl_goc_pair', ''),
+            'KQ Lô Cầu Ghép Góc': rec.get('hit_stl_goc', '0 nháy'),
+            'KQ Lô Dàn Giao Thoa': rec.get('hit_inter_lo', '0 nháy')
+        })
 
     # Sheet 6: HISTORICAL PREDICTION LOG (1-DAY)
     sheet5_rows = []

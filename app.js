@@ -437,6 +437,45 @@ function renderTabStatsG7() {
         window.currentDowBurstList = burstList.join(' ');
     }
 
+    // Render G7 & Móc chung Lô Predictions
+    if (appData.g7_lo_predictions) {
+        const loP = appData.g7_lo_predictions;
+        const badgeStl = document.getElementById('badgeStlGocRate');
+        if (badgeStl) badgeStl.textContent = `Tỷ Lệ Nổ Lô STL: ${loP.stl_goc_rate}%`;
+
+        const lblStl = document.getElementById('lblStlGocNext');
+        if (lblStl) lblStl.textContent = loP.stl_goc_next || '-- - --';
+
+        const lblHits = document.getElementById('lblStlGocHits');
+        if (lblHits) lblHits.textContent = `${loP.stl_goc_hits} kỳ`;
+
+        const lblNhay = document.getElementById('lblStlGocNhay');
+        if (lblNhay) lblNhay.textContent = `${loP.stl_goc_total_nhay} nháy`;
+
+        const lblBtl = document.getElementById('lblBtlGocNext');
+        if (lblBtl) lblBtl.textContent = loP.btl_goc_next || '--';
+
+        const gridTopLo = document.getElementById('gridTopLoG7');
+        if (gridTopLo && loP.top_lo_g7_moc_chung) {
+            gridTopLo.innerHTML = '';
+            loP.top_lo_g7_moc_chung.forEach(item => {
+                const card = document.createElement('div');
+                card.style.background = 'rgba(16, 185, 129, 0.12)';
+                card.style.border = '1px solid rgba(52, 211, 153, 0.3)';
+                card.style.borderRadius = '8px';
+                card.style.padding = '8px 12px';
+                card.style.textAlign = 'center';
+
+                card.innerHTML = `
+                    <div style="font-size: 18px; font-weight: 800; color: #34D399;">${item.number}</div>
+                    <div style="font-size: 10px; color: #94A3B8;">${item.source}</div>
+                    <div style="font-size: 11px; font-weight: 700; color: #FBBF24;">${item.score} điểm</div>
+                `;
+                gridTopLo.appendChild(card);
+            });
+        }
+    }
+
     // Render G7 ranking for initial window (30 days)
     renderG7WindowStats('30');
 

@@ -345,6 +345,38 @@
         <!-- TAB 5: THỐNG KÊ G7 & MỐC KHUNG -->
         <section id="tab-stats" class="tab-content">
             
+            <!-- Card: Dự Đoán & Phong Độ Lô G7 & Cầu Ghép Góc / Móc Chung -->
+            <div class="card" style="border: 1px solid rgba(52, 211, 153, 0.4); background: linear-gradient(180deg, rgba(16, 185, 129, 0.08) 0%, rgba(15, 23, 42, 0.85) 100%);">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="icon">🎲</span>
+                        <span>DỰ ĐOÁN & PHONG ĐỘ LÔ G7 & CẦU GHÉP GÓC (MÓC CHUNG)</span>
+                    </div>
+                    <span class="badge badge-gold" id="badgeStlGocRate" style="background: rgba(52, 211, 153, 0.2); color: #34D399; border: 1px solid rgba(52, 211, 153, 0.4); padding: 4px 10px; border-radius: 6px; font-weight: 700; font-size: 12px;">Tỷ Lệ Nổ: --%</span>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-bottom: 14px;">
+                    <div style="background: rgba(30, 41, 59, 0.7); padding: 12px; border-radius: 10px; border: 1px solid var(--border-color);">
+                        <div style="font-size: 11px; color: #94A3B8; font-weight: 700;">SONG THỦ LÔ CẦU GHÉP GÓC (G7.1 + G7.4)</div>
+                        <div style="font-size: 22px; font-weight: 800; color: #34D399; margin: 4px 0;" id="lblStlGocNext">-- - --</div>
+                        <div style="font-size: 11px; color: #94A3B8;">Đã nổ <strong id="lblStlGocHits" style="color:#FBBF24;">-- kỳ</strong> (<span id="lblStlGocNhay">-- nháy</span> năm 2026)</div>
+                    </div>
+                    
+                    <div style="background: rgba(30, 41, 59, 0.7); padding: 12px; border-radius: 10px; border: 1px solid var(--border-color);">
+                        <div style="font-size: 11px; color: #94A3B8; font-weight: 700;">BẠCH THỦ LÔ CẦU GHÉP GÓC</div>
+                        <div style="font-size: 22px; font-weight: 800; color: #67E8F9; margin: 4px 0;" id="lblBtlGocNext">--</div>
+                        <div style="font-size: 11px; color: #34D399;">Hỏa lực chính ghép góc G7</div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 8px;">
+                    <div style="font-size: 13px; font-weight: 700; color: #34D399; margin-bottom: 8px;">🔥 TOP 4 LÔ TIỀM NĂNG G7 & MÓC CHUNG CHO KỲ TỚI:</div>
+                    <div class="number-grid" id="gridTopLoG7" style="grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));">
+                        <!-- Dynamic Top 4 Lô Cards -->
+                    </div>
+                </div>
+            </div>
+
             <!-- High Confidence Burst Prediction Card -->
             <div class="card" style="border: 1px solid rgba(245, 158, 11, 0.4); background: linear-gradient(180deg, rgba(245, 158, 11, 0.08) 0%, rgba(15, 23, 42, 0.85) 100%);">
                 <div class="card-header">
