@@ -36,6 +36,15 @@ Lệnh trên sẽ tự động:
 - Thư mục: `58_up_to_75/`
 - Chứa Mini App Tối Ưu Dàn 58 lên 75 số, chuyển cầu N1/N2/N3, kịch bản `update_daily.py`, dashboard `index.html` và file dữ liệu `data.json`.
 
-
-
-
+### 4. Ứng Dụng Web UI Radar Soi Cầu G1-G5 (`soi_cau_g1_g5_app.html`):
+- File được lưu và đồng bộ tại 2 vị trí:
+  - Thư mục gốc: `soi_cau_g1_g5_app.html`
+  - Thư mục nhánh: `58_up_to_75/soi_cau_g1_g5_app.html`
+- **Link Online GitHub Pages**:
+  - Gốc: `https://happiness2286-dot.github.io/logistic/soi_cau_g1_g5_app.html`
+  - Nhánh 58: `https://happiness2286-dot.github.io/logistic/58_up_to_75/soi_cau_g1_g5_app.html`
+- **Đặc tả UI & Mobile UX**:
+  - Tối ưu chuẩn Mobile Responsive (đặc biệt iPhone 11: 414 × 896).
+  - Có Action Sheet Bottom Menu sao chép nhanh: Top 1, Top 4, Dàn Tinh Túy, Dàn N1, N2, N3.
+  - Phân loại cầu gộp: 🟡 Chỉ đạo (3-4 ngày: đánh chính) | 🔵 Lót (2 ngày) | ⚪ Theo dõi (1 ngày).
+  - Thẻ `div` và HTML luôn cân bằng chuẩn, không lặp ID.
