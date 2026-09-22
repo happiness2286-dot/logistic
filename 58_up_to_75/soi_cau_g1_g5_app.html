@@ -324,9 +324,19 @@
             line-height: 1;
             margin-top: 2px;
             letter-spacing: -0.5px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
         .digit-cycle-main .digit-cycle-tag { color: #fde68a; }
         .digit-cycle-lot .digit-cycle-tag { color: #bae6fd; }
+        .digit-cycle-watch .digit-cycle-tag { color: #94a3b8; }
+
+        .tag-text { display: inline; }
+        .tag-dot { display: none; }
+        .dot-gold-sm { color: #fbbf24; text-shadow: 0 0 4px #fbbf24; }
+        .dot-blue-sm { color: #38bdf8; text-shadow: 0 0 4px #38bdf8; }
+        .dot-dim-sm { color: #94a3b8; }
 
         /* THANH CHÚ THÍCH PHÂN LOẠI CẦU (3 LOẠI GỘP) */
         .radar-legend-bar {
@@ -727,6 +737,374 @@
             transform: translateY(0);
             opacity: 1;
         }
+
+        /* HELPER VISIBILITY CLASSES */
+        .pc-only { display: inline-flex !important; }
+        .mobile-only { display: none !important; }
+        .mobile-only-flex { display: none !important; }
+
+        /* LEGEND INFO BUTTON */
+        .legend-info-btn {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: rgba(56, 189, 248, 0.2);
+            border: 1px solid #38bdf8;
+            color: #38bdf8;
+            font-weight: 900;
+            font-size: 11px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-left: auto;
+        }
+
+        /* NÚT COPY CHÍNH CHO ĐIỆN THOẠI */
+        .btn-mobile-copy-master {
+            width: 100%;
+            padding: 13px 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 800;
+            color: #0f172a;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            border: none;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: transform 0.15s ease;
+        }
+        .btn-mobile-copy-master:active {
+            transform: scale(0.98);
+        }
+
+        /* MOBILE ACTION SHEET (BOTTOM SHEET CHO MENU COPY) */
+        .mobile-action-sheet {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2000;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+        .mobile-action-sheet.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            opacity: 1;
+        }
+        .sheet-backdrop {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(4px);
+        }
+        .sheet-content {
+            position: relative;
+            background: #0f172a;
+            border-top: 2px solid #fbbf24;
+            border-radius: 20px 20px 0 0;
+            padding: 18px 16px 28px 16px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(251, 191, 36, 0.2);
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .mobile-action-sheet.active .sheet-content {
+            transform: translateY(0);
+        }
+        .sheet-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .sheet-header h3 {
+            font-size: 14px;
+            font-weight: 800;
+            color: #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0;
+        }
+        .sheet-close-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #cbd5e1;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+        }
+        .sheet-options {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+        .sheet-option-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 11px 12px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-align: left;
+        }
+        .sheet-option-btn:active {
+            background: rgba(251, 191, 36, 0.15);
+            border-color: #fbbf24;
+            transform: scale(0.98);
+        }
+        .sheet-option-btn .opt-icon {
+            font-size: 18px;
+            margin-right: 10px;
+        }
+        .sheet-option-btn .opt-text {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .sheet-option-btn .opt-text strong {
+            font-size: 13px;
+            color: #f8fafc;
+        }
+        .sheet-option-btn .opt-text small {
+            font-size: 11px;
+            color: #94a3b8;
+            margin-top: 1px;
+        }
+        .opt-top1 { border-color: rgba(251, 191, 36, 0.45); background: rgba(251, 191, 36, 0.09); }
+        .opt-top4 { border-color: rgba(249, 115, 22, 0.45); background: rgba(249, 115, 22, 0.09); }
+        .opt-tinhtuy { border-color: rgba(56, 189, 248, 0.45); background: rgba(56, 189, 248, 0.09); }
+        .opt-n1 { border-color: rgba(34, 197, 94, 0.45); background: rgba(34, 197, 94, 0.09); }
+        .opt-n2 { border-color: rgba(251, 191, 36, 0.35); background: rgba(251, 191, 36, 0.06); }
+        .opt-n3 { border-color: rgba(249, 115, 22, 0.35); background: rgba(249, 115, 22, 0.06); }
+
+        /* =====================================================================
+           RESPONSIVE DESIGN CHO ĐIỆN THOẠI (MAX-WIDTH: 640PX)
+           ===================================================================== */
+        @media (max-width: 640px) {
+            body {
+                padding: 10px 8px 30px 8px;
+            }
+            .container {
+                padding: 0;
+            }
+            .pc-only { display: none !important; }
+            .mobile-only { display: block !important; }
+            .mobile-only-flex { display: flex !important; }
+
+            /* 1. BỐ CỤC TỔNG THỂ HEADER (DỌC) */
+            .app-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+                padding: 14px 12px;
+                border-radius: 16px;
+                margin-bottom: 14px;
+            }
+            .header-brand {
+                justify-content: center;
+                text-align: center;
+            }
+            .brand-title {
+                font-size: 16px;
+            }
+            .brand-sub {
+                font-size: 10px;
+            }
+            .header-actions {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 8px;
+                width: 100%;
+            }
+            .btn-refresh {
+                flex: 1;
+                justify-content: center;
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+            .radar-status-badge {
+                flex: 1.3;
+                justify-content: center;
+                padding: 8px 10px;
+                font-size: 11px;
+            }
+
+            /* PHẦN 1: BẢNG KẾT QUẢ QUAY TRỰC TIẾP */
+            .section-box, .tinh-tuy-box, .n123-box, .frame-alert-card {
+                padding: 14px 10px;
+                border-radius: 16px;
+                margin-bottom: 14px;
+            }
+            .section-header {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 10px;
+                padding-bottom: 8px;
+            }
+            .section-header h2 {
+                font-size: 12.5px;
+            }
+            .tag-info {
+                font-size: 10px;
+                padding: 2px 7px;
+            }
+
+            .prize-table, 
+            .prize-table tbody, 
+            .prize-table tr, 
+            .prize-table td {
+                display: block;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .prize-table tr {
+                padding: 7px 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            }
+            .prize-name-col {
+                width: 100% !important;
+                padding: 0 0 5px 2px !important;
+                font-size: 12px !important;
+                font-weight: 800 !important;
+                color: #94a3b8 !important;
+                display: flex !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+            }
+            .prize-status-col {
+                display: none !important;
+            }
+            .prize-nums-col {
+                width: 100% !important;
+                padding: 0 !important;
+                display: grid !important;
+                gap: 5px !important;
+            }
+
+            /* 2. XỬ LÝ CÁC GIẢI CÓ NHIỀU SỐ (G3, G5: 2 HÀNG X 3 SỐ) */
+            #live-g1 { grid-template-columns: 1fr !important; }
+            #live-g2 { grid-template-columns: repeat(2, 1fr) !important; }
+            #live-g3 { grid-template-columns: repeat(3, 1fr) !important; }
+            #live-g4 { grid-template-columns: repeat(2, 1fr) !important; }
+            #live-g5 { grid-template-columns: repeat(3, 1fr) !important; }
+
+            .prize-num-chip {
+                margin: 0 !important;
+                padding: 3px 1px !important;
+                justify-content: center !important;
+                width: 100% !important;
+                border-radius: 6px !important;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
+            }
+
+            /* 3 & 4. GIẢM KÍCH THƯỚC Ô SỐ, CHỮ & DÙNG CHẤM TRÒN THAY CHỮ "3D" */
+            .prize-digit {
+                min-width: 15px !important;
+                height: 27px !important;
+                padding: 1px 1px !important;
+                margin: 0 1px !important;
+                border-radius: 4px !important;
+            }
+            .prize-digit span:first-child {
+                font-size: 13px !important;
+                font-weight: 800 !important;
+                line-height: 1.1 !important;
+            }
+            .tag-text { display: none !important; }
+            .tag-dot { 
+                display: inline-block !important; 
+                font-size: 7px !important; 
+                line-height: 1 !important; 
+                margin-top: 1px !important;
+            }
+
+            /* 5. CHÚ THÍCH (LEGEND) THU GỌN 1 HÀNG */
+            .radar-legend-bar {
+                margin-top: 12px;
+                padding: 8px 10px;
+                border-radius: 10px;
+                gap: 6px;
+                flex-direction: row;
+                align-items: center;
+            }
+            .legend-items {
+                gap: 6px;
+                width: 100%;
+                justify-content: space-between;
+            }
+            .legend-pill {
+                padding: 4px 7px;
+                font-size: 10px;
+                border-radius: 12px;
+                gap: 3px;
+            }
+
+            /* PHẦN 2: DÀN SỐ TINH TÚY & PHẦN 3 */
+            .tier-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+                padding: 10px 0;
+            }
+            .tier-label {
+                width: 100%;
+                font-size: 12px;
+            }
+            .tier-content {
+                width: 100%;
+                gap: 6px;
+            }
+            .num-badge-top1-glow {
+                font-size: 22px !important;
+                padding: 4px 16px !important;
+            }
+            .num-badge-orange, .num-badge-top4-star {
+                font-size: 14px !important;
+                padding: 4px 8px !important;
+            }
+            .num-badge-blue, .num-badge-green, .num-badge-gold {
+                font-size: 12.5px !important;
+                padding: 2.5px 6px !important;
+            }
+
+            /* Toast trên điện thoại */
+            .toast {
+                left: 16px;
+                right: 16px;
+                bottom: 16px;
+                justify-content: center;
+                font-size: 12px;
+                padding: 10px 14px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -835,13 +1213,14 @@
 
             <!-- THANH CHÚ THÍCH PHÂN LOẠI CẦU (3 LOẠI CHUẨN) -->
             <div class="radar-legend-bar">
-                <div class="legend-title">
-                    <i class="fa-solid fa-palette" style="color: #38bdf8;"></i> <strong>CHÚ THÍCH PHÂN LOẠI CẦU:</strong>
+                <div class="legend-title pc-only">
+                    <i class="fa-solid fa-palette" style="color: #38bdf8;"></i> <strong>CHÚ THÍCH CẦU:</strong>
                 </div>
                 <div class="legend-items">
-                    <span class="legend-pill pill-main"><span class="legend-dot dot-gold"></span> 🟡 <strong>Chỉ đạo (3-4 ngày)</strong>: Cầu chạy 3-4 ngày → Đánh chính</span>
-                    <span class="legend-pill pill-lot"><span class="legend-dot dot-blue"></span> 🔵 <strong>Lót (2 ngày)</strong>: Cầu chạy 2 ngày → Đánh lót</span>
-                    <span class="legend-pill pill-watch"><span class="legend-dot dot-dim"></span> ⚪ <strong>Theo dõi (1 ngày)</strong>: Cầu chạy 1 ngày → Chỉ theo dõi</span>
+                    <span class="legend-pill pill-main"><span class="legend-dot dot-gold"></span> 🟡 <strong>Chỉ đạo (3-4d)</strong><span class="pc-only">: Đánh chính</span></span>
+                    <span class="legend-pill pill-lot"><span class="legend-dot dot-blue"></span> 🔵 <strong>Lót (2d)</strong><span class="pc-only">: Đánh lót</span></span>
+                    <span class="legend-pill pill-watch"><span class="legend-dot dot-dim"></span> ⚪ <strong>Theo dõi (1d)</strong><span class="pc-only">: Chỉ theo dõi</span></span>
+                    <button class="legend-info-btn mobile-only" id="btn-legend-help" title="Nhấn để xem giải thích chi tiết">?</button>
                 </div>
             </div>
         </section>
@@ -889,8 +1268,8 @@
                 </div>
             </div>
 
-            <!-- Nút Copy Phần 2 -->
-            <div class="btn-copy-bar" style="margin-top: 18px; margin-bottom: 0;">
+            <!-- Nút Copy Phần 2 (PC: 3 nút riêng) -->
+            <div class="btn-copy-bar pc-only" style="margin-top: 18px; margin-bottom: 0;">
                 <button class="btn-copy btn-copy-gold" id="btn-copy-top1">
                     <i class="fa-regular fa-copy"></i> Copy Top 1
                 </button>
@@ -899,6 +1278,13 @@
                 </button>
                 <button class="btn-copy btn-copy-blue" id="btn-copy-tinh-tuy">
                     <i class="fa-solid fa-check-double"></i> Copy Dàn Tinh Túy
+                </button>
+            </div>
+
+            <!-- Nút Copy Phần 2 (Mobile: 1 nút gộp hiển thị Menu) -->
+            <div class="mobile-only" style="margin-top: 14px;">
+                <button class="btn-mobile-copy-master" id="btn-mobile-copy-trigger">
+                    <i class="fa-solid fa-clipboard-list"></i> SAO CHÉP DÀN SỐ <i class="fa-solid fa-chevron-down" style="font-size: 11px;"></i>
                 </button>
             </div>
         </section>
@@ -984,6 +1370,67 @@
                 </div>
             </div>
         </section>
+    </div>
+
+    <!-- MOBILE ACTION SHEET CHO MENU SAO CHÉP DÀN SỐ -->
+    <div class="mobile-action-sheet" id="mobileActionSheet">
+        <div class="sheet-backdrop" id="sheetBackdrop"></div>
+        <div class="sheet-content">
+            <div class="sheet-header">
+                <h3><i class="fa-solid fa-clipboard-check" style="color: #fbbf24;"></i> SAO CHÉP DÀN SỐ</h3>
+                <button class="sheet-close-btn" id="sheetCloseBtn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="sheet-options">
+                <button class="sheet-option-btn opt-top1" id="m-btn-copy-top1">
+                    <span class="opt-icon">👑</span>
+                    <span class="opt-text">
+                        <strong>Sao chép Top 1 (Chỉ đạo)</strong>
+                        <small id="m-label-top1">Số: 32</small>
+                    </span>
+                    <i class="fa-regular fa-copy"></i>
+                </button>
+                <button class="sheet-option-btn opt-top4" id="m-btn-copy-top4">
+                    <span class="opt-icon">⭐</span>
+                    <span class="opt-text">
+                        <strong>Sao chép Top 4 Tinh Túy</strong>
+                        <small id="m-label-top4">32, 37, 33, 42</small>
+                    </span>
+                    <i class="fa-regular fa-copy"></i>
+                </button>
+                <button class="sheet-option-btn opt-tinhtuy" id="m-btn-copy-tinhtuy">
+                    <span class="opt-icon">💎</span>
+                    <span class="opt-text">
+                        <strong>Sao chép Dàn Tinh Túy (Toàn bộ)</strong>
+                        <small id="m-label-tinhtuy">Giao thoa 60 số Cấp 4</small>
+                    </span>
+                    <i class="fa-solid fa-check-double"></i>
+                </button>
+                <button class="sheet-option-btn opt-n1" id="m-btn-copy-n1">
+                    <span class="opt-icon">🟢</span>
+                    <span class="opt-text">
+                        <strong>Sao chép Dàn N1 (60 số Cấp 4)</strong>
+                        <small>Dàn gốc đã kiểm chứng 98.3%</small>
+                    </span>
+                    <i class="fa-regular fa-copy"></i>
+                </button>
+                <button class="sheet-option-btn opt-n2" id="m-btn-copy-n2">
+                    <span class="opt-icon">🟡</span>
+                    <span class="opt-text">
+                        <strong>Sao chép Dàn N2 (36 số)</strong>
+                        <small>Hard Filter từ N1</small>
+                    </span>
+                    <i class="fa-regular fa-copy"></i>
+                </button>
+                <button class="sheet-option-btn opt-n3" id="m-btn-copy-n3">
+                    <span class="opt-icon">🟠</span>
+                    <span class="opt-text">
+                        <strong>Sao chép Dàn N3 (36 số)</strong>
+                        <small>Hard Filter giữ nguyên N2</small>
+                    </span>
+                    <i class="fa-regular fa-copy"></i>
+                </button>
+            </div>
+        </div>
     </div>
 
     <!-- TOAST NOTIFICATION -->
@@ -1163,25 +1610,37 @@
 
                     if (info) {
                         const cycle = info.cycle || 1;
+                        let dotChar = '○';
+                        let dotClass = 'dot-dim-sm';
                         // 1. Chỉ đạo (3-4 ngày) -> 🟡 VÀNG (Cả Đầu và Đuôi cùng màu)
                         if (info.color_type === 'cycle_main' || cycle >= 3) {
                             digitSpan.classList.add('digit-cycle-main');
+                            dotChar = '●';
+                            dotClass = 'dot-gold-sm';
                             const tag = document.createElement('span');
                             tag.className = 'digit-cycle-tag';
-                            tag.textContent = `${cycle}d`;
+                            tag.innerHTML = `<span class="tag-text">${cycle}d</span><span class="tag-dot ${dotClass}">${dotChar}</span>`;
                             digitSpan.appendChild(tag);
                         }
                         // 2. Lót (2 ngày) -> 🔵 XANH (Cả Đầu và Đuôi cùng màu)
                         else if (info.color_type === 'cycle_lot' || cycle === 2) {
                             digitSpan.classList.add('digit-cycle-lot');
+                            dotChar = '●';
+                            dotClass = 'dot-blue-sm';
                             const tag = document.createElement('span');
                             tag.className = 'digit-cycle-tag';
-                            tag.textContent = '2d';
+                            tag.innerHTML = `<span class="tag-text">2d</span><span class="tag-dot ${dotClass}">${dotChar}</span>`;
                             digitSpan.appendChild(tag);
                         }
                         // 3. Theo dõi (1 ngày) -> ⚪ TRẮNG / MỜ
                         else {
                             digitSpan.classList.add('digit-cycle-watch');
+                            dotChar = '○';
+                            dotClass = 'dot-dim-sm';
+                            const tag = document.createElement('span');
+                            tag.className = 'digit-cycle-tag';
+                            tag.innerHTML = `<span class="tag-text">1d</span><span class="tag-dot ${dotClass}">${dotChar}</span>`;
+                            digitSpan.appendChild(tag);
                         }
                         digitSpan.setAttribute('title', info.tooltip || `${code} vị trí ${posIdx}: ${char} (${cycle}d)`);
                     } else {
@@ -1196,36 +1655,143 @@
         }
 
         function setupCopyButtons() {
-            // Phần 2
-            document.getElementById('btn-copy-top1').onclick = () => {
-                copyText(currentData.top_1 || '', 'Đã sao chép Top 1: ' + currentData.top_1);
+            // Phần 2 (PC)
+            const btnCopyTop1 = document.getElementById('btn-copy-top1');
+            if (btnCopyTop1) {
+                btnCopyTop1.onclick = () => copyText(currentData.top_1 || '', 'Đã sao chép Top 1: ' + currentData.top_1);
+            }
+
+            const btnCopyTop4 = document.getElementById('btn-copy-top4');
+            if (btnCopyTop4) {
+                btnCopyTop4.onclick = () => {
+                    const text = (currentData.top_4 || []).join(', ');
+                    copyText(text, 'Đã sao chép Top 4: ' + text);
+                };
+            }
+
+            const btnCopyTinhTuy = document.getElementById('btn-copy-tinh-tuy');
+            if (btnCopyTinhTuy) {
+                btnCopyTinhTuy.onclick = () => {
+                    const text = (currentData.dan_giao_thoa || []).join(', ');
+                    copyText(text, `Đã sao chép Dàn Tinh Túy (${(currentData.dan_giao_thoa || []).length} số)`);
+                };
+            }
+
+            // Phần 3 (PC)
+            const btnCopyN1 = document.getElementById('btn-copy-n1');
+            if (btnCopyN1) {
+                btnCopyN1.onclick = () => {
+                    const text = (currentData.dan_n1 || []).join(', ');
+                    copyText(text, `Đã sao chép Dàn N1 (${(currentData.dan_n1 || []).length} số)`);
+                };
+            }
+
+            const btnCopyN2 = document.getElementById('btn-copy-n2');
+            if (btnCopyN2) {
+                btnCopyN2.onclick = () => {
+                    const text = (currentData.dan_n2 || []).join(', ');
+                    copyText(text, `Đã sao chép Dàn N2 (${(currentData.dan_n2 || []).length} số)`);
+                };
+            }
+
+            const btnCopyN3 = document.getElementById('btn-copy-n3');
+            if (btnCopyN3) {
+                btnCopyN3.onclick = () => {
+                    const text = (currentData.dan_n3 || []).join(', ');
+                    copyText(text, `Đã sao chép Dàn N3 (${(currentData.dan_n3 || []).length} số)`);
+                };
+            }
+
+            // Mobile Action Sheet Trigger & Close
+            const sheet = document.getElementById('mobileActionSheet');
+            const trigger = document.getElementById('btn-mobile-copy-trigger');
+            const closeBtn = document.getElementById('sheetCloseBtn');
+            const backdrop = document.getElementById('sheetBackdrop');
+
+            if (trigger && sheet) {
+                trigger.onclick = () => {
+                    // Update dynamic labels in mobile sheet
+                    const lblTop1 = document.getElementById('m-label-top1');
+                    if (lblTop1) lblTop1.textContent = 'Số: ' + (currentData.top_1 || '--');
+
+                    const lblTop4 = document.getElementById('m-label-top4');
+                    if (lblTop4) lblTop4.textContent = (currentData.top_4 || []).join(', ');
+
+                    const lblTinhTuy = document.getElementById('m-label-tinhtuy');
+                    if (lblTinhTuy) lblTinhTuy.textContent = `Giao thoa 60 số Cấp 4 (${(currentData.dan_giao_thoa || []).length} số)`;
+
+                    sheet.classList.add('active');
+                };
+            }
+
+            const closeSheet = () => {
+                if (sheet) sheet.classList.remove('active');
             };
 
-            document.getElementById('btn-copy-top4').onclick = () => {
-                const text = (currentData.top_4 || []).join(', ');
-                copyText(text, 'Đã sao chép Top 4: ' + text);
-            };
+            if (closeBtn) closeBtn.onclick = closeSheet;
+            if (backdrop) backdrop.onclick = closeSheet;
 
-            document.getElementById('btn-copy-tinh-tuy').onclick = () => {
-                const text = (currentData.dan_giao_thoa || []).join(', ');
-                copyText(text, `Đã sao chép Dàn Tinh Túy (${(currentData.dan_giao_thoa || []).length} số)`);
-            };
+            // Mobile Sheet Options Click Handlers
+            const mBtnTop1 = document.getElementById('m-btn-copy-top1');
+            if (mBtnTop1) {
+                mBtnTop1.onclick = () => {
+                    copyText(currentData.top_1 || '', 'Đã sao chép Top 1: ' + currentData.top_1);
+                    closeSheet();
+                };
+            }
 
-            // Phần 3
-            document.getElementById('btn-copy-n1').onclick = () => {
-                const text = (currentData.dan_n1 || []).join(', ');
-                copyText(text, `Đã sao chép Dàn N1 (${(currentData.dan_n1 || []).length} số)`);
-            };
+            const mBtnTop4 = document.getElementById('m-btn-copy-top4');
+            if (mBtnTop4) {
+                mBtnTop4.onclick = () => {
+                    const text = (currentData.top_4 || []).join(', ');
+                    copyText(text, 'Đã sao chép Top 4: ' + text);
+                    closeSheet();
+                };
+            }
 
-            document.getElementById('btn-copy-n2').onclick = () => {
-                const text = (currentData.dan_n2 || []).join(', ');
-                copyText(text, `Đã sao chép Dàn N2 (${(currentData.dan_n2 || []).length} số)`);
-            };
+            const mBtnTinhTuy = document.getElementById('m-btn-copy-tinhtuy');
+            if (mBtnTinhTuy) {
+                mBtnTinhTuy.onclick = () => {
+                    const text = (currentData.dan_giao_thoa || []).join(', ');
+                    copyText(text, `Đã sao chép Dàn Tinh Túy (${(currentData.dan_giao_thoa || []).length} số)`);
+                    closeSheet();
+                };
+            }
 
-            document.getElementById('btn-copy-n3').onclick = () => {
-                const text = (currentData.dan_n3 || []).join(', ');
-                copyText(text, `Đã sao chép Dàn N3 (${(currentData.dan_n3 || []).length} số)`);
-            };
+            const mBtnN1 = document.getElementById('m-btn-copy-n1');
+            if (mBtnN1) {
+                mBtnN1.onclick = () => {
+                    const text = (currentData.dan_n1 || []).join(', ');
+                    copyText(text, `Đã sao chép Dàn N1 (${(currentData.dan_n1 || []).length} số)`);
+                    closeSheet();
+                };
+            }
+
+            const mBtnN2 = document.getElementById('m-btn-copy-n2');
+            if (mBtnN2) {
+                mBtnN2.onclick = () => {
+                    const text = (currentData.dan_n2 || []).join(', ');
+                    copyText(text, `Đã sao chép Dàn N2 (${(currentData.dan_n2 || []).length} số)`);
+                    closeSheet();
+                };
+            }
+
+            const mBtnN3 = document.getElementById('m-btn-copy-n3');
+            if (mBtnN3) {
+                mBtnN3.onclick = () => {
+                    const text = (currentData.dan_n3 || []).join(', ');
+                    copyText(text, `Đã sao chép Dàn N3 (${(currentData.dan_n3 || []).length} số)`);
+                    closeSheet();
+                };
+            }
+
+            // Legend Info Help Button Click
+            const btnLegendHelp = document.getElementById('btn-legend-help');
+            if (btnLegendHelp) {
+                btnLegendHelp.onclick = () => {
+                    showToast('🟡 Chỉ đạo (3-4 ngày): Đánh chính | 🔵 Lót (2 ngày): Đánh lót | ⚪ Theo dõi (1 ngày): Chỉ theo dõi');
+                };
+            }
         }
 
         function copyText(text, msg) {
