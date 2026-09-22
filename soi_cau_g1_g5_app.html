@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>XSMB AI - Mini App Real-Time (3 Phần Hoàn Chỉnh)</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800;900&family=Plus+Jakarta+Sans:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-base: #060911;
+            --bg-card: rgba(15, 23, 42, 0.8);
+            --bg-card-hover: rgba(30, 41, 59, 0.9);
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --border-glass-strong: rgba(255, 255, 255, 0.16);
+
+            /* Màu chỉ đạo chuẩn theo yêu cầu */
+            --color-gold: #fbbf24;        /* 🟡 Top 1 & N2 (Vàng) */
+            --color-gold-glow: rgba(251, 191, 36, 0.5);
+            --color-gold-bg: rgba(251, 191, 36, 0.12);
+
+            --color-orange: #f97316;      /* 🟠 Top 4 & N3 (Cam) */
+            --color-orange-glow: rgba(249, 115, 22, 0.5);
+            --color-orange-bg: rgba(249, 115, 22, 0.12);
+
+            --color-blue: #38bdf8;        /* 🔵 Lót (Xanh Lam) */
+            --color-blue-glow: rgba(56, 189, 248, 0.4);
+            --color-blue-bg: rgba(56, 189, 248, 0.12);
+
+            --color-green: #22c55e;       /* 🟢 N1 (Xanh Lá) */
+            --color-green-glow: rgba(34, 197, 94, 0.45);
+            --color-green-bg: rgba(34, 197, 94, 0.12);
+
+            --color-muted: #475569;
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: radial-gradient(circle at 50% 0%, #151e36 0%, var(--bg-base) 70%);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 16px 12px 60px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        /* HEADER */
+        .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #fbbf24 0%, #f97316 50%, #38bdf8 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #000;
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+        }
+
+        .brand-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 19px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            background: linear-gradient(90deg, #fff 40%, #fbbf24 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-sub {
+            font-size: 11px;
+            color: var(--text-sub);
+            margin-top: 2px;
+        }
+
+        .radar-status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 30px;
+            background: rgba(56, 189, 248, 0.15);
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            font-size: 12px;
+            font-weight: 700;
+            color: #38bdf8;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #38bdf8;
+            box-shadow: 0 0 10px #38bdf8;
+            animation: pulse-ring 1.5s infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.7); }
+            70% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(56, 189, 248, 0); }
+            100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); }
+        }
+
+        .btn-refresh {
+            background: rgba(56, 189, 248, 0.12);
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            color: #38bdf8;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .btn-refresh:hover {
+            background: rgba(56, 189, 248, 0.25);
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+        }
+
+        /* SECTION BOX */
+        .section-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            backdrop-filter: blur(16px);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--border-glass);
+            padding-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .section-header h2 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-header .tag-info {
+            font-size: 11px;
+            color: #38bdf8;
+            font-weight: 700;
+            background: rgba(56, 189, 248, 0.12);
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }
+
+        /* PHẦN 1: BẢNG KẾT QUẢ QUAY TRỰC TIẾP (G1 -> G5.6) */
+        .prize-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .prize-table tr {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .prize-table tr:last-child {
+            border-bottom: none;
+        }
+
+        .prize-name-col {
+            width: 22%;
+            padding: 10px 12px;
+            font-weight: 700;
+            color: #94a3b8;
+        }
+
+        .prize-nums-col {
+            width: 60%;
+            padding: 10px 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 15px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #f8fafc;
+        }
+
+        .prize-status-col {
+            width: 18%;
+            padding: 10px 12px;
+            text-align: right;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .badge-done {
+            color: #34d399;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .badge-skip {
+            color: #ef4444;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+        }
+
+        .prize-num-chip {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.9);
+            padding: 4px 10px;
+            border-radius: 8px;
+            margin-right: 8px;
+            margin-bottom: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+        }
+
+        .prize-digit {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 16px;
+            font-weight: 700;
+            padding: 1px 3.5px;
+            margin: 0 1.5px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            line-height: 1.1;
+        }
+
+        .prize-digit:hover {
+            transform: translateY(-2px) scale(1.22);
+            z-index: 10;
+        }
+
+        /* 🟡 1. CHỈ ĐẠO (3-4 NGÀY): VÀNG NEON (CẢ ĐẦU VÀ ĐUÔI CÙNG MÀU) */
+        .digit-cycle-main {
+            color: #fbbf24;
+            font-weight: 900;
+            background: rgba(251, 191, 36, 0.2);
+            border: 1px solid rgba(251, 191, 36, 0.55);
+            box-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+        }
+
+        /* 🔵 2. LÓT (2 NGÀY): XANH LAM (CẢ ĐẦU VÀ ĐUÔI CÙNG MÀU) */
+        .digit-cycle-lot {
+            color: #38bdf8;
+            font-weight: 800;
+            background: rgba(56, 189, 248, 0.18);
+            border: 1px solid rgba(56, 189, 248, 0.5);
+            box-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
+        }
+
+        /* ⚪ 3. THEO DÕI (1 NGÀY / MỜ): TRẮNG/MỜ */
+        .digit-cycle-watch {
+            color: #94a3b8;
+            font-weight: 500;
+            opacity: 0.65;
+        }
+
+        /* HẬU TỐ CHU KỲ (3d, 4d, 2d) DƯỚI TỪNG CHỮ SỐ */
+        .digit-cycle-tag {
+            font-size: 9px;
+            font-weight: 800;
+            line-height: 1;
+            margin-top: 2px;
+            letter-spacing: -0.5px;
+        }
+        .digit-cycle-main .digit-cycle-tag { color: #fde68a; }
+        .digit-cycle-lot .digit-cycle-tag { color: #bae6fd; }
+
+        /* THANH CHÚ THÍCH PHÂN LOẠI CẦU (3 LOẠI GỘP) */
+        .radar-legend-bar {
+            margin-top: 16px;
+            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 12px;
+        }
+
+        .legend-title {
+            color: #f1f5f9;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .legend-items {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .legend-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .pill-main { color: #fde68a; border-color: rgba(251, 191, 36, 0.5); background: rgba(251, 191, 36, 0.15); box-shadow: 0 0 10px rgba(251, 191, 36, 0.2); }
+        .pill-lot { color: #bae6fd; border-color: rgba(56, 189, 248, 0.5); background: rgba(56, 189, 248, 0.15); box-shadow: 0 0 10px rgba(56, 189, 248, 0.2); }
+        .pill-watch { color: #cbd5e1; border-color: rgba(148, 163, 184, 0.35); background: rgba(148, 163, 184, 0.1); }
+
+        .legend-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+        }
+        .dot-gold { background: #fbbf24; box-shadow: 0 0 8px #fbbf24; }
+        .dot-blue { background: #38bdf8; box-shadow: 0 0 8px #38bdf8; }
+        .dot-dim { background: #94a3b8; }
+
+        /* 🟡 NỔI BẬT TOP 1: VIỀN VÀNG ĐẬM & PHÓNG TO */
+        .num-badge-top1-glow {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 32px;
+            font-weight: 900;
+            color: #000;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            padding: 8px 24px;
+            border-radius: 14px;
+            border: 3px solid #fff;
+            box-shadow: 0 0 25px rgba(251, 191, 36, 0.8), 0 0 45px rgba(251, 191, 36, 0.4);
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .num-badge-top1-glow:hover { transform: scale(1.08); }
+
+        /* 🟠 NỔI BẬT TOP 4: CÓ DẤU SAO (★) & VIỀN CAM NỔI */
+        .num-badge-top4-star {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 19px;
+            font-weight: 800;
+            color: #fff;
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            padding: 7px 16px;
+            border-radius: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.45);
+            box-shadow: 0 0 16px rgba(249, 115, 22, 0.6);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .num-badge-top4-star:hover { transform: scale(1.08); }
+
+        /* PHẦN 2: DÀN SỐ TINH TÚY */
+        .tinh-tuy-box {
+            background: linear-gradient(145deg, rgba(251, 191, 36, 0.05) 0%, rgba(15, 23, 42, 0.95) 70%);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 20px;
+            padding: 22px;
+            margin-bottom: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 0 25px rgba(251, 191, 36, 0.04);
+        }
+
+        .tier-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            flex-wrap: wrap;
+        }
+
+        .tier-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .tier-label {
+            width: 170px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .tier-label.label-gold { color: var(--color-gold); }
+        .tier-label.label-orange { color: var(--color-orange); }
+        .tier-label.label-blue { color: var(--color-blue); }
+        .tier-label.label-green { color: var(--color-green); }
+
+        .tier-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        /* Number Badges */
+        .num-badge-gold {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 26px;
+            font-weight: 900;
+            color: #000;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            padding: 6px 18px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px var(--color-gold-glow);
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .num-badge-gold:hover { transform: scale(1.08); }
+
+        .num-badge-orange {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 18px;
+            font-weight: 800;
+            color: #fff;
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            padding: 6px 12px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px var(--color-orange-glow);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .num-badge-orange:hover { transform: scale(1.08); }
+
+        .num-badge-blue {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            font-weight: 700;
+            color: #38bdf8;
+            background: var(--color-blue-bg);
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            padding: 4px 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .num-badge-blue:hover {
+            background: rgba(56, 189, 248, 0.25);
+            transform: scale(1.06);
+        }
+
+        .num-badge-green {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            font-weight: 700;
+            color: #4ade80;
+            background: var(--color-green-bg);
+            border: 1px solid rgba(34, 197, 94, 0.4);
+            padding: 4px 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .num-badge-green:hover {
+            background: rgba(34, 197, 94, 0.25);
+            transform: scale(1.06);
+        }
+
+        .num-badge-yellow {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            font-weight: 700;
+            color: #fbbf24;
+            background: rgba(251, 191, 36, 0.12);
+            border: 1px solid rgba(251, 191, 36, 0.45);
+            padding: 4px 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .num-badge-yellow:hover {
+            background: rgba(251, 191, 36, 0.25);
+            transform: scale(1.06);
+        }
+
+        .num-badge-orange-sm {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            font-weight: 700;
+            color: #fb923c;
+            background: rgba(249, 115, 22, 0.12);
+            border: 1px solid rgba(249, 115, 22, 0.45);
+            padding: 4px 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .num-badge-orange-sm:hover {
+            background: rgba(249, 115, 22, 0.25);
+            transform: scale(1.06);
+        }
+
+        /* PHẦN 3: DÀN SỐ N1, N2, N3 */
+        .n123-box {
+            background: linear-gradient(145deg, rgba(34, 197, 94, 0.05) 0%, rgba(15, 23, 42, 0.95) 70%);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 20px;
+            padding: 22px;
+            margin-bottom: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        }
+
+        /* BUTTON BAR */
+        .btn-copy-bar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        @media (max-width: 640px) {
+            .btn-copy-bar {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .btn-copy {
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 12px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.25s ease;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            text-transform: uppercase;
+        }
+
+        .btn-copy:hover { transform: translateY(-2px); }
+
+        .btn-copy-gold {
+            background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+            color: #000;
+            box-shadow: 0 0 15px var(--color-gold-glow);
+        }
+
+        .btn-copy-orange {
+            background: linear-gradient(135deg, #f97316 0%, #c2410c 100%);
+            color: #fff;
+            box-shadow: 0 0 15px var(--color-orange-glow);
+        }
+
+        .btn-copy-blue {
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            color: #fff;
+            box-shadow: 0 0 15px var(--color-blue-glow);
+        }
+
+        .btn-copy-green {
+            background: linear-gradient(135deg, #22c55e 0%, #15803d 100%);
+            color: #fff;
+            box-shadow: 0 0 15px var(--color-green-glow);
+        }
+
+        /* TRẠNG THÁI CHUYỂN CẦU BANNER */
+        .frame-alert-card {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(15, 23, 42, 0.95) 100%);
+            border: 1.5px solid #10b981;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(16, 185, 129, 0.2);
+        }
+
+        .frame-alert-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .frame-alert-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 800;
+            color: #6ee7b7;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .frame-schedule-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 12px;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 13px;
+        }
+
+        .schedule-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .schedule-tag {
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+        }
+
+        .tag-n1 { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid #22c55e; }
+        .tag-n2 { background: rgba(251, 191, 36, 0.2); color: #fde68a; border: 1px solid #fbbf24; }
+        .tag-n3 { background: rgba(249, 115, 22, 0.2); color: #fed7aa; border: 1px solid #f97316; }
+
+        /* TOAST NOTIFICATION */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #0f172a;
+            border: 1px solid #38bdf8;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 700;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 15px rgba(56, 189, 248, 0.5);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- HEADER -->
+        <header class="app-header">
+            <div class="header-brand">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-bolt"></i>
+                </div>
+                <div>
+                    <h1 class="brand-title">XSMB AI - REAL-TIME RADAR</h1>
+                    <p class="brand-sub">Quay đến hết Giải 5.6 là kết thúc &amp; tự động xuất dàn</p>
+                </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <button class="btn-refresh" id="btn-manual-refresh" title="Làm mới dữ liệu">
+                    <i class="fa-solid fa-arrows-rotate"></i> Làm mới
+                </button>
+                <div class="radar-status-badge">
+                    <span class="pulse-dot"></span>
+                    <span id="txt-radar-status">QUAY ĐẾN HẾT GIẢI 5.6</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- PHẦN 1: BẢNG KẾT QUẢ QUAY TRỰC TIẾP (GIẢI 1 → GIẢI 5.6) -->
+        <section class="section-box">
+            <div class="section-header">
+                <h2><i class="fa-solid fa-list-check" style="color: #38bdf8;"></i> PHẦN 1: KẾT QUẢ QUAY TRỰC TIẾP (<span id="txt-draw-date">22/09/2026</span>)</h2>
+                <span class="tag-info" id="txt-progress-badge">19/19 GIẢI (ĐÃ HOÀN TẤT)</span>
+            </div>
+
+            <table class="prize-table">
+                <tbody>
+                    <tr>
+                        <td class="prize-name-col">Giải 1</td>
+                        <td class="prize-nums-col" id="live-g1">
+                            <span class="prize-num-chip">68392</span>
+                        </td>
+                        <td class="prize-status-col">
+                            <span class="badge-done"><i class="fa-solid fa-circle-check"></i> Đã quay</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="prize-name-col">Giải 2 (2.1 - 2.2)</td>
+                        <td class="prize-nums-col" id="live-g2">
+                            <span class="prize-num-chip">42192</span>
+                            <span class="prize-num-chip">98961</span>
+                        </td>
+                        <td class="prize-status-col">
+                            <span class="badge-done"><i class="fa-solid fa-circle-check"></i> Đã quay</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="prize-name-col">Giải 3 (3.1 → 3.6)</td>
+                        <td class="prize-nums-col" id="live-g3">
+                            <span class="prize-num-chip">18400</span>
+                            <span class="prize-num-chip">72209</span>
+                            <span class="prize-num-chip">72261</span>
+                            <span class="prize-num-chip">68433</span>
+                            <span class="prize-num-chip">35051</span>
+                            <span class="prize-num-chip">86944</span>
+                        </td>
+                        <td class="prize-status-col">
+                            <span class="badge-done"><i class="fa-solid fa-circle-check"></i> Đã quay</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="prize-name-col">Giải 4 (4.1 → 4.4)</td>
+                        <td class="prize-nums-col" id="live-g4">
+                            <span class="prize-num-chip">3748</span>
+                            <span class="prize-num-chip">6738</span>
+                            <span class="prize-num-chip">0334</span>
+                            <span class="prize-num-chip">1736</span>
+                        </td>
+                        <td class="prize-status-col">
+                            <span class="badge-done"><i class="fa-solid fa-circle-check"></i> Đã quay</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="prize-name-col">Giải 5 (5.1 → 5.6)</td>
+                        <td class="prize-nums-col" id="live-g5">
+                            <span class="prize-num-chip">6318</span>
+                            <span class="prize-num-chip">9384</span>
+                            <span class="prize-num-chip">1206</span>
+                            <span class="prize-num-chip">7167</span>
+                            <span class="prize-num-chip">8446</span>
+                            <span class="prize-num-chip">7367</span>
+                        </td>
+                        <td class="prize-status-col">
+                            <span class="badge-done"><i class="fa-solid fa-circle-check"></i> Đã quay</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="prize-name-col" style="color: #64748b;">Giải 6 &amp; 7</td>
+                        <td class="prize-nums-col" style="color: #64748b; font-size: 13px;">
+                            [Không cần - Bỏ qua hoàn toàn]
+                        </td>
+                        <td class="prize-status-col">
+                            <span class="badge-skip"><i class="fa-solid fa-ban"></i> Bỏ qua</span>
+                        </td>
+                    </tr>
+            </table>
+
+            <!-- THANH CHÚ THÍCH PHÂN LOẠI CẦU (3 LOẠI CHUẨN) -->
+            <div class="radar-legend-bar">
+                <div class="legend-title">
+                    <i class="fa-solid fa-palette" style="color: #38bdf8;"></i> <strong>CHÚ THÍCH PHÂN LOẠI CẦU:</strong>
+                </div>
+                <div class="legend-items">
+                    <span class="legend-pill pill-main"><span class="legend-dot dot-gold"></span> 🟡 <strong>Chỉ đạo (3-4 ngày)</strong>: Cầu chạy 3-4 ngày → Đánh chính</span>
+                    <span class="legend-pill pill-lot"><span class="legend-dot dot-blue"></span> 🔵 <strong>Lót (2 ngày)</strong>: Cầu chạy 2 ngày → Đánh lót</span>
+                    <span class="legend-pill pill-watch"><span class="legend-dot dot-dim"></span> ⚪ <strong>Theo dõi (1 ngày)</strong>: Cầu chạy 1 ngày → Chỉ theo dõi</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- PHẦN 2: DÀN SỐ TINH TÚY (XUẤT HIỆN SAU KHI GIẢI 5.6 KẾT THÚC) -->
+        <section class="tinh-tuy-box">
+            <div class="section-header" style="border-color: rgba(251, 191, 36, 0.2);">
+                <h2 style="color: #fde68a;"><i class="fa-solid fa-gem" style="color: #fbbf24;"></i> PHẦN 2: DÀN SỐ TINH TÚY (XUẤT HIỆN SAU GIẢI 5.6)</h2>
+                <span class="tag-info" style="color: #fbbf24; border-color: rgba(251, 191, 36, 0.4); background: rgba(251, 191, 36, 0.1);">
+                    GIAO THOA VỚI 60 SỐ CẤP 4
+                </span>
+            </div>
+
+            <!-- Dòng 1: Top 1 (Vàng) -->
+            <div class="tier-row">
+                <div class="tier-label label-gold">
+                    <i class="fa-solid fa-crown"></i> 🟡 TOP 1 (CHỈ ĐẠO)
+                </div>
+                <div class="tier-content">
+                    <span class="num-badge-top1-glow" id="val-top1">32 (3d)</span>
+                    <span style="font-size: 12px; color: #fde68a; font-weight: 600;">(Con số chỉ đạo mạnh nhất chu kỳ 3-4 ngày)</span>
+                </div>
+            </div>
+
+            <!-- Dòng 2: Top 4 (Cam) -->
+            <div class="tier-row">
+                <div class="tier-label label-orange">
+                    <i class="fa-solid fa-fire-flame-curved"></i> 🟠 TOP 4 (CHỈ ĐẠO)
+                </div>
+                <div class="tier-content" id="list-top4">
+                    <span class="num-badge-orange">32</span>
+                    <span class="num-badge-orange">37</span>
+                    <span class="num-badge-orange">33</span>
+                    <span class="num-badge-orange">42</span>
+                </div>
+            </div>
+
+            <!-- Dòng 3: Lót (Xanh) -->
+            <div class="tier-row">
+                <div class="tier-label label-blue">
+                    <i class="fa-solid fa-shield"></i> 🔵 LÓT
+                </div>
+                <div class="tier-content" id="list-lot">
+                    <!-- Dynamic blue badges for Lót -->
+                </div>
+            </div>
+
+            <!-- Nút Copy Phần 2 -->
+            <div class="btn-copy-bar" style="margin-top: 18px; margin-bottom: 0;">
+                <button class="btn-copy btn-copy-gold" id="btn-copy-top1">
+                    <i class="fa-regular fa-copy"></i> Copy Top 1
+                </button>
+                <button class="btn-copy btn-copy-orange" id="btn-copy-top4">
+                    <i class="fa-regular fa-copy"></i> Copy Top 4
+                </button>
+                <button class="btn-copy btn-copy-blue" id="btn-copy-tinh-tuy">
+                    <i class="fa-solid fa-check-double"></i> Copy Dàn Tinh Túy
+                </button>
+            </div>
+        </section>
+
+        <!-- PHẦN 3: DÀN SỐ N1, N2, N3 (THEO QUY TẮC CẤP 4) -->
+        <section class="n123-box">
+            <div class="section-header" style="border-color: rgba(34, 197, 94, 0.2);">
+                <h2 style="color: #4ade80;"><i class="fa-solid fa-layer-group" style="color: #22c55e;"></i> PHẦN 3: DÀN SỐ N1, N2, N3 (CẤP 4)</h2>
+                <span class="tag-info" style="color: #4ade80; border-color: rgba(34, 197, 94, 0.4); background: rgba(34, 197, 94, 0.1);">
+                    KIỂM CHỨNG 98.3%
+                </span>
+            </div>
+
+            <!-- Dòng N1 (60 số - Xanh lá) -->
+            <div class="tier-row">
+                <div class="tier-label label-green">
+                    <i class="fa-solid fa-circle"></i> 🟢 DÀN N1 (60 SỐ):
+                </div>
+                <div class="tier-content" id="list-n1">
+                    <!-- Dynamic green badges for N1 -->
+                </div>
+            </div>
+
+            <!-- Dòng N2 (36 số - Vàng) -->
+            <div class="tier-row">
+                <div class="tier-label label-gold">
+                    <i class="fa-solid fa-circle"></i> 🟡 DÀN N2 (36 SỐ):
+                </div>
+                <div class="tier-content" id="list-n2">
+                    <!-- Dynamic yellow badges for N2 -->
+                </div>
+            </div>
+
+            <!-- Dòng N3 (36 số - Cam) -->
+            <div class="tier-row">
+                <div class="tier-label label-orange">
+                    <i class="fa-solid fa-circle"></i> 🟠 DÀN N3 (36 SỐ):
+                </div>
+                <div class="tier-content" id="list-n3">
+                    <!-- Dynamic orange badges for N3 -->
+                </div>
+            </div>
+
+            <!-- Nút Copy Phần 3 -->
+            <div class="btn-copy-bar" style="margin-top: 18px; margin-bottom: 0;">
+                <button class="btn-copy btn-copy-green" id="btn-copy-n1">
+                    <i class="fa-regular fa-copy"></i> Copy N1
+                </button>
+                <button class="btn-copy btn-copy-gold" id="btn-copy-n2">
+                    <i class="fa-regular fa-copy"></i> Copy N2
+                </button>
+                <button class="btn-copy btn-copy-orange" id="btn-copy-n3">
+                    <i class="fa-regular fa-copy"></i> Copy N3
+                </button>
+            </div>
+        </section>
+
+        <!-- TRẠNG THÁI CHUYỂN CẦU NGÀY MỚI (RESET CẦU) -->
+        <section class="frame-alert-card">
+            <div class="frame-alert-header">
+                <div class="frame-alert-title">
+                    <i class="fa-solid fa-arrows-rotate"></i> TRẠNG THÁI CHUYỂN CẦU NGÀY MỚI
+                </div>
+                <span style="font-size: 11px; font-weight: 800; color: #10b981; background: rgba(16, 185, 129, 0.2); padding: 4px 10px; border-radius: 8px;" id="badge-reset-status">
+                    ĐÃ NỔ N1 → RESET CẦU MỚI
+                </span>
+            </div>
+            <p style="font-size: 13px; color: #cbd5e1; line-height: 1.5; font-weight: 600;" id="desc-last-result">
+                Kỳ gần nhất (22/09) đã trúng N1 → RESET CẦU MỚI
+            </p>
+            <div class="frame-schedule-list">
+                <div class="schedule-item">
+                    <span class="schedule-tag tag-n1">ĐÁNH CHÍNH</span>
+                    <strong style="color: #4ade80;" id="sched-n1">Đánh chính: Thứ Tư 23/09 (Dàn 60 Số N1)</strong>
+                </div>
+                <div class="schedule-item">
+                    <span class="schedule-tag tag-n2">DỰ PHÒNG N2</span>
+                    <span style="color: #fde68a;" id="sched-n2">Dự phòng N2: Thứ Năm 24/09 (36 số)</span>
+                </div>
+                <div class="schedule-item">
+                    <span class="schedule-tag tag-n3">DỰ PHÒNG N3</span>
+                    <span style="color: #fed7aa;" id="sched-n3">Dự phòng N3: Thứ Sáu 25/09 (36 số)</span>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div class="toast" id="toastBox">
+        <i class="fa-solid fa-circle-check" style="color: #38bdf8;"></i>
+        <span id="toastMsg">Đã sao chép thành công!</span>
+    </div>
+
+    <script>
+        // Fallback embedded data
+        const DEFAULT_PAYLOAD = {
+            "target_date": "Thứ ba ngày 22-09-2026",
+            "live_prizes": {
+                "g1": "68392",
+                "g2": ["42192", "98961"],
+                "g3": ["18400", "72209", "72261", "68433", "35051", "86944"],
+                "g4": ["3748", "6738", "0334", "1736"],
+                "g5": ["6318", "9384", "1206", "7167", "8446", "7367"]
+            },
+            "filled_count": 19,
+            "total_count": 19,
+            "is_g5_finished": true,
+            "top_1": "32",
+            "top_1_display": "32 (3d)",
+            "top_4": ["32", "37", "33", "42"],
+            "top_4_display": ["★ 32 (3d)", "★ 37 (3d)", "★ 33 (3d)", "★ 42 (3d)"],
+            "dan_lot": ["95", "99", "91", "15", "19", "24", "29", "65", "69", "61", "11", "21", "92", "97", "12", "17", "13", "26", "22", "23", "35", "34", "31", "45", "44", "05", "04", "02", "09", "01", "03", "72", "62", "67", "63", "55", "59", "51", "53", "85", "84", "82", "87", "81", "83"],
+            "dan_lot_display": ["95 (2d)", "99 (2d)", "91 (2d)", "15 (2d)", "19 (2d)", "24 (2d)", "29 (2d)", "65 (2d)", "69 (2d)", "61 (2d)", "11 (1d)", "21 (1d)", "92 (3d)", "97 (3d)", "12 (3d)", "17 (3d)", "13 (3d)", "26 (3d)", "22 (3d)", "23 (3d)", "35 (3d)", "34 (3d)", "31 (3d)", "45 (3d)", "44 (3d)", "05 (3d)", "04 (3d)", "02 (3d)", "09 (3d)", "01 (3d)", "03 (3d)", "72 (3d)", "62 (3d)", "67 (3d)", "63 (3d)", "55 (3d)", "59 (3d)", "51 (3d)", "53 (3d)", "85 (3d)", "84 (3d)", "82 (3d)", "87 (3d)", "81 (3d)", "83 (3d)"],
+            "dan_giao_thoa": ["01","02","03","04","05","09","11","12","13","15","17","19","21","22","23","24","26","29","31","32","33","34","35","37","42","44","45","51","53","55","59","61","62","63","65","67","69","72","81","82","83","84","85","87","91","92","95","97","99"],
+            "dan_n1": ["01","02","03","04","05","08","09","11","12","13","15","17","18","19","20","21","22","23","24","26","28","29","31","32","33","34","35","37","38","42","44","45","51","53","55","58","59","60","61","62","63","65","67","68","69","72","80","81","82","83","84","85","87","88","91","92","95","97","98","99"],
+            "dan_n2": ["11","12","13","15","17","18","19","21","22","23","28","29","31","32","33","35","37","38","42","44","45","51","53","55","58","59","61","62","63","65","67","81","82","83","85","87"],
+            "dan_n3": ["11","12","13","15","17","18","19","21","22","23","28","29","31","32","33","35","37","38","42","44","45","51","53","55","58","59","61","62","63","65","67","81","82","83","85","87"],
+            "frame_transition": {
+                "last_result": "Kỳ gần nhất (22/09) đã trúng N1 → RESET CẦU MỚI",
+                "status_badge": "ĐÃ TRÚNG N1 → RESET CẦU MỚI",
+                "schedule_n1": "Đánh chính: Thứ Tư 23/09 (Dàn 60 Số N1)",
+                "schedule_n2": "Dự phòng N2: Thứ Năm 24/09 (36 số)",
+                "schedule_n3": "Dự phòng N3: Thứ Sáu 25/09 (36 số)"
+            }
+        };
+
+        let currentData = DEFAULT_PAYLOAD;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadLiveData();
+
+            // Tự động kiểm tra và cập nhật mỗi 5 giây trong lúc quay thưởng (18h15 - 18h35)
+            setInterval(loadLiveData, 5000);
+
+            // Nút bấm làm mới dữ liệu tức thì
+            const btnRefresh = document.getElementById('btn-manual-refresh');
+            if (btnRefresh) {
+                btnRefresh.onclick = () => {
+                    btnRefresh.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang tải...';
+                    loadLiveData().then(() => {
+                        setTimeout(() => {
+                            btnRefresh.innerHTML = '<i class="fa-solid fa-arrows-rotate"></i> Làm mới';
+                            showToast('Đã cập nhật dữ liệu radar mới nhất!');
+                        }, 500);
+                    });
+                };
+            }
+        });
+
+        async function loadLiveData() {
+            try {
+                const res = await fetch('ket_qua_soi_cau_g1_g5.json?t=' + Date.now());
+                if (res.ok) {
+                    const json = await res.json();
+                    if (json && json.top_1) {
+                        currentData = json;
+                    }
+                }
+            } catch (err) {
+                console.warn('Dùng dữ liệu dự phòng cục bộ:', err);
+            }
+
+            renderApp();
+            setupCopyButtons();
+        }
+
+        function renderApp() {
+            // Header date & progress
+            document.getElementById('txt-draw-date').textContent = currentData.target_date || '22/09/2026';
+            
+            const filled = currentData.filled_count || 19;
+            const total = currentData.total_count || 19;
+            document.getElementById('txt-progress-badge').textContent = `${filled}/${total} GIẢI (ĐÃ HOÀN TẤT)`;
+
+            // PHẦN 1: Live Prizes Table With Position Highlights (3 categories)
+            const lp = currentData.live_prizes || {};
+            if (lp.g1) renderPrizeWithHighlights('live-g1', ['G1'], [lp.g1]);
+            if (lp.g2) renderPrizeWithHighlights('live-g2', ['G2.1', 'G2.2'], lp.g2);
+            if (lp.g3) renderPrizeWithHighlights('live-g3', ['G3.1', 'G3.2', 'G3.3', 'G3.4', 'G3.5', 'G3.6'], lp.g3);
+            if (lp.g4) renderPrizeWithHighlights('live-g4', ['G4.1', 'G4.2', 'G4.3', 'G4.4'], lp.g4);
+            if (lp.g5) renderPrizeWithHighlights('live-g5', ['G5.1', 'G5.2', 'G5.3', 'G5.4', 'G5.5', 'G5.6'], lp.g5);
+
+            // PHẦN 2: DÀN SỐ TINH TÚY
+            // Top 1: Phóng to, viền vàng đậm, kèm hậu tố (3d/4d)
+            const top1Val = currentData.top_1_display || (currentData.top_1 ? `${currentData.top_1} (3d)` : '--');
+            document.getElementById('val-top1').textContent = top1Val;
+
+            // Top 4: Thêm dấu sao (★) và hậu tố chu kỳ (3d/4d)
+            const top4List = currentData.top_4_display || (currentData.top_4 || []).map(x => `★ ${x} (3d)`);
+            const containerTop4 = document.getElementById('list-top4');
+            containerTop4.innerHTML = '';
+            top4List.forEach(itemStr => {
+                const badge = document.createElement('span');
+                badge.className = 'num-badge-top4-star';
+                badge.textContent = itemStr;
+                containerTop4.appendChild(badge);
+            });
+
+            // Lót: Hiển thị kèm chu kỳ (2d...)
+            const lotList = currentData.dan_lot_display || (currentData.dan_lot || []).map(x => `${x} (2d)`);
+            const containerLot = document.getElementById('list-lot');
+            containerLot.innerHTML = '';
+            lotList.forEach(itemStr => {
+                const badge = document.createElement('span');
+                badge.className = 'num-badge-blue';
+                badge.textContent = itemStr;
+                containerLot.appendChild(badge);
+            });
+
+            // PHẦN 3: DÀN SỐ N1, N2, N3
+            renderNumberList('list-n1', currentData.dan_n1 || [], 'num-badge-green');
+            renderNumberList('list-n2', currentData.dan_n2 || [], 'num-badge-yellow');
+            renderNumberList('list-n3', currentData.dan_n3 || [], 'num-badge-orange-sm');
+
+            // KHUNG CHUYỂN CẦU NGÀY MỚI
+            const ft = currentData.frame_transition || {};
+            if (ft.status_badge) document.getElementById('badge-reset-status').textContent = ft.status_badge;
+            if (ft.last_result) document.getElementById('desc-last-result').textContent = ft.last_result;
+            if (ft.schedule_n1) document.getElementById('sched-n1').textContent = ft.schedule_n1;
+            if (ft.schedule_n2) document.getElementById('sched-n2').textContent = ft.schedule_n2;
+            if (ft.schedule_n3) document.getElementById('sched-n3').textContent = ft.schedule_n3;
+        }
+
+        function renderNumberList(elementId, arr, cssClass, inlineStyle = '') {
+            const el = document.getElementById(elementId);
+            if (!el) return;
+            el.innerHTML = '';
+            arr.forEach(num => {
+                const span = document.createElement('span');
+                span.className = cssClass;
+                if (inlineStyle) span.style.cssText = inlineStyle;
+                span.textContent = num;
+                el.appendChild(span);
+            });
+        }
+
+        function renderPrizeWithHighlights(elementId, prizeCodes, prizeValues) {
+            const el = document.getElementById(elementId);
+            if (!el) return;
+            el.innerHTML = '';
+
+            const hp = currentData.highlight_positions || {};
+
+            prizeCodes.forEach((code, idx) => {
+                const val = prizeValues[idx];
+                if (!val) return;
+
+                const chip = document.createElement('span');
+                chip.className = 'prize-num-chip';
+
+                for (let posIdx = 1; posIdx <= val.length; posIdx++) {
+                    const char = val[posIdx - 1];
+                    const posKey = `${code}_${posIdx}`;
+                    const info = hp[posKey];
+
+                    const digitSpan = document.createElement('span');
+                    digitSpan.className = 'prize-digit';
+
+                    const charSpan = document.createElement('span');
+                    charSpan.textContent = char;
+                    digitSpan.appendChild(charSpan);
+
+                    if (info) {
+                        const cycle = info.cycle || 1;
+                        // 1. Chỉ đạo (3-4 ngày) -> 🟡 VÀNG (Cả Đầu và Đuôi cùng màu)
+                        if (info.color_type === 'cycle_main' || cycle >= 3) {
+                            digitSpan.classList.add('digit-cycle-main');
+                            const tag = document.createElement('span');
+                            tag.className = 'digit-cycle-tag';
+                            tag.textContent = `${cycle}d`;
+                            digitSpan.appendChild(tag);
+                        }
+                        // 2. Lót (2 ngày) -> 🔵 XANH (Cả Đầu và Đuôi cùng màu)
+                        else if (info.color_type === 'cycle_lot' || cycle === 2) {
+                            digitSpan.classList.add('digit-cycle-lot');
+                            const tag = document.createElement('span');
+                            tag.className = 'digit-cycle-tag';
+                            tag.textContent = '2d';
+                            digitSpan.appendChild(tag);
+                        }
+                        // 3. Theo dõi (1 ngày) -> ⚪ TRẮNG / MỜ
+                        else {
+                            digitSpan.classList.add('digit-cycle-watch');
+                        }
+                        digitSpan.setAttribute('title', info.tooltip || `${code} vị trí ${posIdx}: ${char} (${cycle}d)`);
+                    } else {
+                        digitSpan.classList.add('digit-cycle-watch');
+                    }
+
+                    chip.appendChild(digitSpan);
+                }
+
+                el.appendChild(chip);
+            });
+        }
+
+        function setupCopyButtons() {
+            // Phần 2
+            document.getElementById('btn-copy-top1').onclick = () => {
+                copyText(currentData.top_1 || '', 'Đã sao chép Top 1: ' + currentData.top_1);
+            };
+
+            document.getElementById('btn-copy-top4').onclick = () => {
+                const text = (currentData.top_4 || []).join(', ');
+                copyText(text, 'Đã sao chép Top 4: ' + text);
+            };
+
+            document.getElementById('btn-copy-tinh-tuy').onclick = () => {
+                const text = (currentData.dan_giao_thoa || []).join(', ');
+                copyText(text, `Đã sao chép Dàn Tinh Túy (${(currentData.dan_giao_thoa || []).length} số)`);
+            };
+
+            // Phần 3
+            document.getElementById('btn-copy-n1').onclick = () => {
+                const text = (currentData.dan_n1 || []).join(', ');
+                copyText(text, `Đã sao chép Dàn N1 (${(currentData.dan_n1 || []).length} số)`);
+            };
+
+            document.getElementById('btn-copy-n2').onclick = () => {
+                const text = (currentData.dan_n2 || []).join(', ');
+                copyText(text, `Đã sao chép Dàn N2 (${(currentData.dan_n2 || []).length} số)`);
+            };
+
+            document.getElementById('btn-copy-n3').onclick = () => {
+                const text = (currentData.dan_n3 || []).join(', ');
+                copyText(text, `Đã sao chép Dàn N3 (${(currentData.dan_n3 || []).length} số)`);
+            };
+        }
+
+        function copyText(text, msg) {
+            if (!text) return;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast(msg || 'Đã sao chép thành công!');
+            }).catch(() => {
+                showToast('Không thể sao chép tự động!');
+            });
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toastBox');
+            document.getElementById('toastMsg').textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+    </script>
+</body>
+</html>

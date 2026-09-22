@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="XSMB AI 2026">
+    <title>AI XSMB 2026 - Mini App Tối Ưu Dàn 60 Số N1 (4 Bước)</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css?v=20260922183515">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header / Navbar -->
+        <header class="main-header">
+            <div class="header-brand">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+                <div>
+                    <h1 class="brand-title">XSMB AI OPTIMIZER <span class="badge-v2">2026 v4.0</span></h1>
+                    <p class="brand-subtitle">Hệ Thống Tự Động Nhận Diện Chuyển Cầu &amp; Tùy Chọn Linh Hoạt Dàn Kế Tiếp N1/N2/N3</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <div class="status-indicator">
+                    <span class="pulse-dot"></span>
+                    <span class="status-text" id="hdr-frame-status">🎯 Trạng Thái: <strong class="text-emerald">ĐÃ NỔ N1 ➔ RESET KHUNG MỚI NGÀY 01/09</strong></span>
+                </div>
+                <button id="btn-fetch-live" class="btn btn-primary" title="Cập nhật kết quả trực tiếp từ ketqua16.net">
+                    <i class="fa-solid fa-arrows-rotate"></i> Cập Nhật Trực Tiếp
+                </button>
+                <button id="btn-export-git" class="btn btn-github">
+                    <i class="fa-brands fa-github"></i> Push GitHub
+                </button>
+            </div>
+        </header>
+
+        <!-- Dynamic Frame Alert Box -->
+        <div class="frame-alert-box glass" id="frame-alert-banner">
+            <div class="alert-content">
+                <div class="alert-badge"><i class="fa-solid fa-circle-check text-emerald"></i> TRẠNG THÁI CHUYỂN CẦU NGÀY MỚI</div>
+                <h3 id="alert-title">🎉 KHUNG TRƯỚC ĐÃ NỔ N2 THÀNH CÔNG (ĐỀ 81)! ĐÃ RESET CHUYỂN CẦU NGÀY MỚI</h3>
+                <p id="alert-desc">Kỳ vừa qua (Thứ Năm ngày 10-09-2026 - Đề 81) đã nổ <strong>TRÚNG N2 🎯</strong>. Hệ thống tự động đóng khung cũ và khởi tạo <strong>KHUNG MỚI N1</strong> cho ngày tiếp theo.</p>
+            </div>
+            <div class="alert-dates">
+                <div class="date-chip active">
+                    <span class="chip-label">ĐÁNH CHÍNH KHUNG MỚI (N1)</span>
+                    <strong id="chip-n1-date">Thứ Sáu (11/09/2026)</strong>
+                    <span class="chip-status text-emerald"><i class="fa-solid fa-fire"></i> Dàn 60 Số N1</span>
+                </div>
+                <div class="date-chip">
+                    <span class="chip-label">DỰ PHÒNG N2 (36 SỐ)</span>
+                    <strong id="chip-n2-date">Thứ Bảy (12/09/2026)</strong>
+                    <span class="chip-status text-secondary">Đánh nếu N1 trượt</span>
+                </div>
+                <div class="date-chip">
+                    <span class="chip-label">DỰ PHÒNG N3 (36 SỐ)</span>
+                    <strong id="chip-n3-date">Chủ Nhật (13/09/2026)</strong>
+                    <span class="chip-status text-secondary">Đánh nếu N2 trượt</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <nav class="nav-tabs">
+            <button class="tab-btn active" data-tab="tab-optimizer">
+                <i class="fa-solid fa-sliders"></i> Tab 1: Bộ Lọc Tối Ưu (<span class="badge-tab-date" id="tab1-date-badge">Cầu Mới: Thứ Sáu 11/09</span>)
+            </button>
+            <button class="tab-btn" data-tab="tab-results">
+                <i class="fa-solid fa-fire"></i> Tab 2: 3 Tầng (60s N1 - 36s N2 - 36s N3)
+            </button>
+            <button class="tab-btn" data-tab="tab-next-day">
+                <i class="fa-solid fa-square-poll-vertical text-amber"></i> Tab 3: 🚀 Dàn Kế Tiếp &amp; Tùy Chọn N1/N2/N3
+            </button>
+            <button class="tab-btn" data-tab="tab-frame-history">
+                <i class="fa-solid fa-book-bookmark"></i> Tab 4: Nhật Ký Khung 2026
+            </button>
+            <button class="tab-btn" data-tab="tab-analytics">
+                <i class="fa-solid fa-chart-line"></i> Tab 5: Phân Tích Win Rate
+            </button>
+            <button class="tab-btn" data-tab="tab-history">
+                <i class="fa-solid fa-database"></i> Tab 6: Lịch Sử Quay (247 Kỳ)
+            </button>
+            <button class="tab-btn" data-tab="tab-soicau-g1g5" style="border: 1px solid rgba(245, 158, 11, 0.6); color: #fde68a; background: rgba(245, 158, 11, 0.12);">
+                <i class="fa-solid fa-bolt text-amber"></i> Tab 7: ⚡ Radar G1→G5 (Màu Số Live)
+            </button>
+        </nav>
+
+        <!-- TAB 1: BỘ LỌC TỐI ƯU 4 BƯỚC -->
+        <section id="tab-optimizer" class="tab-content active">
+            <!-- Metric Overview Cards -->
+            <div class="metrics-grid">
+                <div class="metric-card glass">
+                    <div class="metric-icon purple"><i class="fa-solid fa-bullseye"></i></div>
+                    <div class="metric-info">
+                        <span class="metric-label">Dàn Gốc KHUNG MỚI (N1)</span>
+                        <h3 class="metric-value" id="metric-size">60 Số</h3>
+                        <span class="metric-sub text-emerald"><i class="fa-solid fa-calendar-day"></i> Đánh Ngày N1: <strong id="m-n1-date">Thứ Sáu (11/09/2026)</strong></span>
+                    </div>
+                </div>
+                <div class="metric-card glass">
+                    <div class="metric-icon green"><i class="fa-solid fa-chart-pie"></i></div>
+                    <div class="metric-info">
+                        <span class="metric-label">Tỷ Lệ Ăn Thẳng N1</span>
+                        <h3 class="metric-value text-emerald" id="metric-winrate">74.0%</h3>
+                        <span class="metric-sub text-emerald"><i class="fa-solid fa-arrow-trend-up"></i> Toàn Khung 3 Ngày: 98.3%</span>
+                    </div>
+                </div>
+                <div class="metric-card glass">
+                    <div class="metric-icon cyan"><i class="fa-solid fa-shield-halved"></i></div>
+                    <div class="metric-info">
+                        <span class="metric-label">Số Lượng Số Đã Lọc Bỏ</span>
+                        <h3 class="metric-value text-cyan" id="metric-filtered">36 Số</h3>
+                        <span class="metric-sub" id="metric-filtered-desc">Đầu 4, 7, Lô rơi 44-21, Điểm &lt;7.0</span>
+                    </div>
+                </div>
+                <div class="metric-card glass">
+                    <div class="metric-icon amber"><i class="fa-solid fa-fire-flame-curved"></i></div>
+                    <div class="metric-info">
+                        <span class="metric-label">Mật Độ Điểm AI TB</span>
+                        <h3 class="metric-value text-amber" id="metric-score">38.2 đ</h3>
+                        <span class="metric-sub text-emerald"><i class="fa-solid fa-arrow-up"></i> +55.9% chất lượng</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4-Step Interactive Optimizer Controls -->
+            <div class="optimizer-grid">
+                <!-- STEP 1 -->
+                <div class="step-card glass">
+                    <div class="step-header">
+                        <span class="step-badge">BƯỚC 1</span>
+                        <h3><i class="fa-solid fa-brain"></i> Top Đầu / Đuôi Động</h3>
+                    </div>
+                    <p class="step-desc">Đánh giá điểm AI cho Cầu Ngày Mới N1 (<strong id="step1-n1-lbl">Thứ Tư 02/09/2026</strong>) dựa trên tần suất nổ &amp; nhịp Gaussian.</p>
+                    <div class="step-controls">
+                        <div class="scores-mini-panel">
+                            <h4>Top 5 Đầu Mạnh Nhất:</h4>
+                            <div class="badge-group" id="head-scores-list">
+                                <span class="score-badge active clickable-pill" data-copy="2">Đầu 2: 13.0đ</span>
+                                <span class="score-badge active clickable-pill" data-copy="3">Đầu 3: 11.0đ</span>
+                                <span class="score-badge active clickable-pill" data-copy="1">Đầu 1: 10.5đ</span>
+                                <span class="score-badge active clickable-pill" data-copy="5">Đầu 5: 9.5đ</span>
+                                <span class="score-badge active clickable-pill" data-copy="8">Đầu 8: 9.0đ</span>
+                            </div>
+                            <h4 style="margin-top: 12px;">Top 5 Đuôi Mạnh Nhất:</h4>
+                            <div class="badge-group" id="tail-scores-list">
+                                <span class="score-badge active clickable-pill" data-copy="3">Đuôi 3: 11.5đ</span>
+                                <span class="score-badge active clickable-pill" data-copy="1">Đuôi 1: 10.0đ</span>
+                                <span class="score-badge active clickable-pill" data-copy="7">Đuôi 7: 9.0đ</span>
+                                <span class="score-badge active clickable-pill" data-copy="5">Đuôi 5: 8.5đ</span>
+                                <span class="score-badge active clickable-pill" data-copy="9">Đuôi 9: 8.0đ</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2 -->
+                <div class="step-card glass">
+                    <div class="step-header">
+                        <span class="step-badge badge-danger">BƯỚC 2</span>
+                        <h3><i class="fa-solid fa-filter-circle-xmark"></i> Bộ Lọc Cứng (Hard Filter)</h3>
+                    </div>
+                    <p class="step-desc">Loại bỏ các số bão hòa, lô rơi 2 ngày gần nhất và vùng điểm kém.</p>
+                    <div class="step-controls">
+                        <label class="toggle-option">
+                            <input type="checkbox" id="chk-sat-heads" checked>
+                            <span class="toggle-slider"></span>
+                            <span class="toggle-label">Cấm Đầu Bão Hòa: <strong>Đầu 4, Đầu 7</strong> (20 số)</span>
+                        </label>
+                        <label class="toggle-option">
+                            <input type="checkbox" id="chk-recent-days" checked>
+                            <span class="toggle-slider"></span>
+                            <span class="toggle-label">Loại Lô/Đề Rơi 2 Ngày: <strong id="lbl-recent-2days">`44`, `21`</strong></span>
+                        </label>
+                        <label class="toggle-option">
+                            <input type="checkbox" id="chk-low-scores" checked>
+                            <span class="toggle-slider"></span>
+                            <span class="toggle-label">Loại Đầu/Đuôi &lt; 7.0đ: <strong>Đầu 0, Đuôi 4, Đuôi 6</strong></span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- STEP 3 -->
+                <div class="step-card glass">
+                    <div class="step-header">
+                        <span class="step-badge badge-purple">BƯỚC 3</span>
+                        <h3><i class="fa-solid fa-arrows-rotate"></i> Hoán Đổi Bóng Dương</h3>
+                    </div>
+                    <p class="step-desc">Thay thế các số yếu bằng Bóng Dương ($Digit \leftrightarrow Digit+5$) của Top Hỏa Lực.</p>
+                    <div class="step-controls">
+                        <label class="toggle-option">
+                            <input type="checkbox" id="chk-shadow-swap" checked>
+                            <span class="toggle-slider"></span>
+                            <span class="toggle-label">Kích hoạt Quy tắc Bóng Dương cho Top 10</span>
+                        </label>
+                        <div class="shadow-preview-box">
+                            <span class="shadow-tag clickable-pill" data-copy="28">23 ➔ 78 ➔ 28</span>
+                            <span class="shadow-tag clickable-pill" data-copy="89">39 ➔ 84 ➔ 89</span>
+                            <span class="shadow-tag clickable-pill" data-copy="68">13 ➔ 68</span>
+                            <span class="shadow-tag clickable-pill" data-copy="02">57 ➔ 02</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 4 -->
+                <div class="step-card glass">
+                    <div class="step-header">
+                        <span class="step-badge badge-success">BƯỚC 4</span>
+                        <h3><i class="fa-solid fa-layer-group"></i> Lọc Giao Thoa 30 Kỳ</h3>
+                    </div>
+                    <p class="step-desc">Đối chiếu 30 kỳ gần nhất (#208 - #239) để ưu tiên Cầu Nhiệt &amp; Nhịp Vàng.</p>
+                    <div class="step-controls">
+                        <label class="toggle-option">
+                            <input type="checkbox" id="chk-30day-cross" checked>
+                            <span class="toggle-slider"></span>
+                            <span class="toggle-label">Giữ 28 số Cầu Nhiệt + 32 số Chớm Nổ chuẩn 60 số</span>
+                        </label>
+                        <div class="freq-info">
+                            <span><i class="fa-solid fa-temperature-full text-danger"></i> Cầu Nhiệt (Freq &ge; 1): <strong>28 số</strong></span>
+                            <span><i class="fa-solid fa-bolt text-amber"></i> Chớm Nổ &amp; Bóng: <strong>32 số</strong></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 1 Live Preview Visual Numbers Box -->
+            <div class="card glass" style="margin-top: 20px;">
+                <div class="card-header">
+                    <div>
+                        <h3><i class="fa-solid fa-eye text-cyan"></i> Dàn 60 Số N1 Tức Thời (Tab 1 Live Preview)</h3>
+                        <span class="badge-date-tag text-emerald">🎯 ĐÁNH CHÍNH CẦU NGÀY MỚI N1: <strong id="t1-preview-n1-date">Thứ Ba (01/09/2026)</strong></span>
+                    </div>
+                    <button class="btn btn-sm btn-primary" id="btn-copy-tab1"><i class="fa-regular fa-copy"></i> Copy Dàn 60 Số N1</button>
+                </div>
+                <div class="number-tags-container" id="tab1-visual-grid">
+                    <!-- Dynamic Pills -->
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: DÀN 60 SỐ N1 - 36 SỐ N2 - 36 SỐ N3 -->
+        <section id="tab-results" class="tab-content">
+            <div class="results-header glass">
+                <div>
+                    <h2><i class="fa-solid fa-award text-amber"></i> Hệ Thống 3 Tầng Chuẩn Mực (60 - 36 - 36) — Đạt 22-24 Ngày Trúng/Tháng</h2>
+                    <p>Sự phối hợp ăn ý 3 tầng: <span class="text-emerald">🎯 N1 (60s): <strong id="t2-n1-lbl">Thứ Ba 01/09</strong></span> ➔ <span class="text-purple">⚡ N2 (36s Tinh Nhuệ): <strong id="t2-n2-lbl">Thứ Tư 02/09</strong></span> ➔ <span class="text-amber">🔥 N3 (36s Chốt Khung): <strong id="t2-n3-lbl">Thứ Năm 03/09</strong></span></p>
+                </div>
+                <div class="results-actions">
+                    <button class="btn btn-primary" id="btn-copy-60">
+                        <i class="fa-regular fa-copy"></i> Sao chép Dàn 60 Số N1
+                    </button>
+                    <button class="btn btn-secondary" id="btn-download-txt">
+                        <i class="fa-solid fa-download"></i> Tải File .TXT
+                    </button>
+                </div>
+            </div>
+
+            <!-- Number Grid Presentation (Dàn 60 số N1) -->
+            <div class="number-grid-container glass">
+                <div class="card-header">
+                    <div>
+                        <h3><i class="fa-solid fa-dice-six text-emerald"></i> Tầng 1: Dàn Gốc 60 Số N1 — ĐÁNH NGÀY MỚI (N1)</h3>
+                        <span class="badge-date-tag text-emerald">🎯 ĐÁNH CHÍNH NGÀY N1: <strong id="grid60-n1-date">Thứ Ba (01/09/2026)</strong></span>
+                    </div>
+                    <div class="grid-legend">
+                        <span class="legend-item"><span class="dot gaussian"></span> Top Gaussian (Hỏa lực)</span>
+                        <span class="legend-item"><span class="dot shadow"></span> Bóng Dương / Cầu Nhiệt</span>
+                        <span class="legend-item"><span class="dot active"></span> Đạt Lọc Cứng</span>
+                    </div>
+                </div>
+                <div class="number-grid" id="grid-60-numbers">
+                    <!-- Numbers rendered dynamically via JS -->
+                </div>
+            </div>
+
+            <!-- Phương Án Tối Ưu N2 (36 Số) & N3 (36 Số) -->
+            <div class="lowering-section grid-3" style="margin-top: 20px;">
+                <!-- Top 36 (N2) -->
+                <div class="card glass">
+                    <div class="card-header">
+                        <div>
+                            <h3><i class="fa-solid fa-filter text-purple"></i> Tầng 2: Dàn Siêu Lọc 36 Số (N2)</h3>
+                            <span class="badge-date-tag text-purple">⚡ ĐÁNH NGÀY 2 (N2): <strong id="grid36-n2-date">Thứ Tư (02/09/2026)</strong></span>
+                        </div>
+                        <button class="btn btn-sm btn-outline" id="btn-copy-36"><i class="fa-regular fa-copy"></i> Copy 36 Số N2</button>
+                    </div>
+                    <p class="card-desc"><strong>TỐI ƯU MẬT ĐỘ AI (N2)</strong>: Giữ chuẩn 36 số nhưng tập trung vào 36 con số có điểm AI nổ nhiệt nhất cho Ngày 2 khi N1 trượt.</p>
+                    <div class="number-tags-container" id="grid-36-numbers">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+
+                <!-- Top 36 (N3) -->
+                <div class="card glass">
+                    <div class="card-header">
+                        <div>
+                            <h3><i class="fa-solid fa-shield-cat text-amber"></i> Tầng 3: Dàn Siêu Lọc 36 Số (N3)</h3>
+                            <span class="badge-date-tag text-amber">🔥 ĐÁNH NGÀY 3 (N3): <strong id="grid36-n3-date">Thứ Năm (03/09/2026)</strong></span>
+                        </div>
+                        <button class="btn btn-sm btn-outline" id="btn-copy-n3"><i class="fa-regular fa-copy"></i> Copy 36 Số N3</button>
+                    </div>
+                    <p class="card-desc"><strong>CHỐT KHUNG AN TOÀN (N3)</strong>: Giữ chuẩn 36 số hỏa lực AI cực đại để chốt khung Ngày 3 khi N1 &amp; N2 chưa nổ.</p>
+                    <div class="number-tags-container" id="grid-n3-numbers">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+
+                <!-- Top 20 (Hỏa lực N1) -->
+                <div class="card glass">
+                    <div class="card-header">
+                        <div>
+                            <h3><i class="fa-solid fa-fire text-danger"></i> Dàn Hỏa Lực Top 20 (Super-Score)</h3>
+                            <span class="badge-date-tag text-danger">🚀 ĐÁNH KHUNG MỚI (N1): <strong id="grid20-n1-date">Thứ Ba (01/09/2026)</strong></span>
+                        </div>
+                        <button class="btn btn-sm btn-outline" id="btn-copy-20"><i class="fa-regular fa-copy"></i> Copy Top 20</button>
+                    </div>
+                    <p class="card-desc">Top 20 số có điểm đồng thuận cao nhất để đánh hỏa lực chính cho <strong>Ngày N1</strong>.</p>
+                    <div class="number-tags-container" id="grid-20-numbers">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional 3D / 4D Visual Grid -->
+            <div class="lowering-section grid-2" style="margin-top: 20px;">
+                <!-- 3D Ba Càng -->
+                <div class="card glass">
+                    <div class="card-header">
+                        <div>
+                            <h3><i class="fa-solid fa-cubes text-amber"></i> Top 20 Ba Càng (3D) Mạnh Nhất</h3>
+                            <span class="badge-date-tag text-amber">🎯 ĐÁNH NGÀY N1: <strong id="grid3d-n1-date">Thứ Ba (01/09/2026)</strong></span>
+                        </div>
+                        <button class="btn btn-sm btn-outline" id="btn-copy-3d"><i class="fa-regular fa-copy"></i> Copy Top 3D</button>
+                    </div>
+                    <div class="number-tags-container" id="grid-3d-numbers">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+
+                <!-- 4D Bốn Càng -->
+                <div class="card glass">
+                    <div class="card-header">
+                        <div>
+                            <h3><i class="fa-solid fa-shield-halved text-cyan"></i> Top 20 Bốn Càng (4D) Mạnh Nhất</h3>
+                            <span class="badge-date-tag text-cyan">🎯 ĐÁNH NGÀY N1: <strong id="grid4d-n1-date">Thứ Ba (01/09/2026)</strong></span>
+                        </div>
+                        <button class="btn btn-sm btn-outline" id="btn-copy-4d"><i class="fa-regular fa-copy"></i> Copy Top 4D</button>
+                    </div>
+                    <div class="number-tags-container" id="grid-4d-numbers">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3 MỚI: DÀN KẾ TIẾP & TÙY CHỌN KHUNG N1 / N2 / N3 -->
+        <section id="tab-next-day" class="tab-content">
+            <div class="results-header glass">
+                <div>
+                    <h2><i class="fa-solid fa-sliders text-cyan"></i> Dàn Kế Tiếp Cho Ngày Tiếp Theo — Bảng Tùy Chọn Linh Hoạt (N1 / N2 / N3)</h2>
+                    <p>Ngày đánh tiếp theo: <strong class="text-emerald" id="next-tab-date-lbl">Thứ Ba (01/09/2026)</strong> — Chọn chế độ dàn số bạn muốn sử dụng:</p>
+                </div>
+                <div class="results-actions">
+                    <button class="btn btn-primary" id="btn-copy-selected-mode">
+                        <i class="fa-regular fa-copy"></i> Copy Dàn Đã Chọn
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mode Selector Switches -->
+            <div class="mode-selector-grid grid-3" style="margin-top: 20px;">
+                <div class="mode-card glass active" id="mode-card-n1" data-mode="n1">
+                    <div class="mode-header">
+                        <span class="badge badge-success">LỰA CHỌN 1 (KHUYÊN DÙNG)</span>
+                        <h3>🎯 Đánh Khung Mới (N1)</h3>
+                    </div>
+                    <div class="mode-body">
+                        <div class="mode-size text-emerald">60 SỐ GỐC</div>
+                        <p class="mode-desc">Phù hợp khi kỳ trước đã nổ (Reset Khung Mới). Phủ rộng an toàn tối đa.</p>
+                    </div>
+                </div>
+
+                <div class="mode-card glass" id="mode-card-n2" data-mode="n2">
+                    <div class="mode-header">
+                        <span class="badge badge-purple">LỰA CHỌN 2</span>
+                        <h3>⚡ Đánh Nối Khung (N2)</h3>
+                    </div>
+                    <div class="mode-body">
+                        <div class="mode-size text-purple">36 SỐ SIÊU LỌC</div>
+                        <p class="mode-desc">Tối ưu mật độ AI nổ cao cho Ngày 2 khi N1 trượt hoặc muốn đánh tinh gọn.</p>
+                    </div>
+                </div>
+
+                <div class="mode-card glass" id="mode-card-n3" data-mode="n3">
+                    <div class="mode-header">
+                        <span class="badge badge-amber">LỰA CHỌN 3</span>
+                        <h3>🔥 Đánh Chốt Khung (N3)</h3>
+                    </div>
+                    <div class="mode-body">
+                        <div class="mode-size text-amber">36 SỐ HỎA LỰC</div>
+                        <p class="mode-desc">Tối ưu hỏa lực chốt khung Ngày 3 khi N1&amp;N2 chưa nổ hoặc muốn đánh vốn lớn.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Selected Mode Visual Numbers Presentation -->
+            <div class="card glass" style="margin-top: 20px;">
+                <div class="card-header">
+                    <div>
+                        <h3 id="selected-mode-title"><i class="fa-solid fa-fire text-amber"></i> Danh Sách Dàn Số Đã Chọn (Khung Mới N1 - 60 Số)</h3>
+                        <span class="badge-date-tag text-emerald">🎯 ĐÁNH NGÀY HÔM SAU: <strong id="selected-mode-date">Thứ Ba (01/09/2026)</strong></span>
+                    </div>
+                    <button class="btn btn-sm btn-primary" id="btn-copy-mode-inner"><i class="fa-regular fa-copy"></i> Sao Chép Dàn Này</button>
+                </div>
+                <div class="number-tags-container" id="grid-selected-mode-numbers">
+                    <!-- Dynamic rendering by JS based on selected mode -->
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: NHẬT KÝ LỊCH SỬ CÁC KHUNG (FRAME HISTORY LOG) -->
+        <section id="tab-frame-history" class="tab-content">
+            <div class="card glass">
+                <div class="card-header">
+                    <div>
+                        <h3><i class="fa-solid fa-book-bookmark text-emerald"></i> Ô Bảng Nhật Ký Ghi Nhận Lịch Sử Các Khung Nuôi (2026)</h3>
+                        <p class="card-desc">Ghi nhận chi tiết lịch sử từng khung 3 ngày, kết quả nổ thực tế và trạng thái chuyển cầu tự động.</p>
+                    </div>
+                    <div style="display: flex; gap: 12px; align-items: center;">
+                        <button class="btn btn-sm btn-primary" id="btn-copy-frame-log"><i class="fa-regular fa-copy"></i> Copy Nhật Ký Khung</button>
+                        <div class="search-box">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="frame-search" placeholder="Tìm theo STT, thứ, kết quả...">
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="data-table" id="table-frame-history">
+                        <thead>
+                            <tr>
+                                <th>STT Khung</th>
+                                <th>Ngày Bắt Đầu Khung</th>
+                                <th>Kết Quả Nổ Thực Tế</th>
+                                <th>Đề Nổ</th>
+                                <th>Dàn N1 (60 Số) (Click Copy)</th>
+                                <th>Trạng Thái Chuyển Cầu</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-frame-history">
+                            <!-- Rendered by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 5: PHÂN TÍCH & WIN RATE -->
+        <section id="tab-analytics" class="tab-content">
+            <div class="analytics-grid">
+                <div class="card glass">
+                    <div class="card-header">
+                        <div>
+                            <h3><i class="fa-solid fa-chart-column text-cyan"></i> Bảng So Sánh Hiệu Năng (Trước vs Sau Tối Ưu)</h3>
+                            <span class="badge-date-tag text-cyan">📊 Lịch Cầu Ngày Mới N1: <strong id="tab3-n1-date">Thứ Ba (01/09/2026)</strong></span>
+                        </div>
+                        <button class="btn btn-sm btn-primary" id="btn-copy-headtail"><i class="fa-regular fa-copy"></i> Copy Top Đầu/Đuôi</button>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Chỉ Số Đánh Giá</th>
+                                <th>Trước Tối Ưu</th>
+                                <th>Sau Tối Ưu (Phương Án N2 &amp; N3 36 Số Tối Ưu)</th>
+                                <th>Chênh Lệch</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Số Con Dàn N1 (Đánh <span id="tb-n1-day">Thứ Ba</span>)</strong></td>
+                                <td>60 số</td>
+                                <td><span class="badge badge-success">60 số (N2: 36s, N3: 36s)</span></td>
+                                <td>0 (Không đổi)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tỷ Lệ Ăn Thẳng N1 (Dàn 60s Ngày 1)</strong></td>
+                                <td>~54.6% (16-17 ngày/tháng)</td>
+                                <td><span class="badge badge-success">~74.0% (22-23 ngày/tháng)</span></td>
+                                <td class="text-emerald"><strong>+19.4% (Tăng +5 đến +6 ngày N1)</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Win Rate Toàn Khung 3 Ngày (N1+N2+N3)</strong></td>
+                                <td>~88.5%</td>
+                                <td><span class="badge badge-success">~98.3%</span></td>
+                                <td class="text-emerald"><strong>+9.8% (Chỉ trượt ~0.5 khung/tháng)</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mật Độ Điểm AI Trung Bình</strong></td>
+                                24.5 điểm/số
+                                <td><span class="badge badge-purple">38.2 điểm/số</span></td>
+                                <td class="text-emerald"><strong>+55.9% chất lượng</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tỷ Lệ Trùng Bão Hòa / Lô Rơi</strong></td>
+                                ~35%
+                                <td><span class="badge badge-success">0% (Đã lọc sạch)</span></td>
+                                <td class="text-emerald"><strong>-35% rủi ro</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card glass">
+                    <div class="card-header">
+                        <div>
+                            <h3><i class="fa-solid fa-cubes text-amber"></i> Top 10 Con Số Hỏa Lực Gaussian Nhịp Vàng</h3>
+                            <span class="badge-date-tag text-amber">🔥 ĐÁNH NGÀY N1: <strong id="t3-gaussian-n1-date">Thứ Ba (01/09/2026)</strong></span>
+                        </div>
+                        <button class="btn btn-sm btn-primary" id="btn-copy-gaussian"><i class="fa-regular fa-copy"></i> Copy Dàn Nhịp Vàng</button>
+                    </div>
+                    <div class="nhip-vang-list" id="nhip-vang-container">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 6: LỊCH SỬ QUAY 2026 -->
+        <section id="tab-history" class="tab-content">
+            <div class="card glass">
+                <div class="card-header">
+                    <div>
+                        <h3><i class="fa-solid fa-clock-rotate-left"></i> Dữ Liệu Lịch Sử Kết Quả XSMB 2026 (239 Kỳ Quay)</h3>
+                        <span class="badge-date-tag text-emerald">📌 Kỳ Quay Gần Nhất: <strong id="t4-last-date">Thứ hai ngày 31-08-2026</strong></span>
+                    </div>
+                    <div style="display: flex; gap: 12px; align-items: center;">
+                        <button class="btn btn-sm btn-primary" id="btn-copy-30recent"><i class="fa-regular fa-copy"></i> Copy 30 Kỳ Đề Gần Nhất</button>
+                        <div class="search-box">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="history-search" placeholder="Tìm theo ngày, thứ, giải đặc biệt...">
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="data-table" id="table-history">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Ngày Quay</th>
+                                <th>Giải Đặc Biệt</th>
+                                <th>Số Đề (2 số) (Click Copy)</th>
+                                <th>G7.1</th>
+                                <th>G7.2</th>
+                                <th>G7.3</th>
+                                <th>G7.4</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-history">
+                            <!-- Rows rendered by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        <!-- TAB 7: RADAR G1->G5 REAL-TIME -->
+        <section id="tab-soicau-g1g5" class="tab-content">
+            <div style="margin-bottom: 14px; display: flex; justify-content: flex-end;">
+                <a href="soi_cau_g1_g5_app.html" target="_blank" class="btn btn-primary" style="font-size: 13px; text-decoration: none; color: #fde68a; border: 1px solid #fbbf24; background: rgba(251, 191, 36, 0.15);">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Mở Mini App Độc Lập Toàn Màn Hình
+                </a>
+            </div>
+            <iframe src="soi_cau_g1_g5_app.html" style="width: 100%; height: 1400px; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);"></iframe>
+        </section>
+
+        <!-- Footer -->
+        <footer class="main-footer">
+            <p>© 2026 Antigravity AI Lab — XSMB 4-Step Dynamic Optimization System. Interactive Mode Selector N1/N2/N3 Tab Added.</p>
+        </footer>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast hidden">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="toast-msg">Đã sao chép dàn số!</span>
+    </div>
+
+    <script src="app.js?v=20260922183515"></script>
+</body>
+</html>
