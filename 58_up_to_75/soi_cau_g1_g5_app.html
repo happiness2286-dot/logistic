@@ -897,10 +897,109 @@
         }
         .opt-top1 { border-color: rgba(251, 191, 36, 0.45); background: rgba(251, 191, 36, 0.09); }
         .opt-top4 { border-color: rgba(249, 115, 22, 0.45); background: rgba(249, 115, 22, 0.09); }
-        .opt-tinhtuy { border-color: rgba(56, 189, 248, 0.45); background: rgba(56, 189, 248, 0.09); }
-        .opt-n1 { border-color: rgba(34, 197, 94, 0.45); background: rgba(34, 197, 94, 0.09); }
-        .opt-n2 { border-color: rgba(251, 191, 36, 0.35); background: rgba(251, 191, 36, 0.06); }
-        .opt-n3 { border-color: rgba(249, 115, 22, 0.35); background: rgba(249, 115, 22, 0.06); }
+        /* =====================================================================
+           PHẦN 4: LỊCH SỬ & TỶ LỆ PHƯƠNG PHÁP
+           ===================================================================== */
+        .history-box {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            padding: 22px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .tong-quan {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .stat-card {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid var(--border-glass);
+            border-radius: 14px;
+            padding: 12px 10px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .stat-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--border-glass-strong);
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-sub);
+            margin-bottom: 6px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 18px;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .stat-value.gold { color: #fbbf24; text-shadow: 0 0 12px rgba(251, 191, 36, 0.4); }
+        .stat-value.blue { color: #38bdf8; text-shadow: 0 0 12px rgba(56, 189, 248, 0.4); }
+        .stat-value.orange { color: #f97316; text-shadow: 0 0 12px rgba(249, 115, 22, 0.4); }
+        .stat-value.red { color: #ef4444; text-shadow: 0 0 12px rgba(239, 68, 68, 0.4); }
+
+        .lich-su-container {
+            max-height: 320px;
+            overflow-y: auto;
+            border: 1px solid var(--border-glass);
+            border-radius: 14px;
+            padding: 10px;
+            background: rgba(6, 9, 17, 0.65);
+        }
+        .lich-su-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        .lich-su-container::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+        }
+
+        .lich-su-item {
+            display: grid;
+            grid-template-columns: 115px 90px 1fr;
+            gap: 10px;
+            padding: 10px 8px;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+            font-size: 13px;
+            align-items: center;
+        }
+        .lich-su-item:last-child {
+            border-bottom: none;
+        }
+
+        .lich-su-item .ngay {
+            font-weight: 700;
+            color: #cbd5e1;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+        }
+        .lich-su-item .de {
+            font-weight: 700;
+            color: #fff;
+        }
+        .lich-su-item .de strong {
+            color: #fbbf24;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .ket-qua.trung_n1, .ket-qua.trung-n1 { color: #fbbf24; font-weight: 800; }
+        .ket-qua.trung_n2, .ket-qua.trung-n2 { color: #38bdf8; font-weight: 800; }
+        .ket-qua.trung_n3, .ket-qua.trung-n3 { color: #f97316; font-weight: 800; }
+        .ket-qua.truot { color: #ef4444; font-weight: 800; }
 
         /* =====================================================================
            RESPONSIVE DESIGN CHO ĐIỆN THOẠI (MAX-WIDTH: 640PX)
@@ -1095,14 +1194,41 @@
                 padding: 2.5px 6px !important;
             }
 
-            /* Toast trên điện thoại */
-            .toast {
-                left: 16px;
-                right: 16px;
-                bottom: 16px;
-                justify-content: center;
-                font-size: 12px;
-                padding: 10px 14px;
+            /* PHẦN 4 MOBILE OVERRIDE (IPHONE 11) */
+            .history-box {
+                padding: 14px 10px;
+                border-radius: 16px;
+                margin-bottom: 14px;
+            }
+            .tong-quan {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+            .stat-card:first-child {
+                grid-column: span 2;
+            }
+            .stat-card {
+                padding: 8px 6px;
+                border-radius: 10px;
+            }
+            .stat-label {
+                font-size: 10px;
+            }
+            .stat-value {
+                font-size: 14.5px;
+            }
+            .lich-su-container {
+                max-height: 280px;
+                padding: 6px;
+            }
+            .lich-su-item {
+                grid-template-columns: 88px 68px 1fr;
+                font-size: 11.5px;
+                padding: 8px 4px;
+                gap: 6px;
+            }
+            .lich-su-item .ngay {
+                font-size: 11px;
             }
         }
     </style>
@@ -1384,6 +1510,45 @@
                 </div>
             </div>
         </section>
+
+        <!-- PHẦN 4: LỊCH SỬ & TỶ LỆ PHƯƠNG PHÁP -->
+        <section class="history-box">
+            <div class="section-header">
+                <h2 style="color: #fbbf24;"><i class="fa-solid fa-chart-pie" style="color: #fbbf24;"></i> PHẦN 4: LỊCH SỬ &amp; TỶ LỆ PHƯƠNG PHÁP</h2>
+                <span class="tag-info" id="txt-history-badge" style="color: #fbbf24; border-color: rgba(251, 191, 36, 0.4); background: rgba(251, 191, 36, 0.1);">
+                    30 KỲ GẦN NHẤT
+                </span>
+            </div>
+
+            <!-- Tổng quan -->
+            <div class="tong-quan">
+                <div class="stat-card">
+                    <div class="stat-label">Tổng số kỳ</div>
+                    <div class="stat-value" id="stat-tong-ky">30</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Trúng N1</div>
+                    <div class="stat-value gold" id="stat-trung-n1">22 (73.3%)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Trúng N2</div>
+                    <div class="stat-value blue" id="stat-trung-n2">5 (16.7%)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Trúng N3</div>
+                    <div class="stat-value orange" id="stat-trung-n3">2 (6.7%)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Trượt khung</div>
+                    <div class="stat-value red" id="stat-truot">1 (3.3%)</div>
+                </div>
+            </div>
+
+            <!-- Lịch sử chi tiết (cuộn dọc) -->
+            <div class="lich-su-container" id="lich-su-list">
+                <!-- Nạp tự động từ lich_su_phuong_phap.json -->
+            </div>
+        </section>
     </div>
 
     <!-- MOBILE ACTION SHEET CHO MENU SAO CHÉP DÀN SỐ -->
@@ -1499,24 +1664,73 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             loadLiveData();
+            loadLichSu();
 
             // Tự động kiểm tra và cập nhật mỗi 5 giây trong lúc quay thưởng (18h15 - 18h35)
             setInterval(loadLiveData, 5000);
+            setInterval(loadLichSu, 15000);
 
             // Nút bấm làm mới dữ liệu tức thì
             const btnRefresh = document.getElementById('btn-manual-refresh');
             if (btnRefresh) {
                 btnRefresh.onclick = () => {
                     btnRefresh.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang tải...';
-                    loadLiveData().then(() => {
+                    Promise.all([loadLiveData(), loadLichSu()]).then(() => {
                         setTimeout(() => {
                             btnRefresh.innerHTML = '<i class="fa-solid fa-arrows-rotate"></i> Làm mới';
-                            showToast('Đã cập nhật dữ liệu radar mới nhất!');
+                            showToast('Đã cập nhật dữ liệu radar & lịch sử mới nhất!');
                         }, 500);
                     });
                 };
             }
         });
+
+        // BƯỚC 4: HÀM LOAD LỊCH SỬ & TỶ LỆ PHƯƠNG PHÁP
+        async function loadLichSu() {
+            try {
+                const res = await fetch('lich_su_phuong_phap.json?t=' + Date.now());
+                if (!res.ok) return;
+                const data = await res.json();
+                if (!data || !data.tong_quan) return;
+
+                const tq = data.tong_quan;
+                const elTong = document.getElementById('stat-tong-ky');
+                if (elTong) elTong.textContent = tq.tong_ky;
+
+                const elN1 = document.getElementById('stat-trung-n1');
+                if (elN1) elN1.textContent = `${tq.trung_n1} (${tq.ty_le_n1}%)`;
+
+                const elN2 = document.getElementById('stat-trung-n2');
+                if (elN2) elN2.textContent = `${tq.trung_n2} (${tq.ty_le_n2}%)`;
+
+                const elN3 = document.getElementById('stat-trung-n3');
+                if (elN3) elN3.textContent = `${tq.trung_n3} (${tq.ty_le_n3}%)`;
+
+                const elTruot = document.getElementById('stat-truot');
+                if (elTruot) elTruot.textContent = `${tq.truot_khung || 0} (${tq.ty_le_truot || 0}%)`;
+
+                const elBadge = document.getElementById('txt-history-badge');
+                if (elBadge) elBadge.textContent = `${tq.tong_ky} KỲ (ĂN N1: ${tq.ty_le_n1}%)`;
+
+                const container = document.getElementById('lich-su-list');
+                if (container && Array.isArray(data.lich_su)) {
+                    container.innerHTML = data.lich_su.map(item => {
+                        let icon = (item.ket_qua || '').includes('trung') ? '✅' : '❌';
+                        let sub = item.top1 ? `<small style="color:#94a3b8; font-weight:normal; margin-left:6px;">[Top 1: ${item.top1}]</small>` : '';
+                        return `
+                            <div class="lich-su-item">
+                                <div class="ngay">${item.ngay}</div>
+                                <div class="de">Đề: <strong>${item.de}</strong></div>
+                                <div class="ket-qua ${item.ket_qua}">${item.ghi_chu || item.ket_qua} ${icon}${sub}</div>
+                            </div>
+                        `;
+                    }).join('');
+                }
+            } catch (err) {
+                console.warn('Lỗi load lịch sử phương pháp:', err);
+            }
+        }
+        window.loadLichSu = loadLichSu;
 
         async function loadLiveData() {
             try {
