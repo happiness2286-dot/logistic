@@ -392,9 +392,9 @@
             height: 9px;
             border-radius: 50%;
         }
-        .dot-gold { background: #fbbf24; box-shadow: 0 0 8px #fbbf24; }
-        .dot-blue { background: #38bdf8; box-shadow: 0 0 8px #38bdf8; }
-        .dot-dim { background: #94a3b8; }
+        .dot-gold, .gold { background: #fbbf24; box-shadow: 0 0 8px #fbbf24; }
+        .dot-blue, .blue { background: #38bdf8; box-shadow: 0 0 8px #38bdf8; }
+        .dot-dim, .dot-gray, .gray { background: #94a3b8; }
 
         /* 🟡 NỔI BẬT TOP 1: VIỀN VÀNG ĐẬM & PHÓNG TO */
         .num-badge-top1-glow {
@@ -1440,7 +1440,29 @@
                     <span class="opt-text">
                         <strong>Sao chép Dàn N2 (36 số)</strong>
                         <small>Hard Filter từ N1</small>
-                    // Fallback embedded data (Kỳ chuẩn 22/09/2026)
+                    </span>
+                    <i class="fa-regular fa-copy"></i>
+                </button>
+                <button class="sheet-option-btn opt-n3" id="m-btn-copy-n3">
+                    <span class="opt-icon">🟠</span>
+                    <span class="opt-text">
+                        <strong>Sao chép Dàn N3 (36 số)</strong>
+                        <small>Hard Filter giữ nguyên N2</small>
+                    </span>
+                    <i class="fa-regular fa-copy"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div class="toast" id="toastBox">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="toastMsg">Đã sao chép!</span>
+    </div>
+
+    <script>
+        // Fallback embedded data (Kỳ chuẩn 22/09/2026)
         const DEFAULT_PAYLOAD = {
             "target_date": "Thứ ba ngày 22-09-2026",
             "live_prizes": {

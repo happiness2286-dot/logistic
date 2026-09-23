@@ -2047,3 +2047,11 @@ if __name__ == '__main__':
             
         export_excel(data, summary, filename='Thong_Ke_G7_Va_Top20_XSMB_2026.xlsx')
         print("All daily analysis complete. Updated Unified Master Excel File (18 Sheets) & Dashboard successfully.")
+
+        try:
+            import soi_cau_g1_g5
+            print("\n[*] Đang tự động phân tích Soi Cầu G1-G5...")
+            soi_cau_g1_g5.run_pipeline()
+        except Exception as e:
+            print(f"[!] Lỗi khi chạy soi_cau_g1_g5: {e}")
+

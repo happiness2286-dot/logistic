@@ -625,6 +625,14 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None)
         json.dump(output_data, f, ensure_ascii=False, indent=2)
     print(f"\n[*] Đã lưu toàn bộ kết quả phân tầng 5 cột vào: ket_qua_soi_cau_g1_g5.json")
 
+    # Đồng bộ sang thư mục 58_up_to_75 nếu tồn tại
+    branch_dir = '58_up_to_75'
+    if os.path.exists(branch_dir):
+        branch_json_path = os.path.join(branch_dir, 'ket_qua_soi_cau_g1_g5.json')
+        with open(branch_json_path, 'w', encoding='utf-8') as f:
+            json.dump(output_data, f, ensure_ascii=False, indent=2)
+        print(f"[*] Đã đồng bộ sang: {branch_json_path}")
+
     return output_data
 
 if __name__ == '__main__':
