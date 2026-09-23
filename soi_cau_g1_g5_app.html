@@ -949,6 +949,7 @@
 
         .stat-value.gold { color: #fbbf24; text-shadow: 0 0 12px rgba(251, 191, 36, 0.4); }
         .stat-value.blue { color: #38bdf8; text-shadow: 0 0 12px rgba(56, 189, 248, 0.4); }
+        .stat-value.green { color: #22c55e; text-shadow: 0 0 12px rgba(34, 197, 94, 0.4); }
         .stat-value.orange { color: #f97316; text-shadow: 0 0 12px rgba(249, 115, 22, 0.4); }
         .stat-value.red { color: #ef4444; text-shadow: 0 0 12px rgba(239, 68, 68, 0.4); }
 
@@ -996,10 +997,17 @@
             font-family: 'JetBrains Mono', monospace;
         }
 
+        /* Classes Phần 4A: Khung 3 ngày */
         .ket-qua.trung_n1, .ket-qua.trung-n1 { color: #fbbf24; font-weight: 800; }
         .ket-qua.trung_n2, .ket-qua.trung-n2 { color: #38bdf8; font-weight: 800; }
         .ket-qua.trung_n3, .ket-qua.trung-n3 { color: #f97316; font-weight: 800; }
-        .ket-qua.truot { color: #ef4444; font-weight: 800; }
+        .ket-qua.truot_khung, .ket-qua.truot { color: #ef4444; font-weight: 800; }
+
+        /* Classes Phần 4B: Soi trực tiếp */
+        .ket-qua.trung_bach_thu { color: #fbbf24; font-weight: 800; }
+        .ket-qua.trung_tu_thu { color: #38bdf8; font-weight: 800; }
+        .ket-qua.trung_lot { color: #22c55e; font-weight: 800; }
+        .ket-qua.truot_truc_tiep { color: #ef4444; font-weight: 800; }
 
         /* =====================================================================
            RESPONSIVE DESIGN CHO ĐIỆN THOẠI (MAX-WIDTH: 640PX)
@@ -1511,42 +1519,81 @@
             </div>
         </section>
 
-        <!-- PHẦN 4: LỊCH SỬ & TỶ LỆ PHƯƠNG PHÁP -->
-        <section class="history-box">
+        <!-- PHẦN 4A: ĐÁNH GIÁ KHUNG 3 NGÀY (58_UP_TO_75) -->
+        <section class="history-box" id="sec-khung-3-ngay">
             <div class="section-header">
-                <h2 style="color: #fbbf24;"><i class="fa-solid fa-chart-pie" style="color: #fbbf24;"></i> PHẦN 4: LỊCH SỬ &amp; TỶ LỆ PHƯƠNG PHÁP</h2>
-                <span class="tag-info" id="txt-history-badge" style="color: #fbbf24; border-color: rgba(251, 191, 36, 0.4); background: rgba(251, 191, 36, 0.1);">
-                    30 KỲ GẦN NHẤT
+                <h2 style="color: #4ade80;"><i class="fa-solid fa-layer-group" style="color: #22c55e;"></i> PHẦN 4A: ĐÁNH GIÁ KHUNG 3 NGÀY (58_UP_TO_75)</h2>
+                <span class="tag-info" id="badge-khung-summary" style="color: #4ade80; border-color: rgba(34, 197, 94, 0.4); background: rgba(34, 197, 94, 0.1);">
+                    KIỂM CHỨNG THỰC TẾ
                 </span>
             </div>
 
-            <!-- Tổng quan -->
+            <!-- Tổng quan 4A -->
             <div class="tong-quan">
                 <div class="stat-card">
-                    <div class="stat-label">Tổng số kỳ</div>
-                    <div class="stat-value" id="stat-tong-ky">30</div>
+                    <div class="stat-label">Tổng số khung</div>
+                    <div class="stat-value" id="k-stat-tong">31</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-label">Trúng N1</div>
-                    <div class="stat-value gold" id="stat-trung-n1">22 (73.3%)</div>
+                    <div class="stat-value gold" id="k-stat-n1">24 (77.4%)</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-label">Trúng N2</div>
-                    <div class="stat-value blue" id="stat-trung-n2">5 (16.7%)</div>
+                    <div class="stat-value blue" id="k-stat-n2">1 (3.2%)</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-label">Trúng N3</div>
-                    <div class="stat-value orange" id="stat-trung-n3">2 (6.7%)</div>
+                    <div class="stat-value orange" id="k-stat-n3">0 (0.0%)</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-label">Trượt khung</div>
-                    <div class="stat-value red" id="stat-truot">1 (3.3%)</div>
+                    <div class="stat-value red" id="k-stat-truot">6 (19.4%)</div>
                 </div>
             </div>
 
-            <!-- Lịch sử chi tiết (cuộn dọc) -->
-            <div class="lich-su-container" id="lich-su-list">
-                <!-- Nạp tự động từ lich_su_phuong_phap.json -->
+            <!-- Lịch sử khung cuộn dọc -->
+            <div class="lich-su-container" id="list-history-khung">
+                <!-- Nạp tự động từ lich_su_phuong_phap.json -> khung_3_ngay -->
+            </div>
+        </section>
+
+        <!-- PHẦN 4B: ĐÁNH GIÁ SOI TRỰC TIẾP (BẠCH THỦ & TỨ THỦ G1-G5) -->
+        <section class="history-box" id="sec-soi-truc-tiep">
+            <div class="section-header">
+                <h2 style="color: #fbbf24;"><i class="fa-solid fa-bullseye" style="color: #fbbf24;"></i> PHẦN 4B: ĐÁNH GIÁ SOI TRỰC TIẾP (BẠCH THỦ &amp; TỨ THỦ)</h2>
+                <span class="tag-info" id="badge-direct-summary" style="color: #fbbf24; border-color: rgba(251, 191, 36, 0.4); background: rgba(251, 191, 36, 0.1);">
+                    RADAR G1→G5 LIVE
+                </span>
+            </div>
+
+            <!-- Tổng quan 4B -->
+            <div class="tong-quan">
+                <div class="stat-card">
+                    <div class="stat-label">Tổng số ngày</div>
+                    <div class="stat-value" id="d-stat-tong">31</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Trúng Bạch Thủ</div>
+                    <div class="stat-value gold" id="d-stat-bt">11 (35.5%)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Trúng Tứ Thủ</div>
+                    <div class="stat-value blue" id="d-stat-tt">21 (67.7%)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Trúng Dàn Lót</div>
+                    <div class="stat-value green" id="d-stat-lot">25 (80.6%)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Hiệu Quả Tinh Túy</div>
+                    <div class="stat-value orange" id="d-stat-rate">Top 4: 67.7%</div>
+                </div>
+            </div>
+
+            <!-- Lịch sử soi trực tiếp cuộn dọc -->
+            <div class="lich-su-container" id="list-history-direct">
+                <!-- Nạp tự động từ lich_su_phuong_phap.json -> soi_truc_tiep -->
             </div>
         </section>
     </div>
@@ -1685,46 +1732,99 @@
             }
         });
 
-        // BƯỚC 4: HÀM LOAD LỊCH SỬ & TỶ LỆ PHƯƠNG PHÁP
+        // BƯỚC 4A: HÀM LOAD LỊCH SỬ KHUNG 3 NGÀY (58_UP_TO_75)
+        function loadKhung3Ngay(khungData) {
+            if (!khungData || !khungData.tong_quan) return;
+            const tq = khungData.tong_quan;
+
+            const elTong = document.getElementById('k-stat-tong');
+            if (elTong) elTong.textContent = tq.tong_khung || 0;
+
+            const elN1 = document.getElementById('k-stat-n1');
+            if (elN1) elN1.textContent = `${tq.trung_n1 || 0} (${tq.ty_le_n1 || 0}%)`;
+
+            const elN2 = document.getElementById('k-stat-n2');
+            if (elN2) elN2.textContent = `${tq.trung_n2 || 0} (${tq.ty_le_n2 || 0}%)`;
+
+            const elN3 = document.getElementById('k-stat-n3');
+            if (elN3) elN3.textContent = `${tq.trung_n3 || 0} (${tq.ty_le_n3 || 0}%)`;
+
+            const elTruot = document.getElementById('k-stat-truot');
+            if (elTruot) elTruot.textContent = `${tq.truot_khung || 0} (${tq.ty_le_truot || 0}%)`;
+
+            const elBadge = document.getElementById('badge-khung-summary');
+            if (elBadge) elBadge.textContent = `${tq.tong_khung || 0} KHUNG (ĂN N1: ${tq.ty_le_n1 || 0}%)`;
+
+            const container = document.getElementById('list-history-khung');
+            if (container && Array.isArray(khungData.lich_su)) {
+                container.innerHTML = khungData.lich_su.map(item => {
+                    let icon = (item.ket_qua || '').includes('trung') ? '🎯' : '❌';
+                    let sttTag = item.khung_stt ? `<small style="color:#94a3b8; margin-right:4px;">#K${item.khung_stt}</small>` : '';
+                    return `
+                        <div class="lich-su-item">
+                            <div class="ngay">${sttTag}${item.ngay}</div>
+                            <div class="de">Đề: <strong>${item.de}</strong></div>
+                            <div class="ket-qua ${item.ket_qua}">${item.ghi_chu || item.ket_qua} ${icon}</div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+        window.loadKhung3Ngay = loadKhung3Ngay;
+
+        // BƯỚC 4B: HÀM LOAD LỊCH SỬ SOI TRỰC TIẾP (BẠCH THỦ & TỨ THỦ G1-G5)
+        function loadSoiTrucTiep(directData) {
+            if (!directData || !directData.tong_quan) return;
+            const tq = directData.tong_quan;
+
+            const elTong = document.getElementById('d-stat-tong');
+            if (elTong) elTong.textContent = tq.tong_ngay || 0;
+
+            const elBT = document.getElementById('d-stat-bt');
+            if (elBT) elBT.textContent = `${tq.trung_bach_thu || 0} (${tq.ty_le_bach_thu || 0}%)`;
+
+            const elTT = document.getElementById('d-stat-tt');
+            if (elTT) elTT.textContent = `${tq.trung_tu_thu || 0} (${tq.ty_le_tu_thu || 0}%)`;
+
+            const elLot = document.getElementById('d-stat-lot');
+            if (elLot) elLot.textContent = `${tq.trung_lot || 0} (${tq.ty_le_lot || 0}%)`;
+
+            const elRate = document.getElementById('d-stat-rate');
+            if (elRate) elRate.textContent = `Top 4: ${tq.ty_le_tu_thu || 0}%`;
+
+            const elBadge = document.getElementById('badge-direct-summary');
+            if (elBadge) elBadge.textContent = `${tq.tong_ngay || 0} NGÀY (TỨ THỦ: ${tq.ty_le_tu_thu || 0}%)`;
+
+            const container = document.getElementById('list-history-direct');
+            if (container && Array.isArray(directData.lich_su)) {
+                container.innerHTML = directData.lich_su.map(item => {
+                    let icon = (item.ket_qua || '').includes('trung') ? '✨' : '❌';
+                    let top1Display = item.top1 ? `<small style="color:#94a3b8; font-weight:normal; margin-left:6px;">[Top 1: ${item.top1}]</small>` : '';
+                    return `
+                        <div class="lich-su-item">
+                            <div class="ngay">${item.ngay}</div>
+                            <div class="de">Đề: <strong>${item.de}</strong></div>
+                            <div class="ket-qua ${item.ket_qua}">${item.ghi_chu || item.ket_qua} ${icon}${top1Display}</div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+        window.loadSoiTrucTiep = loadSoiTrucTiep;
+
+        // HÀM ĐIỀU PHỐI CHUNG NẠP FILE JSON LỊCH SỬ
         async function loadLichSu() {
             try {
                 const res = await fetch('lich_su_phuong_phap.json?t=' + Date.now());
                 if (!res.ok) return;
                 const data = await res.json();
-                if (!data || !data.tong_quan) return;
+                if (!data) return;
 
-                const tq = data.tong_quan;
-                const elTong = document.getElementById('stat-tong-ky');
-                if (elTong) elTong.textContent = tq.tong_ky;
-
-                const elN1 = document.getElementById('stat-trung-n1');
-                if (elN1) elN1.textContent = `${tq.trung_n1} (${tq.ty_le_n1}%)`;
-
-                const elN2 = document.getElementById('stat-trung-n2');
-                if (elN2) elN2.textContent = `${tq.trung_n2} (${tq.ty_le_n2}%)`;
-
-                const elN3 = document.getElementById('stat-trung-n3');
-                if (elN3) elN3.textContent = `${tq.trung_n3} (${tq.ty_le_n3}%)`;
-
-                const elTruot = document.getElementById('stat-truot');
-                if (elTruot) elTruot.textContent = `${tq.truot_khung || 0} (${tq.ty_le_truot || 0}%)`;
-
-                const elBadge = document.getElementById('txt-history-badge');
-                if (elBadge) elBadge.textContent = `${tq.tong_ky} KỲ (ĂN N1: ${tq.ty_le_n1}%)`;
-
-                const container = document.getElementById('lich-su-list');
-                if (container && Array.isArray(data.lich_su)) {
-                    container.innerHTML = data.lich_su.map(item => {
-                        let icon = (item.ket_qua || '').includes('trung') ? '✅' : '❌';
-                        let sub = item.top1 ? `<small style="color:#94a3b8; font-weight:normal; margin-left:6px;">[Top 1: ${item.top1}]</small>` : '';
-                        return `
-                            <div class="lich-su-item">
-                                <div class="ngay">${item.ngay}</div>
-                                <div class="de">Đề: <strong>${item.de}</strong></div>
-                                <div class="ket-qua ${item.ket_qua}">${item.ghi_chu || item.ket_qua} ${icon}${sub}</div>
-                            </div>
-                        `;
-                    }).join('');
+                if (data.khung_3_ngay) {
+                    loadKhung3Ngay(data.khung_3_ngay);
+                }
+                if (data.soi_truc_tiep) {
+                    loadSoiTrucTiep(data.soi_truc_tiep);
                 }
             } catch (err) {
                 console.warn('Lỗi load lịch sử phương pháp:', err);

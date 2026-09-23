@@ -636,70 +636,74 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None)
             json.dump(output_data, f, ensure_ascii=False, indent=2)
         print(f"[*] Đã đồng bộ sang: {branch_json_path}")
 
-    # BƯỚC 5: TỰ ĐỘNG GHI LỊCH SỬ PHƯƠNG PHÁP HÀNG NGÀY
+    # BƯỚC 5: TỰ ĐỘNG GHI LỊCH SỬ PHƯƠNG PHÁP HÀNG NGÀY CHO CẢ 2 CƠ CHẾ
     if actual_de:
+        # Cơ chế 4A: Khung 3 ngày (58_up_to_75)
         if actual_de in dan_n1_list:
-            kq_status = 'trung_n1'
+            kq_khung = 'trung_n1'
         elif actual_de in dan_n2_list:
-            kq_status = 'trung_n2'
+            kq_khung = 'trung_n2'
         else:
-            kq_status = 'truot'
-        ghi_lich_su(target_draw['date'], actual_de, kq_status, top_1, top_4_nums)
+            kq_khung = 'truot_khung'
+        ghi_lich_su_khung(target_draw['date'], actual_de, kq_khung)
+
+        # Cơ chế 4B: Soi trực tiếp (Bạch thủ, Tứ thủ, Lót)
+        ghi_lich_su_truc_tiep(target_draw['date'], actual_de, top_1, top_4_nums, dan_lot_list)
 
     return output_data
 
-def ghi_lich_su(ngay_str, de_str, ket_qua_status, top1_val, top4_list):
-    """Ghi nhận lịch sử kiểm chứng và tính lại tỷ lệ tổng quan cho lich_su_phuong_phap.json"""
+def ghi_lich_su_khung(date_str, de_str, kq_status, frame_stt=None):
+    """Ghi nhận lịch sử khung 3 ngày (58_up_to_75)"""
     for file_path in ['lich_su_phuong_phap.json', os.path.join('58_up_to_75', 'lich_su_phuong_phap.json')]:
-        dir_name = os.path.dirname(file_path)
-        if dir_name and not os.path.exists(dir_name):
+        if not os.path.exists(os.path.dirname(file_path) or '.'):
             continue
         try:
             if os.path.exists(file_path):
                 with open(file_path, 'r', encoding='utf-8') as f:
                     data = json.load(f)
             else:
-                data = {"tong_quan": {}, "lich_su": []}
+                data = {}
+            if 'khung_3_ngay' not in data:
+                data['khung_3_ngay'] = {"tong_quan": {}, "lich_su": []}
 
-            clean_date = ngay_str.split()[-1].replace('-', '/') if ngay_str else datetime.now().strftime('%d/%m/%Y')
+            clean_date = date_str.split()[-1].replace('-', '/') if date_str else datetime.now().strftime('%d/%m/%Y')
 
             existing_idx = None
-            for idx, item in enumerate(data.get("lich_su", [])):
+            for idx, item in enumerate(data['khung_3_ngay'].get("lich_su", [])):
                 if item.get("ngay") == clean_date:
                     existing_idx = idx
                     break
 
-            ghi_chu_map = {
-                'trung_n1': 'Nổ ngày 1 (Trúng N1)',
-                'trung_n2': 'Nổ ngày 2 (Trúng N2)',
-                'trung_n3': 'Nổ ngày 3 (Trúng N3)',
-                'truot': 'Trượt khung 3 ngày'
+            note_map = {
+                'trung_n1': 'Trúng N1 ngày 1 ✅ (Dàn 60s)',
+                'trung_n2': 'Trúng N2 ngày 2 ✅ (Dàn 36s)',
+                'trung_n3': 'Trúng N3 ngày 3 ✅ (Dàn 36s)',
+                'truot_khung': 'Trượt khung 3 ngày ❌'
             }
 
             entry = {
+                "khung_stt": frame_stt or len(data['khung_3_ngay'].get("lich_su", [])) + 1,
                 "ngay": clean_date,
                 "de": str(de_str).zfill(2),
-                "ket_qua": ket_qua_status,
-                "top1": str(top1_val) if top1_val else "",
-                "top4": top4_list if top4_list else [],
-                "ghi_chu": ghi_chu_map.get(ket_qua_status, ket_qua_status)
+                "ket_qua": kq_status,
+                "ghi_chu": note_map.get(kq_status, kq_status)
             }
 
             if existing_idx is not None:
-                data["lich_su"][existing_idx] = entry
+                data['khung_3_ngay']["lich_su"][existing_idx] = entry
             else:
-                data["lich_su"].insert(0, entry)
+                data['khung_3_ngay']["lich_su"].insert(0, entry)
 
-            data["lich_su"] = data["lich_su"][:50]
+            data['khung_3_ngay']["lich_su"] = data['khung_3_ngay']["lich_su"][:50]
 
-            tot = len(data["lich_su"])
-            c_n1 = sum(1 for x in data["lich_su"] if x.get("ket_qua") == "trung_n1")
-            c_n2 = sum(1 for x in data["lich_su"] if x.get("ket_qua") == "trung_n2")
-            c_n3 = sum(1 for x in data["lich_su"] if x.get("ket_qua") == "trung_n3")
-            c_truot = sum(1 for x in data["lich_su"] if x.get("ket_qua") == "truot")
+            tot = len(data['khung_3_ngay']["lich_su"])
+            c_n1 = sum(1 for x in data['khung_3_ngay']["lich_su"] if x.get("ket_qua") == "trung_n1")
+            c_n2 = sum(1 for x in data['khung_3_ngay']["lich_su"] if x.get("ket_qua") == "trung_n2")
+            c_n3 = sum(1 for x in data['khung_3_ngay']["lich_su"] if x.get("ket_qua") == "trung_n3")
+            c_truot = sum(1 for x in data['khung_3_ngay']["lich_su"] if x.get("ket_qua") == "truot_khung")
 
-            data["tong_quan"] = {
-                "tong_ky": tot,
+            data['khung_3_ngay']["tong_quan"] = {
+                "tong_khung": tot,
                 "trung_n1": c_n1,
                 "trung_n2": c_n2,
                 "trung_n3": c_n3,
@@ -712,9 +716,82 @@ def ghi_lich_su(ngay_str, de_str, ket_qua_status, top1_val, top4_list):
 
             with open(file_path, 'w', encoding='utf-8') as f:
                 json.dump(data, f, ensure_ascii=False, indent=2)
-            print(f"[*] Đã cập nhật lịch sử phương pháp vào: {file_path}")
+            print(f"[*] Đã cập nhật lịch sử khung vào: {file_path}")
         except Exception as e:
-            print(f"[!] Lỗi khi ghi lịch sử vào {file_path}: {e}")
+            print(f"[!] Lỗi ghi lịch sử khung vào {file_path}: {e}")
+
+def ghi_lich_su_truc_tiep(date_str, de_str, top1_val, top4_list, lot_list):
+    """Ghi nhận lịch sử soi trực tiếp (Bạch thủ, Tứ thủ, Lót)"""
+    for file_path in ['lich_su_phuong_phap.json', os.path.join('58_up_to_75', 'lich_su_phuong_phap.json')]:
+        if not os.path.exists(os.path.dirname(file_path) or '.'):
+            continue
+        try:
+            if os.path.exists(file_path):
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+            else:
+                data = {}
+            if 'soi_truc_tiep' not in data:
+                data['soi_truc_tiep'] = {"tong_quan": {}, "lich_su": []}
+
+            clean_date = date_str.split()[-1].replace('-', '/') if date_str else datetime.now().strftime('%d/%m/%Y')
+            de_clean = str(de_str).zfill(2)
+
+            existing_idx = None
+            for idx, item in enumerate(data['soi_truc_tiep'].get("lich_su", [])):
+                if item.get("ngay") == clean_date:
+                    existing_idx = idx
+                    break
+
+            if top1_val and de_clean == str(top1_val).zfill(2):
+                kq_status = 'trung_bach_thu'
+                note = f'👑 Trúng Bạch Thủ Top 1 [{de_clean}]'
+            elif top4_list and de_clean in [str(x).zfill(2) for x in top4_list]:
+                kq_status = 'trung_tu_thu'
+                note = f'⭐ Trúng Tứ Thủ Top 4 [{de_clean}]'
+            elif lot_list and de_clean in [str(x).zfill(2) for x in lot_list]:
+                kq_status = 'trung_lot'
+                note = f'🛡️ Trúng Dàn Số Lót [{de_clean}]'
+            else:
+                kq_status = 'truot_truc_tiep'
+                note = 'Trượt kỳ quay ❌'
+
+            entry = {
+                "ngay": clean_date,
+                "de": de_clean,
+                "top1": str(top1_val) if top1_val else "",
+                "top4": top4_list if top4_list else [],
+                "ket_qua": kq_status,
+                "ghi_chu": note
+            }
+
+            if existing_idx is not None:
+                data['soi_truc_tiep']["lich_su"][existing_idx] = entry
+            else:
+                data['soi_truc_tiep']["lich_su"].insert(0, entry)
+
+            data['soi_truc_tiep']["lich_su"] = data['soi_truc_tiep']["lich_su"][:50]
+
+            tot = len(data['soi_truc_tiep']["lich_su"])
+            c_bt = sum(1 for x in data['soi_truc_tiep']["lich_su"] if x.get("ket_qua") == "trung_bach_thu")
+            c_tt = sum(1 for x in data['soi_truc_tiep']["lich_su"] if x.get("ket_qua") in ["trung_bach_thu", "trung_tu_thu"])
+            c_lot = sum(1 for x in data['soi_truc_tiep']["lich_su"] if x.get("ket_qua") in ["trung_bach_thu", "trung_tu_thu", "trung_lot"])
+
+            data['soi_truc_tiep']["tong_quan"] = {
+                "tong_ngay": tot,
+                "trung_bach_thu": c_bt,
+                "trung_tu_thu": c_tt,
+                "trung_lot": c_lot,
+                "ty_le_bach_thu": round(c_bt / tot * 100, 1) if tot > 0 else 0,
+                "ty_le_tu_thu": round(c_tt / tot * 100, 1) if tot > 0 else 0,
+                "ty_le_lot": round(c_lot / tot * 100, 1) if tot > 0 else 0
+            }
+
+            with open(file_path, 'w', encoding='utf-8') as f:
+                json.dump(data, f, ensure_ascii=False, indent=2)
+            print(f"[*] Đã cập nhật lịch sử soi trực tiếp vào: {file_path}")
+        except Exception as e:
+            print(f"[!] Lỗi ghi lịch sử trực tiếp vào {file_path}: {e}")
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="XSMB AI - Soi Vị Trí G1->G5 & Chu Kỳ Nổ Ngày 3, 4")
