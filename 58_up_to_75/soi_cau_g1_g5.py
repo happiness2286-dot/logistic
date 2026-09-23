@@ -400,7 +400,7 @@ def analyze_bridge_cycles(draws, target_draw_idx=0):
         'target_pos_map': target_pos_map
     }
 
-def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None):
+def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None, n2_size=None, n3_size=None):
     """
     Thực thi toàn bộ pipeline chuẩn hóa 5 bước theo yêu cầu:
     Bước 1: Xác định đề ngày hôm trước (Chạm đầu, Đuôi, Bóng dương)
@@ -630,8 +630,8 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None)
 
     # ÁP DỤNG CHU KỲ 7 NGÀY & TỐI ƯU HÓA MỞ RỘNG N2 (42 SỐ), N3 (40 SỐ)
     weekly_cycle = get_weekly_cycle_mode(target_draw['date'])
-    n2_target_count = weekly_cycle['n2_count']
-    n3_target_count = weekly_cycle['n3_count']
+    n2_target_count = n2_size if n2_size is not None else weekly_cycle['n2_count']
+    n3_target_count = n3_size if n3_size is not None else weekly_cycle['n3_count']
 
     # Chấm điểm AI Score cho tất cả 100 số
     all_draws_for_ai = draws
@@ -646,9 +646,10 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None)
 
     ai_scores, gan_dict, prev_de_val, prev_prev_de_val = compute_ai_scores(all_draws_for_ai, target_draw_idx, unique_numbers_map)
 
-    # 1. DÀN N2 (42 số - Mở rộng cứu N1):
-    # Tuyển chọn số từ N1 và các ứng viên tiềm năng có điểm AI cao
-    # Loại bỏ số bệt 2 ngày liên tiếp (đề về 2 ngày liên tục)
+    # GIAI ĐOẠN 1: TỐI ƯU N2 (Mở rộng từ 36 lên 42 số, loại bỏ cầu gãy, loại bỏ bệt 2 ngày)
+    # Bước 1: Mở rộng tuyển chọn số từ N1 và các ứng viên tiềm năng có điểm AI cao
+    # Bước 2: Loại bỏ số cầu gãy: chỉ giữ số có cầu chạy >= 2 ngày (hoặc số điểm AI cao từ N1)
+    # Bước 3: Loại bỏ số đã về 2 ngày liên tiếp (bệt liên tục)
     bet_2_days = {prev_de_val} if (prev_de_val and prev_de_val == prev_prev_de_val) else set()
     base_n2_pool = [
         11, 12, 13, 15, 17, 18, 19, 21, 22, 23, 28, 29, 31, 32, 33, 35, 37, 38,
@@ -659,7 +660,18 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None)
     for n in dan_n1_list:
         n2_candidates_set.add(n)
         
-    n2_candidates_filtered = [n for n in n2_candidates_set if n not in bet_2_days]
+    n2_candidates_filtered = []
+    for n in n2_candidates_set:
+        # Bước 3: Loại bỏ bệt 2 ngày liên tiếp
+        if n in bet_2_days:
+            continue
+        # Bước 2: Loại bỏ cầu gãy: nếu có trong bảng vị trí mà chu kỳ < 2 ngày và điểm AI < 7.0 thì loại
+        if unique_numbers_map and n in unique_numbers_map:
+            cycle = unique_numbers_map[n].get('cycle_days', 0)
+            if cycle < 2 and ai_scores.get(n, 5.0) < 7.0:
+                continue
+        n2_candidates_filtered.append(n)
+        
     n2_candidates_filtered.sort(key=lambda x: (ai_scores.get(x, 5.0), 1 if x in dan_n1_list else 0), reverse=True)
     dan_n2_list = sorted(n2_candidates_filtered[:n2_target_count])
 
@@ -947,6 +959,8 @@ if __name__ == '__main__':
     parser.add_argument('--backtest', type=int, default=0, help='Chỉ số kỳ cần soi (0: mới nhất, 1: kỳ trước)')
     parser.add_argument('--csv', type=str, default=DEFAULT_CAP4_CSV, help='Đường dẫn file CSV 60 số Cấp 4')
     parser.add_argument('--max-minutes', type=int, default=25, help='Thời gian tối đa chạy live (phút)')
+    parser.add_argument('--n2-size', type=int, default=None, help='Số lượng số trong Dàn N2 (mở rộng, ví dụ: 42)')
+    parser.add_argument('--n3-size', type=int, default=None, help='Số lượng số trong Dàn N3 (ví dụ: 40)')
     args = parser.parse_args()
 
     if args.live:
@@ -963,7 +977,7 @@ if __name__ == '__main__':
                 print(f"\n[*] Đã đạt giới hạn thời gian chạy ({args.max_minutes} phút). Dừng phiên live.")
                 break
             try:
-                res = run_pipeline(target_draw_idx=0, cap4_csv=args.csv)
+                res = run_pipeline(target_draw_idx=0, cap4_csv=args.csv, n2_size=args.n2_size, n3_size=args.n3_size)
                 if res:
                     filled = res.get('filled_count', 0)
                     total = res.get('total_count', 19)
@@ -984,4 +998,4 @@ if __name__ == '__main__':
                 print(f"[!] Thử lại sau {args.interval}s do lỗi kết nối: {e}")
                 time.sleep(args.interval)
     else:
-        run_pipeline(target_draw_idx=args.backtest, cap4_csv=args.csv)
+        run_pipeline(target_draw_idx=args.backtest, cap4_csv=args.csv, n2_size=args.n2_size, n3_size=args.n3_size)
