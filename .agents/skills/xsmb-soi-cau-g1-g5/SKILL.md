@@ -5,7 +5,7 @@ description: Hệ thống tự động soi vị trí G1->G5 XSMB, chu kỳ lặp
 
 # XSMB G1-G5 Position Bridge, Cycle Tracker & Cap 4 Filter Baseline
 
-Kỹ năng này chuyên trách nghiệp vụ **Soi Vị Trí G1 $\rightarrow$ G5, Chu Kỳ Lặp & Lọc Dàn 60 Số Cấp 4**, được triển khai độc lập theo chuẩn 9 bước nghiêm ngặt:
+Kỹ năng này chuyên trách nghiệp vụ **Soi Vị Trí G1 $\rightarrow$ G5, Chu Kỳ Lặp & Lọc Dàn 60 Số Cấp 4**, được triển khai chuẩn hóa theo đúng các quy tắc và quy trình 5 bước cốt lõi:
 
 ---
 
@@ -20,54 +20,46 @@ Hệ thống chỉ quét các giải từ G1 đến G5, loại bỏ hoàn toàn 
 
 ---
 
-## 2. Quy Trình Cốt Lõi 9 Bước
+## 2. Quy Tắc Cầu & Phân Tầng Trạng Thái
 
-### Bước 1: Xác định đề ngày hôm trước ($D_{N-1}$)
-- Trích xuất 2 số cuối giải Đặc Biệt kỳ trước: Chạm đầu = $H$, Chạm đuôi = $T$.
-
-### Bước 2: Lấy bóng dương chính
-- Bảng ánh xạ: $0 \leftrightarrow 5, 1 \leftrightarrow 6, 2 \leftrightarrow 7, 3 \leftrightarrow 8, 4 \leftrightarrow 9$.
-- Bóng đầu: $H_{bong} = Bong(H)$.
-- Bóng đuôi: $T_{bong} = Bong(T)$.
-
-### Bước 3: Tập hợp số cần soi vị trí
-- Tập Hàng Chục: $\{H, H_{bong}\}$.
-- Tập Hàng Đơn Vị: $\{T, T_{bong}\}$.
-
-### Bước 4: Tìm tất cả vị trí xuất hiện trong 5 ngày gần nhất
-- Quét 85 vị trí vật lý trên 5 kỳ gần nhất từ nguồn `mketqua.net` để ghi nhận tọa độ.
-
-### Bước 5: Áp dụng quy tắc chu kỳ lặp & Phân loại
-- **Lặp 2 ngày**: Gán nhãn `Lót ngày 2`.
-- **Lặp 3 ngày**: Gán nhãn `Ưu tiên ngày 3`.
-- **Lặp 4 ngày**: Gán nhãn `Ưu tiên ngày 4`.
-- **Không thuộc khung 2-4 ngày**: Bỏ qua hoàn toàn.
-- **Quy tắc đặc biệt**: Nếu vị trí ngày 2 đã nổ đề ở kỳ trước $\rightarrow$ nâng hạng thành **`★ Chủ lực ngày 3 (Nổ ngày 2)`**.
-
-### Bước 6: Soi kết quả kỳ đang quay tại các vị trí đã ghi nhận
-- Nhặt chữ số tại các vị trí thuộc nhóm Chạm Đầu $\rightarrow$ Tập ứng viên **Hàng Chục**.
-- Nhặt chữ số tại các vị trí thuộc nhóm Đuôi $\rightarrow$ Tập ứng viên **Hàng Đơn Vị**.
-
-### Bước 7: Ghép tổ hợp dàn mới
-- Nhân Descartes: Hàng Chục $\times$ Hàng Đơn Vị $\rightarrow$ Dàn ghép 2D (đã loại trùng).
-
-### Bước 8: So với 60 số Cấp 4 (Giao thoa là nguồn nguyên liệu)
-- Đọc 60 số Cấp 4 từ file `dan_60_cap_4.csv` (hoặc từ bộ tối ưu Optimizer Dàn 60).
-- Dàn 60 Cấp 4 **CHỈ LÀ NGUỒN NGUYÊN LIỆU / MÀNG LỌC ĐIỀU KIỆN CẦN**, không phải tiêu chí xếp hạng.
-- Xác định trạng thái `Trong 60 số?`: Có / Không.
-
-### Bước 9: QUY TẮC CHỌN TOP 1 / TOP 4 (ĐÃ SỬA CHUẨN)
-- **TUYỆT ĐỐI KHÔNG** lấy con mạnh có điểm cao trong dàn giao thoa ra làm Top 1 / Top 4.
-- **CHỈ ĐẠO DUY NHẤT**: CHỈ LẤY con có điểm nổ ngày 3, ngày 4 (vị trí lặp 3-4 ngày) làm CHỈ ĐẠO.
-- **Top 1**: Con có vị trí lặp 3 ngày hoặc 4 ngày mạnh nhất (và nằm trong 60 số).
-- **Top 4**: 4 con có vị trí lặp 3-4 ngày mạnh nhất (và nằm trong 60 số).
-- **Lót ngày 2**: Con có vị trí lặp 2 ngày (Đánh lót; nếu nổ ngày 2 $\rightarrow$ Tổng lực ngày 3).
-- **Theo dõi ngày 1**: Con có vị trí lặp 1 ngày.
-- **Bảng hiển thị chuẩn 5 cột**: `Con số` | `Vị trí lặp` | `Phân loại` | `Trong 60 số?` | `Top`.
+| # | Trạng Thái Cầu | Hành Động | Mô Tả Nghiệp Vụ |
+| :-: | :--- | :--- | :--- |
+| **1** | **Cầu chạy ngày 3, 4** | ✅ **VẪN LẤY BÌNH THƯỜNG** | Vị trí có chuỗi xuất hiện liên tục 3-4 ngày (`streak >= 3`). Đây là nhóm **CHỈ ĐẠO**, dùng để chọn **Top 1** và **Top 4** (khi nằm trong 60 số Cấp 4). |
+| **2** | **Cầu đã bỏ (gãy)** | ❌ **KHÔNG LẤY NỮA** | Loại bỏ hoàn toàn! Tuyệt đối không cộng dồn các ngày rời rạc/nhảy cóc (`total_in_5days`). Chuỗi bị đứt ở kỳ nào thì cầu đó đã gãy $\rightarrow$ BỎ. |
+| **3** | **Cầu mới chạm ngày 1** | ⚠️ **THEO DÕI** | Vị trí mới xuất hiện lần đầu trong chu kỳ (`streak == 1`). Ưu tiên theo quy tắc đầu đuôi bóng $\rightarrow$ Vào dàn ngày 1 $\rightarrow$ So với 60 số $\rightarrow$ Giao thoa tinh túy. |
+| **4** | **Ngày 2 (nếu nổ)** | 🎯 **TỔNG LỰC NGÀY 3** | Cầu chạy ngày 2 (`streak == 2`), nếu nổ đề ở kỳ trước $\rightarrow$ thăng hạng thành **Chủ lực / Tổng lực ngày 3**. |
+| **5** | **Số lót** | 🛡️ **LẤY TỪ 60 SỐ N1** | Toàn bộ các con số lót được lấy trực tiếp từ **Dàn 60 số N1**, không sinh số rác từ các chữ số ngoài luồng. |
 
 ---
 
-## 3. Lệnh Vận Hành & Khai Thác
+## 3. Quy Trình 5 Bước Cụ Thể (Ví Dụ Minh Họa Ngày 22/09)
+
+### Bước 1: Xác định đề ngày hôm trước (21/09)
+- Đề ngày 21/09: `40432`
+- Chạm đầu = `3`, Đuôi = `2`
+- Bóng dương: $3 \rightarrow 8$, $2 \rightarrow 7$
+- Tập hợp số cần soi: **Đầu [3, 8]**, **Đuôi [2, 7]**
+
+### Bước 2: Soi vị trí mới chạm 22/09
+- Tìm tất cả các vị trí mới chạm của các số 3, 8, 2, 7 trong ngày 22/09 trên G1 $\rightarrow$ G5.
+- Đây là các vị trí mới xuất hiện lần đầu trong chu kỳ (`streak = 1`).
+
+### Bước 3: Ưu tiên theo quy tắc đầu đuôi bóng
+- Tại những vị trí mới chạm $\rightarrow$ Ưu tiên theo quy tắc đầu đuôi bóng: Vị trí Chạm Đầu [3, 8] đại diện cho Hàng Chục, Vị trí Chạm Đuôi [2, 7] đại diện cho Hàng Đơn Vị.
+- Đây là Ngày 1 của cầu mới.
+
+### Bước 4: Vào dàn
+- Ghép các con số từ các vị trí mới chạm thành dàn mới.
+- Đây là dàn ngày 1 (theo dõi).
+
+### Bước 5: So với dàn 60 số Cấp 4 (Giao thoa)
+- Lấy dàn ngày 1 ở Bước 4, so với 60 số Cấp 4 đã có.
+- Chỉ giữ những con số xuất hiện trong cả 2 dàn (giao thoa).
+- **Kết quả**: Đây là các con số tinh túy cho ngày 1.
+
+---
+
+## 4. Lệnh Vận Hành & Khai Thác
 
 ### Chạy phân tích kỳ mới nhất / chỉ định:
 ```bash

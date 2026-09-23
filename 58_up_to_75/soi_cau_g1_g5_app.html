@@ -1211,15 +1211,16 @@
                     </tr>
             </table>
 
-            <!-- THANH CHÚ THÍCH PHÂN LOẠI CẦU (3 LOẠI CHUẨN) -->
+            <!-- THANH CHÚ THÍCH PHÂN LOẠI CẦU (4 TRẠNG THÁI CHUẨN) -->
             <div class="radar-legend-bar">
                 <div class="legend-title pc-only">
-                    <i class="fa-solid fa-palette" style="color: #38bdf8;"></i> <strong>CHÚ THÍCH CẦU:</strong>
+                    <i class="fa-solid fa-palette" style="color: #38bdf8;"></i> <strong>QUY TẮC CẦU:</strong>
                 </div>
                 <div class="legend-items">
-                    <span class="legend-pill pill-main"><span class="legend-dot dot-gold"></span> 🟡 <strong>Chỉ đạo (3-4d)</strong><span class="pc-only">: Đánh chính</span></span>
-                    <span class="legend-pill pill-lot"><span class="legend-dot dot-blue"></span> 🔵 <strong>Lót (2d)</strong><span class="pc-only">: Đánh lót</span></span>
-                    <span class="legend-pill pill-watch"><span class="legend-dot dot-dim"></span> ⚪ <strong>Theo dõi (1d)</strong><span class="pc-only">: Chỉ theo dõi</span></span>
+                    <span class="legend-pill pill-main"><span class="legend-dot dot-gold"></span> 🟡 <strong>Chỉ đạo (3-4d)</strong><span class="pc-only">: Vẫn lấy bình thường</span></span>
+                    <span class="legend-pill pill-lot"><span class="legend-dot dot-blue"></span> 🔵 <strong>Lót (2d)</strong><span class="pc-only">: Nổ ngày 2 → Tổng lực ngày 3</span></span>
+                    <span class="legend-pill pill-watch"><span class="legend-dot dot-dim"></span> ⚪ <strong>Theo dõi (1d)</strong><span class="pc-only">: Mới chạm ngày 1</span></span>
+                    <span class="legend-pill" style="border: 1px solid rgba(239, 68, 68, 0.4); background: rgba(239, 68, 68, 0.12); color: #f87171;"><span class="legend-dot" style="background: #ef4444;"></span> ❌ <strong>Cầu gãy</strong><span class="pc-only">: Bỏ, loại hoàn toàn</span></span>
                     <button class="legend-info-btn mobile-only" id="btn-legend-help" title="Nhấn để xem giải thích chi tiết">?</button>
                 </div>
             </div>
@@ -1228,19 +1229,19 @@
         <!-- PHẦN 2: DÀN SỐ TINH TÚY (XUẤT HIỆN SAU KHI GIẢI 5.6 KẾT THÚC) -->
         <section class="tinh-tuy-box">
             <div class="section-header" style="border-color: rgba(251, 191, 36, 0.2);">
-                <h2 style="color: #fde68a;"><i class="fa-solid fa-gem" style="color: #fbbf24;"></i> PHẦN 2: DÀN SỐ TINH TÚY (XUẤT HIỆN SAU GIẢI 5.6)</h2>
+                <h2 style="color: #fde68a;"><i class="fa-solid fa-gem" style="color: #fbbf24;"></i> PHẦN 2: DÀN SỐ TINH TÚY (GIAO THOA 60 SỐ CẤP 4)</h2>
                 <span class="tag-info" style="color: #fbbf24; border-color: rgba(251, 191, 36, 0.4); background: rgba(251, 191, 36, 0.1);">
-                    GIAO THOA VỚI 60 SỐ CẤP 4
+                    ƯU TIÊN CẦU CHẠY 3-4 NGÀY
                 </span>
             </div>
 
             <!-- Dòng 1: Top 1 (Vàng) -->
             <div class="tier-row">
                 <div class="tier-label label-gold">
-                    <i class="fa-solid fa-crown"></i> 🟡 TOP 1 (CHỈ ĐẠO)
+                    <i class="fa-solid fa-crown"></i> 🟡 TOP 1 (CHỈ ĐẠO 3-4D)
                 </div>
                 <div class="tier-content">
-                    <span class="num-badge-top1-glow" id="val-top1">32 (3d)</span>
+                    <span class="num-badge-top1-glow" id="val-top1">82 (3d)</span>
                     <span style="font-size: 12px; color: #fde68a; font-weight: 600;">(Con số chỉ đạo mạnh nhất chu kỳ 3-4 ngày)</span>
                 </div>
             </div>
@@ -1248,27 +1249,37 @@
             <!-- Dòng 2: Top 4 (Cam) -->
             <div class="tier-row">
                 <div class="tier-label label-orange">
-                    <i class="fa-solid fa-fire-flame-curved"></i> 🟠 TOP 4 (CHỈ ĐẠO)
+                    <i class="fa-solid fa-fire-flame-curved"></i> 🟠 TOP 4 (CHỈ ĐẠO 3-4D)
                 </div>
                 <div class="tier-content" id="list-top4">
-                    <span class="num-badge-orange">32</span>
-                    <span class="num-badge-orange">37</span>
-                    <span class="num-badge-orange">33</span>
-                    <span class="num-badge-orange">42</span>
+                    <span class="num-badge-orange">★ 82 (3d)</span>
+                    <span class="num-badge-orange">★ 32 (3d)</span>
+                    <span class="num-badge-orange">★ 87 (3d)</span>
+                    <span class="num-badge-orange">★ 37 (3d)</span>
                 </div>
             </div>
 
-            <!-- Dòng 3: Lót (Xanh) -->
+            <!-- Dòng 3: Dàn Tinh Túy Ngày 1 Giao Thoa (Trắng/Ánh kim) -->
+            <div class="tier-row">
+                <div class="tier-label" style="color: #cbd5e1; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.06); padding: 4px 10px; border-radius: 8px;">
+                    <i class="fa-solid fa-gem" style="color: #38bdf8;"></i> ⚪ DÀN TINH TÚY NGÀY 1
+                </div>
+                <div class="tier-content" id="list-tinhtuy-ngay1">
+                    <!-- Dynamic badges for Tinh Túy Ngày 1 -->
+                </div>
+            </div>
+
+            <!-- Dòng 4: Số Lót (Xanh - Lấy từ 60 số N1) -->
             <div class="tier-row">
                 <div class="tier-label label-blue">
-                    <i class="fa-solid fa-shield"></i> 🔵 LÓT
+                    <i class="fa-solid fa-shield"></i> 🔵 SỐ LÓT (LẤY TỪ 60 SỐ N1)
                 </div>
                 <div class="tier-content" id="list-lot">
                     <!-- Dynamic blue badges for Lót -->
                 </div>
             </div>
 
-            <!-- Nút Copy Phần 2 (PC: 3 nút riêng) -->
+            <!-- Nút Copy Phần 2 (PC: 4 nút riêng) -->
             <div class="btn-copy-bar pc-only" style="margin-top: 18px; margin-bottom: 0;">
                 <button class="btn-copy btn-copy-gold" id="btn-copy-top1">
                     <i class="fa-regular fa-copy"></i> Copy Top 1
@@ -1278,6 +1289,9 @@
                 </button>
                 <button class="btn-copy btn-copy-blue" id="btn-copy-tinh-tuy">
                     <i class="fa-solid fa-check-double"></i> Copy Dàn Tinh Túy
+                </button>
+                <button class="btn-copy" id="btn-copy-lot" style="background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); color: #38bdf8;">
+                    <i class="fa-solid fa-shield"></i> Copy Số Lót N1
                 </button>
             </div>
 
@@ -1400,10 +1414,18 @@
                 <button class="sheet-option-btn opt-tinhtuy" id="m-btn-copy-tinhtuy">
                     <span class="opt-icon">💎</span>
                     <span class="opt-text">
-                        <strong>Sao chép Dàn Tinh Túy (Toàn bộ)</strong>
-                        <small id="m-label-tinhtuy">Giao thoa 60 số Cấp 4</small>
+                        <strong>Sao chép Dàn Tinh Túy Ngày 1</strong>
+                        <small id="m-label-tinhtuy">Giao thoa 60 số Cấp 4 (4 số)</small>
                     </span>
                     <i class="fa-solid fa-check-double"></i>
+                </button>
+                <button class="sheet-option-btn opt-lot" id="m-btn-copy-lot" style="background: rgba(56, 189, 248, 0.08); border-color: rgba(56, 189, 248, 0.35);">
+                    <span class="opt-icon">🛡️</span>
+                    <span class="opt-text">
+                        <strong>Sao chép Dàn Số Lót (N1)</strong>
+                        <small id="m-label-lot">Toàn bộ số lót từ 60 số N1 (56 số)</small>
+                    </span>
+                    <i class="fa-regular fa-copy"></i>
                 </button>
                 <button class="sheet-option-btn opt-n1" id="m-btn-copy-n1">
                     <span class="opt-icon">🟢</span>
@@ -1418,29 +1440,7 @@
                     <span class="opt-text">
                         <strong>Sao chép Dàn N2 (36 số)</strong>
                         <small>Hard Filter từ N1</small>
-                    </span>
-                    <i class="fa-regular fa-copy"></i>
-                </button>
-                <button class="sheet-option-btn opt-n3" id="m-btn-copy-n3">
-                    <span class="opt-icon">🟠</span>
-                    <span class="opt-text">
-                        <strong>Sao chép Dàn N3 (36 số)</strong>
-                        <small>Hard Filter giữ nguyên N2</small>
-                    </span>
-                    <i class="fa-regular fa-copy"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- TOAST NOTIFICATION -->
-    <div class="toast" id="toastBox">
-        <i class="fa-solid fa-circle-check" style="color: #38bdf8;"></i>
-        <span id="toastMsg">Đã sao chép thành công!</span>
-    </div>
-
-    <script>
-        // Fallback embedded data
+                    // Fallback embedded data (Kỳ chuẩn 22/09/2026)
         const DEFAULT_PAYLOAD = {
             "target_date": "Thứ ba ngày 22-09-2026",
             "live_prizes": {
@@ -1453,13 +1453,14 @@
             "filled_count": 19,
             "total_count": 19,
             "is_g5_finished": true,
-            "top_1": "32",
-            "top_1_display": "32 (3d)",
-            "top_4": ["32", "37", "33", "42"],
-            "top_4_display": ["★ 32 (3d)", "★ 37 (3d)", "★ 33 (3d)", "★ 42 (3d)"],
-            "dan_lot": ["95", "99", "91", "15", "19", "24", "29", "65", "69", "61", "11", "21", "92", "97", "12", "17", "13", "26", "22", "23", "35", "34", "31", "45", "44", "05", "04", "02", "09", "01", "03", "72", "62", "67", "63", "55", "59", "51", "53", "85", "84", "82", "87", "81", "83"],
-            "dan_lot_display": ["95 (2d)", "99 (2d)", "91 (2d)", "15 (2d)", "19 (2d)", "24 (2d)", "29 (2d)", "65 (2d)", "69 (2d)", "61 (2d)", "11 (1d)", "21 (1d)", "92 (3d)", "97 (3d)", "12 (3d)", "17 (3d)", "13 (3d)", "26 (3d)", "22 (3d)", "23 (3d)", "35 (3d)", "34 (3d)", "31 (3d)", "45 (3d)", "44 (3d)", "05 (3d)", "04 (3d)", "02 (3d)", "09 (3d)", "01 (3d)", "03 (3d)", "72 (3d)", "62 (3d)", "67 (3d)", "63 (3d)", "55 (3d)", "59 (3d)", "51 (3d)", "53 (3d)", "85 (3d)", "84 (3d)", "82 (3d)", "87 (3d)", "81 (3d)", "83 (3d)"],
-            "dan_giao_thoa": ["01","02","03","04","05","09","11","12","13","15","17","19","21","22","23","24","26","29","31","32","33","34","35","37","42","44","45","51","53","55","59","61","62","63","65","67","69","72","81","82","83","84","85","87","91","92","95","97","99"],
+            "top_1": "82",
+            "top_1_display": "82 (3d)",
+            "top_4": ["82", "32", "87", "37"],
+            "top_4_display": ["★ 82 (3d)", "★ 32 (3d)", "★ 87 (3d)", "★ 37 (3d)"],
+            "dan_ngay_1_tinhtuy": ["32", "37", "82", "87"],
+            "dan_giao_thoa": ["32", "37", "82", "87"],
+            "dan_lot": ["01", "02", "03", "04", "05", "08", "09", "11", "12", "13", "15", "17", "18", "19", "20", "21", "22", "23", "24", "26", "28", "29", "31", "33", "34", "35", "38", "42", "44", "45", "51", "53", "55", "58", "59", "60", "61", "62", "63", "65", "67", "68", "69", "72", "80", "81", "83", "84", "85", "88", "91", "92", "95", "97", "98", "99"],
+            "dan_lot_display": ["01 (lót)", "02 (lót)", "03 (lót)", "04 (lót)", "05 (lót)", "08 (lót)", "09 (lót)", "11 (lót)", "12 (lót)", "13 (lót)", "15 (lót)", "17 (lót)", "18 (lót)", "19 (lót)", "20 (lót)", "21 (lót)", "22 (lót)", "23 (lót)", "24 (lót)", "26 (lót)", "28 (lót)", "29 (lót)", "31 (lót)", "33 (lót)", "34 (lót)", "35 (lót)", "38 (lót)", "42 (lót)", "44 (lót)", "45 (lót)", "51 (lót)", "53 (lót)", "55 (lót)", "58 (lót)", "59 (lót)", "60 (lót)", "61 (lót)", "62 (lót)", "63 (lót)", "65 (lót)", "67 (lót)", "68 (lót)", "69 (lót)", "72 (lót)", "80 (lót)", "81 (lót)", "83 (lót)", "84 (lót)", "85 (lót)", "88 (lót)", "91 (lót)", "92 (lót)", "95 (lót)", "97 (lót)", "98 (lót)", "99 (lót)"],
             "dan_n1": ["01","02","03","04","05","08","09","11","12","13","15","17","18","19","20","21","22","23","24","26","28","29","31","32","33","34","35","37","38","42","44","45","51","53","55","58","59","60","61","62","63","65","67","68","69","72","80","81","82","83","84","85","87","88","91","92","95","97","98","99"],
             "dan_n2": ["11","12","13","15","17","18","19","21","22","23","28","29","31","32","33","35","37","38","42","44","45","51","53","55","58","59","61","62","63","65","67","81","82","83","85","87"],
             "dan_n3": ["11","12","13","15","17","18","19","21","22","23","28","29","31","32","33","35","37","38","42","44","45","51","53","55","58","59","61","62","63","65","67","81","82","83","85","87"],
@@ -1520,7 +1521,7 @@
             const total = currentData.total_count || 19;
             document.getElementById('txt-progress-badge').textContent = `${filled}/${total} GIẢI (ĐÃ HOÀN TẤT)`;
 
-            // PHẦN 1: Live Prizes Table With Position Highlights (3 categories)
+            // PHẦN 1: Live Prizes Table With Position Highlights
             const lp = currentData.live_prizes || {};
             if (lp.g1) renderPrizeWithHighlights('live-g1', ['G1'], [lp.g1]);
             if (lp.g2) renderPrizeWithHighlights('live-g2', ['G2.1', 'G2.2'], lp.g2);
@@ -1536,24 +1537,43 @@
             // Top 4: Thêm dấu sao (★) và hậu tố chu kỳ (3d/4d)
             const top4List = currentData.top_4_display || (currentData.top_4 || []).map(x => `★ ${x} (3d)`);
             const containerTop4 = document.getElementById('list-top4');
-            containerTop4.innerHTML = '';
-            top4List.forEach(itemStr => {
-                const badge = document.createElement('span');
-                badge.className = 'num-badge-top4-star';
-                badge.textContent = itemStr;
-                containerTop4.appendChild(badge);
-            });
+            if (containerTop4) {
+                containerTop4.innerHTML = '';
+                top4List.forEach(itemStr => {
+                    const badge = document.createElement('span');
+                    badge.className = 'num-badge-top4-star';
+                    badge.textContent = itemStr;
+                    containerTop4.appendChild(badge);
+                });
+            }
 
-            // Lót: Hiển thị kèm chu kỳ (2d...)
-            const lotList = currentData.dan_lot_display || (currentData.dan_lot || []).map(x => `${x} (2d)`);
+            // Dàn Tinh Túy Ngày 1 (Mới chạm giao thoa 60 số Cấp 4)
+            const tinhtuyList = currentData.dan_ngay_1_tinhtuy || currentData.dan_giao_thoa || [];
+            const containerTinhTuy = document.getElementById('list-tinhtuy-ngay1');
+            if (containerTinhTuy) {
+                containerTinhTuy.innerHTML = '';
+                tinhtuyList.forEach(itemStr => {
+                    const badge = document.createElement('span');
+                    badge.className = 'num-badge-yellow';
+                    badge.style.borderColor = 'rgba(56, 189, 248, 0.6)';
+                    badge.style.color = '#fff';
+                    badge.textContent = itemStr;
+                    containerTinhTuy.appendChild(badge);
+                });
+            }
+
+            // Dàn Số Lót (Lấy từ 60 số N1)
+            const lotList = currentData.dan_lot || [];
             const containerLot = document.getElementById('list-lot');
-            containerLot.innerHTML = '';
-            lotList.forEach(itemStr => {
-                const badge = document.createElement('span');
-                badge.className = 'num-badge-blue';
-                badge.textContent = itemStr;
-                containerLot.appendChild(badge);
-            });
+            if (containerLot) {
+                containerLot.innerHTML = '';
+                lotList.forEach(itemStr => {
+                    const badge = document.createElement('span');
+                    badge.className = 'num-badge-blue';
+                    badge.textContent = itemStr;
+                    containerLot.appendChild(badge);
+                });
+            }
 
             // PHẦN 3: DÀN SỐ N1, N2, N3
             renderNumberList('list-n1', currentData.dan_n1 || [], 'num-badge-green');
@@ -1612,7 +1632,7 @@
                         const cycle = info.cycle || 1;
                         let dotChar = '○';
                         let dotClass = 'dot-dim-sm';
-                        // 1. Chỉ đạo (3-4 ngày) -> 🟡 VÀNG (Cả Đầu và Đuôi cùng màu)
+                        // 1. Chỉ đạo (3-4 ngày) -> 🟡 VÀNG
                         if (info.color_type === 'cycle_main' || cycle >= 3) {
                             digitSpan.classList.add('digit-cycle-main');
                             dotChar = '●';
@@ -1622,7 +1642,7 @@
                             tag.innerHTML = `<span class="tag-text">${cycle}d</span><span class="tag-dot ${dotClass}">${dotChar}</span>`;
                             digitSpan.appendChild(tag);
                         }
-                        // 2. Lót (2 ngày) -> 🔵 XANH (Cả Đầu và Đuôi cùng màu)
+                        // 2. Lót (2 ngày) -> 🔵 XANH
                         else if (info.color_type === 'cycle_lot' || cycle === 2) {
                             digitSpan.classList.add('digit-cycle-lot');
                             dotChar = '●';
@@ -1649,7 +1669,6 @@
 
                     chip.appendChild(digitSpan);
                 }
-
                 el.appendChild(chip);
             });
         }
@@ -1672,8 +1691,17 @@
             const btnCopyTinhTuy = document.getElementById('btn-copy-tinh-tuy');
             if (btnCopyTinhTuy) {
                 btnCopyTinhTuy.onclick = () => {
-                    const text = (currentData.dan_giao_thoa || []).join(', ');
-                    copyText(text, `Đã sao chép Dàn Tinh Túy (${(currentData.dan_giao_thoa || []).length} số)`);
+                    const list = currentData.dan_ngay_1_tinhtuy || currentData.dan_giao_thoa || [];
+                    const text = list.join(', ');
+                    copyText(text, `Đã sao chép Dàn Tinh Túy Ngày 1 (${list.length} số)`);
+                };
+            }
+
+            const btnCopyLot = document.getElementById('btn-copy-lot');
+            if (btnCopyLot) {
+                btnCopyLot.onclick = () => {
+                    const text = (currentData.dan_lot || []).join(', ');
+                    copyText(text, `Đã sao chép Dàn Số Lót N1 (${(currentData.dan_lot || []).length} số)`);
                 };
             }
 
@@ -1717,8 +1745,12 @@
                     const lblTop4 = document.getElementById('m-label-top4');
                     if (lblTop4) lblTop4.textContent = (currentData.top_4 || []).join(', ');
 
+                    const tinhtuyList = currentData.dan_ngay_1_tinhtuy || currentData.dan_giao_thoa || [];
                     const lblTinhTuy = document.getElementById('m-label-tinhtuy');
-                    if (lblTinhTuy) lblTinhTuy.textContent = `Giao thoa 60 số Cấp 4 (${(currentData.dan_giao_thoa || []).length} số)`;
+                    if (lblTinhTuy) lblTinhTuy.textContent = `Giao thoa 60 số Cấp 4 (${tinhtuyList.length} số)`;
+
+                    const lblLot = document.getElementById('m-label-lot');
+                    if (lblLot) lblLot.textContent = `Toàn bộ số lót từ 60 số N1 (${(currentData.dan_lot || []).length} số)`;
 
                     sheet.classList.add('active');
                 };
@@ -1752,8 +1784,18 @@
             const mBtnTinhTuy = document.getElementById('m-btn-copy-tinhtuy');
             if (mBtnTinhTuy) {
                 mBtnTinhTuy.onclick = () => {
-                    const text = (currentData.dan_giao_thoa || []).join(', ');
-                    copyText(text, `Đã sao chép Dàn Tinh Túy (${(currentData.dan_giao_thoa || []).length} số)`);
+                    const list = currentData.dan_ngay_1_tinhtuy || currentData.dan_giao_thoa || [];
+                    const text = list.join(', ');
+                    copyText(text, `Đã sao chép Dàn Tinh Túy Ngày 1 (${list.length} số)`);
+                    closeSheet();
+                };
+            }
+
+            const mBtnLot = document.getElementById('m-btn-copy-lot');
+            if (mBtnLot) {
+                mBtnLot.onclick = () => {
+                    const text = (currentData.dan_lot || []).join(', ');
+                    copyText(text, `Đã sao chép Dàn Số Lót N1 (${(currentData.dan_lot || []).length} số)`);
                     closeSheet();
                 };
             }
@@ -1789,7 +1831,7 @@
             const btnLegendHelp = document.getElementById('btn-legend-help');
             if (btnLegendHelp) {
                 btnLegendHelp.onclick = () => {
-                    showToast('🟡 Chỉ đạo (3-4 ngày): Đánh chính | 🔵 Lót (2 ngày): Đánh lót | ⚪ Theo dõi (1 ngày): Chỉ theo dõi');
+                    showToast('🟡 Chỉ đạo (3-4 ngày): Vẫn lấy bình thường | 🔵 Lót (2 ngày): Nổ ngày 2 → Tổng lực ngày 3 | ⚪ Theo dõi (1 ngày): Mới chạm ngày 1 | ❌ Cầu gãy: Loại bỏ hoàn toàn');
                 };
             }
         }

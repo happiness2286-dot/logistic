@@ -18,6 +18,12 @@ Lệnh trên sẽ tự động:
 4. Cập nhật dữ liệu cho Web Dashboard Localhost `http://localhost:8080`.
 
 ### 2. Soi Vị Trí G1->G5 & Lọc 60 Số Cấp 4 (Module Mới):
+- **Chuẩn hóa 5 Quy Tắc**:
+  1. Cầu chạy ngày 3, 4: Vẫn lấy bình thường (ưu tiên Top 1, Top 4).
+  2. Cầu đã bỏ (gãy): Không lấy nữa — loại bỏ hoàn toàn (streak liên tục, không cộng dồn đứt quãng).
+  3. Cầu mới chạm ngày 1: Theo dõi — nếu nổ ngày 2 -> trở thành tổng lực ngày 3.
+  4. Quy trình 5 bước (ví dụ ngày 22/09 từ đề 21/09: 40432 -> Đầu [3, 8], Đuôi [2, 7] -> Soi vị trí -> Ưu tiên đầu đuôi bóng -> Ghép dàn Ngày 1 -> Giao thoa 60 số Cấp 4).
+  5. Dàn số lót: Lấy từ 60 số N1.
 - **Chạy phân tích kỳ mới nhất**:
   ```bash
   python soi_cau_g1_g5.py
