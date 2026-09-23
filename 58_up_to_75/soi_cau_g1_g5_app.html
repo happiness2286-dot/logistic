@@ -1317,7 +1317,7 @@
                 <div class="tier-label label-green">
                     <i class="fa-solid fa-circle"></i> 🟢 DÀN N1 (60 SỐ):
                 </div>
-                <div class="tier-content" id="list-n1">
+                <div class="tier-content" id="dan-n1">
                     <!-- Dynamic green badges for N1 -->
                 </div>
             </div>
@@ -1327,7 +1327,7 @@
                 <div class="tier-label label-gold">
                     <i class="fa-solid fa-circle"></i> 🟡 DÀN N2 (36 SỐ):
                 </div>
-                <div class="tier-content" id="list-n2">
+                <div class="tier-content" id="dan-n2">
                     <!-- Dynamic yellow badges for N2 -->
                 </div>
             </div>
@@ -1337,20 +1337,20 @@
                 <div class="tier-label label-orange">
                     <i class="fa-solid fa-circle"></i> 🟠 DÀN N3 (36 SỐ):
                 </div>
-                <div class="tier-content" id="list-n3">
+                <div class="tier-content" id="dan-n3">
                     <!-- Dynamic orange badges for N3 -->
                 </div>
             </div>
 
             <!-- Nút Copy Phần 3 -->
             <div class="btn-copy-bar" style="margin-top: 18px; margin-bottom: 0;">
-                <button class="btn-copy btn-copy-green" id="btn-copy-n1">
+                <button class="btn-copy btn-copy-green" id="btn-copy-n1" onclick="copyDan('dan-n1')">
                     <i class="fa-regular fa-copy"></i> Copy N1
                 </button>
-                <button class="btn-copy btn-copy-gold" id="btn-copy-n2">
+                <button class="btn-copy btn-copy-gold" id="btn-copy-n2" onclick="copyDan('dan-n2')">
                     <i class="fa-regular fa-copy"></i> Copy N2
                 </button>
-                <button class="btn-copy btn-copy-orange" id="btn-copy-n3">
+                <button class="btn-copy btn-copy-orange" id="btn-copy-n3" onclick="copyDan('dan-n3')">
                     <i class="fa-regular fa-copy"></i> Copy N3
                 </button>
             </div>
@@ -1606,9 +1606,12 @@
             }
 
             // PHẦN 3: DÀN SỐ N1, N2, N3
-            renderNumberList('list-n1', currentData.dan_n1 || [], 'num-badge-green');
-            renderNumberList('list-n2', currentData.dan_n2 || [], 'num-badge-yellow');
-            renderNumberList('list-n3', currentData.dan_n3 || [], 'num-badge-orange-sm');
+            renderDan(currentData.dan_n1, 'dan-n1');
+            renderDan(currentData.dan_n2, 'dan-n2');
+            renderDan(currentData.dan_n3, 'dan-n3');
+            renderDan(currentData.dan_n1, 'list-n1');
+            renderDan(currentData.dan_n2, 'list-n2');
+            renderDan(currentData.dan_n3, 'list-n3');
 
             // KHUNG CHUYỂN CẦU NGÀY MỚI
             const ft = currentData.frame_transition || {};
@@ -1618,6 +1621,38 @@
             if (ft.schedule_n2) document.getElementById('sched-n2').textContent = ft.schedule_n2;
             if (ft.schedule_n3) document.getElementById('sched-n3').textContent = ft.schedule_n3;
         }
+
+        // BƯỚC 5: HÀM RENDER DÀN N1, N2, N3
+        function renderDan(dan, containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            if (!dan || dan.length === 0) {
+                container.innerHTML = '<span style="color:#8b9ac0; font-size:12px;">Chưa có dữ liệu</span>';
+                return;
+            }
+
+            let badgeClass = 'num-badge-green';
+            if (containerId.includes('n2')) badgeClass = 'num-badge-yellow';
+            else if (containerId.includes('n3')) badgeClass = 'num-badge-orange-sm';
+
+            container.innerHTML = dan.map(so => 
+                `<span class="${badgeClass} num">${so}</span>`
+            ).join(' ');
+        }
+        window.renderDan = renderDan;
+
+        // BƯỚC 6: HÀM COPY DÀN SỐ CHO TẤT CẢ CÁC DÀN
+        function copyDan(containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const items = Array.from(container.querySelectorAll('.num, span')).map(e => e.textContent.trim()).filter(x => x && !x.includes('Chưa có'));
+            const text = items.length > 0 ? items.join(', ') : container.innerText.trim();
+            if (!text) return;
+            const title = containerId.toUpperCase().replace('-', ' ');
+            copyText(text, `Đã copy ${title} (${items.length} số)`);
+        }
+        window.copyDan = copyDan;
 
         function renderNumberList(elementId, arr, cssClass, inlineStyle = '') {
             const el = document.getElementById(elementId);
