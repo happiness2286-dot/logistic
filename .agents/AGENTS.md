@@ -54,3 +54,5 @@ Lệnh trên sẽ tự động:
   - Có Action Sheet Bottom Menu sao chép nhanh: Top 1, Top 4, Dàn Tinh Túy, Dàn N1, N2, N3.
   - Phân loại cầu gộp: 🟡 Chỉ đạo (3-4 ngày: đánh chính) | 🔵 Lót (2 ngày) | ⚪ Theo dõi (1 ngày).
   - Thẻ `div` và HTML luôn cân bằng chuẩn, không lặp ID.
+  - **Phần 4 Tách Biệt**: PHẦN 4A (Khung 3 ngày 58_up_to_75) và PHẦN 4B (Soi trực tiếp Bạch thủ/Tứ thủ).
+  - **Tối Ưu N2/N3 & Chu Kỳ 7 Ngày**: N2 mở rộng (42 số - lọc bệt 2 ngày), N3 cơ hội cuối (40 số - lọc gan >45 ngày), chu kỳ 7 ngày tự động theo tuần.

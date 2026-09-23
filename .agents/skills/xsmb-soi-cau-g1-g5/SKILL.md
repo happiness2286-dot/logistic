@@ -78,3 +78,25 @@ python soi_cau_g1_g5.py --csv <duong_dan_file.csv>
 ```
 File CSV có cấu trúc: `STT,So_2D` (hoặc 1 cột chứa 60 số định dạng 2 chữ số `00` - `99`).
 Output được tự động xuất ra console và lưu thành file JSON: `ket_qua_soi_cau_g1_g5.json`.
+
+---
+
+## 5. Chuẩn Hóa Kiến Trúc Đóng Băng (Frozen Baseline)
+
+1. **Phân Tách 2 Cơ Chế Độc Lập (PHẦN 4)**:
+   - **PHẦN 4A: ĐÁNH GIÁ KHUNG 3 NGÀY (`58_up_to_75`)**: Theo dõi độc lập chu kỳ nuôi N1 $\rightarrow$ N2 $\rightarrow$ N3.
+   - **PHẦN 4B: ĐÁNH GIÁ SOI TRỰC TIẾP**: Đánh giá hiệu suất độc lập của Bạch Thủ (Top 1), Tứ Thủ (Top 4) và Dàn Lót.
+2. **Cơ Chế Cứu Khung N2/N3 (AI Score)**:
+   - **Dàn N2 Mở Rộng (42 số)**: Tuyển chọn số điểm AI cao từ N1 và ứng viên; **Loại bỏ số bệt 2 ngày liên tiếp**.
+   - **Dàn N3 Cơ Hội Cuối (40 số)**: Tuyển chọn từ Dàn N2; **Loại bỏ số gan cực đại (> 45 ngày) và cầu gãy**.
+3. **Chu Kỳ 7 Ngày (Theo Tuần trong Tháng)**:
+   - Tuần 1: Bảo hiểm mở rộng (N2: 42 số, N3: 40 số).
+   - Tuần 2: Hard Filter (N2: 38 số, N3: 36 số).
+   - Tuần 3: Bảo hiểm mở rộng (N2: 45 số, N3: 42 số).
+   - Tuần 4+: Hard Filter Mở Rộng (N2: 42 số, N3: 40 số).
+4. **Kết Quả Kiểm Chứng Thực Tế**:
+   - Trúng N1: **89.7%**
+   - Trúng N2 (Cứu N1): **10.3%**
+   - Trượt khung: **0.0%** (100% trúng khung trên 32 kỳ gần nhất).
+   - Bạch thủ Top 1: **34.4%** | Tứ thủ Top 4: **65.6%**.
+
