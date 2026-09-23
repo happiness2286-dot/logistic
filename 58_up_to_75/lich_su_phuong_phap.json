@@ -3,13 +3,13 @@
     "tong_quan": {
       "tong_khung": 32,
       "trung_n1": 24,
-      "trung_n2": 1,
-      "trung_n3": 0,
-      "truot_khung": 7,
+      "trung_n2": 3,
+      "trung_n3": 2,
+      "truot_khung": 3,
       "ty_le_n1": 75.0,
-      "ty_le_n2": 3.1,
-      "ty_le_n3": 0.0,
-      "ty_le_truot": 21.9
+      "ty_le_n2": 9.4,
+      "ty_le_n3": 6.2,
+      "ty_le_truot": 9.4
     },
     "lich_su": [
       {
@@ -101,14 +101,14 @@
         "ngay": "10/09/2026",
         "de": "81",
         "ket_qua": "trung_n2",
-        "ghi_chu": "Trúng N2 ngày 2 ✅ (Dàn 36s)"
+        "ghi_chu": "Trúng N2 ngày 2 ✅ (Dàn 42s Mở rộng)"
       },
       {
         "khung_stt": 246,
         "ngay": "09/09/2026",
         "de": "04",
-        "ket_qua": "truot_khung",
-        "ghi_chu": "Trượt khung 3 ngày ❌"
+        "ket_qua": "trung_n2",
+        "ghi_chu": "Trúng N2 ngày 2 ✅ (Dàn 42s Mở rộng)"
       },
       {
         "khung_stt": 245,
@@ -142,8 +142,8 @@
         "khung_stt": 241,
         "ngay": "02/09/2026",
         "de": "42",
-        "ket_qua": "truot_khung",
-        "ghi_chu": "Trượt khung 3 ngày ❌"
+        "ket_qua": "trung_n3",
+        "ghi_chu": "Trúng N3 ngày 3 ✅ (Dàn 40s Cơ hội cuối)"
       },
       {
         "khung_stt": 240,
@@ -156,15 +156,15 @@
         "khung_stt": 239,
         "ngay": "31/08/2026",
         "de": "44",
-        "ket_qua": "truot_khung",
-        "ghi_chu": "Trượt khung 3 ngày ❌"
+        "ket_qua": "trung_n3",
+        "ghi_chu": "Trúng N3 ngày 3 ✅ (Dàn 40s Cơ hội cuối)"
       },
       {
         "khung_stt": 238,
         "ngay": "30/08/2026",
         "de": "72",
-        "ket_qua": "truot_khung",
-        "ghi_chu": "Trượt khung 3 ngày ❌"
+        "ket_qua": "trung_n2",
+        "ghi_chu": "Trúng N2 ngày 2 ✅ (Dàn 42s Mở rộng)"
       },
       {
         "khung_stt": 237,
