@@ -25,6 +25,7 @@ import json
 import time
 import argparse
 from datetime import datetime
+from collections import Counter
 import pandas as pd
 
 # Reconfigure stdout for UTF-8 on Windows
@@ -85,6 +86,110 @@ def load_cap4_numbers(csv_path=DEFAULT_CAP4_CSV):
     except Exception as e:
         print(f"[!] Lỗi khi đọc file CSV {csv_path}: {e}. Dùng dàn Cấp 4 dự phòng.")
         return [f"{x:02d}" for x in sorted(DEFAULT_60_CAP4)]
+
+def get_weekly_cycle_mode(draw_date_str=None):
+    """
+    Áp dụng chu kỳ 7 ngày (Cấp 4):
+    Tuần 1 (1-7): Bảo hiểm mở rộng (N2: 42 số, N3: 40 số)
+    Tuần 2 (8-14): Hard Filter (N2: 38 số, N3: 36 số)
+    Tuần 3 (15-21): Bảo hiểm mở rộng (N2: 45 số, N3: 42 số)
+    Tuần 4+ (22 trở đi): Hard Filter Mở rộng (N2: 42 số, N3: 40 số)
+    """
+    day = 23
+    if draw_date_str:
+        match = re.search(r'(\d{1,2})[-/](\d{1,2})[-/](\d{4})', str(draw_date_str))
+        if match:
+            day = int(match.group(1))
+    if 1 <= day <= 7:
+        return {'week': 'Tuần 1', 'model': 'Bảo hiểm mở rộng', 'n2_count': 42, 'n3_count': 40, 'note': 'Cầu mở rộng'}
+    elif 8 <= day <= 14:
+        return {'week': 'Tuần 2', 'model': 'Hard Filter', 'n2_count': 38, 'n3_count': 36, 'note': 'Tiết kiệm vốn'}
+    elif 15 <= day <= 21:
+        return {'week': 'Tuần 3', 'model': 'Bảo hiểm mở rộng', 'n2_count': 45, 'n3_count': 42, 'note': 'Cầu bùng nổ'}
+    else:
+        return {'week': 'Tuần 4', 'model': 'Hard Filter Mở Rộng', 'n2_count': 42, 'n3_count': 40, 'note': 'Bảo toàn & Cứu khung'}
+
+def compute_ai_scores(all_draws, target_idx, unique_numbers_map=None):
+    """
+    Chấm điểm AI Score (0.0 - 10.0) cho các con số 2D:
+    - Tần suất 30 kỳ (Golden Frequency)
+    - Nhịp gan lý tưởng (5 - 25 ngày)
+    - Phạt số bệt 2 ngày liên tiếp
+    - Phạt gan cực đại (> 45 ngày)
+    - Thưởng điểm cầu vị trí G1->G5 đang chạy (Chỉ đạo: +2.5, Lót: +1.5, Theo dõi: +0.8)
+    - Loại bỏ cầu gãy hoàn toàn
+    """
+    prev_de = all_draws[target_idx + 1]['de'] if target_idx + 1 < len(all_draws) else None
+    prev_prev_de = all_draws[target_idx + 2]['de'] if target_idx + 2 < len(all_draws) else None
+    
+    # 30 kỳ gần nhất tính từ target_idx + 1
+    hist_30 = [d['de'] for d in all_draws[target_idx + 1: target_idx + 31] if d.get('de')]
+    counter_30 = Counter(hist_30)
+    
+    # Tính độ gan
+    gan_dict = {}
+    for i in range(100):
+        n_str = f"{i:02d}"
+        gan = 999
+        for step, d in enumerate(all_draws[target_idx + 1:]):
+            if d.get('de') == n_str:
+                gan = step
+                break
+        gan_dict[n_str] = gan
+        
+    bong_map = {0:5, 1:6, 2:7, 3:8, 4:9, 5:0, 6:1, 7:2, 8:3, 9:4}
+    dau_set = set()
+    duoi_set = set()
+    if prev_de and len(prev_de) == 2:
+        c = int(prev_de[0])
+        dv = int(prev_de[1])
+        dau_set = {str(c), str(bong_map[c])}
+        duoi_set = {str(dv), str(bong_map[dv])}
+        
+    scores = {}
+    for i in range(100):
+        n_str = f"{i:02d}"
+        sc = 5.0
+        
+        # 1. Tần suất 30 kỳ
+        freq = counter_30.get(n_str, 0)
+        if freq == 1: sc += 1.5
+        elif freq == 2: sc += 2.2
+        elif freq >= 3: sc += 1.8
+        else: sc -= 0.5
+        
+        # 2. Độ gan
+        gan = gan_dict.get(n_str, 999)
+        if 5 <= gan <= 25: sc += 1.5
+        elif gan > 45: sc -= 3.0
+        
+        # Bệt 2 ngày liên tiếp -> phạt rất nặng để loại khỏi N2
+        if prev_de == n_str and prev_prev_de == n_str:
+            sc -= 6.0
+        elif prev_de == n_str:
+            sc -= 1.5
+            
+        # 3. Tương hợp Đầu/Đuôi & Bóng
+        if n_str[0] in dau_set and n_str[1] in duoi_set:
+            sc += 1.2
+        elif n_str[0] in dau_set or n_str[1] in duoi_set:
+            sc += 0.5
+            
+        # 4. Cầu vị trí G1->G5
+        if unique_numbers_map and n_str in unique_numbers_map:
+            info = unique_numbers_map[n_str]
+            cat = info.get('category', '')
+            cycle = info.get('cycle_days', 0)
+            if cat == 'Chỉ đạo' or cycle >= 3:
+                sc += 2.5
+            elif cat == 'Lót' or cycle == 2:
+                sc += 1.5
+            elif cycle == 1:
+                sc += 0.8
+                
+        scores[n_str] = round(min(max(sc, 1.0), 9.9), 1)
+        
+    return scores, gan_dict, prev_de, prev_prev_de
 
 def fetch_mketqua_html(count=10):
     """Lấy mã HTML các kỳ xổ số gần nhất từ mketqua.net"""
@@ -523,28 +628,66 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None)
 
     is_g5_finished = (filled_g1_to_g5 == total_g1_to_g5)
 
-    # Dàn N2, N3
-    n2_candidates = [
+    # ÁP DỤNG CHU KỲ 7 NGÀY & TỐI ƯU HÓA MỞ RỘNG N2 (42 SỐ), N3 (40 SỐ)
+    weekly_cycle = get_weekly_cycle_mode(target_draw['date'])
+    n2_target_count = weekly_cycle['n2_count']
+    n3_target_count = weekly_cycle['n3_count']
+
+    # Chấm điểm AI Score cho tất cả 100 số
+    all_draws_for_ai = draws
+    if os.path.exists('data_2026.json'):
+        try:
+            with open('data_2026.json', encoding='utf-8') as f:
+                d_2026 = json.load(f)
+                if len(d_2026) > len(all_draws_for_ai):
+                    all_draws_for_ai = d_2026
+        except Exception:
+            pass
+
+    ai_scores, gan_dict, prev_de_val, prev_prev_de_val = compute_ai_scores(all_draws_for_ai, target_draw_idx, unique_numbers_map)
+
+    # 1. DÀN N2 (42 số - Mở rộng cứu N1):
+    # Tuyển chọn số từ N1 và các ứng viên tiềm năng có điểm AI cao
+    # Loại bỏ số bệt 2 ngày liên tiếp (đề về 2 ngày liên tục)
+    bet_2_days = {prev_de_val} if (prev_de_val and prev_de_val == prev_prev_de_val) else set()
+    base_n2_pool = [
         11, 12, 13, 15, 17, 18, 19, 21, 22, 23, 28, 29, 31, 32, 33, 35, 37, 38,
-        42, 44, 45, 51, 53, 55, 58, 59, 61, 62, 63, 65, 67, 81, 82, 83, 85, 87
+        42, 44, 45, 51, 52, 53, 55, 58, 59, 61, 62, 63, 65, 66, 67, 68, 81, 82,
+        83, 85, 87, 90, 95, 98
     ]
-    dan_n2_clean = sorted([f"{x:02d}" for x in n2_candidates if f"{x:02d}" in dan_n1_list])
-    for num in dan_n1_list:
-        if len(dan_n2_clean) >= 36:
+    n2_candidates_set = set(f"{x:02d}" for x in base_n2_pool)
+    for n in dan_n1_list:
+        n2_candidates_set.add(n)
+        
+    n2_candidates_filtered = [n for n in n2_candidates_set if n not in bet_2_days]
+    n2_candidates_filtered.sort(key=lambda x: (ai_scores.get(x, 5.0), 1 if x in dan_n1_list else 0), reverse=True)
+    dan_n2_list = sorted(n2_candidates_filtered[:n2_target_count])
+
+    # 2. DÀN N3 (40 số - Cơ hội cuối cứu khung):
+    # Tuyển chọn từ Dàn N2, ưu tiên số có điểm AI cao và không bị gan cực đại (> 45 ngày)
+    n3_candidates = [n for n in dan_n2_list if gan_dict.get(n, 0) <= 45]
+    for n in dan_n2_list:
+        if len(n3_candidates) >= n3_target_count:
             break
-        if num not in dan_n2_clean:
-            dan_n2_clean.append(num)
-    dan_n2_list = sorted(dan_n2_clean[:36])
-    dan_n3_list = list(dan_n2_list)
+        if n not in n3_candidates:
+            n3_candidates.append(n)
+    n3_candidates.sort(key=lambda x: ai_scores.get(x, 5.0), reverse=True)
+    dan_n3_list = sorted(n3_candidates[:n3_target_count])
 
     # Trạng thái chuyển cầu ngày mới
     is_n1_hit = (actual_de in dan_n1_list) if actual_de else False
+    is_n2_hit = (actual_de in dan_n2_list) if actual_de else False
+    is_n3_hit = (actual_de in dan_n3_list) if actual_de else False
+
+    status_badge = "ĐÃ TRÚNG N1 → RESET CẦU MỚI" if is_n1_hit else ("ĐÃ TRÚNG N2 → CỨU N1 THÀNH CÔNG" if is_n2_hit else ("ĐÃ TRÚNG N3 → CỨU KHUNG THÀNH CÔNG" if is_n3_hit else "ĐANG THEO DÕI KHUNG"))
+
     frame_transition = {
-        'last_result': f"Kỳ gần nhất ({target_draw['date']}) đã {'trúng N1 → RESET CẦU MỚI' if is_n1_hit else 'chưa nổ N1'}",
-        'status_badge': "ĐÃ TRÚNG N1 → RESET CẦU MỚI" if is_n1_hit else "ĐANG THEO DÕI KHUNG",
-        'schedule_n1': "Đánh chính: Kỳ tiếp theo (Dàn 60 Số N1)",
-        'schedule_n2': "Dự phòng N2: Ngày thứ 2 (36 số)",
-        'schedule_n3': "Dự phòng N3: Ngày thứ 3 (36 số)"
+        'last_result': f"Kỳ gần nhất ({target_draw['date']}) đã {status_badge}",
+        'status_badge': status_badge,
+        'schedule_n1': f"Đánh chính N1: Kỳ tiếp theo ({len(dan_n1_list)} Số N1)",
+        'schedule_n2': f"Dự phòng N2: Ngày thứ 2 ({len(dan_n2_list)} số - Mở rộng cứu N1)",
+        'schedule_n3': f"Dự phòng N3: Ngày thứ 3 ({len(dan_n3_list)} số - Cơ hội cuối)",
+        'weekly_cycle': weekly_cycle
     }
 
     # BẢNG MA TRẬN TÔ MÀU VỊ TRÍ CẦU (3 LOẠI CHUẨN HOÁ):
@@ -619,6 +762,8 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None)
         'dan_n1': dan_n1_list,
         'dan_n2': dan_n2_list,
         'dan_n3': dan_n3_list,
+        'weekly_cycle': weekly_cycle,
+        'ai_scores': ai_scores,
         'frame_transition': frame_transition,
         'table_5cols': found_numbers,
         'actual_de': actual_de
@@ -643,6 +788,8 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None)
             kq_khung = 'trung_n1'
         elif actual_de in dan_n2_list:
             kq_khung = 'trung_n2'
+        elif actual_de in dan_n3_list:
+            kq_khung = 'trung_n3'
         else:
             kq_khung = 'truot_khung'
         ghi_lich_su_khung(target_draw['date'], actual_de, kq_khung)
@@ -676,8 +823,8 @@ def ghi_lich_su_khung(date_str, de_str, kq_status, frame_stt=None):
 
             note_map = {
                 'trung_n1': 'Trúng N1 ngày 1 ✅ (Dàn 60s)',
-                'trung_n2': 'Trúng N2 ngày 2 ✅ (Dàn 36s)',
-                'trung_n3': 'Trúng N3 ngày 3 ✅ (Dàn 36s)',
+                'trung_n2': 'Trúng N2 ngày 2 ✅ (Dàn 42s Mở rộng)',
+                'trung_n3': 'Trúng N3 ngày 3 ✅ (Dàn 40s Cơ hội cuối)',
                 'truot_khung': 'Trượt khung 3 ngày ❌'
             }
 

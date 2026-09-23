@@ -1441,14 +1441,14 @@
         <section class="n123-box">
             <div class="section-header" style="border-color: rgba(34, 197, 94, 0.2);">
                 <h2 style="color: #4ade80;"><i class="fa-solid fa-layer-group" style="color: #22c55e;"></i> PHẦN 3: DÀN SỐ N1, N2, N3 (CẤP 4)</h2>
-                <span class="tag-info" style="color: #4ade80; border-color: rgba(34, 197, 94, 0.4); background: rgba(34, 197, 94, 0.1);">
-                    KIỂM CHỨNG 98.3%
+                <span class="tag-info" id="weekly-cycle-badge" style="color: #4ade80; border-color: rgba(34, 197, 94, 0.4); background: rgba(34, 197, 94, 0.1);">
+                    CHU KỲ 7 NGÀY
                 </span>
             </div>
 
             <!-- Dòng N1 (60 số - Xanh lá) -->
             <div class="tier-row">
-                <div class="tier-label label-green">
+                <div class="tier-label label-green" id="lbl-dan-n1">
                     <i class="fa-solid fa-circle"></i> 🟢 DÀN N1 (60 SỐ):
                 </div>
                 <div class="tier-content" id="dan-n1">
@@ -1456,20 +1456,20 @@
                 </div>
             </div>
 
-            <!-- Dòng N2 (36 số - Vàng) -->
+            <!-- Dòng N2 (42 số - Vàng) -->
             <div class="tier-row">
-                <div class="tier-label label-gold">
-                    <i class="fa-solid fa-circle"></i> 🟡 DÀN N2 (36 SỐ):
+                <div class="tier-label label-gold" id="lbl-dan-n2">
+                    <i class="fa-solid fa-circle"></i> 🟡 DÀN N2 (42 SỐ - MỞ RỘNG CỨU N1):
                 </div>
                 <div class="tier-content" id="dan-n2">
                     <!-- Dynamic yellow badges for N2 -->
                 </div>
             </div>
 
-            <!-- Dòng N3 (36 số - Cam) -->
+            <!-- Dòng N3 (40 số - Cam) -->
             <div class="tier-row">
-                <div class="tier-label label-orange">
-                    <i class="fa-solid fa-circle"></i> 🟠 DÀN N3 (36 SỐ):
+                <div class="tier-label label-orange" id="lbl-dan-n3">
+                    <i class="fa-solid fa-circle"></i> 🟠 DÀN N3 (40 SỐ - CƠ HỘI CUỐI):
                 </div>
                 <div class="tier-content" id="dan-n3">
                     <!-- Dynamic orange badges for N3 -->
@@ -1926,6 +1926,24 @@
             renderDan(currentData.dan_n1, 'list-n1');
             renderDan(currentData.dan_n2, 'list-n2');
             renderDan(currentData.dan_n3, 'list-n3');
+
+            // Cập nhật nhãn số lượng động cho N1, N2, N3
+            const n1Count = (currentData.dan_n1 || []).length;
+            const n2Count = (currentData.dan_n2 || []).length;
+            const n3Count = (currentData.dan_n3 || []).length;
+            const lblN1 = document.getElementById('lbl-dan-n1');
+            if (lblN1) lblN1.innerHTML = `<i class="fa-solid fa-circle"></i> 🟢 DÀN N1 (${n1Count} SỐ):`;
+            const lblN2 = document.getElementById('lbl-dan-n2');
+            if (lblN2) lblN2.innerHTML = `<i class="fa-solid fa-circle"></i> 🟡 DÀN N2 (${n2Count} SỐ - MỞ RỘNG CỨU N1):`;
+            const lblN3 = document.getElementById('lbl-dan-n3');
+            if (lblN3) lblN3.innerHTML = `<i class="fa-solid fa-circle"></i> 🟠 DÀN N3 (${n3Count} SỐ - CƠ HỘI CUỐI):`;
+
+            // Chu kỳ 7 ngày
+            const wc = currentData.weekly_cycle || {};
+            const wcBadge = document.getElementById('weekly-cycle-badge');
+            if (wcBadge && wc.week) {
+                wcBadge.textContent = `${wc.week} • ${wc.model} (${wc.note || ''})`;
+            }
 
             // KHUNG CHUYỂN CẦU NGÀY MỚI
             const ft = currentData.frame_transition || {};
