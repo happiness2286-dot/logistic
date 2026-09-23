@@ -1523,7 +1523,7 @@
                 const res = await fetch('ket_qua_soi_cau_g1_g5.json?t=' + Date.now());
                 if (res.ok) {
                     const json = await res.json();
-                    if (json && json.top_1) {
+                    if (json && (json.top_1 || json.target_date)) {
                         currentData = json;
                     }
                 }
@@ -1531,11 +1531,19 @@
                 console.warn('Dùng dữ liệu dự phòng cục bộ:', err);
             }
 
-            renderApp();
+            renderApp(currentData);
             setupCopyButtons();
         }
 
-        function renderApp() {
+        // Expose ra window để hỗ trợ cả 3 giải pháp (fetchData, renderApp, WebSocket)
+        window.fetchData = loadLiveData;
+        window.renderApp = renderApp;
+
+        function renderApp(data) {
+            if (data && typeof data === 'object') {
+                currentData = data;
+            }
+
             // Header date & progress
             document.getElementById('txt-draw-date').textContent = currentData.target_date || '22/09/2026';
             
