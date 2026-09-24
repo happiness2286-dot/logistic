@@ -55,11 +55,12 @@ BONG_DUONG = {
 
 # 60 số Cấp 4 mặc định tối ưu (nếu chưa có file CSV)
 DEFAULT_60_CAP4 = [
-    1, 2, 3, 4, 5, 8, 9, 11, 12, 13, 15, 17, 18, 19, 20,
-    21, 22, 23, 24, 26, 28, 29, 31, 32, 33, 34, 35, 37, 38, 42,
-    44, 45, 51, 53, 55, 58, 59, 60, 61, 62, 63, 65, 67, 68, 69,
-    72, 80, 81, 82, 83, 84, 85, 87, 88, 91, 92, 95, 97, 98, 99
+    1, 2, 3, 4, 5, 8, 9, 11, 12, 13, 15, 17, 18, 19, 21,
+    22, 23, 24, 26, 28, 29, 31, 32, 33, 34, 35, 37, 38, 39, 42,
+    43, 44, 45, 51, 53, 55, 58, 59, 60, 61, 62, 63, 65, 67, 68,
+    69, 72, 80, 81, 82, 83, 84, 85, 87, 88, 91, 92, 95, 96, 97, 99
 ]
+
 
 def ensure_cap4_csv(csv_path=DEFAULT_CAP4_CSV):
     """Tạo file CSV 60 số Cấp 4 nếu chưa tồn tại"""
@@ -312,12 +313,17 @@ def get_physical_positions(prizes):
 
 def analyze_bridge_cycles(draws, target_draw_idx=0):
     """
-    Phân tích vị trí cầu G1->G5 XSMB theo chuẩn 5 bước và quy tắc mới:
-    1. Cầu chạy ngày 3, 4: ✅ VẪN LẤY BÌNH THƯỜNG (ưu tiên Top 1, Top 4)
-    2. Cầu đã bỏ (gãy): ❌ KHÔNG LẤY NỮA — loại bỏ hoàn toàn (không cộng dồn ngày đứt quãng)
-    3. Cầu mới chạm ngày 1: ⚠️ THEO DÕI (ưu tiên theo quy tắc đầu đuôi bóng -> Dàn ngày 1 -> Giao thoa 60 số)
-    4. Ngày 2 (nếu nổ): 🎯 THÀNH TỔNG LỰC NGÀY 3 (đôn lên chu kỳ 3 ngày)
-    5. Số lót: 🛡️ LẤY TỪ 60 SỐ N1
+    Phân tích vị trí cầu G1->G5 XSMB theo đúng logic chuẩn hoá:
+    1. Cầu được xác định từ các kỳ trước (LÙI NGÀY):
+       - Tìm các vị trí ở kỳ trước (target_draw_idx + 1) đã nổ trúng Chạm Đầu / Bóng Đầu (Cầu Đầu)
+       - Tìm các vị trí ở kỳ trước đã nổ trúng Chạm Đuôi / Bóng Đuôi (Cầu Đuôi)
+       - Lùi tiếp về các kỳ trước nữa để tính chu kỳ liên tiếp (streak):
+         + Ăn thông >= 3 ngày: Chỉ đạo (Ưu tiên Bạch thủ Top 1)
+         + Ăn thông 2 ngày: Lót (Song thủ Top 4)
+         + Mới chạm 1 ngày: Theo dõi
+    2. Tại kỳ đang quay (target_draw_idx):
+       - Lấy chữ số thực tế nổ tại các vị trí Cầu Đầu làm Hàng Chục (kèm bóng dương)
+       - Lấy chữ số thực tế nổ tại các vị trí Cầu Đuôi làm Hàng Đơn Vị (kèm bóng dương)
     """
     prev_idx = target_draw_idx + 1
     if len(draws) <= prev_idx:
@@ -330,112 +336,116 @@ def analyze_bridge_cycles(draws, target_draw_idx=0):
     if len(de_str) < 2:
         return None
         
-    head_num = int(de_str[0])
-    tail_num = int(de_str[1])
+    prev_head_num = int(de_str[0])
+    prev_tail_num = int(de_str[1])
     
-    head_bong = BONG_DUONG[head_num]
-    tail_bong = BONG_DUONG[tail_num]
+    prev_head_bong = BONG_DUONG[prev_head_num]
+    prev_tail_bong = BONG_DUONG[prev_tail_num]
     
-    target_head_digits = [head_num, head_bong]
-    target_tail_digits = [tail_num, tail_bong]
+    prev_head_targets = [str(prev_head_num), str(prev_head_bong)]
+    prev_tail_targets = [str(prev_tail_num), str(prev_tail_bong)]
     
     target_pos_map = get_physical_positions(target_draw['prizes'])
+    prev_pos_map = get_physical_positions(prev_draw['prizes'])
     
-    # Hàm tính chuỗi ngày xuất hiện liên tiếp (Streak) tính lùi từ kỳ hiện tại
-    # Tuyệt đối loại bỏ cầu gãy: hễ đứt quãng là dừng ngay lập tức
-    def calculate_consecutive_days(pos, digit_char):
-        streak = 1
-        for past_idx in range(target_draw_idx + 1, min(len(draws), target_draw_idx + 6)):
+    # Hàm tính chuỗi ngày ăn thông liên tiếp (Streak) tính lùi từ kỳ prev (target_draw_idx + 1)
+    def calculate_consecutive_bridge_days(pos, is_head=True):
+        streak = 1 # Đã ăn ở kỳ prev (target_draw_idx + 1)
+        for past_idx in range(target_draw_idx + 2, min(len(draws), target_draw_idx + 7)):
+            de = draws[past_idx]['de']
+            if not de or len(de) < 2:
+                break
+            target_digit = int(de[0] if is_head else de[1])
+            allowed = [str(target_digit), str(BONG_DUONG[target_digit])]
             past_pos_map = get_physical_positions(draws[past_idx]['prizes'])
-            if past_pos_map.get(pos) == digit_char:
+            if past_pos_map.get(pos) in allowed:
                 streak += 1
             else:
-                # CẦU ĐÃ BỎ (GÃY) -> DỪNG LẠI NGAY LẬP TỨC, LOẠI BỎ HOÀN TOÀN
-                break
+                break # Cầu gãy dừng ngay lập tức
         return streak
 
-    # Quét vị trí Chạm Đầu
+    # 1. Quét các vị trí CẦU ĐẦU (từ kỳ trước và lùi ngày)
     head_positions = []
-    for pos, char in target_pos_map.items():
-        if char in [str(x) for x in target_head_digits]:
-            streak = calculate_consecutive_days(pos, char)
-            
-            # Quy tắc 4: Ngày 2 (nếu nổ ở đề hôm trước) -> Thành tổng lực ngày 3
-            is_chuluc_n2 = False
-            if streak == 2 and prev_idx < len(draws):
-                prev_de_val = prev_draw['de']
-                if char in prev_de_val:
-                    is_chuluc_n2 = True
-                    streak = 3  # Thăng hạng lên tổng lực ngày 3
-            
+    for pos, char in prev_pos_map.items():
+        if char in prev_head_targets:
+            streak = calculate_consecutive_bridge_days(pos, is_head=True)
+            cur_digit = target_pos_map.get(pos)
+            if not cur_digit:
+                continue
+                
+            cur_bong = str(BONG_DUONG[int(cur_digit)])
+            is_direct = (char == str(prev_head_num))
+
             if streak >= 4:
                 cat = "Chỉ đạo"
                 label = "✅ CHỈ ĐẠO (Ưu tiên ngày 4)"
             elif streak == 3:
                 cat = "Chỉ đạo"
-                label = "✅ CHỈ ĐẠO (Tổng lực ngày 3)" if is_chuluc_n2 else "✅ CHỈ ĐẠO (Ưu tiên ngày 3)"
+                label = "✅ CHỈ ĐẠO (Ưu tiên ngày 3)"
             elif streak == 2:
                 cat = "Lót"
                 label = "Lót ngày 2"
             else:
                 cat = "Theo dõi"
                 label = "Theo dõi ngày 1 (Mới chạm)"
-                
+
             head_positions.append({
                 'position': pos,
-                'digit': char,
+                'prev_digit': char,
+                'digit': cur_digit,
+                'digit_bong': cur_bong,
                 'role': 'Đầu',
                 'cycle_days': streak,
                 'category': cat,
                 'label': label,
-                'is_chuluc_n2': is_chuluc_n2
+                'is_direct': is_direct
             })
 
-    # Quét vị trí Chạm Đuôi
+    # 2. Quét các vị trí CẦU ĐUÔI (từ kỳ trước và lùi ngày)
     tail_positions = []
-    for pos, char in target_pos_map.items():
-        if char in [str(x) for x in target_tail_digits]:
-            streak = calculate_consecutive_days(pos, char)
-            
-            # Quy tắc 4: Ngày 2 (nếu nổ ở đề hôm trước) -> Thành tổng lực ngày 3
-            is_chuluc_n2 = False
-            if streak == 2 and prev_idx < len(draws):
-                prev_de_val = prev_draw['de']
-                if char in prev_de_val:
-                    is_chuluc_n2 = True
-                    streak = 3  # Thăng hạng lên tổng lực ngày 3
-            
+    for pos, char in prev_pos_map.items():
+        if char in prev_tail_targets:
+            streak = calculate_consecutive_bridge_days(pos, is_head=False)
+            cur_digit = target_pos_map.get(pos)
+            if not cur_digit:
+                continue
+                
+            cur_bong = str(BONG_DUONG[int(cur_digit)])
+            is_direct = (char == str(prev_tail_num))
+
             if streak >= 4:
                 cat = "Chỉ đạo"
                 label = "✅ CHỈ ĐẠO (Ưu tiên ngày 4)"
             elif streak == 3:
                 cat = "Chỉ đạo"
-                label = "✅ CHỈ ĐẠO (Tổng lực ngày 3)" if is_chuluc_n2 else "✅ CHỈ ĐẠO (Ưu tiên ngày 3)"
+                label = "✅ CHỈ ĐẠO (Ưu tiên ngày 3)"
             elif streak == 2:
                 cat = "Lót"
                 label = "Lót ngày 2"
             else:
                 cat = "Theo dõi"
                 label = "Theo dõi ngày 1 (Mới chạm)"
-                
+
             tail_positions.append({
                 'position': pos,
-                'digit': char,
+                'prev_digit': char,
+                'digit': cur_digit,
+                'digit_bong': cur_bong,
                 'role': 'Đuôi',
                 'cycle_days': streak,
                 'category': cat,
                 'label': label,
-                'is_chuluc_n2': is_chuluc_n2
+                'is_direct': is_direct
             })
 
     return {
         'prev_date': prev_draw['date'],
         'prev_db': prev_draw['db'],
         'prev_de': prev_draw['de'],
-        'head': head_num,
-        'head_bong': head_bong,
-        'tail': tail_num,
-        'tail_bong': tail_bong,
+        'head': prev_head_num,
+        'head_bong': prev_head_bong,
+        'tail': prev_tail_num,
+        'tail_bong': prev_tail_bong,
         'head_positions': head_positions,
         'tail_positions': tail_positions,
         'target_pos_map': target_pos_map
@@ -487,65 +497,89 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
     tail_positions = analysis['tail_positions']
 
     print("\n" + "-" * 78)
-    print(f" BƯỚC 2 & 3: VỊ TRÍ MỚI CHẠM & CHU KỲ (ƯU TIÊN QUY TẮC ĐẦU ĐUÔI BÓNG)")
+    print(f" BƯỚC 2 & 3: VỊ TRÍ CẦU VÀ CHỮ SỐ NỔ THỰC TẾ HÔM NAY (G1 -> G5.6)")
     print("-" * 78)
-    print(f"  • Tổng vị trí Chạm Đầu ({analysis['head']}, {analysis['head_bong']}): {len(head_positions)} vị trí")
+    print(f"  • Tổng vị trí Cầu Đầu: {len(head_positions)} vị trí")
     print(f"      - Chạy 3-4 ngày (Chỉ đạo): {sum(1 for x in head_positions if x['cycle_days'] >= 3)} vị trí")
     print(f"      - Chạy 2 ngày (Lót):      {sum(1 for x in head_positions if x['cycle_days'] == 2)} vị trí")
     print(f"      - Mới chạm 1 ngày:        {sum(1 for x in head_positions if x['cycle_days'] == 1)} vị trí")
-    print(f"  • Tổng vị trí Chạm Đuôi ({analysis['tail']}, {analysis['tail_bong']}): {len(tail_positions)} vị trí")
+    print(f"  • Tổng vị trí Cầu Đuôi: {len(tail_positions)} vị trí")
     print(f"      - Chạy 3-4 ngày (Chỉ đạo): {sum(1 for x in tail_positions if x['cycle_days'] >= 3)} vị trí")
-    print(f"      - Chạy 2 ngày (Lót):      {sum(1 for x in tail_positions if x['cycle_days'] == 2)} vị trí")
     print(f"      - Mới chạm 1 ngày:        {sum(1 for x in tail_positions if x['cycle_days'] == 1)} vị trí")
 
-    # BƯỚC 4: Vào dàn (Ghép các con số từ các vị trí theo quy tắc đầu đuôi bóng)
-    # Hàng Chục lấy từ các vị trí Đầu, Hàng Đơn Vị lấy từ các vị trí Đuôi
+    # BƯỚC 4: Vào dàn (Ghép các con số từ các vị trí: Chục từ Đầu, Đơn vị từ Đuôi)
     all_pairs = []
     for h in head_positions:
         for t in tail_positions:
-            num_str = f"{h['digit']}{t['digit']}"
-            pair_cycle = max(h['cycle_days'], t['cycle_days'])
-            
-            if pair_cycle >= 4:
-                cat = "Chỉ đạo"
-                cat_label = "✅ CHỈ ĐẠO (4 ngày)"
-            elif pair_cycle == 3:
-                cat = "Chỉ đạo"
-                cat_label = "✅ CHỈ ĐẠO (3 ngày)"
-            elif pair_cycle == 2:
-                cat = "Lót"
-                cat_label = "Lót ngày 2"
+            c_main = h['digit']
+            d_main = t['digit']
+            c_bong = h['digit_bong']
+            d_bong = t['digit_bong']
+
+            # Chu kỳ cầu:
+            # Nếu cả 2 vị trí đều là chính diện trực tiếp từ Đề hôm qua -> Cầu Bạch thủ thăng hạng 3 ngày!
+            if h.get('is_direct') and t.get('is_direct'):
+                pair_cycle = 3
+            elif h['cycle_days'] >= 2 or t['cycle_days'] >= 2:
+                pair_cycle = max(h['cycle_days'], t['cycle_days'])
             else:
-                cat = "Theo dõi"
-                cat_label = "Theo dõi ngày 1 (Mới chạm)"
+                pair_cycle = 1
 
-            all_pairs.append({
-                'num': num_str,
-                'c_digit': h['digit'],
-                'd_digit': t['digit'],
-                'c_cycle': h['cycle_days'],
-                'd_cycle': t['cycle_days'],
-                'cycle_days': pair_cycle,
-                'category': cat,
-                'cat_label': cat_label
-            })
+            combos = [
+                (f"{c_main}{d_main}", 1.0, "chính diện"),
+                (f"{c_main}{d_bong}", 0.85, "bóng đuôi"),
+                (f"{c_bong}{d_main}", 0.85, "bóng đầu"),
+                (f"{c_bong}{d_bong}", 0.7, "bóng cả hai")
+            ]
 
-    # Nhóm theo con số (loại trùng, giữ chu kỳ cao nhất)
+            # Điểm cộng vị trí đối xứng giải vàng (G5.5 x G2.1)
+            pos_bonus = 0.0
+            if ('G5.5' in h['position'] and 'G2.1' in t['position']) or ('G2.1' in h['position'] and 'G5.5' in t['position']):
+                pos_bonus = 50.0
+
+            for num_str, weight, combo_type in combos:
+                if pair_cycle >= 4:
+                    cat = "Chỉ đạo"
+                    cat_label = "✅ CHỈ ĐẠO (4 ngày)"
+                elif pair_cycle == 3:
+                    cat = "Chỉ đạo"
+                    cat_label = "✅ CHỈ ĐẠO (3 ngày)"
+                elif pair_cycle == 2:
+                    cat = "Lót"
+                    cat_label = "Lót ngày 2"
+                else:
+                    cat = "Theo dõi"
+                    cat_label = "Theo dõi ngày 1 (Mới chạm)"
+
+                direct_bonus = 40.0 if (h.get('is_direct') and t.get('is_direct')) else (10.0 if (h.get('is_direct') or t.get('is_direct')) else 0)
+                score = pair_cycle * 30 + weight * 20 + direct_bonus + pos_bonus + (h['cycle_days'] + t['cycle_days'])
+
+                all_pairs.append({
+                    'num': num_str,
+                    'c_digit': c_main,
+                    'd_digit': d_main,
+                    'c_cycle': h['cycle_days'],
+                    'd_cycle': t['cycle_days'],
+                    'cycle_days': pair_cycle,
+                    'category': cat,
+                    'cat_label': cat_label,
+                    'weight': weight,
+                    'combo_type': combo_type,
+                    'score': score,
+                    'h_pos': h['position'],
+                    't_pos': t['position']
+                })
+
+    # Nhóm theo con số (loại trùng, giữ chu kỳ và điểm cao nhất)
     unique_numbers_map = {}
     for p in all_pairs:
         n = p['num']
-        if n not in unique_numbers_map or p['cycle_days'] > unique_numbers_map[n]['cycle_days']:
+        if n not in unique_numbers_map or p['score'] > unique_numbers_map[n].get('score', 0):
             unique_numbers_map[n] = p
-        elif p['cycle_days'] == unique_numbers_map[n]['cycle_days']:
-            # Nếu bằng chu kỳ thì cộng dồn độ mạnh
-            cur_sum = unique_numbers_map[n]['c_cycle'] + unique_numbers_map[n]['d_cycle']
-            new_sum = p['c_cycle'] + p['d_cycle']
-            if new_sum > cur_sum:
-                unique_numbers_map[n] = p
 
     found_numbers = list(unique_numbers_map.values())
 
-    # BƯỚC 5: So với dàn 60 số Cấp 4 (Giao thoa là kết quả tinh túy)
+    # BƯỚC 5: So với dàn 60 số Cấp 4
     if custom_cap4:
         cap4_numbers = set(custom_cap4)
     else:
@@ -555,15 +589,13 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
         item['in_cap4'] = (item['num'] in cap4_numbers)
         item['in_cap4_str'] = "Có" if item['in_cap4'] else "Không"
 
-    # CHỌN TOP 1 & TOP 4 (QUY TẮC CẦU CHẠY NGÀY 3, 4 ƯU TIÊN TOP 1, TOP 4)
-    # Lấy các số có chu kỳ >= 3 ngày (Chỉ đạo) và nằm trong 60 số Cấp 4
-    chidao_pool = [x for x in found_numbers if x['category'] == "Chỉ đạo" and x['in_cap4']]
-    
-    # Sắp xếp ưu tiên: 4 ngày trước, sau đó đến 3 ngày, tổng chu kỳ chục+đơn vị
-    chidao_pool.sort(key=lambda x: (x['cycle_days'], x['c_cycle'] + x['d_cycle']), reverse=True)
+    # CHỌN TOP 1 & TOP 4 (ƯU TIÊN CẦU CHẠY 3-4 NGÀY VÀ ĐIỂM SỐ CAO NHẤT)
+    chidao_pool = [x for x in found_numbers if x['category'] == "Chỉ đạo"]
+    selection_pool = chidao_pool if chidao_pool else found_numbers
+    selection_pool.sort(key=lambda x: (x['cycle_days'], x.get('score', 0)), reverse=True)
 
-    top_1 = chidao_pool[0]['num'] if len(chidao_pool) >= 1 else None
-    top_4_nums = [x['num'] for x in chidao_pool[:4]]
+    top_1 = selection_pool[0]['num'] if len(selection_pool) >= 1 else None
+    top_4_nums = [x['num'] for x in selection_pool[:4]]
 
     # Gán nhãn Top cho từng con số
     for item in found_numbers:
@@ -572,9 +604,9 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
             item['top_rank'] = "👑 Top 1"
         elif n in top_4_nums:
             item['top_rank'] = "🔥 Top 4"
-        elif item['category'] == "Lót" and item['in_cap4']:
+        elif item['category'] == "Lót":
             item['top_rank'] = "Lót ngày 2"
-        elif item['category'] == "Theo dõi" and item['in_cap4']:
+        elif item['category'] == "Theo dõi":
             item['top_rank'] = "Ngày 1 (Mới chạm)"
         else:
             item['top_rank'] = "-"
@@ -586,9 +618,10 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
         elif x['top_rank'] == "🔥 Top 4": tier = 3
         elif x['top_rank'] == "Lót ngày 2": tier = 2
         elif x['top_rank'] == "Ngày 1 (Mới chạm)": tier = 1
-        return (tier, x['cycle_days'], 1 if x['in_cap4'] else 0)
+        return (tier, x['cycle_days'], x.get('score', 0))
 
     found_numbers.sort(key=sort_key, reverse=True)
+
 
     # In bảng 5 cột
     print("\n" + "=" * 78)
