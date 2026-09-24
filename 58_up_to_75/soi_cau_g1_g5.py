@@ -26,6 +26,7 @@ import time
 import argparse
 from datetime import datetime
 from collections import Counter
+import subprocess
 import pandas as pd
 
 # Reconfigure stdout for UTF-8 on Windows
@@ -191,31 +192,71 @@ def compute_ai_scores(all_draws, target_idx, unique_numbers_map=None):
         
     return scores, gan_dict, prev_de, prev_prev_de
 
-def fetch_mketqua_html(count=10):
-    """Lấy mã HTML các kỳ xổ số gần nhất từ mketqua.net"""
+def fetch_mketqua_html(count=10, is_live=False):
+    """
+    Lấy mã HTML các kỳ xổ số gần nhất từ mketqua.net.
+    Khi is_live=True (hoặc trong khung giờ quay 18h10 - 18h38):
+    Ưu tiên lấy bảng trực tiếp từ trang chủ https://mketqua.net/ ghép với quá khứ từ so-ket-qua.
+    """
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         'Content-Type': 'application/x-www-form-urlencoded'
     }
+    table_tag = '<table class="table table-condensed kqcenter kqvertimarginw table-kq-border table-kq-hover-div table-bordered kqbackground table-kq-bold-border tb-phoi-border watermark table-striped" id="result_tab_mb">'
     
+    # 1. Lấy sổ kết quả cho các kỳ trước
+    so_kq_html = ""
     if HAS_BS4:
         try:
             resp = requests.post(MKETQUA_SO_KQ_URL, data={'code': 'mb', 'count': str(count), 'dow': '7'}, headers=headers, timeout=12)
             if resp.status_code == 200:
-                return resp.text
+                so_kq_html = resp.text
         except Exception as e:
             print(f"[!] Requests failed: {e}, chuyển sang urllib...")
             
-    try:
-        import urllib.request
-        import urllib.parse
-        data = urllib.parse.urlencode({'code': 'mb', 'count': str(count), 'dow': '7'}).encode('utf-8')
-        req = urllib.request.Request(MKETQUA_SO_KQ_URL, data=data, headers=headers)
-        with urllib.request.urlopen(req, timeout=12) as response:
-            return response.read().decode('utf-8')
-    except Exception as e:
-        print(f"[!] Lỗi kết nối mketqua.net: {e}")
-        return ""
+    if not so_kq_html:
+        try:
+            import urllib.request
+            import urllib.parse
+            data = urllib.parse.urlencode({'code': 'mb', 'count': str(count), 'dow': '7'}).encode('utf-8')
+            req = urllib.request.Request(MKETQUA_SO_KQ_URL, data=data, headers=headers)
+            with urllib.request.urlopen(req, timeout=12) as response:
+                so_kq_html = response.read().decode('utf-8')
+        except Exception as e:
+            print(f"[!] Lỗi kết nối mketqua.net: {e}")
+
+    # 2. Nếu đang ở chế độ live: lấy trang chủ để bắt kỳ đang quay
+    if is_live:
+        home_html = ""
+        try:
+            resp_home = requests.get(MKETQUA_LIVE_URL, headers=headers, timeout=8)
+            if resp_home.status_code == 200 and table_tag in resp_home.text:
+                home_html = resp_home.text
+        except Exception as e:
+            print(f"[!] Không lấy được trang chủ mketqua: {e}")
+            
+        if home_html and so_kq_html:
+            h_blocks = home_html.split(table_tag)
+            s_blocks = so_kq_html.split(table_tag)
+            if len(h_blocks) > 1 and len(s_blocks) > 1:
+                home_first = h_blocks[1]
+                h_date_m = re.search(r'id="result_date">([^<]+)</span>', home_first)
+                h_date = h_date_m.group(1).strip() if h_date_m else ""
+                
+                s_first = s_blocks[1]
+                s_date_m = re.search(r'id="result_date">([^<]+)</span>', s_first)
+                s_date = s_date_m.group(1).strip() if s_date_m else ""
+                
+                # Nếu ngày trên trang chủ khác với ngày đầu sổ kết quả (ví dụ trang chủ là hôm nay, sổ kết quả chưa có)
+                if h_date and h_date != s_date:
+                    return s_blocks[0] + table_tag + home_first + table_tag + table_tag.join(s_blocks[1:])
+                # Nếu trùng ngày nhưng trang chủ có dữ liệu live mới hơn
+                elif h_date and h_date == s_date:
+                    return s_blocks[0] + table_tag + home_first + table_tag + table_tag.join(s_blocks[2:])
+        elif home_html and not so_kq_html:
+            return home_html
+
+    return so_kq_html
 
 def parse_lottery_blocks(html):
     """Phân tách từng kỳ quay và trích xuất đúng 85 vị trí vật lý trong G1 -> G5"""
@@ -400,7 +441,7 @@ def analyze_bridge_cycles(draws, target_draw_idx=0):
         'target_pos_map': target_pos_map
     }
 
-def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None, n2_size=None, n3_size=None):
+def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None, n2_size=None, n3_size=None, is_live=False):
     """
     Thực thi toàn bộ pipeline chuẩn hóa 5 bước theo yêu cầu:
     Bước 1: Xác định đề ngày hôm trước (Chạm đầu, Đuôi, Bóng dương)
@@ -414,7 +455,7 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
     print("      XSMB AI - SOI VỊ TRÍ G1->G5 & CHU KỲ NỔ THEO 5 BƯỚC CHUẨN HÓA")
     print("=" * 78)
     
-    html = fetch_mketqua_html(count=10)
+    html = fetch_mketqua_html(count=10, is_live=is_live)
     if not html:
         print("[!] Không thể lấy dữ liệu từ mketqua.net!")
         return None
@@ -952,6 +993,21 @@ def ghi_lich_su_truc_tiep(date_str, de_str, top1_val, top4_list, lot_list):
         except Exception as e:
             print(f"[!] Lỗi ghi lịch sử trực tiếp vào {file_path}: {e}")
 
+def push_live_update(filled, total, is_done=False):
+    """Đồng bộ nhanh kết quả giải mới nổ lên GitHub để mobile cập nhật"""
+    try:
+        targets = ['ket_qua_soi_cau_g1_g5.json']
+        if os.path.exists('58_up_to_75/ket_qua_soi_cau_g1_g5.json'):
+            targets.append('58_up_to_75/ket_qua_soi_cau_g1_g5.json')
+        subprocess.run(['git', 'add'] + targets, timeout=10, check=False)
+        status_txt = "HOAN TAT G5.6" if is_done else f"Da quay {filled}/{total} giai"
+        msg = f"auto: Live XSMB {status_txt} [skip ci]"
+        subprocess.run(['git', 'commit', '-m', msg], timeout=10, check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        subprocess.Popen(['git', 'push', 'origin', 'main'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        print(f"      [✓ Cloud Sync] Đang đẩy {status_txt} lên GitHub Pages...")
+    except Exception as e:
+        print(f"      [!] Lỗi push cloud: {e}")
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="XSMB AI - Soi Vị Trí G1->G5 & Chu Kỳ Nổ Ngày 3, 4")
     parser.add_argument('--live', action='store_true', help='Bật chế độ giám sát Real-time trong lúc quay thưởng')
@@ -961,6 +1017,7 @@ if __name__ == '__main__':
     parser.add_argument('--max-minutes', type=int, default=25, help='Thời gian tối đa chạy live (phút)')
     parser.add_argument('--n2-size', type=int, default=None, help='Số lượng số trong Dàn N2 (mở rộng, ví dụ: 42)')
     parser.add_argument('--n3-size', type=int, default=None, help='Số lượng số trong Dàn N3 (ví dụ: 40)')
+    parser.add_argument('--push', action='store_true', help='Tự động git push lên GitHub khi có giải mới để đồng bộ với GitHub Pages')
     args = parser.parse_args()
 
     if args.live:
@@ -968,6 +1025,8 @@ if __name__ == '__main__':
         print(f" [*] ĐANG CHẠY CHẾ ĐỘ GIÁM SÁT REAL-TIME (Tự động cập nhật mỗi {args.interval} giây)")
         print(" [*] Radar tự động lấy kết quả trực tiếp từ Giải 1 -> Giải 5.6 (bỏ qua G6, G7)")
         print(" [*] Ngay khi Giải 5.6 nổ xong, hệ thống sẽ tự động chốt Dàn Tinh Túy & Tô Màu Cầu")
+        if args.push:
+            print(" [*] CHẾ ĐỘ CLOUD SYNC: Tự động push lên GitHub Pages mỗi khi nổ giải mới!")
         print("=" * 78)
         last_filled = -1
         start_time = time.time()
@@ -977,18 +1036,22 @@ if __name__ == '__main__':
                 print(f"\n[*] Đã đạt giới hạn thời gian chạy ({args.max_minutes} phút). Dừng phiên live.")
                 break
             try:
-                res = run_pipeline(target_draw_idx=0, cap4_csv=args.csv, n2_size=args.n2_size, n3_size=args.n3_size)
+                res = run_pipeline(target_draw_idx=0, cap4_csv=args.csv, n2_size=args.n2_size, n3_size=args.n3_size, is_live=True)
                 if res:
                     filled = res.get('filled_count', 0)
                     total = res.get('total_count', 19)
                     now_str = datetime.now().strftime('%H:%M:%S')
                     if filled != last_filled:
                         print(f"\n>>> [{now_str}] CẬP NHẬT MỚI: Đã quay {filled}/{total} giải.")
+                        if args.push and last_filled != -1:
+                            push_live_update(filled, total, is_done=False)
                         last_filled = filled
                     
                     if res.get('is_g5_finished'):
                         print(f"\n[★ {now_str}] ĐÃ HOÀN TẤT GIẢI 5.6! XUẤT THÀNH CÔNG DÀN TINH TÚY & TÔ MÀU VỊ TRÍ CẦU.")
                         print(f"      Top 1: {res.get('top_1')} | Top 4: {res.get('top_4')}")
+                        if args.push:
+                            push_live_update(filled, total, is_done=True)
                         break
                 time.sleep(args.interval)
             except KeyboardInterrupt:
@@ -998,4 +1061,4 @@ if __name__ == '__main__':
                 print(f"[!] Thử lại sau {args.interval}s do lỗi kết nối: {e}")
                 time.sleep(args.interval)
     else:
-        run_pipeline(target_draw_idx=args.backtest, cap4_csv=args.csv, n2_size=args.n2_size, n3_size=args.n3_size)
+        run_pipeline(target_draw_idx=args.backtest, cap4_csv=args.csv, n2_size=args.n2_size, n3_size=args.n3_size, is_live=False)

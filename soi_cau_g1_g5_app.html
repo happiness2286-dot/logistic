@@ -1861,9 +1861,22 @@
             // Header date & progress
             document.getElementById('txt-draw-date').textContent = currentData.target_date || '22/09/2026';
             
-            const filled = currentData.filled_count || 19;
+            const filled = currentData.filled_count !== undefined ? currentData.filled_count : 19;
             const total = currentData.total_count || 19;
-            document.getElementById('txt-progress-badge').textContent = `${filled}/${total} GIẢI (ĐÃ HOÀN TẤT)`;
+            const badgeEl = document.getElementById('txt-progress-badge');
+            if (badgeEl) {
+                if (filled < total) {
+                    badgeEl.innerHTML = `<i class="fa-solid fa-bolt fa-fade" style="color: #fbbf24;"></i> ĐANG QUAY: ${filled}/${total} GIẢI`;
+                    badgeEl.style.background = 'rgba(245, 158, 11, 0.2)';
+                    badgeEl.style.color = '#fbbf24';
+                    badgeEl.style.borderColor = 'rgba(245, 158, 11, 0.5)';
+                } else {
+                    badgeEl.innerHTML = `<i class="fa-solid fa-circle-check" style="color: #10b981;"></i> ${filled}/${total} GIẢI (ĐÃ HOÀN TẤT)`;
+                    badgeEl.style.background = 'rgba(16, 185, 129, 0.15)';
+                    badgeEl.style.color = '#34d399';
+                    badgeEl.style.borderColor = 'rgba(16, 185, 129, 0.4)';
+                }
+            }
 
             // PHẦN 1: Live Prizes Table With Position Highlights
             const lp = currentData.live_prizes || {};
