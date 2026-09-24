@@ -159,6 +159,174 @@
             box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
         }
 
+        /* =====================================================================
+           LIVE BROADCAST CARD - TRỰC TIẾP ĐÀI QUAY XSMB
+           ===================================================================== */
+        .live-broadcast-card {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.12) 0%, rgba(15, 23, 42, 0.95) 60%, rgba(56, 189, 248, 0.08) 100%);
+            border: 1px solid rgba(239, 68, 68, 0.35);
+            border-radius: 20px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(239, 68, 68, 0.15);
+            backdrop-filter: blur(16px);
+        }
+
+        .live-broadcast-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .live-badge-glow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.5);
+            color: #ff6b6b;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .live-dot-red {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ef4444;
+            box-shadow: 0 0 10px #ef4444;
+            animation: pulse-ring-red 1.2s infinite;
+        }
+
+        @keyframes pulse-ring-red {
+            0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { transform: scale(1.15); box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+            100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
+        .live-station-info {
+            font-size: 12px;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+        }
+
+        .live-broadcast-controls {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        @media (max-width: 640px) {
+            .live-broadcast-controls {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
+        .btn-live-media {
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 12.5px;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            transition: all 0.2s;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .btn-live-video {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.25) 0%, rgba(185, 28, 28, 0.3) 100%);
+            color: #fca5a5;
+            border-color: rgba(239, 68, 68, 0.5);
+        }
+        .btn-live-video:hover {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.4) 0%, rgba(185, 28, 28, 0.5) 100%);
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-live-audio {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.2) 0%, rgba(3, 105, 161, 0.25) 100%);
+            color: #bae6fd;
+            border-color: rgba(56, 189, 248, 0.45);
+        }
+        .btn-live-audio:hover {
+            background: rgba(56, 189, 248, 0.35);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-live-reload {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.18) 0%, rgba(217, 119, 6, 0.25) 100%);
+            color: #fde68a;
+            border-color: rgba(251, 191, 36, 0.45);
+        }
+        .btn-live-reload:hover {
+            background: rgba(251, 191, 36, 0.35);
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .media-live-box {
+            margin-top: 14px;
+            background: #000;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
+        }
+
+        .media-box-inner {
+            padding: 12px;
+            text-align: center;
+        }
+
+        .media-iframe-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+        .media-iframe-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* CHIP PLACEHOLDER KHI GIẢI CHƯA QUAY */
+        .prize-waiting-chip {
+            background: rgba(255, 255, 255, 0.04) !important;
+            border: 1px dashed rgba(255, 255, 255, 0.15) !important;
+            color: #64748b !important;
+            font-size: 13px !important;
+            font-weight: normal !important;
+        }
+        .prize-rolling-chip {
+            background: rgba(251, 191, 36, 0.15) !important;
+            border: 1px solid rgba(251, 191, 36, 0.6) !important;
+            color: #fbbf24 !important;
+            font-size: 13px !important;
+            animation: pulse-ring 1s infinite;
+        }
+
         /* SECTION BOX */
         .section-box {
             background: var(--bg-card);
@@ -1266,6 +1434,37 @@
             </div>
         </header>
 
+        <!-- THANH TRỰC TIẾP ĐÀI QUAY XSMB (TRƯỜNG QUAY 53 HÀNG CHUỐI) -->
+        <div class="live-broadcast-card">
+            <div class="live-broadcast-header">
+                <div class="live-badge-glow">
+                    <span class="live-dot-red"></span>
+                    <span>TRỰC TIẾP ĐÀI QUAY XSMB</span>
+                </div>
+                <div class="live-station-info">
+                    <i class="fa-solid fa-tower-broadcast" style="color: #ef4444;"></i>
+                    <span>Trường quay 53 Hàng Chuối • Đài PT-TH Hà Nội / VTC9 (18h15 - 18h35)</span>
+                </div>
+            </div>
+            <div class="live-broadcast-controls">
+                <button class="btn-live-media btn-live-video" id="btn-toggle-video" onclick="toggleLiveMedia('video')">
+                    <i class="fa-brands fa-youtube" style="color: #ef4444;"></i> Kênh Đài Quay (Video)
+                </button>
+                <button class="btn-live-media btn-live-audio" id="btn-toggle-audio" onclick="toggleLiveMedia('audio')">
+                    <i class="fa-solid fa-volume-high" style="color: #38bdf8;"></i> Nghe Tường Thuật
+                </button>
+                <button class="btn-live-media btn-live-reload" onclick="forceCheckLiveNow()">
+                    <i class="fa-solid fa-rotate" style="color: #fbbf24;"></i> Bắt Số Real-time
+                </button>
+            </div>
+            <!-- Khung nhúng Live Stream Modal / Container -->
+            <div id="mediaLiveBox" class="media-live-box" style="display: none;">
+                <div class="media-box-inner" id="mediaBoxContent">
+                    <!-- Dynamic Media Content -->
+                </div>
+            </div>
+        </div>
+
         <!-- PHẦN 1: BẢNG KẾT QUẢ QUAY TRỰC TIẾP (GIẢI 1 → GIẢI 5.6) -->
         <section class="section-box">
             <div class="section-header">
@@ -1859,49 +2058,64 @@
             }
 
             // Header date & progress
-            document.getElementById('txt-draw-date').textContent = currentData.target_date || '22/09/2026';
+            document.getElementById('txt-draw-date').textContent = currentData.target_date || '24/09/2026';
             
             const filled = currentData.filled_count !== undefined ? currentData.filled_count : 19;
             const total = currentData.total_count || 19;
             const badgeEl = document.getElementById('txt-progress-badge');
+            const radarStatusEl = document.getElementById('txt-radar-status');
+
             if (badgeEl) {
                 if (filled < total) {
                     badgeEl.innerHTML = `<i class="fa-solid fa-bolt fa-fade" style="color: #fbbf24;"></i> ĐANG QUAY: ${filled}/${total} GIẢI`;
                     badgeEl.style.background = 'rgba(245, 158, 11, 0.2)';
                     badgeEl.style.color = '#fbbf24';
                     badgeEl.style.borderColor = 'rgba(245, 158, 11, 0.5)';
+                    if (radarStatusEl) radarStatusEl.textContent = `ĐANG QUAY ${filled}/${total} GIẢI`;
                 } else {
                     badgeEl.innerHTML = `<i class="fa-solid fa-circle-check" style="color: #10b981;"></i> ${filled}/${total} GIẢI (ĐÃ HOÀN TẤT)`;
                     badgeEl.style.background = 'rgba(16, 185, 129, 0.15)';
                     badgeEl.style.color = '#34d399';
                     badgeEl.style.borderColor = 'rgba(16, 185, 129, 0.4)';
+                    if (radarStatusEl) radarStatusEl.textContent = `HOÀN TẤT G5.6 - ĐÃ CHỐT DÀN`;
                 }
             }
 
             // PHẦN 1: Live Prizes Table With Position Highlights
             const lp = currentData.live_prizes || {};
-            if (lp.g1) renderPrizeWithHighlights('live-g1', ['G1'], [lp.g1]);
-            if (lp.g2) renderPrizeWithHighlights('live-g2', ['G2.1', 'G2.2'], lp.g2);
-            if (lp.g3) renderPrizeWithHighlights('live-g3', ['G3.1', 'G3.2', 'G3.3', 'G3.4', 'G3.5', 'G3.6'], lp.g3);
-            if (lp.g4) renderPrizeWithHighlights('live-g4', ['G4.1', 'G4.2', 'G4.3', 'G4.4'], lp.g4);
-            if (lp.g5) renderPrizeWithHighlights('live-g5', ['G5.1', 'G5.2', 'G5.3', 'G5.4', 'G5.5', 'G5.6'], lp.g5);
+            renderPrizeWithHighlights('live-g1', ['G1'], [lp.g1]);
+            renderPrizeWithHighlights('live-g2', ['G2.1', 'G2.2'], lp.g2 || []);
+            renderPrizeWithHighlights('live-g3', ['G3.1', 'G3.2', 'G3.3', 'G3.4', 'G3.5', 'G3.6'], lp.g3 || []);
+            renderPrizeWithHighlights('live-g4', ['G4.1', 'G4.2', 'G4.3', 'G4.4'], lp.g4 || []);
+            renderPrizeWithHighlights('live-g5', ['G5.1', 'G5.2', 'G5.3', 'G5.4', 'G5.5', 'G5.6'], lp.g5 || []);
 
             // PHẦN 2: DÀN SỐ TINH TÚY
             // Top 1: Phóng to, viền vàng đậm, kèm hậu tố (3d/4d)
-            const top1Val = currentData.top_1_display || (currentData.top_1 ? `${currentData.top_1} (3d)` : '--');
+            let top1Val = currentData.top_1_display || (currentData.top_1 ? `${currentData.top_1} (3d)` : '');
+            if (!top1Val) {
+                if (filled < total) {
+                    top1Val = '⚡ Đang quay... (Chốt sau G5.6)';
+                } else {
+                    top1Val = '--';
+                }
+            }
             document.getElementById('val-top1').textContent = top1Val;
 
             // Top 4: Thêm dấu sao (★) và hậu tố chu kỳ (3d/4d)
-            const top4List = currentData.top_4_display || (currentData.top_4 || []).map(x => `★ ${x} (3d)`);
+            let top4List = currentData.top_4_display || (currentData.top_4 || []).map(x => `★ ${x} (3d)`);
             const containerTop4 = document.getElementById('list-top4');
             if (containerTop4) {
                 containerTop4.innerHTML = '';
-                top4List.forEach(itemStr => {
-                    const badge = document.createElement('span');
-                    badge.className = 'num-badge-top4-star';
-                    badge.textContent = itemStr;
-                    containerTop4.appendChild(badge);
-                });
+                if (top4List.length === 0 && filled < total) {
+                    containerTop4.innerHTML = '<span style="color:#fbbf24; font-size:12px; font-weight:700;"><i class="fa-solid fa-bolt fa-fade"></i> Đang quét vị trí cầu... (Chốt sau G5.6)</span>';
+                } else {
+                    top4List.forEach(itemStr => {
+                        const badge = document.createElement('span');
+                        badge.className = 'num-badge-top4-star';
+                        badge.textContent = itemStr;
+                        containerTop4.appendChild(badge);
+                    });
+                }
             }
 
             // Dàn Tinh Túy Ngày 1 (Mới chạm giao thoa 60 số Cấp 4)
@@ -1909,14 +2123,18 @@
             const containerTinhTuy = document.getElementById('list-tinhtuy-ngay1');
             if (containerTinhTuy) {
                 containerTinhTuy.innerHTML = '';
-                tinhtuyList.forEach(itemStr => {
-                    const badge = document.createElement('span');
-                    badge.className = 'num-badge-yellow';
-                    badge.style.borderColor = 'rgba(56, 189, 248, 0.6)';
-                    badge.style.color = '#fff';
-                    badge.textContent = itemStr;
-                    containerTinhTuy.appendChild(badge);
-                });
+                if (tinhtuyList.length === 0 && filled < total) {
+                    containerTinhTuy.innerHTML = '<span style="color:#94a3b8; font-size:12px;"><i class="fa-solid fa-spinner fa-spin"></i> Đang tổng hợp các vị trí nổ...</span>';
+                } else {
+                    tinhtuyList.forEach(itemStr => {
+                        const badge = document.createElement('span');
+                        badge.className = 'num-badge-yellow';
+                        badge.style.borderColor = 'rgba(56, 189, 248, 0.6)';
+                        badge.style.color = '#fff';
+                        badge.textContent = itemStr;
+                        containerTinhTuy.appendChild(badge);
+                    });
+                }
             }
 
             // Dàn Số Lót (Lấy từ 60 số N1)
@@ -2021,7 +2239,13 @@
 
             prizeCodes.forEach((code, idx) => {
                 const val = prizeValues[idx];
-                if (!val) return;
+                if (!val) {
+                    const chip = document.createElement('span');
+                    chip.className = 'prize-num-chip prize-waiting-chip';
+                    chip.innerHTML = `<span style="letter-spacing:2px; font-family:'JetBrains Mono'; opacity:0.5; font-size:12px;">• • • • •</span>`;
+                    el.appendChild(chip);
+                    return;
+                }
 
                 const chip = document.createElement('span');
                 chip.className = 'prize-num-chip';
@@ -2263,6 +2487,68 @@
                 toast.classList.remove('show');
             }, 2500);
         }
+
+        // ĐIỀU KHIỂN XEM TRỰC TIẾP ĐÀI QUAY XSMB
+        function toggleLiveMedia(type) {
+            const box = document.getElementById('mediaLiveBox');
+            const content = document.getElementById('mediaBoxContent');
+            if (!box || !content) return;
+
+            if (box.style.display === 'block' && box.getAttribute('data-active-type') === type) {
+                box.style.display = 'none';
+                content.innerHTML = '';
+                return;
+            }
+
+            box.style.display = 'block';
+            box.setAttribute('data-active-type', type);
+
+            if (type === 'video') {
+                content.innerHTML = `
+                    <div style="margin-bottom: 10px; font-size: 13px; font-weight: 700; color: #fca5a5; display:flex; justify-content:space-between; align-items:center;">
+                        <span><i class="fa-brands fa-youtube" style="color:#ef4444;"></i> Phát Trực Tiếp Trường Quay XSMB (18h15 - 18h35)</span>
+                        <a href="https://www.youtube.com/results?search_query=tr%E1%BB%B1c+ti%E1%BA%BFp+xsmb+h%C3%B4m+nay" target="_blank" style="color:#38bdf8; text-decoration:none; font-size:12px; font-weight:bold;">Mở App YouTube <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                    </div>
+                    <div class="media-iframe-wrapper">
+                        <iframe src="https://www.youtube.com/embed?listType=search&list=truc+tiep+xo+so+mien+bac+hom+nay" title="Trực tiếp XSMB" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div style="margin-top: 10px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+                        <a href="https://www.youtube.com/results?search_query=tr%E1%BB%B1c+ti%E1%BA%BFp+xsmb+h%C3%B4m+nay" target="_blank" class="btn-live-media btn-live-video" style="text-decoration:none; font-size:11.5px; padding:7px 14px;">
+                            <i class="fa-brands fa-youtube"></i> Xem Trực Tiếp Trên YouTube
+                        </a>
+                        <a href="https://xosodaiphat.com/xsmb-xo-so-mien-bac.html" target="_blank" class="btn-live-media btn-live-audio" style="text-decoration:none; font-size:11.5px; padding:7px 14px;">
+                            <i class="fa-solid fa-bolt"></i> Bảng Quay Tốc Độ Cao
+                        </a>
+                    </div>
+                `;
+            } else if (type === 'audio') {
+                content.innerHTML = `
+                    <div style="padding: 18px 14px; background: rgba(15, 23, 42, 0.95); border-radius: 12px; border: 1px solid rgba(56, 189, 248, 0.3);">
+                        <div style="font-size: 14px; font-weight: 800; color: #38bdf8; margin-bottom: 8px;">
+                            <i class="fa-solid fa-radio fa-fade"></i> TƯỜNG THUẬT ÂM THANH TRƯỜNG QUAY 53 HÀNG CHUỐI
+                        </div>
+                        <p style="font-size: 12px; color: #94a3b8; margin-bottom: 14px;">
+                            Kênh tường thuật âm thanh quay thưởng trực tiếp cùng lúc với lồng cầu quay (18h15 - 18h35)
+                        </p>
+                        <audio controls autoplay style="width: 100%; max-width: 420px; height: 38px; border-radius: 20px;">
+                            <source src="https://stream.radiovietnam.vn/vov1" type="audio/mpeg">
+                            Trình duyệt không hỗ trợ phát âm thanh trực tiếp.
+                        </audio>
+                        <div style="margin-top: 10px;">
+                            <span style="font-size: 11px; color: #fbbf24;"><i class="fa-solid fa-circle-info"></i> Từng giải nổ sẽ tự động sáng đèn &amp; nhảy số trên bảng phía dưới</span>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+        window.toggleLiveMedia = toggleLiveMedia;
+
+        function forceCheckLiveNow() {
+            showToast('Đang kết nối trường quay và làm mới dàn...');
+            loadLiveData();
+            loadLichSu();
+        }
+        window.forceCheckLiveNow = forceCheckLiveNow;
     </script>
 </body>
 </html>

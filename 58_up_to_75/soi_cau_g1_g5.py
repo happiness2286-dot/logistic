@@ -996,15 +996,21 @@ def ghi_lich_su_truc_tiep(date_str, de_str, top1_val, top4_list, lot_list):
 def push_live_update(filled, total, is_done=False):
     """Đồng bộ nhanh kết quả giải mới nổ lên GitHub để mobile cập nhật"""
     try:
-        targets = ['ket_qua_soi_cau_g1_g5.json']
+        targets = ['ket_qua_soi_cau_g1_g5.json', 'lich_su_phuong_phap.json']
         if os.path.exists('58_up_to_75/ket_qua_soi_cau_g1_g5.json'):
             targets.append('58_up_to_75/ket_qua_soi_cau_g1_g5.json')
+        if os.path.exists('58_up_to_75/lich_su_phuong_phap.json'):
+            targets.append('58_up_to_75/lich_su_phuong_phap.json')
         subprocess.run(['git', 'add'] + targets, timeout=10, check=False)
         status_txt = "HOAN TAT G5.6" if is_done else f"Da quay {filled}/{total} giai"
         msg = f"auto: Live XSMB {status_txt} [skip ci]"
         subprocess.run(['git', 'commit', '-m', msg], timeout=10, check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        subprocess.Popen(['git', 'push', 'origin', 'main'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        print(f"      [✓ Cloud Sync] Đang đẩy {status_txt} lên GitHub Pages...")
+        res = subprocess.run(['git', 'push', 'origin', 'main'], timeout=20, check=False, capture_output=True, text=True)
+        if res.returncode == 0:
+            print(f"      [✓ Cloud Sync] Đã đẩy thành công {status_txt} lên GitHub Pages!")
+        else:
+            err_msg = res.stderr.strip()[:100] if res.stderr else "Timeout/Rejection"
+            print(f"      [!] Git push error: {err_msg}")
     except Exception as e:
         print(f"      [!] Lỗi push cloud: {e}")
 
@@ -1043,7 +1049,7 @@ if __name__ == '__main__':
                     now_str = datetime.now().strftime('%H:%M:%S')
                     if filled != last_filled:
                         print(f"\n>>> [{now_str}] CẬP NHẬT MỚI: Đã quay {filled}/{total} giải.")
-                        if args.push and last_filled != -1:
+                        if args.push and filled > 0:
                             push_live_update(filled, total, is_done=False)
                         last_filled = filled
                     
