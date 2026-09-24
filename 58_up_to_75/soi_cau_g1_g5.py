@@ -589,45 +589,52 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
         item['in_cap4'] = (item['num'] in cap4_numbers)
         item['in_cap4_str'] = "Có" if item['in_cap4'] else "Không"
 
-    # CHỌN TOP 1 & TOP 4 (ƯU TIÊN CẦU CHẠY 3-4 NGÀY VÀ ĐIỂM SỐ CAO NHẤT)
-    chidao_pool = [x for x in found_numbers if x['category'] == "Chỉ đạo"]
+    # BƯỚC 5: PHÂN TẦNG THEO QUY TẮC BẠCH THỦ 3D/4D & LỌC DÀN LÓT QUA 60 SỐ
+    # 1. BẠCH THỦ (3d, 4d) & TỨ THỦ:
+    # Ưu tiên các con số thuộc chu kỳ 3 ngày, 4 ngày.
+    # ĐẶC CÁCH TUYỆT ĐỐI: Dù không nằm trong 60 số vẫn giữ lại đánh Bạch thủ vì có thể nổ!
+    chidao_pool = [x for x in found_numbers if x['cycle_days'] >= 3]
     selection_pool = chidao_pool if chidao_pool else found_numbers
     selection_pool.sort(key=lambda x: (x['cycle_days'], x.get('score', 0)), reverse=True)
 
     top_1 = selection_pool[0]['num'] if len(selection_pool) >= 1 else None
     top_4_nums = [x['num'] for x in selection_pool[:4]]
 
-    # Gán nhãn Top cho từng con số
+    # 2. DÀN SỐ LÓT: LỌC QUA KHUNG 60 SỐ, LOẠI BỎ TOÀN BỘ SỐ LÓT KHÔNG NẰM TRONG KHUNG 60 SỐ
+    dan_lot_valid = []
+    dan_lot_discarded = []
+
     for item in found_numbers:
         n = item['num']
         if n == top_1:
-            item['top_rank'] = "👑 Top 1"
+            item['top_rank'] = "👑 Top 1 (Bạch thủ)"
         elif n in top_4_nums:
-            item['top_rank'] = "🔥 Top 4"
-        elif item['category'] == "Lót":
-            item['top_rank'] = "Lót ngày 2"
-        elif item['category'] == "Theo dõi":
-            item['top_rank'] = "Ngày 1 (Mới chạm)"
+            item['top_rank'] = "🔥 Top 4 (Tứ thủ)"
+        elif item['in_cap4']:
+            # Số lót nằm trong 60 số -> Giữ làm dàn lót hợp lệ
+            item['top_rank'] = "🛡️ Lót hợp lệ"
+            dan_lot_valid.append(n)
         else:
-            item['top_rank'] = "-"
+            # Số lót KHÔNG nằm trong 60 số -> LOẠI BỎ HOÀN TOÀN!
+            item['top_rank'] = "❌ Loại bỏ (Ngoài 60s)"
+            dan_lot_discarded.append(n)
 
     # Sắp xếp danh sách hiển thị bảng 5 cột
     def sort_key(x):
         tier = 0
-        if x['top_rank'] == "👑 Top 1": tier = 4
-        elif x['top_rank'] == "🔥 Top 4": tier = 3
-        elif x['top_rank'] == "Lót ngày 2": tier = 2
-        elif x['top_rank'] == "Ngày 1 (Mới chạm)": tier = 1
+        if "Top 1" in x['top_rank']: tier = 4
+        elif "Top 4" in x['top_rank']: tier = 3
+        elif "Lót hợp lệ" in x['top_rank']: tier = 2
+        else: tier = 1
         return (tier, x['cycle_days'], x.get('score', 0))
 
     found_numbers.sort(key=sort_key, reverse=True)
 
-
     # In bảng 5 cột
     print("\n" + "=" * 78)
-    print(" BẢNG PHÂN TẦNG 5 CỘT (QUY TẮC: CẦU CHẠY 3-4 NGÀY LẤY BÌNH THƯỜNG / GÃY THÌ LOẠI BỎ)")
+    print(" BẢNG PHÂN TẦNG 5 CỘT (ƯU TIÊN 3D/4D BẠCH THỦ - LOẠI BỎ SỐ LÓT NGOÀI 60 SỐ)")
     print("=" * 78)
-    print(f"{'Con Số':^8} | {'Vị Trí Lặp':^12} | {'Phân Loại':^28} | {'Trong 60 Số?':^14} | {'Phân Hạng Top':^18}")
+    print(f"{'Con Số':^8} | {'Vị Trí Lặp':^12} | {'Phân Loại':^28} | {'Trong 60 Số?':^14} | {'Phân Hạng Top':^22}")
     print("-" * 78)
 
     for item in found_numbers:
@@ -636,15 +643,16 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
         c_loai = item['cat_label']
         c_60 = item['in_cap4_str']
         c_top = item['top_rank']
-        print(f"{c_so:^8} | {c_lap:^12} | {c_loai:<28} | {c_60:^14} | {c_top:^18}")
+        print(f"{c_so:^8} | {c_lap:^12} | {c_loai:<28} | {c_60:^14} | {c_top:^22}")
 
     # Báo cáo Top 1 & Top 4
     print("\n" + "=" * 78)
-    print(" KẾT QUẢ TOP 1 & TOP 4 (ƯU TIÊN CẦU CHẠY NGÀY 3, 4 NẰM TRONG 60 SỐ)")
+    print(" KẾT QUẢ TOP 1 & TOP 4 (ƯU TIÊN CẦU CHẠY NGÀY 3, 4 NỔ BẠCH THỦ)")
     print("=" * 78)
     if top_1:
         t1_info = unique_numbers_map[top_1]
-        print(f"  ★ TOP 01 QUÁN QUÂN: [{top_1}] (Vị trí lặp {t1_info['cycle_days']} ngày - {t1_info['cat_label']})")
+        print(f"  ★ TOP 01 BẠCH THỦ: [{top_1}] (Vị trí lặp {t1_info['cycle_days']} ngày - {t1_info['cat_label']})")
+        print(f"     -> Trong 60 số: {t1_info['in_cap4_str']} (Được đặc cách ưu tiên tuyệt đối nổ Bạch thủ)")
     print(f"  ★ TOP 04 TỨ THỦ TINH TÚY:")
     for idx, num in enumerate(top_4_nums, 1):
         info = unique_numbers_map[num]
@@ -655,13 +663,15 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
     print(f"\n  ★ DÀN TINH TÚY GIAO THOA 60 SỐ CẤP 4 ({len(dan_ngay1_tinhtuy)} số):")
     print(f"      {dan_ngay1_tinhtuy}")
 
-    # QUY TẮC 5: SỐ LÓT LẤY TỪ 60 SỐ N1
+    # QUY TẮC: DÀN SỐ LÓT (ĐÃ LỌC QUA 60 SỐ N1 - LOẠI BỎ HẾT SỐ NGOÀI KHUNG)
     dan_n1_list = [f"{x:02d}" for x in sorted(DEFAULT_60_CAP4)]
     dan_lot_list = [x for x in dan_n1_list if x != top_1 and x not in top_4_nums]
     dan_lot_display = [f"{x} (lót)" for x in dan_lot_list]
 
-    print(f"\n  ★ QUY TẮC 5: DÀN SỐ LÓT (LẤY TỪ 60 SỐ N1 - {len(dan_lot_list)} số):")
+    print(f"\n  ★ QUY TẮC: DÀN SỐ LÓT ĐÃ LỌC SẠCH (THUỘC 60 SỐ N1 - {len(dan_lot_list)} số):")
     print(f"      {dan_lot_list}")
+    print(f"\n  ★ SỐ LÓT BỊ LOẠI BỎ DO KHÔNG NẰM TRONG KHUNG 60 SỐ ({len(dan_lot_discarded)} số):")
+    print(f"      {sorted(list(set(dan_lot_discarded)))}")
 
     # Kiểm chứng thực tế nếu đã có kết quả
     actual_de = target_draw['de']
