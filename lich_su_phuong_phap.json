@@ -1,17 +1,24 @@
 {
   "khung_3_ngay": {
     "tong_quan": {
-      "tong_khung": 32,
+      "tong_khung": 33,
       "trung_n1": 24,
       "trung_n2": 3,
       "trung_n3": 2,
-      "truot_khung": 3,
-      "ty_le_n1": 75.0,
-      "ty_le_n2": 9.4,
-      "ty_le_n3": 6.2,
-      "ty_le_truot": 9.4
+      "truot_khung": 4,
+      "ty_le_n1": 72.7,
+      "ty_le_n2": 9.1,
+      "ty_le_n3": 6.1,
+      "ty_le_truot": 12.1
     },
     "lich_su": [
+      {
+        "khung_stt": 33,
+        "ngay": "24/09/2026",
+        "de": "96",
+        "ket_qua": "truot_khung",
+        "ghi_chu": "Trượt khung 3 ngày ❌"
+      },
       {
         "khung_stt": 33,
         "ngay": "23/09/2026",
@@ -240,15 +247,25 @@
   },
   "soi_truc_tiep": {
     "tong_quan": {
-      "tong_ngay": 32,
+      "tong_ngay": 33,
       "trung_bach_thu": 11,
       "trung_tu_thu": 21,
       "trung_lot": 29,
-      "ty_le_bach_thu": 34.4,
-      "ty_le_tu_thu": 65.6,
-      "ty_le_lot": 90.6
+      "ty_le_bach_thu": 33.3,
+      "ty_le_tu_thu": 63.6,
+      "ty_le_lot": 87.9
     },
     "lich_su": [
+      {
+        "ngay": "24/09/2026",
+        "de": "96",
+        "top1": "01",
+        "top4": [
+          "01"
+        ],
+        "ket_qua": "truot_truc_tiep",
+        "ghi_chu": "Trượt kỳ quay ❌"
+      },
       {
         "ngay": "23/09/2026",
         "de": "06",
