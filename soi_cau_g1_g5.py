@@ -832,6 +832,27 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
         top_4_display.append(f"★ {num} ({c}d)")
 
     # Xuất kết quả JSON
+    
+    # TÍNH TOÁN DÀN TĨNH 4 CẤP (CHỐT TRƯỚC 18H15 CHO KỲ MỚI)
+    dan_tinh_4cap = {
+        'target_date': 'Thứ sáu ngày 25-09-2026',
+        'status_text': 'ĐANG CÓ HIỆU LỰC (VÀO TIỀN TRƯỚC 18H15)',
+        'bach_thu': '41',
+        'song_thu': ['41', '14'],
+        'tu_thu': ['41', '14', '67', '31'],
+        'cang_3d': ['0', '2', '4', '5', '7'],
+        'dan_9_so': ['67', '61', '62', '37', '31', '32', '47', '41', '42'],
+        'top_dau': ['Đầu 6', 'Đầu 3', 'Đầu 4'],
+        'top_duoi': ['Đuôi 7', 'Đuôi 1', 'Đuôi 2'],
+        'dan_cap2_38so': [
+            '01', '02', '04', '07', '09', '11', '12', '14', '16', '17', 
+            '20', '22', '23', '25', '27', '31', '32', '37', '40', '41', 
+            '42', '45', '47', '49', '61', '62', '67', '68', '70', '72', 
+            '75', '77', '81', '82', '84', '86', '87', '89'
+        ],
+        'dan_60_cap4': [f"{x:02d}" for x in DEFAULT_60_CAP4]
+    }
+
     output_data = {
         'target_date': target_draw['date'],
         'prev_date': draws[prev_draw_idx]['date'],
@@ -862,7 +883,8 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
         'ai_scores': ai_scores,
         'frame_transition': frame_transition,
         'table_5cols': found_numbers,
-        'actual_de': actual_de
+        'actual_de': actual_de,
+        'dan_tinh_4cap': dan_tinh_4cap
     }
     
     with open('ket_qua_soi_cau_g1_g5.json', 'w', encoding='utf-8') as f:

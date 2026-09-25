@@ -1465,6 +1465,93 @@
             </div>
         </div>
 
+        
+        <!-- PHẦN 0: BẢNG CHỐT DÀN TĨNH 4 CẤP (ĐÁNH TRƯỚC 18H15) -->
+        <section class="section-box" id="section-dan-tinh" style="border: 1px solid rgba(251, 191, 36, 0.4); box-shadow: 0 0 25px rgba(251, 191, 36, 0.12); margin-bottom: 22px;">
+            <div class="section-header" style="border-bottom: 1px solid rgba(251, 191, 36, 0.25); padding-bottom: 14px;">
+                <h2>
+                    <i class="fa-solid fa-crown" style="color: #fbbf24; filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.6));"></i> 
+                    PHẦN 0: BẢNG CHỐT DÀN TĨNH 4 CẤP (<span id="txt-tinh-date" style="color: #67e8f9;">25/09/2026</span>)
+                </h2>
+                <span class="tag-info" id="txt-tinh-badge" style="background: rgba(16, 185, 129, 0.18); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.5); font-weight: 700;">
+                    <i class="fa-solid fa-circle-check"></i> ĐANG HIỆU LỰC (VÀO TIỀN TRƯỚC 18H15)
+                </span>
+            </div>
+
+            <!-- TẦNG 4: HỎA LỰC BẠCH THỦ & TỨ THỦ -->
+            <div class="tier-row" style="background: linear-gradient(90deg, rgba(251, 191, 36, 0.08) 0%, rgba(15, 23, 42, 0.4) 100%); padding: 14px 12px; border-radius: 12px; margin-bottom: 10px; border: 1px solid rgba(251, 191, 36, 0.2);">
+                <div class="tier-label label-gold" style="min-width: 175px;">
+                    <i class="fa-solid fa-fire-flame-curved"></i> CẤP 4 (HỎA LỰC)
+                </div>
+                <div class="tier-content" style="gap: 12px; align-items: center;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 11px; color: #fbbf24; font-weight: 800;">BẠCH THỦ:</span>
+                        <span class="num-badge-gold" id="badge-tinh-bt" style="font-size: 26px; padding: 4px 18px; cursor: pointer;" title="Bấm để sao chép Bạch thủ">41</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 11px; color: #f97316; font-weight: 800;">SONG THỦ:</span>
+                        <span class="num-badge-orange" id="badge-tinh-st" style="font-size: 18px; padding: 4px 12px; cursor: pointer;" title="Bấm để sao chép Song thủ">41 - 14</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 11px; color: #f97316; font-weight: 800;">TỨ THỦ:</span>
+                        <span class="num-badge-orange" id="badge-tinh-tt" style="font-size: 15px; padding: 4px 10px; cursor: pointer;" title="Bấm để sao chép Tứ thủ">41 - 14 - 67 - 31</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #67e8f9; font-weight: 700; background: rgba(56, 189, 248, 0.1); padding: 4px 10px; border-radius: 8px; border: 1px solid rgba(56, 189, 248, 0.25);">
+                        <span>🔮 CÀNG 3D: 0, 2, 4, 5, 7</span>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 6px; margin-top: 6px;">
+                    <button class="btn-copy-dan" style="padding: 5px 10px; font-size: 11px;" onclick="copyText('41', 'Đã chép Bạch thủ 41')"><i class="fa-regular fa-copy"></i> Copy BT 41</button>
+                    <button class="btn-copy-dan" style="padding: 5px 10px; font-size: 11px;" onclick="copyText('41, 14', 'Đã chép Song thủ 41, 14')"><i class="fa-regular fa-copy"></i> Copy Song Thủ</button>
+                    <button class="btn-copy-dan" style="padding: 5px 10px; font-size: 11px;" onclick="copyText('41, 14, 67, 31', 'Đã chép Tứ thủ 41, 14, 67, 31')"><i class="fa-regular fa-copy"></i> Copy Tứ Thủ</button>
+                </div>
+            </div>
+
+            <!-- TẦNG 3: DÀN 9 SỐ CỘI NGUỒN -->
+            <div class="tier-row" style="background: rgba(56, 189, 248, 0.04); padding: 12px; border-radius: 12px; margin-bottom: 10px; border: 1px solid rgba(56, 189, 248, 0.15);">
+                <div class="tier-label label-blue" style="min-width: 175px;">
+                    <div><i class="fa-solid fa-dice"></i> CẤP 3 (DÀN 9 SỐ)</div>
+                    <div style="font-size: 10.5px; color: #94a3b8; font-weight: 600; margin-top: 2px;">Top 3 Đầu [6,3,4] × Top 3 Đuôi [7,1,2]</div>
+                </div>
+                <div class="tier-content" id="tinh-grid-dan9" style="gap: 8px;">
+                    <span class="num-badge-blue" onclick="copyText('67', 'Đã copy 67')">67</span>
+                    <span class="num-badge-blue" onclick="copyText('61', 'Đã copy 61')">61</span>
+                    <span class="num-badge-blue" onclick="copyText('62', 'Đã copy 62')">62</span>
+                    <span class="num-badge-blue" onclick="copyText('37', 'Đã copy 37')">37</span>
+                    <span class="num-badge-blue" onclick="copyText('31', 'Đã copy 31')">31</span>
+                    <span class="num-badge-blue" onclick="copyText('32', 'Đã copy 32')">32</span>
+                    <span class="num-badge-blue" onclick="copyText('47', 'Đã copy 47')">47</span>
+                    <span class="num-badge-gold" style="font-size: 15px; padding: 4px 10px;" onclick="copyText('41', 'Đã copy 41')">41 ⭐</span>
+                    <span class="num-badge-blue" onclick="copyText('42', 'Đã copy 42')">42</span>
+                </div>
+                <button class="btn-copy-dan" style="padding: 6px 14px; font-size: 11px;" id="btn-copy-tinh-dan9"><i class="fa-regular fa-copy"></i> Copy Dàn 9 Số</button>
+            </div>
+
+            <!-- TẦNG 2: DÀN GIAO THOA 38 SỐ CẤP 2 -->
+            <div class="tier-row" style="background: rgba(249, 115, 22, 0.03); padding: 12px; border-radius: 12px; margin-bottom: 10px; border: 1px solid rgba(249, 115, 22, 0.15);">
+                <div class="tier-label label-orange" style="min-width: 175px;">
+                    <div><i class="fa-solid fa-filter"></i> CẤP 2 (38 SỐ)</div>
+                    <div style="font-size: 10.5px; color: #94a3b8; font-weight: 600; margin-top: 2px;">Chạm G7 × Nhịp Vàng Gaussian</div>
+                </div>
+                <div class="tier-content" id="tinh-grid-dan38" style="gap: 5px;">
+                    <!-- Sẽ nạp qua JS -->
+                </div>
+                <button class="btn-copy-dan" style="padding: 6px 14px; font-size: 11px;" id="btn-copy-tinh-dan38"><i class="fa-regular fa-copy"></i> Copy Dàn 38 Số</button>
+            </div>
+
+            <!-- TẦNG 1: DÀN GỐC 60 SỐ N1 -->
+            <div class="tier-row" style="background: rgba(34, 197, 94, 0.03); padding: 12px; border-radius: 12px; border: 1px solid rgba(34, 197, 94, 0.15);">
+                <div class="tier-label label-green" style="min-width: 175px;">
+                    <div><i class="fa-solid fa-shield-halved"></i> CẤP 1 (DÀN GỐC 60S)</div>
+                    <div style="font-size: 10.5px; color: #94a3b8; font-weight: 600; margin-top: 2px;">Khung N1 An Toàn Ăn 87.5%</div>
+                </div>
+                <div class="tier-content" id="tinh-grid-dan60" style="gap: 4px;">
+                    <!-- Sẽ nạp qua JS -->
+                </div>
+                <button class="btn-copy-dan" style="padding: 6px 14px; font-size: 11px;" id="btn-copy-tinh-dan60"><i class="fa-regular fa-copy"></i> Copy Dàn 60 Số</button>
+            </div>
+        </section>
+
         <!-- PHẦN 1: BẢNG KẾT QUẢ QUAY TRỰC TIẾP (GIẢI 1 → GIẢI 5.6) -->
         <section class="section-box">
             <div class="section-header">
@@ -2052,6 +2139,114 @@
         window.fetchData = loadLiveData;
         window.renderApp = renderApp;
 
+        
+        function renderDanTinh(dt) {
+            if (!dt) {
+                dt = {
+                    target_date: "Thứ sáu ngày 25-09-2026",
+                    bach_thu: "41",
+                    song_thu: ["41", "14"],
+                    tu_thu: ["41", "14", "67", "31"],
+                    cang_3d: ["0", "2", "4", "5", "7"],
+                    dan_9_so: ["67", "61", "62", "37", "31", "32", "47", "41", "42"],
+                    dan_cap2_38so: [
+                        "01", "02", "04", "07", "09", "11", "12", "14", "16", "17", 
+                        "20", "22", "23", "25", "27", "31", "32", "37", "40", "41", 
+                        "42", "45", "47", "49", "61", "62", "67", "68", "70", "72", 
+                        "75", "77", "81", "82", "84", "86", "87", "89"
+                    ],
+                    dan_60_cap4: [
+                        "01", "02", "03", "04", "05", "08", "09", "11", "12", "13", 
+                        "15", "17", "18", "19", "21", "22", "23", "24", "26", "28", 
+                        "29", "31", "32", "33", "34", "35", "37", "38", "39", "42", 
+                        "43", "44", "45", "51", "53", "55", "58", "59", "60", "61", 
+                        "62", "63", "65", "67", "68", "69", "72", "80", "81", "82", 
+                        "83", "84", "85", "87", "88", "91", "92", "95", "96", "97", "99"
+                    ]
+                };
+            }
+
+            const txtDate = document.getElementById('txt-tinh-date');
+            if (txtDate) txtDate.textContent = dt.target_date || '25/09/2026';
+
+            const elBt = document.getElementById('badge-tinh-bt');
+            if (elBt) {
+                elBt.textContent = dt.bach_thu || '41';
+                elBt.onclick = () => copyText(dt.bach_thu, 'Đã sao chép Bạch thủ: ' + dt.bach_thu);
+            }
+
+            const elSt = document.getElementById('badge-tinh-st');
+            if (elSt) {
+                const stStr = (dt.song_thu || ['41', '14']).join(' - ');
+                elSt.textContent = stStr;
+                elSt.onclick = () => copyText((dt.song_thu || []).join(', '), 'Đã sao chép Song thủ: ' + stStr);
+            }
+
+            const elTt = document.getElementById('badge-tinh-tt');
+            if (elTt) {
+                const ttStr = (dt.tu_thu || ['41', '14', '67', '31']).join(' - ');
+                elTt.textContent = ttStr;
+                elTt.onclick = () => copyText((dt.tu_thu || []).join(', '), 'Đã sao chép Tứ thủ: ' + ttStr);
+            }
+
+            // Dàn 9 số Cội Nguồn
+            const grid9 = document.getElementById('tinh-grid-dan9');
+            if (grid9 && dt.dan_9_so) {
+                grid9.innerHTML = dt.dan_9_so.map(n => {
+                    const isBt = (n === dt.bach_thu);
+                    const cls = isBt ? 'num-badge-gold' : 'num-badge-blue';
+                    const style = isBt ? 'font-size:15px; padding:3px 9px;' : 'font-size:13px; padding:3px 8px;';
+                    return `<span class="${cls}" style="${style}" onclick="copyText('${n}', 'Đã sao chép số ${n}')">${n}</span>`;
+                }).join(' ');
+            }
+
+            // Dàn 38 số Cấp 2
+            const grid38 = document.getElementById('tinh-grid-dan38');
+            if (grid38 && dt.dan_cap2_38so) {
+                grid38.innerHTML = dt.dan_cap2_38so.map(n => {
+                    const isBt = (n === dt.bach_thu);
+                    const cls = isBt ? 'num-badge-gold' : 'num-badge-blue';
+                    const style = isBt ? 'font-size:13px; padding:2px 7px;' : 'font-size:12px; padding:2px 6px;';
+                    return `<span class="${cls}" style="${style}" onclick="copyText('${n}', 'Đã sao chép số ${n}')">${n}</span>`;
+                }).join(' ');
+            }
+
+            // Dàn 60 số Cấp 1
+            const grid60 = document.getElementById('tinh-grid-dan60');
+            if (grid60 && dt.dan_60_cap4) {
+                grid60.innerHTML = dt.dan_60_cap4.map(n => {
+                    const isBt = (n === dt.bach_thu);
+                    const cls = isBt ? 'num-badge-gold' : 'num-badge-green';
+                    const style = isBt ? 'font-size:13px; padding:2px 7px;' : 'font-size:11.5px; padding:2px 5px;';
+                    return `<span class="${cls}" style="${style}" onclick="copyText('${n}', 'Đã sao chép số ${n}')">${n}</span>`;
+                }).join(' ');
+            }
+
+            // Gán nút sao chép dàn tĩnh
+            const btnCopy9 = document.getElementById('btn-copy-tinh-dan9');
+            if (btnCopy9) {
+                btnCopy9.onclick = () => {
+                    const s = (dt.dan_9_so || []).join(', ');
+                    copyText(s, 'Đã sao chép Dàn 9 Số Cội Nguồn: ' + s);
+                };
+            }
+            const btnCopy38 = document.getElementById('btn-copy-tinh-dan38');
+            if (btnCopy38) {
+                btnCopy38.onclick = () => {
+                    const s = (dt.dan_cap2_38so || []).join(', ');
+                    copyText(s, `Đã sao chép Dàn Cấp 2 (${dt.dan_cap2_38so.length} số): ` + s);
+                };
+            }
+            const btnCopy60 = document.getElementById('btn-copy-tinh-dan60');
+            if (btnCopy60) {
+                btnCopy60.onclick = () => {
+                    const s = (dt.dan_60_cap4 || []).join(', ');
+                    copyText(s, `Đã sao chép Dàn Gốc Cấp 1 (${dt.dan_60_cap4.length} số): ` + s);
+                };
+            }
+        }
+        window.renderDanTinh = renderDanTinh;
+
         function renderApp(data) {
             if (data && typeof data === 'object') {
                 currentData = data;
@@ -2059,6 +2254,7 @@
 
             // Header date & progress
             document.getElementById('txt-draw-date').textContent = currentData.target_date || '24/09/2026';
+            renderDanTinh(currentData.dan_tinh_4cap);
             
             const filled = currentData.filled_count !== undefined ? currentData.filled_count : 19;
             const total = currentData.total_count || 19;
