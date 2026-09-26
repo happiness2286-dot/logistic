@@ -41,3 +41,12 @@ hint: Update
 [2026-09-26 18:35:20] -> Đang chạy: Git Push repo 58_up_to_75 (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\58_up_to_75)...
 [2026-09-26 18:35:20]    [Cảnh báo] Git Push repo 58_up_to_75 kết thúc với mã 1
 [2026-09-26 18:35:20] -> Đang chạy: Git Push repo Logic goc (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-09-26 18:35:22]    [Cảnh báo] Git Push repo Logic goc kết thúc với mã 1
+[2026-09-26 18:35:22]    Stderr: To https://github.com/happiness2286-dot/logistic.git
+ ! [rejected]        main -> main (non-fast-forward)
+error: failed to push some refs to 'https://github.com/happiness2286-dot/logistic.git'
+hint: U
+[2026-09-26 18:35:22] =================================================================
+[2026-09-26 18:35:22] HOÀN TẤT CHU TRÌNH TỰ ĐỘNG CẬP NHẬT XSMB HÀNG NGÀY!
+[2026-09-26 18:35:22] =================================================================
+

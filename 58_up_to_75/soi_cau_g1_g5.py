@@ -24,7 +24,7 @@ import re
 import json
 import time
 import argparse
-from datetime import datetime
+from datetime import datetime, timedelta
 from collections import Counter
 import subprocess
 import pandas as pd
@@ -833,23 +833,125 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
 
     # Xuất kết quả JSON
     
-    # TÍNH TOÁN DÀN TĨNH 4 CẤP (CHỐT TRƯỚC 18H15 CHO KỲ MỚI)
+    # TÍNH TOÁN DÀN TĨNH 4 CẤP (CHỐT TRƯỚC 18H15 CHO KỲ MỚI - TỰ ĐỘNG NHẢY NGÀY & SỐ)
+    dow_vn = {
+        0: "Thứ hai", 1: "Thứ ba", 2: "Thứ tư", 3: "Thứ năm",
+        4: "Thứ sáu", 5: "Thứ bảy", 6: "Chủ nhật"
+    }
+    date_m = re.search(r'(\d{1,2})[-/](\d{1,2})[-/](\d{4})', target_draw['date'])
+    if date_m:
+        d_val, m_val, y_val = map(int, date_m.groups())
+        cur_dt = datetime(y_val, m_val, d_val)
+        if actual_de:
+            next_dt = cur_dt + timedelta(days=1)
+            tinh_target_date = f"{dow_vn[next_dt.weekday()]} ngày {next_dt.strftime('%d-%m-%Y')}"
+            tinh_status_text = f"ĐANG HIỆU LỰC CHO KỲ TỚI (VÀO TIỀN TRƯỚC 18H15 NGÀY {next_dt.strftime('%d/%m')})"
+        else:
+            tinh_target_date = target_draw['date']
+            tinh_status_text = "ĐANG CÓ HIỆU LỰC (VÀO TIỀN TRƯỚC 18H15)"
+    else:
+        tinh_target_date = target_draw['date']
+        tinh_status_text = "ĐANG CÓ HIỆU LỰC (VÀO TIỀN TRƯỚC 18H15)"
+
+    # Đọc kết quả phân tích thống kê từ analysis_summary.json nếu có
+    summary_data = None
+    for s_path in ['analysis_summary.json', os.path.join(os.path.dirname(__file__), 'analysis_summary.json')]:
+        if os.path.exists(s_path):
+            try:
+                with open(s_path, 'r', encoding='utf-8') as sf:
+                    summary_data = json.load(sf)
+                    break
+            except Exception:
+                pass
+
+    top_dau_list = []
+    if summary_data and summary_data.get('top_predicted_heads'):
+        top_dau_list = [h.get('head', '') for h in summary_data['top_predicted_heads'][:3]]
+    if not top_dau_list or len(top_dau_list) < 3:
+        top_dau_list = [f"Đầu {analysis.get('head', 6)}", f"Đầu {analysis.get('head_bong', 1)}", f"Đầu {(analysis.get('head', 6) + 2) % 10}"]
+
+    top_duoi_list = []
+    if summary_data and summary_data.get('top_predicted_tails'):
+        top_duoi_list = [t.get('tail', '') for t in summary_data['top_predicted_tails'][:3]]
+    if not top_duoi_list or len(top_duoi_list) < 3:
+        top_duoi_list = [f"Đuôi {analysis.get('tail', 7)}", f"Đuôi {analysis.get('tail_bong', 2)}", f"Đuôi {(analysis.get('tail', 7) + 2) % 10}"]
+
+    # Ghép Dàn 9 số Cội Nguồn (Top 3 Đầu x Top 3 Đuôi)
+    dan_9_so_calc = []
+    for h in top_dau_list:
+        h_d = re.search(r'\d+', h)
+        if not h_d: continue
+        for t in top_duoi_list:
+            t_d = re.search(r'\d+', t)
+            if not t_d: continue
+            num_str = f"{h_d.group(0)}{t_d.group(0)}"
+            if num_str not in dan_9_so_calc:
+                dan_9_so_calc.append(num_str)
+
+    def calc_lot_lon(n):
+        if not n or len(n) < 2: return n
+        if n[0] != n[1]: return f"{n[1]}{n[0]}"
+        d = int(n[0])
+        b = BONG_DUONG.get(d, (d + 5) % 10)
+        return f"{b}{b}"
+
+    # Cầu Ghép Góc G7: G7.1[0] + G7.4[1]
+    bt_candidate = None
+    for d_path in ['data_2026.json', os.path.join(os.path.dirname(__file__), 'data_2026.json')]:
+        if os.path.exists(d_path):
+            try:
+                with open(d_path, 'r', encoding='utf-8') as df:
+                    raw_d = json.load(df)
+                    d_list = raw_d if isinstance(raw_d, list) else raw_d.get('draws', [])
+                    if d_list and d_list[0].get('g7_1') and d_list[0].get('g7_4'):
+                        g1 = str(d_list[0]['g7_1'])
+                        g4 = str(d_list[0]['g7_4'])
+                        if len(g1) >= 2 and len(g4) >= 2 and g1[0].isdigit() and g4[-1].isdigit():
+                            bt_candidate = f"{g1[0]}{g4[-1]}"
+                            break
+            except Exception:
+                pass
+
+    if not bt_candidate:
+        if summary_data and summary_data.get('top_20_consensus'):
+            bt_candidate = str(summary_data['top_20_consensus'][0].get('number', ''))
+        elif top_1:
+            bt_candidate = top_1
+        else:
+            bt_candidate = dan_9_so_calc[0] if dan_9_so_calc else '65'
+
+    bach_thu_tinh = bt_candidate
+    lot_lon_tinh = calc_lot_lon(bach_thu_tinh)
+    song_thu_tinh = [bach_thu_tinh, lot_lon_tinh]
+
+    tu_thu_tinh = [bach_thu_tinh]
+    if lot_lon_tinh not in tu_thu_tinh:
+        tu_thu_tinh.append(lot_lon_tinh)
+    for num in dan_9_so_calc:
+        if num not in tu_thu_tinh:
+            tu_thu_tinh.append(num)
+        if len(tu_thu_tinh) >= 4:
+            break
+
+    dan_cap2_38so = [
+        '01', '02', '04', '07', '09', '11', '12', '14', '16', '17', 
+        '20', '22', '23', '25', '27', '31', '32', '37', '40', '41', 
+        '42', '45', '47', '49', '61', '62', '67', '68', '70', '72', 
+        '75', '77', '81', '82', '84', '86', '87', '89'
+    ]
+
     dan_tinh_4cap = {
-        'target_date': 'Thứ sáu ngày 25-09-2026',
-        'status_text': 'ĐANG CÓ HIỆU LỰC (VÀO TIỀN TRƯỚC 18H15)',
-        'bach_thu': '41',
-        'song_thu': ['41', '14'],
-        'tu_thu': ['41', '14', '67', '31'],
+        'target_date': tinh_target_date,
+        'status_text': tinh_status_text,
+        'bach_thu': bach_thu_tinh,
+        'lot_lon': lot_lon_tinh,
+        'song_thu': song_thu_tinh,
+        'tu_thu': tu_thu_tinh,
         'cang_3d': ['0', '2', '4', '5', '7'],
-        'dan_9_so': ['67', '61', '62', '37', '31', '32', '47', '41', '42'],
-        'top_dau': ['Đầu 6', 'Đầu 3', 'Đầu 4'],
-        'top_duoi': ['Đuôi 7', 'Đuôi 1', 'Đuôi 2'],
-        'dan_cap2_38so': [
-            '01', '02', '04', '07', '09', '11', '12', '14', '16', '17', 
-            '20', '22', '23', '25', '27', '31', '32', '37', '40', '41', 
-            '42', '45', '47', '49', '61', '62', '67', '68', '70', '72', 
-            '75', '77', '81', '82', '84', '86', '87', '89'
-        ],
+        'dan_9_so': dan_9_so_calc,
+        'top_dau': top_dau_list,
+        'top_duoi': top_duoi_list,
+        'dan_cap2_38so': dan_cap2_38so,
         'dan_60_cap4': [f"{x:02d}" for x in DEFAULT_60_CAP4]
     }
 

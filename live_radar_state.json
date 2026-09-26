@@ -3172,8 +3172,8 @@
   ],
   "actual_de": "32",
   "dan_tinh_4cap": {
-    "target_date": "Thứ bảy ngày 26-09-2026",
-    "status_text": "ĐANG CÓ HIỆU LỰC (VÀO TIỀN TRƯỚC 18H15)",
+    "target_date": "Chủ nhật ngày 27-09-2026",
+    "status_text": "ĐANG HIỆU LỰC CHO KỲ TỚI (VÀO TIỀN TRƯỚC 18H15 NGÀY 27/09)",
     "bach_thu": "42",
     "lot_lon": "24",
     "song_thu": [
@@ -6495,5 +6495,5 @@
     "cang_bt_hits": 0,
     "cang_bt_rate": 0.0
   },
-  "last_updated": "22:22:54 26/09/2026"
+  "last_updated": "23:34:52 26/09/2026"
 }

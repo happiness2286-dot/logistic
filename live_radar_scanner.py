@@ -17,7 +17,7 @@ import re
 import json
 import time
 import argparse
-from datetime import datetime
+from datetime import datetime, timedelta
 from collections import Counter
 
 # UTF-8 stdout
@@ -530,14 +530,29 @@ def scan_radar():
     cang_info['tam_g1_source'] = f"Tâm Càng G1 ({p_g1[2] if len(p_g1)>=3 else '---'} từ G1: {p_g1 or 'Chờ quay'})"
     cang_info['prev_de_source'] = f"Tổng Đề hôm trước ({prev_de}): {(int(prev_de[0])+int(prev_de[1]))%10 if len(prev_de)>=2 else '---'}"
 
-    # Dàn Tĩnh 4 Cấp trước 18h15
+    # Dàn Tĩnh 4 Cấp trước 18h15 (Tự động nhảy ngày sang kỳ tiếp theo nếu đã có GĐB)
+    dow_vn = {
+        0: "Thứ hai", 1: "Thứ ba", 2: "Thứ tư", 3: "Thứ năm",
+        4: "Thứ sáu", 5: "Thứ bảy", 6: "Chủ nhật"
+    }
+    date_m = re.search(r'(\d{1,2})[-/](\d{1,2})[-/](\d{4})', target_draw['date'])
+    if date_m and actual_de:
+        d_val, m_val, y_val = map(int, date_m.groups())
+        cur_dt = datetime(y_val, m_val, d_val)
+        next_dt = cur_dt + timedelta(days=1)
+        tinh_target_date = f"{dow_vn[next_dt.weekday()]} ngày {next_dt.strftime('%d-%m-%Y')}"
+        tinh_status_text = f"ĐANG HIỆU LỰC CHO KỲ TỚI (VÀO TIỀN TRƯỚC 18H15 NGÀY {next_dt.strftime('%d/%m')})"
+    else:
+        tinh_target_date = target_draw['date']
+        tinh_status_text = "ĐANG CÓ HIỆU LỰC (VÀO TIỀN TRƯỚC 18H15)"
+
     dan_tinh_4cap = {
-        'target_date': target_draw['date'],
-        'status_text': 'ĐANG CÓ HIỆU LỰC (VÀO TIỀN TRƯỚC 18H15)',
-        'bach_thu': top_1 if top_1 else '32',
-        'lot_lon': lot_lon if lot_lon else '23',
+        'target_date': tinh_target_date,
+        'status_text': tinh_status_text,
+        'bach_thu': top_1 if top_1 else '65',
+        'lot_lon': lot_lon if lot_lon else '56',
         'song_thu': song_thu_tru,
-        'tu_thu': top_4 if len(top_4) >= 4 else ['32', '23', '37', '82'],
+        'tu_thu': top_4 if len(top_4) >= 4 else ['65', '56', '22', '21'],
         'cang_3d': cang_info['top3_cang'],
         'dan_9_so': dan_9_so,
         'dan_cap2_38so': dan_cap2_38so,
