@@ -1,0 +1,2750 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>XSMB AI - Mini App Real-Time (3 Phần Hoàn Chỉnh)</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800;900&family=Plus+Jakarta+Sans:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-base: #060911;
+            --bg-card: rgba(15, 23, 42, 0.8);
+            --bg-card-hover: rgba(30, 41, 59, 0.9);
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --border-glass-strong: rgba(255, 255, 255, 0.16);
+
+            /* Màu chỉ đạo chuẩn theo yêu cầu */
+            --color-gold: #fbbf24;        /* 🟡 Top 1 & N2 (Vàng) */
+            --color-gold-glow: rgba(251, 191, 36, 0.5);
+            --color-gold-bg: rgba(251, 191, 36, 0.12);
+
+            --color-orange: #f97316;      /* 🟠 Top 4 & N3 (Cam) */
+            --color-orange-glow: rgba(249, 115, 22, 0.5);
+            --color-orange-bg: rgba(249, 115, 22, 0.12);
+
+            --color-blue: #38bdf8;        /* 🔵 Lót (Xanh Lam) */
+            --color-blue-glow: rgba(56, 189, 248, 0.4);
+            --color-blue-bg: rgba(56, 189, 248, 0.12);
+
+            --color-green: #22c55e;       /* 🟢 N1 (Xanh Lá) */
+            --color-green-glow: rgba(34, 197, 94, 0.45);
+            --color-green-bg: rgba(34, 197, 94, 0.12);
+
+            --color-muted: #475569;
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: radial-gradient(circle at 50% 0%, #151e36 0%, var(--bg-base) 70%);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 16px 12px 60px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        /* HEADER */
+        .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #fbbf24 0%, #f97316 50%, #38bdf8 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #000;
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+        }
+
+        .brand-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 19px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            background: linear-gradient(90deg, #fff 40%, #fbbf24 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-sub {
+            font-size: 11px;
+            color: var(--text-sub);
+            margin-top: 2px;
+        }
+
+        .radar-status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 30px;
+            background: rgba(56, 189, 248, 0.15);
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            font-size: 12px;
+            font-weight: 700;
+            color: #38bdf8;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #38bdf8;
+            box-shadow: 0 0 10px #38bdf8;
+            animation: pulse-ring 1.5s infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.7); }
+            70% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(56, 189, 248, 0); }
+            100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); }
+        }
+
+        .btn-refresh {
+            background: rgba(56, 189, 248, 0.12);
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            color: #38bdf8;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .btn-refresh:hover {
+            background: rgba(56, 189, 248, 0.25);
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+        }
+
+        /* =====================================================================
+           LIVE BROADCAST CARD - TRỰC TIẾP ĐÀI QUAY XSMB
+           ===================================================================== */
+        .live-broadcast-card {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.12) 0%, rgba(15, 23, 42, 0.95) 60%, rgba(56, 189, 248, 0.08) 100%);
+            border: 1px solid rgba(239, 68, 68, 0.35);
+            border-radius: 20px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(239, 68, 68, 0.15);
+            backdrop-filter: blur(16px);
+        }
+
+        .live-broadcast-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .live-badge-glow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.5);
+            color: #ff6b6b;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .live-dot-red {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ef4444;
+            box-shadow: 0 0 10px #ef4444;
+            animation: pulse-ring-red 1.2s infinite;
+        }
+
+        @keyframes pulse-ring-red {
+            0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { transform: scale(1.15); box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+            100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
+        .live-station-info {
+            font-size: 12px;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+        }
+
+        .live-broadcast-controls {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        @media (max-width: 640px) {
+            .live-broadcast-controls {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
+        .btn-live-media {
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 12.5px;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            transition: all 0.2s;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .btn-live-video {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.25) 0%, rgba(185, 28, 28, 0.3) 100%);
+            color: #fca5a5;
+            border-color: rgba(239, 68, 68, 0.5);
+        }
+        .btn-live-video:hover {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.4) 0%, rgba(185, 28, 28, 0.5) 100%);
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-live-audio {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.2) 0%, rgba(3, 105, 161, 0.25) 100%);
+            color: #bae6fd;
+            border-color: rgba(56, 189, 248, 0.45);
+        }
+        .btn-live-audio:hover {
+            background: rgba(56, 189, 248, 0.35);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-live-reload {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.18) 0%, rgba(217, 119, 6, 0.25) 100%);
+            color: #fde68a;
+            border-color: rgba(251, 191, 36, 0.45);
+        }
+        .btn-live-reload:hover {
+            background: rgba(251, 191, 36, 0.35);
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .media-live-box {
+            margin-top: 14px;
+            background: #000;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
+        }
+
+        .media-box-inner {
+            padding: 12px;
+            text-align: center;
+        }
+
+        .media-iframe-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+        .media-iframe-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* CHIP PLACEHOLDER KHI GIẢI CHƯA QUAY */
+        .prize-waiting-chip {
+            background: rgba(255, 255, 255, 0.04) !important;
+            border: 1px dashed rgba(255, 255, 255, 0.15) !important;
+            color: #64748b !important;
+            font-size: 13px !important;
+            font-weight: normal !important;
+        }
+        .prize-rolling-chip {
+            background: rgba(251, 191, 36, 0.15) !important;
+            border: 1px solid rgba(251, 191, 36, 0.6) !important;
+            color: #fbbf24 !important;
+            font-size: 13px !important;
+            animation: pulse-ring 1s infinite;
+        }
+
+        /* SECTION BOX */
+        .section-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            backdrop-filter: blur(16px);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--border-glass);
+            padding-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .section-header h2 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-header .tag-info {
+            font-size: 11px;
+            color: #38bdf8;
+            font-weight: 700;
+            background: rgba(56, 189, 248, 0.12);
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }
+
+        /* PHẦN 1: BẢNG KẾT QUẢ QUAY TRỰC TIẾP (G1 -> G5.6) */
+        .prize-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .prize-table tr {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .prize-table tr:last-child {
+            border-bottom: none;
+        }
+
+        .prize-name-col {
+            width: 22%;
+            padding: 10px 12px;
+            font-weight: 700;
+            color: #94a3b8;
+        }
+
+        .prize-nums-col {
+            width: 60%;
+            padding: 10px 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 15px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #f8fafc;
+        }
+
+        .prize-status-col {
+            width: 18%;
+            padding: 10px 12px;
+            text-align: right;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .badge-done {
+            color: #34d399;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .badge-skip {
+            color: #ef4444;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+        }
+
+        .prize-num-chip {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.9);
+            padding: 4px 10px;
+            border-radius: 8px;
+            margin-right: 8px;
+            margin-bottom: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+        }
+
+        .prize-digit {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 16px;
+            font-weight: 700;
+            padding: 1px 3.5px;
+            margin: 0 1.5px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            line-height: 1.1;
+        }
+
+        .prize-digit:hover {
+            transform: translateY(-2px) scale(1.22);
+            z-index: 10;
+        }
+
+        /* 🟡 1. CHỈ ĐẠO (3-4 NGÀY): VÀNG NEON (CẢ ĐẦU VÀ ĐUÔI CÙNG MÀU) */
+        .digit-cycle-main {
+            color: #fbbf24;
+            font-weight: 900;
+            background: rgba(251, 191, 36, 0.2);
+            border: 1px solid rgba(251, 191, 36, 0.55);
+            box-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+        }
+
+        /* 🔵 2. LÓT (2 NGÀY): XANH LAM (CẢ ĐẦU VÀ ĐUÔI CÙNG MÀU) */
+        .digit-cycle-lot {
+            color: #38bdf8;
+            font-weight: 800;
+            background: rgba(56, 189, 248, 0.18);
+            border: 1px solid rgba(56, 189, 248, 0.5);
+            box-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
+        }
+
+        /* ⚪ 3. THEO DÕI (1 NGÀY / MỜ): TRẮNG/MỜ */
+        .digit-cycle-watch {
+            color: #94a3b8;
+            font-weight: 500;
+            opacity: 0.65;
+        }
+
+        /* HẬU TỐ CHU KỲ (3d, 4d, 2d) DƯỚI TỪNG CHỮ SỐ */
+        .digit-cycle-tag {
+            font-size: 9px;
+            font-weight: 800;
+            line-height: 1;
+            margin-top: 2px;
+            letter-spacing: -0.5px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .digit-cycle-main .digit-cycle-tag { color: #fde68a; }
+        .digit-cycle-lot .digit-cycle-tag { color: #bae6fd; }
+        .digit-cycle-watch .digit-cycle-tag { color: #94a3b8; }
+
+        .tag-text { display: inline; }
+        .tag-dot { display: none; }
+        .dot-gold-sm { color: #fbbf24; text-shadow: 0 0 4px #fbbf24; }
+        .dot-blue-sm { color: #38bdf8; text-shadow: 0 0 4px #38bdf8; }
+        .dot-dim-sm { color: #94a3b8; }
+
+        /* THANH CHÚ THÍCH PHÂN LOẠI CẦU (3 LOẠI GỘP) */
+        .radar-legend-bar {
+            margin-top: 16px;
+            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 12px;
+        }
+
+        .legend-title {
+            color: #f1f5f9;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .legend-items {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .legend-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .pill-main { color: #fde68a; border-color: rgba(251, 191, 36, 0.5); background: rgba(251, 191, 36, 0.15); box-shadow: 0 0 10px rgba(251, 191, 36, 0.2); }
+        .pill-lot { color: #bae6fd; border-color: rgba(56, 189, 248, 0.5); background: rgba(56, 189, 248, 0.15); box-shadow: 0 0 10px rgba(56, 189, 248, 0.2); }
+        .pill-watch { color: #cbd5e1; border-color: rgba(148, 163, 184, 0.35); background: rgba(148, 163, 184, 0.1); }
+
+        .legend-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+        }
+        .dot-gold, .gold { background: #fbbf24; box-shadow: 0 0 8px #fbbf24; }
+        .dot-blue, .blue { background: #38bdf8; box-shadow: 0 0 8px #38bdf8; }
+        .dot-dim, .dot-gray, .gray { background: #94a3b8; }
+
+        /* 🟡 NỔI BẬT TOP 1: VIỀN VÀNG ĐẬM & PHÓNG TO */
+        .num-badge-top1-glow {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 32px;
+            font-weight: 900;
+            color: #000;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            padding: 8px 24px;
+            border-radius: 14px;
+            border: 3px solid #fff;
+            box-shadow: 0 0 25px rgba(251, 191, 36, 0.8), 0 0 45px rgba(251, 191, 36, 0.4);
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .num-badge-top1-glow:hover { transform: scale(1.08); }
+
+        /* 🟠 NỔI BẬT TOP 4: CÓ DẤU SAO (★) & VIỀN CAM NỔI */
+        .num-badge-top4-star {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 19px;
+            font-weight: 800;
+            color: #fff;
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            padding: 7px 16px;
+            border-radius: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.45);
+            box-shadow: 0 0 16px rgba(249, 115, 22, 0.6);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .num-badge-top4-star:hover { transform: scale(1.08); }
+
+        /* PHẦN 2: DÀN SỐ TINH TÚY */
+        .tinh-tuy-box {
+            background: linear-gradient(145deg, rgba(251, 191, 36, 0.05) 0%, rgba(15, 23, 42, 0.95) 70%);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 20px;
+            padding: 22px;
+            margin-bottom: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 0 25px rgba(251, 191, 36, 0.04);
+        }
+
+        .tier-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            flex-wrap: wrap;
+        }
+
+        .tier-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .tier-label {
+            width: 170px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .tier-label.label-gold { color: var(--color-gold); }
+        .tier-label.label-orange { color: var(--color-orange); }
+        .tier-label.label-blue { color: var(--color-blue); }
+        .tier-label.label-green { color: var(--color-green); }
+
+        .tier-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        /* Number Badges */
+        .num-badge-gold {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 26px;
+            font-weight: 900;
+            color: #000;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            padding: 6px 18px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px var(--color-gold-glow);
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .num-badge-gold:hover { transform: scale(1.08); }
+
+        .num-badge-orange {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 18px;
+            font-weight: 800;
+            color: #fff;
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            padding: 6px 12px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px var(--color-orange-glow);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .num-badge-orange:hover { transform: scale(1.08); }
+
+        .num-badge-blue {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            font-weight: 700;
+            color: #38bdf8;
+            background: var(--color-blue-bg);
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            padding: 4px 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .num-badge-blue:hover {
+            background: rgba(56, 189, 248, 0.25);
+            transform: scale(1.06);
+        }
+
+        .num-badge-green {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            font-weight: 700;
+            color: #4ade80;
+            background: var(--color-green-bg);
+            border: 1px solid rgba(34, 197, 94, 0.4);
+            padding: 4px 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .num-badge-green:hover {
+            background: rgba(34, 197, 94, 0.25);
+            transform: scale(1.06);
+        }
+
+        .num-badge-yellow {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            font-weight: 700;
+            color: #fbbf24;
+            background: rgba(251, 191, 36, 0.12);
+            border: 1px solid rgba(251, 191, 36, 0.45);
+            padding: 4px 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .num-badge-yellow:hover {
+            background: rgba(251, 191, 36, 0.25);
+            transform: scale(1.06);
+        }
+
+        .num-badge-orange-sm {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            font-weight: 700;
+            color: #fb923c;
+            background: rgba(249, 115, 22, 0.12);
+            border: 1px solid rgba(249, 115, 22, 0.45);
+            padding: 4px 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .num-badge-orange-sm:hover {
+            background: rgba(249, 115, 22, 0.25);
+            transform: scale(1.06);
+        }
+
+        /* PHẦN 3: DÀN SỐ N1, N2, N3 */
+        .n123-box {
+            background: linear-gradient(145deg, rgba(34, 197, 94, 0.05) 0%, rgba(15, 23, 42, 0.95) 70%);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 20px;
+            padding: 22px;
+            margin-bottom: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        }
+
+        /* BUTTON BAR */
+        .btn-copy-bar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        @media (max-width: 640px) {
+            .btn-copy-bar {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .btn-copy {
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 12px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.25s ease;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            text-transform: uppercase;
+        }
+
+        .btn-copy:hover { transform: translateY(-2px); }
+
+        .btn-copy-gold {
+            background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+            color: #000;
+            box-shadow: 0 0 15px var(--color-gold-glow);
+        }
+
+        .btn-copy-orange {
+            background: linear-gradient(135deg, #f97316 0%, #c2410c 100%);
+            color: #fff;
+            box-shadow: 0 0 15px var(--color-orange-glow);
+        }
+
+        .btn-copy-blue {
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            color: #fff;
+            box-shadow: 0 0 15px var(--color-blue-glow);
+        }
+
+        .btn-copy-green {
+            background: linear-gradient(135deg, #22c55e 0%, #15803d 100%);
+            color: #fff;
+            box-shadow: 0 0 15px var(--color-green-glow);
+        }
+
+        /* TRẠNG THÁI CHUYỂN CẦU BANNER */
+        .frame-alert-card {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(15, 23, 42, 0.95) 100%);
+            border: 1.5px solid #10b981;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(16, 185, 129, 0.2);
+        }
+
+        .frame-alert-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .frame-alert-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 800;
+            color: #6ee7b7;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .frame-schedule-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 12px;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 13px;
+        }
+
+        .schedule-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .schedule-tag {
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+        }
+
+        .tag-n1 { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid #22c55e; }
+        .tag-n2 { background: rgba(251, 191, 36, 0.2); color: #fde68a; border: 1px solid #fbbf24; }
+        .tag-n3 { background: rgba(249, 115, 22, 0.2); color: #fed7aa; border: 1px solid #f97316; }
+
+        /* TOAST NOTIFICATION */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #0f172a;
+            border: 1px solid #38bdf8;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 700;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 15px rgba(56, 189, 248, 0.5);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* HELPER VISIBILITY CLASSES */
+        .pc-only { display: inline-flex !important; }
+        .mobile-only { display: none !important; }
+        .mobile-only-flex { display: none !important; }
+
+        /* LEGEND INFO BUTTON */
+        .legend-info-btn {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: rgba(56, 189, 248, 0.2);
+            border: 1px solid #38bdf8;
+            color: #38bdf8;
+            font-weight: 900;
+            font-size: 11px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-left: auto;
+        }
+
+        /* NÚT COPY CHÍNH CHO ĐIỆN THOẠI */
+        .btn-mobile-copy-master {
+            width: 100%;
+            padding: 13px 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 800;
+            color: #0f172a;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            border: none;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: transform 0.15s ease;
+        }
+        .btn-mobile-copy-master:active {
+            transform: scale(0.98);
+        }
+
+        /* MOBILE ACTION SHEET (BOTTOM SHEET CHO MENU COPY) */
+        .mobile-action-sheet {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2000;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+        .mobile-action-sheet.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            opacity: 1;
+        }
+        .sheet-backdrop {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(4px);
+        }
+        .sheet-content {
+            position: relative;
+            background: #0f172a;
+            border-top: 2px solid #fbbf24;
+            border-radius: 20px 20px 0 0;
+            padding: 18px 16px 28px 16px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(251, 191, 36, 0.2);
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .mobile-action-sheet.active .sheet-content {
+            transform: translateY(0);
+        }
+        .sheet-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .sheet-header h3 {
+            font-size: 14px;
+            font-weight: 800;
+            color: #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0;
+        }
+        .sheet-close-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #cbd5e1;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+        }
+        .sheet-options {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+        .sheet-option-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 11px 12px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-align: left;
+        }
+        .sheet-option-btn:active {
+            background: rgba(251, 191, 36, 0.15);
+            border-color: #fbbf24;
+            transform: scale(0.98);
+        }
+        .sheet-option-btn .opt-icon {
+            font-size: 18px;
+            margin-right: 10px;
+        }
+        .sheet-option-btn .opt-text {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .sheet-option-btn .opt-text strong {
+            font-size: 13px;
+            color: #f8fafc;
+        }
+        .sheet-option-btn .opt-text small {
+            font-size: 11px;
+            color: #94a3b8;
+            margin-top: 1px;
+        }
+        .opt-top1 { border-color: rgba(251, 191, 36, 0.45); background: rgba(251, 191, 36, 0.09); }
+        .opt-top4 { border-color: rgba(249, 115, 22, 0.45); background: rgba(249, 115, 22, 0.09); }
+        /* =====================================================================
+           PHẦN 4: LỊCH SỬ & TỶ LỆ PHƯƠNG PHÁP
+           ===================================================================== */
+        .history-box {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            padding: 22px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .tong-quan {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .stat-card {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid var(--border-glass);
+            border-radius: 14px;
+            padding: 12px 10px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .stat-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--border-glass-strong);
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-sub);
+            margin-bottom: 6px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 18px;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .stat-value.gold { color: #fbbf24; text-shadow: 0 0 12px rgba(251, 191, 36, 0.4); }
+        .stat-value.blue { color: #38bdf8; text-shadow: 0 0 12px rgba(56, 189, 248, 0.4); }
+        .stat-value.green { color: #22c55e; text-shadow: 0 0 12px rgba(34, 197, 94, 0.4); }
+        .stat-value.orange { color: #f97316; text-shadow: 0 0 12px rgba(249, 115, 22, 0.4); }
+        .stat-value.red { color: #ef4444; text-shadow: 0 0 12px rgba(239, 68, 68, 0.4); }
+
+        .lich-su-container {
+            max-height: 320px;
+            overflow-y: auto;
+            border: 1px solid var(--border-glass);
+            border-radius: 14px;
+            padding: 10px;
+            background: rgba(6, 9, 17, 0.65);
+        }
+        .lich-su-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        .lich-su-container::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+        }
+
+        .lich-su-item {
+            display: grid;
+            grid-template-columns: 115px 90px 1fr;
+            gap: 10px;
+            padding: 10px 8px;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+            font-size: 13px;
+            align-items: center;
+        }
+        .lich-su-item:last-child {
+            border-bottom: none;
+        }
+
+        .lich-su-item .ngay {
+            font-weight: 700;
+            color: #cbd5e1;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+        }
+        .lich-su-item .de {
+            font-weight: 700;
+            color: #fff;
+        }
+        .lich-su-item .de strong {
+            color: #fbbf24;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Classes Phần 4A: Khung 3 ngày */
+        .ket-qua.trung_n1, .ket-qua.trung-n1 { color: #fbbf24; font-weight: 800; }
+        .ket-qua.trung_n2, .ket-qua.trung-n2 { color: #38bdf8; font-weight: 800; }
+        .ket-qua.trung_n3, .ket-qua.trung-n3 { color: #f97316; font-weight: 800; }
+        .ket-qua.truot_khung, .ket-qua.truot { color: #ef4444; font-weight: 800; }
+
+        /* Classes Phần 4B: Soi trực tiếp */
+        .ket-qua.trung_bach_thu { color: #fbbf24; font-weight: 800; }
+        .ket-qua.trung_tu_thu { color: #38bdf8; font-weight: 800; }
+        .ket-qua.trung_lot { color: #22c55e; font-weight: 800; }
+        .ket-qua.truot_truc_tiep { color: #ef4444; font-weight: 800; }
+
+        /* =====================================================================
+           RESPONSIVE DESIGN CHO ĐIỆN THOẠI (MAX-WIDTH: 640PX)
+           ===================================================================== */
+        @media (max-width: 640px) {
+            body {
+                padding: 10px 8px 30px 8px;
+            }
+            .container {
+                padding: 0;
+            }
+            .pc-only { display: none !important; }
+            .mobile-only { display: block !important; }
+            .mobile-only-flex { display: flex !important; }
+
+            /* 1. BỐ CỤC TỔNG THỂ HEADER (DỌC) */
+            .app-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+                padding: 14px 12px;
+                border-radius: 16px;
+                margin-bottom: 14px;
+            }
+            .header-brand {
+                justify-content: center;
+                text-align: center;
+            }
+            .brand-title {
+                font-size: 16px;
+            }
+            .brand-sub {
+                font-size: 10px;
+            }
+            .header-actions {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 8px;
+                width: 100%;
+            }
+            .btn-refresh {
+                flex: 1;
+                justify-content: center;
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+            .radar-status-badge {
+                flex: 1.3;
+                justify-content: center;
+                padding: 8px 10px;
+                font-size: 11px;
+            }
+
+            /* PHẦN 1: BẢNG KẾT QUẢ QUAY TRỰC TIẾP */
+            .section-box, .tinh-tuy-box, .n123-box, .frame-alert-card {
+                padding: 14px 10px;
+                border-radius: 16px;
+                margin-bottom: 14px;
+            }
+            .section-header {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 10px;
+                padding-bottom: 8px;
+            }
+            .section-header h2 {
+                font-size: 12.5px;
+            }
+            .tag-info {
+                font-size: 10px;
+                padding: 2px 7px;
+            }
+
+            .prize-table, 
+            .prize-table tbody, 
+            .prize-table tr, 
+            .prize-table td {
+                display: block;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .prize-table tr {
+                padding: 7px 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            }
+            .prize-name-col {
+                width: 100% !important;
+                padding: 0 0 5px 2px !important;
+                font-size: 12px !important;
+                font-weight: 800 !important;
+                color: #94a3b8 !important;
+                display: flex !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+            }
+            .prize-status-col {
+                display: none !important;
+            }
+            .prize-nums-col {
+                width: 100% !important;
+                padding: 0 !important;
+                display: grid !important;
+                gap: 5px !important;
+            }
+
+            /* 2. XỬ LÝ CÁC GIẢI CÓ NHIỀU SỐ (G3, G5: 2 HÀNG X 3 SỐ) */
+            #live-g1 { grid-template-columns: 1fr !important; }
+            #live-g2 { grid-template-columns: repeat(2, 1fr) !important; }
+            #live-g3 { grid-template-columns: repeat(3, 1fr) !important; }
+            #live-g4 { grid-template-columns: repeat(2, 1fr) !important; }
+            #live-g5 { grid-template-columns: repeat(3, 1fr) !important; }
+
+            .prize-num-chip {
+                margin: 0 !important;
+                padding: 3px 1px !important;
+                justify-content: center !important;
+                width: 100% !important;
+                border-radius: 6px !important;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
+            }
+
+            /* 3 & 4. GIẢM KÍCH THƯỚC Ô SỐ, CHỮ & DÙNG CHẤM TRÒN THAY CHỮ "3D" */
+            .prize-digit {
+                min-width: 15px !important;
+                height: 27px !important;
+                padding: 1px 1px !important;
+                margin: 0 1px !important;
+                border-radius: 4px !important;
+            }
+            .prize-digit span:first-child {
+                font-size: 13px !important;
+                font-weight: 800 !important;
+                line-height: 1.1 !important;
+            }
+            .tag-text { display: none !important; }
+            .tag-dot { 
+                display: inline-block !important; 
+                font-size: 7px !important; 
+                line-height: 1 !important; 
+                margin-top: 1px !important;
+            }
+
+            /* 5. CHÚ THÍCH (LEGEND) THU GỌN 1 HÀNG */
+            .radar-legend-bar {
+                margin-top: 12px;
+                padding: 8px 10px;
+                border-radius: 10px;
+                gap: 6px;
+                flex-direction: row;
+                align-items: center;
+            }
+            .legend-items {
+                gap: 6px;
+                width: 100%;
+                justify-content: space-between;
+            }
+            .legend-pill {
+                padding: 4px 7px;
+                font-size: 10px;
+                border-radius: 12px;
+                gap: 3px;
+            }
+
+            /* PHẦN 2: DÀN SỐ TINH TÚY & PHẦN 3 */
+            .tier-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+                padding: 10px 0;
+            }
+            .tier-label {
+                width: 100%;
+                font-size: 12px;
+            }
+            .tier-content {
+                width: 100%;
+                gap: 6px;
+            }
+            .num-badge-top1-glow {
+                font-size: 22px !important;
+                padding: 4px 16px !important;
+            }
+            .num-badge-orange, .num-badge-top4-star {
+                font-size: 14px !important;
+                padding: 4px 8px !important;
+            }
+            .num-badge-blue, .num-badge-green, .num-badge-gold {
+                font-size: 12.5px !important;
+                padding: 2.5px 6px !important;
+            }
+
+            /* PHẦN 4 MOBILE OVERRIDE (IPHONE 11) */
+            .history-box {
+                padding: 14px 10px;
+                border-radius: 16px;
+                margin-bottom: 14px;
+            }
+            .tong-quan {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+            .stat-card:first-child {
+                grid-column: span 2;
+            }
+            .stat-card {
+                padding: 8px 6px;
+                border-radius: 10px;
+            }
+            .stat-label {
+                font-size: 10px;
+            }
+            .stat-value {
+                font-size: 14.5px;
+            }
+            .lich-su-container {
+                max-height: 280px;
+                padding: 6px;
+            }
+            .lich-su-item {
+                grid-template-columns: 88px 68px 1fr;
+                font-size: 11.5px;
+                padding: 8px 4px;
+                gap: 6px;
+            }
+            .lich-su-item .ngay {
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- HEADER -->
+        <header class="app-header">
+            <div class="header-brand">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-bolt"></i>
+                </div>
+                <div>
+                    <h1 class="brand-title">XSMB AI - REAL-TIME RADAR</h1>
+                    <p class="brand-sub">Quay đến hết Giải 5.6 là kết thúc &amp; tự động xuất dàn</p>
+                </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <button class="btn-refresh" id="btn-manual-refresh" title="Làm mới dữ liệu">
+                    <i class="fa-solid fa-arrows-rotate"></i> Làm mới
+                </button>
+                <div class="radar-status-badge">
+                    <span class="pulse-dot"></span>
+                    <span id="txt-radar-status">QUAY ĐẾN HẾT GIẢI 5.6</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- THANH TRỰC TIẾP ĐÀI QUAY XSMB (TRƯỜNG QUAY 53 HÀNG CHUỐI) -->
+        <div class="live-broadcast-card">
+            <div class="live-broadcast-header">
+                <div class="live-badge-glow">
+                    <span class="live-dot-red"></span>
+                    <span>TRỰC TIẾP ĐÀI QUAY XSMB</span>
+                </div>
+                <div class="live-station-info">
+                    <i class="fa-solid fa-tower-broadcast" style="color: #ef4444;"></i>
+                    <span>Trường quay 53 Hàng Chuối • Đài PT-TH Hà Nội / VTC9 (18h15 - 18h35)</span>
+                </div>
+            </div>
+            <div class="live-broadcast-controls">
+                <button class="btn-live-media btn-live-video" id="btn-toggle-video" onclick="toggleLiveMedia('video')">
+                    <i class="fa-brands fa-youtube" style="color: #ef4444;"></i> Kênh Đài Quay (Video)
+                </button>
+                <button class="btn-live-media btn-live-audio" id="btn-toggle-audio" onclick="toggleLiveMedia('audio')">
+                    <i class="fa-solid fa-volume-high" style="color: #38bdf8;"></i> Nghe Tường Thuật
+                </button>
+                <button class="btn-live-media btn-live-reload" onclick="forceCheckLiveNow()">
+                    <i class="fa-solid fa-rotate" style="color: #fbbf24;"></i> Bắt Số Real-time
+                </button>
+            </div>
+            <!-- Khung nhúng Live Stream Modal / Container -->
+            <div id="mediaLiveBox" class="media-live-box" style="display: none;">
+                <div class="media-box-inner" id="mediaBoxContent">
+                    <!-- Dynamic Media Content -->
+                </div>
+            </div>
+        </div>
+
+        
+        <!-- PHẦN 0: BẢNG CHỐT DÀN TĨNH 4 CẤP (ĐÁNH TRƯỚC 18H15) -->
+        <section class="section-box" id="section-dan-tinh" style="border: 1px solid rgba(251, 191, 36, 0.4); box-shadow: 0 0 25px rgba(251, 191, 36, 0.12); margin-bottom: 22px;">
+            <div class="section-header" style="border-bottom: 1px solid rgba(251, 191, 36, 0.25); padding-bottom: 14px;">
+                <h2>
+                    <i class="fa-solid fa-crown" style="color: #fbbf24; filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.6));"></i> 
+                    PHẦN 0: BẢNG CHỐT DÀN TĨNH 4 CẤP (<span id="txt-tinh-date" style="color: #67e8f9;">25/09/2026</span>)
+                </h2>
+                <span class="tag-info" id="txt-tinh-badge" style="background: rgba(16, 185, 129, 0.18); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.5); font-weight: 700;">
+                    <i class="fa-solid fa-circle-check"></i> ĐANG HIỆU LỰC (VÀO TIỀN TRƯỚC 18H15)
+                </span>
+            </div>
+
+            <!-- TẦNG 4: HỎA LỰC BẠCH THỦ & TỨ THỦ -->
+            <div class="tier-row" style="background: linear-gradient(90deg, rgba(251, 191, 36, 0.08) 0%, rgba(15, 23, 42, 0.4) 100%); padding: 14px 12px; border-radius: 12px; margin-bottom: 10px; border: 1px solid rgba(251, 191, 36, 0.2);">
+                <div class="tier-label label-gold" style="min-width: 175px;">
+                    <i class="fa-solid fa-fire-flame-curved"></i> CẤP 4 (HỎA LỰC)
+                </div>
+                <div class="tier-content" style="gap: 12px; align-items: center;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 11px; color: #fbbf24; font-weight: 800;">BẠCH THỦ:</span>
+                        <span class="num-badge-gold" id="badge-tinh-bt" style="font-size: 26px; padding: 4px 18px; cursor: pointer;" title="Bấm để sao chép Bạch thủ">41</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 11px; color: #f97316; font-weight: 800;">SONG THỦ:</span>
+                        <span class="num-badge-orange" id="badge-tinh-st" style="font-size: 18px; padding: 4px 12px; cursor: pointer;" title="Bấm để sao chép Song thủ">41 - 14</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 11px; color: #f97316; font-weight: 800;">TỨ THỦ:</span>
+                        <span class="num-badge-orange" id="badge-tinh-tt" style="font-size: 15px; padding: 4px 10px; cursor: pointer;" title="Bấm để sao chép Tứ thủ">41 - 14 - 67 - 31</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; color: #67e8f9; font-weight: 700; background: rgba(56, 189, 248, 0.1); padding: 4px 10px; border-radius: 8px; border: 1px solid rgba(56, 189, 248, 0.25);">
+                        <span>🔮 CÀNG 3D: 0, 2, 4, 5, 7</span>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 6px; margin-top: 6px;">
+                    <button class="btn-copy-dan" style="padding: 5px 10px; font-size: 11px;" onclick="copyText('41', 'Đã chép Bạch thủ 41')"><i class="fa-regular fa-copy"></i> Copy BT 41</button>
+                    <button class="btn-copy-dan" style="padding: 5px 10px; font-size: 11px;" onclick="copyText('41, 14', 'Đã chép Song thủ 41, 14')"><i class="fa-regular fa-copy"></i> Copy Song Thủ</button>
+                    <button class="btn-copy-dan" style="padding: 5px 10px; font-size: 11px;" onclick="copyText('41, 14, 67, 31', 'Đã chép Tứ thủ 41, 14, 67, 31')"><i class="fa-regular fa-copy"></i> Copy Tứ Thủ</button>
+                </div>
+            </div>
+
+            <!-- TẦNG 3: DÀN 9 SỐ CỘI NGUỒN -->
+            <div class="tier-row" style="background: rgba(56, 189, 248, 0.04); padding: 12px; border-radius: 12px; margin-bottom: 10px; border: 1px solid rgba(56, 189, 248, 0.15);">
+                <div class="tier-label label-blue" style="min-width: 175px;">
+                    <div><i class="fa-solid fa-dice"></i> CẤP 3 (DÀN 9 SỐ)</div>
+                    <div style="font-size: 10.5px; color: #94a3b8; font-weight: 600; margin-top: 2px;">Top 3 Đầu [6,3,4] × Top 3 Đuôi [7,1,2]</div>
+                </div>
+                <div class="tier-content" id="tinh-grid-dan9" style="gap: 8px;">
+                    <span class="num-badge-blue" onclick="copyText('67', 'Đã copy 67')">67</span>
+                    <span class="num-badge-blue" onclick="copyText('61', 'Đã copy 61')">61</span>
+                    <span class="num-badge-blue" onclick="copyText('62', 'Đã copy 62')">62</span>
+                    <span class="num-badge-blue" onclick="copyText('37', 'Đã copy 37')">37</span>
+                    <span class="num-badge-blue" onclick="copyText('31', 'Đã copy 31')">31</span>
+                    <span class="num-badge-blue" onclick="copyText('32', 'Đã copy 32')">32</span>
+                    <span class="num-badge-blue" onclick="copyText('47', 'Đã copy 47')">47</span>
+                    <span class="num-badge-gold" style="font-size: 15px; padding: 4px 10px;" onclick="copyText('41', 'Đã copy 41')">41 ⭐</span>
+                    <span class="num-badge-blue" onclick="copyText('42', 'Đã copy 42')">42</span>
+                </div>
+                <button class="btn-copy-dan" style="padding: 6px 14px; font-size: 11px;" id="btn-copy-tinh-dan9"><i class="fa-regular fa-copy"></i> Copy Dàn 9 Số</button>
+            </div>
+
+            <!-- TẦNG 2: DÀN GIAO THOA 38 SỐ CẤP 2 -->
+            <div class="tier-row" style="background: rgba(249, 115, 22, 0.03); padding: 12px; border-radius: 12px; margin-bottom: 10px; border: 1px solid rgba(249, 115, 22, 0.15);">
+                <div class="tier-label label-orange" style="min-width: 175px;">
+                    <div><i class="fa-solid fa-filter"></i> CẤP 2 (38 SỐ)</div>
+                    <div style="font-size: 10.5px; color: #94a3b8; font-weight: 600; margin-top: 2px;">Chạm G7 × Nhịp Vàng Gaussian</div>
+                </div>
+                <div class="tier-content" id="tinh-grid-dan38" style="gap: 5px;">
+                    <!-- Sẽ nạp qua JS -->
+                </div>
+                <button class="btn-copy-dan" style="padding: 6px 14px; font-size: 11px;" id="btn-copy-tinh-dan38"><i class="fa-regular fa-copy"></i> Copy Dàn 38 Số</button>
+            </div>
+
+            <!-- TẦNG 1: DÀN GỐC 60 SỐ N1 -->
+            <div class="tier-row" style="background: rgba(34, 197, 94, 0.03); padding: 12px; border-radius: 12px; border: 1px solid rgba(34, 197, 94, 0.15);">
+                <div class="tier-label label-green" style="min-width: 175px;">
+                    <div><i class="fa-solid fa-shield-halved"></i> CẤP 1 (DÀN GỐC 60S)</div>
+                    <div style="font-size: 10.5px; color: #94a3b8; font-weight: 600; margin-top: 2px;">Khung N1 An Toàn Ăn 87.5%</div>
+                </div>
+                <div class="tier-content" id="tinh-grid-dan60" style="gap: 4px;">
+                    <!-- Sẽ nạp qua JS -->
+                </div>
+                <button class="btn-copy-dan" style="padding: 6px 14px; font-size: 11px;" id="btn-copy-tinh-dan60"><i class="fa-regular fa-copy"></i> Copy Dàn 60 Số</button>
+            </div>
+        </section>
+
+        <!-- PHẦN 1: BẢNG KẾT QUẢ QUAY TRỰC TIẾP (GIẢI 1 → GIẢI 5.6) -->
+        <section class="section-box">
+            <div class="section-header">
+                <h2><i class="fa-solid fa-list-check" style="color: #38bdf8;"></i> PHẦN 1: KẾT QUẢ QUAY TRỰC TIẾP (<span id="txt-draw-date">22/09/2026</span>)</h2>
+                <span class="tag-info" id="txt-progress-badge">19/19 GIẢI (ĐÃ HOÀN TẤT)</span>
+            </div>
+
+            <table class="prize-table">
+                <tbody>
+                    <tr>
+                        <td class="prize-name-col">Giải 1</td>
+                        <td class="prize-nums-col" id="live-g1">
+                            <span class="prize-num-chip">68392</span>
+                        </td>
+                        <td class="prize-status-col">
+                            <span class="badge-done"><i class="fa-solid fa-circle-check"></i> Đã quay</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="prize-name-col">Giải 2 (2.1 - 2.2)</td>
+                        <td class="prize-nums-col" id="live-g2">
+                            <span class="prize-num-chip">42192</span>
+                            <span class="prize-num-chip">98961</span>
+                        </td>
+                        <td class="prize-status-col">
+                            <span class="badge-done"><i class="fa-solid fa-circle-check"></i> Đã quay</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="prize-name-col">Giải 3 (3.1 → 3.6)</td>
+                        <td class="prize-nums-col" id="live-g3">
+                            <span class="prize-num-chip">18400</span>
+                            <span class="prize-num-chip">72209</span>
+                            <span class="prize-num-chip">72261</span>
+                            <span class="prize-num-chip">68433</span>
+                            <span class="prize-num-chip">35051</span>
+                            <span class="prize-num-chip">86944</span>
+                        </td>
+                        <td class="prize-status-col">
+                            <span class="badge-done"><i class="fa-solid fa-circle-check"></i> Đã quay</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="prize-name-col">Giải 4 (4.1 → 4.4)</td>
+                        <td class="prize-nums-col" id="live-g4">
+                            <span class="prize-num-chip">3748</span>
+                            <span class="prize-num-chip">6738</span>
+                            <span class="prize-num-chip">0334</span>
+                            <span class="prize-num-chip">1736</span>
+                        </td>
+                        <td class="prize-status-col">
+                            <span class="badge-done"><i class="fa-solid fa-circle-check"></i> Đã quay</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="prize-name-col">Giải 5 (5.1 → 5.6)</td>
+                        <td class="prize-nums-col" id="live-g5">
+                            <span class="prize-num-chip">6318</span>
+                            <span class="prize-num-chip">9384</span>
+                            <span class="prize-num-chip">1206</span>
+                            <span class="prize-num-chip">7167</span>
+                            <span class="prize-num-chip">8446</span>
+                            <span class="prize-num-chip">7367</span>
+                        </td>
+                        <td class="prize-status-col">
+                            <span class="badge-done"><i class="fa-solid fa-circle-check"></i> Đã quay</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="prize-name-col" style="color: #64748b;">Giải 6 &amp; 7</td>
+                        <td class="prize-nums-col" style="color: #64748b; font-size: 13px;">
+                            [Không cần - Bỏ qua hoàn toàn]
+                        </td>
+                        <td class="prize-status-col">
+                            <span class="badge-skip"><i class="fa-solid fa-ban"></i> Bỏ qua</span>
+                        </td>
+                    </tr>
+            </table>
+
+            <!-- THANH CHÚ THÍCH PHÂN LOẠI CẦU (4 TRẠNG THÁI CHUẨN) -->
+            <div class="radar-legend-bar">
+                <div class="legend-title pc-only">
+                    <i class="fa-solid fa-palette" style="color: #38bdf8;"></i> <strong>QUY TẮC CẦU:</strong>
+                </div>
+                <div class="legend-items">
+                    <span class="legend-pill pill-main"><span class="legend-dot dot-gold"></span> 🟡 <strong>Chỉ đạo (3-4d)</strong><span class="pc-only">: Vẫn lấy bình thường</span></span>
+                    <span class="legend-pill pill-lot"><span class="legend-dot dot-blue"></span> 🔵 <strong>Lót (2d)</strong><span class="pc-only">: Nổ ngày 2 → Tổng lực ngày 3</span></span>
+                    <span class="legend-pill pill-watch"><span class="legend-dot dot-dim"></span> ⚪ <strong>Theo dõi (1d)</strong><span class="pc-only">: Mới chạm ngày 1</span></span>
+                    <span class="legend-pill" style="border: 1px solid rgba(239, 68, 68, 0.4); background: rgba(239, 68, 68, 0.12); color: #f87171;"><span class="legend-dot" style="background: #ef4444;"></span> ❌ <strong>Cầu gãy</strong><span class="pc-only">: Bỏ, loại hoàn toàn</span></span>
+                    <button class="legend-info-btn mobile-only" id="btn-legend-help" title="Nhấn để xem giải thích chi tiết">?</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- PHẦN 2: DÀN SỐ TINH TÚY (XUẤT HIỆN SAU KHI GIẢI 5.6 KẾT THÚC) -->
+        <section class="tinh-tuy-box">
+            <div class="section-header" style="border-color: rgba(251, 191, 36, 0.2);">
+                <h2 style="color: #fde68a;"><i class="fa-solid fa-gem" style="color: #fbbf24;"></i> PHẦN 2: DÀN SỐ TINH TÚY (GIAO THOA 60 SỐ CẤP 4)</h2>
+                <span class="tag-info" style="color: #fbbf24; border-color: rgba(251, 191, 36, 0.4); background: rgba(251, 191, 36, 0.1);">
+                    ƯU TIÊN CẦU CHẠY 3-4 NGÀY
+                </span>
+            </div>
+
+            <!-- Dòng 1: Top 1 (Vàng) -->
+            <div class="tier-row">
+                <div class="tier-label label-gold">
+                    <i class="fa-solid fa-crown"></i> 🟡 TOP 1 (CHỈ ĐẠO 3-4D)
+                </div>
+                <div class="tier-content">
+                    <span class="num-badge-top1-glow" id="val-top1">82 (3d)</span>
+                    <span style="font-size: 12px; color: #fde68a; font-weight: 600;">(Con số chỉ đạo mạnh nhất chu kỳ 3-4 ngày)</span>
+                </div>
+            </div>
+
+            <!-- Dòng 2: Top 4 (Cam) -->
+            <div class="tier-row">
+                <div class="tier-label label-orange">
+                    <i class="fa-solid fa-fire-flame-curved"></i> 🟠 TOP 4 (CHỈ ĐẠO 3-4D)
+                </div>
+                <div class="tier-content" id="list-top4">
+                    <span class="num-badge-orange">★ 82 (3d)</span>
+                    <span class="num-badge-orange">★ 32 (3d)</span>
+                    <span class="num-badge-orange">★ 87 (3d)</span>
+                    <span class="num-badge-orange">★ 37 (3d)</span>
+                </div>
+            </div>
+
+            <!-- Dòng 3: Dàn Tinh Túy Ngày 1 Giao Thoa (Trắng/Ánh kim) -->
+            <div class="tier-row">
+                <div class="tier-label" style="color: #cbd5e1; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.06); padding: 4px 10px; border-radius: 8px;">
+                    <i class="fa-solid fa-gem" style="color: #38bdf8;"></i> ⚪ DÀN TINH TÚY NGÀY 1
+                </div>
+                <div class="tier-content" id="list-tinhtuy-ngay1">
+                    <!-- Dynamic badges for Tinh Túy Ngày 1 -->
+                </div>
+            </div>
+
+            <!-- Dòng 4: Số Lót (Xanh - Lấy từ 60 số N1) -->
+            <div class="tier-row">
+                <div class="tier-label label-blue">
+                    <i class="fa-solid fa-shield"></i> 🔵 SỐ LÓT (LẤY TỪ 60 SỐ N1)
+                </div>
+                <div class="tier-content" id="list-lot">
+                    <!-- Dynamic blue badges for Lót -->
+                </div>
+            </div>
+
+            <!-- Nút Copy Phần 2 (PC: 4 nút riêng) -->
+            <div class="btn-copy-bar pc-only" style="margin-top: 18px; margin-bottom: 0;">
+                <button class="btn-copy btn-copy-gold" id="btn-copy-top1">
+                    <i class="fa-regular fa-copy"></i> Copy Top 1
+                </button>
+                <button class="btn-copy btn-copy-orange" id="btn-copy-top4">
+                    <i class="fa-regular fa-copy"></i> Copy Top 4
+                </button>
+                <button class="btn-copy btn-copy-blue" id="btn-copy-tinh-tuy">
+                    <i class="fa-solid fa-check-double"></i> Copy Dàn Tinh Túy
+                </button>
+                <button class="btn-copy" id="btn-copy-lot" style="background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); color: #38bdf8;">
+                    <i class="fa-solid fa-shield"></i> Copy Số Lót N1
+                </button>
+            </div>
+
+            <!-- Nút Copy Phần 2 (Mobile: 1 nút gộp hiển thị Menu) -->
+            <div class="mobile-only" style="margin-top: 14px;">
+                <button class="btn-mobile-copy-master" id="btn-mobile-copy-trigger">
+                    <i class="fa-solid fa-clipboard-list"></i> SAO CHÉP DÀN SỐ <i class="fa-solid fa-chevron-down" style="font-size: 11px;"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- PHẦN 3: DÀN SỐ N1, N2, N3 (THEO QUY TẮC CẤP 4) -->
+        <section class="n123-box">
+            <div class="section-header" style="border-color: rgba(34, 197, 94, 0.2);">
+                <h2 style="color: #4ade80;"><i class="fa-solid fa-layer-group" style="color: #22c55e;"></i> PHẦN 3: DÀN SỐ N1, N2, N3 (CẤP 4)</h2>
+                <span class="tag-info" id="weekly-cycle-badge" style="color: #4ade80; border-color: rgba(34, 197, 94, 0.4); background: rgba(34, 197, 94, 0.1);">
+                    CHU KỲ 7 NGÀY
+                </span>
+            </div>
+
+            <!-- Dòng N1 (60 số - Xanh lá) -->
+            <div class="tier-row">
+                <div class="tier-label label-green" id="lbl-dan-n1">
+                    <i class="fa-solid fa-circle"></i> 🟢 DÀN N1 (60 SỐ):
+                </div>
+                <div class="tier-content" id="dan-n1">
+                    <!-- Dynamic green badges for N1 -->
+                </div>
+            </div>
+
+            <!-- Dòng N2 (42 số - Vàng) -->
+            <div class="tier-row">
+                <div class="tier-label label-gold" id="lbl-dan-n2">
+                    <i class="fa-solid fa-circle"></i> 🟡 DÀN N2 (42 SỐ - MỞ RỘNG CỨU N1):
+                </div>
+                <div class="tier-content" id="dan-n2">
+                    <!-- Dynamic yellow badges for N2 -->
+                </div>
+            </div>
+
+            <!-- Dòng N3 (40 số - Cam) -->
+            <div class="tier-row">
+                <div class="tier-label label-orange" id="lbl-dan-n3">
+                    <i class="fa-solid fa-circle"></i> 🟠 DÀN N3 (40 SỐ - CƠ HỘI CUỐI):
+                </div>
+                <div class="tier-content" id="dan-n3">
+                    <!-- Dynamic orange badges for N3 -->
+                </div>
+            </div>
+
+            <!-- Nút Copy Phần 3 -->
+            <div class="btn-copy-bar" style="margin-top: 18px; margin-bottom: 0;">
+                <button class="btn-copy btn-copy-green" id="btn-copy-n1" onclick="copyDan('dan-n1')">
+                    <i class="fa-regular fa-copy"></i> Copy N1
+                </button>
+                <button class="btn-copy btn-copy-gold" id="btn-copy-n2" onclick="copyDan('dan-n2')">
+                    <i class="fa-regular fa-copy"></i> Copy N2
+                </button>
+                <button class="btn-copy btn-copy-orange" id="btn-copy-n3" onclick="copyDan('dan-n3')">
+                    <i class="fa-regular fa-copy"></i> Copy N3
+                </button>
+            </div>
+        </section>
+
+        <!-- TRẠNG THÁI CHUYỂN CẦU NGÀY MỚI (RESET CẦU) -->
+        <section class="frame-alert-card">
+            <div class="frame-alert-header">
+                <div class="frame-alert-title">
+                    <i class="fa-solid fa-arrows-rotate"></i> TRẠNG THÁI CHUYỂN CẦU NGÀY MỚI
+                </div>
+                <span style="font-size: 11px; font-weight: 800; color: #10b981; background: rgba(16, 185, 129, 0.2); padding: 4px 10px; border-radius: 8px;" id="badge-reset-status">
+                    ĐÃ NỔ N1 → RESET CẦU MỚI
+                </span>
+            </div>
+            <p style="font-size: 13px; color: #cbd5e1; line-height: 1.5; font-weight: 600;" id="desc-last-result">
+                Kỳ gần nhất (22/09) đã trúng N1 → RESET CẦU MỚI
+            </p>
+            <div class="frame-schedule-list">
+                <div class="schedule-item">
+                    <span class="schedule-tag tag-n1">ĐÁNH CHÍNH</span>
+                    <strong style="color: #4ade80;" id="sched-n1">Đánh chính: Thứ Tư 23/09 (Dàn 60 Số N1)</strong>
+                </div>
+                <div class="schedule-item">
+                    <span class="schedule-tag tag-n2">DỰ PHÒNG N2</span>
+                    <span style="color: #fde68a;" id="sched-n2">Dự phòng N2: Thứ Năm 24/09 (36 số)</span>
+                </div>
+                <div class="schedule-item">
+                    <span class="schedule-tag tag-n3">DỰ PHÒNG N3</span>
+                    <span style="color: #fed7aa;" id="sched-n3">Dự phòng N3: Thứ Sáu 25/09 (36 số)</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- PHẦN 4A: ĐÁNH GIÁ KHUNG 3 NGÀY (58_UP_TO_75) -->
+        <section class="history-box" id="sec-khung-3-ngay">
+            <div class="section-header">
+                <h2 style="color: #4ade80;"><i class="fa-solid fa-layer-group" style="color: #22c55e;"></i> PHẦN 4A: ĐÁNH GIÁ KHUNG 3 NGÀY (58_UP_TO_75)</h2>
+                <span class="tag-info" id="badge-khung-summary" style="color: #4ade80; border-color: rgba(34, 197, 94, 0.4); background: rgba(34, 197, 94, 0.1);">
+                    KIỂM CHỨNG THỰC TẾ
+                </span>
+            </div>
+
+            <!-- Tổng quan 4A -->
+            <div class="tong-quan">
+                <div class="stat-card">
+                    <div class="stat-label">Tổng số khung</div>
+                    <div class="stat-value" id="k-stat-tong">31</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Trúng N1</div>
+                    <div class="stat-value gold" id="k-stat-n1">24 (77.4%)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Trúng N2</div>
+                    <div class="stat-value blue" id="k-stat-n2">1 (3.2%)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Trúng N3</div>
+                    <div class="stat-value orange" id="k-stat-n3">0 (0.0%)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Trượt khung</div>
+                    <div class="stat-value red" id="k-stat-truot">6 (19.4%)</div>
+                </div>
+            </div>
+
+            <!-- Lịch sử khung cuộn dọc -->
+            <div class="lich-su-container" id="list-history-khung">
+                <!-- Nạp tự động từ lich_su_phuong_phap.json -> khung_3_ngay -->
+            </div>
+        </section>
+
+        <!-- PHẦN 4B: ĐÁNH GIÁ SOI TRỰC TIẾP (BẠCH THỦ & TỨ THỦ G1-G5) -->
+        <section class="history-box" id="sec-soi-truc-tiep">
+            <div class="section-header">
+                <h2 style="color: #fbbf24;"><i class="fa-solid fa-bullseye" style="color: #fbbf24;"></i> PHẦN 4B: ĐÁNH GIÁ SOI TRỰC TIẾP (BẠCH THỦ &amp; TỨ THỦ)</h2>
+                <span class="tag-info" id="badge-direct-summary" style="color: #fbbf24; border-color: rgba(251, 191, 36, 0.4); background: rgba(251, 191, 36, 0.1);">
+                    RADAR G1→G5 LIVE
+                </span>
+            </div>
+
+            <!-- Tổng quan 4B -->
+            <div class="tong-quan">
+                <div class="stat-card">
+                    <div class="stat-label">Tổng số ngày</div>
+                    <div class="stat-value" id="d-stat-tong">31</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Trúng Bạch Thủ</div>
+                    <div class="stat-value gold" id="d-stat-bt">11 (35.5%)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Trúng Tứ Thủ</div>
+                    <div class="stat-value blue" id="d-stat-tt">21 (67.7%)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Trúng Dàn Lót</div>
+                    <div class="stat-value green" id="d-stat-lot">25 (80.6%)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Hiệu Quả Tinh Túy</div>
+                    <div class="stat-value orange" id="d-stat-rate">Top 4: 67.7%</div>
+                </div>
+            </div>
+
+            <!-- Lịch sử soi trực tiếp cuộn dọc -->
+            <div class="lich-su-container" id="list-history-direct">
+                <!-- Nạp tự động từ lich_su_phuong_phap.json -> soi_truc_tiep -->
+            </div>
+        </section>
+    </div>
+
+    <!-- MOBILE ACTION SHEET CHO MENU SAO CHÉP DÀN SỐ -->
+    <div class="mobile-action-sheet" id="mobileActionSheet">
+        <div class="sheet-backdrop" id="sheetBackdrop"></div>
+        <div class="sheet-content">
+            <div class="sheet-header">
+                <h3><i class="fa-solid fa-clipboard-check" style="color: #fbbf24;"></i> SAO CHÉP DÀN SỐ</h3>
+                <button class="sheet-close-btn" id="sheetCloseBtn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="sheet-options">
+                <button class="sheet-option-btn opt-top1" id="m-btn-copy-top1">
+                    <span class="opt-icon">👑</span>
+                    <span class="opt-text">
+                        <strong>Sao chép Top 1 (Chỉ đạo)</strong>
+                        <small id="m-label-top1">Số: 32</small>
+                    </span>
+                    <i class="fa-regular fa-copy"></i>
+                </button>
+                <button class="sheet-option-btn opt-top4" id="m-btn-copy-top4">
+                    <span class="opt-icon">⭐</span>
+                    <span class="opt-text">
+                        <strong>Sao chép Top 4 Tinh Túy</strong>
+                        <small id="m-label-top4">32, 37, 33, 42</small>
+                    </span>
+                    <i class="fa-regular fa-copy"></i>
+                </button>
+                <button class="sheet-option-btn opt-tinhtuy" id="m-btn-copy-tinhtuy">
+                    <span class="opt-icon">💎</span>
+                    <span class="opt-text">
+                        <strong>Sao chép Dàn Tinh Túy Ngày 1</strong>
+                        <small id="m-label-tinhtuy">Giao thoa 60 số Cấp 4 (4 số)</small>
+                    </span>
+                    <i class="fa-solid fa-check-double"></i>
+                </button>
+                <button class="sheet-option-btn opt-lot" id="m-btn-copy-lot" style="background: rgba(56, 189, 248, 0.08); border-color: rgba(56, 189, 248, 0.35);">
+                    <span class="opt-icon">🛡️</span>
+                    <span class="opt-text">
+                        <strong>Sao chép Dàn Số Lót (N1)</strong>
+                        <small id="m-label-lot">Toàn bộ số lót từ 60 số N1 (56 số)</small>
+                    </span>
+                    <i class="fa-regular fa-copy"></i>
+                </button>
+                <button class="sheet-option-btn opt-n1" id="m-btn-copy-n1">
+                    <span class="opt-icon">🟢</span>
+                    <span class="opt-text">
+                        <strong>Sao chép Dàn N1 (60 số Cấp 4)</strong>
+                        <small>Dàn gốc đã kiểm chứng 98.3%</small>
+                    </span>
+                    <i class="fa-regular fa-copy"></i>
+                </button>
+                <button class="sheet-option-btn opt-n2" id="m-btn-copy-n2">
+                    <span class="opt-icon">🟡</span>
+                    <span class="opt-text">
+                        <strong>Sao chép Dàn N2 (36 số)</strong>
+                        <small>Hard Filter từ N1</small>
+                    </span>
+                    <i class="fa-regular fa-copy"></i>
+                </button>
+                <button class="sheet-option-btn opt-n3" id="m-btn-copy-n3">
+                    <span class="opt-icon">🟠</span>
+                    <span class="opt-text">
+                        <strong>Sao chép Dàn N3 (36 số)</strong>
+                        <small>Hard Filter giữ nguyên N2</small>
+                    </span>
+                    <i class="fa-regular fa-copy"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div class="toast" id="toastBox">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="toastMsg">Đã sao chép!</span>
+    </div>
+
+    <script>
+        // Fallback embedded data (Kỳ chuẩn 22/09/2026)
+        const DEFAULT_PAYLOAD = {
+            "target_date": "Thứ ba ngày 22-09-2026",
+            "live_prizes": {
+                "g1": "68392",
+                "g2": ["42192", "98961"],
+                "g3": ["18400", "72209", "72261", "68433", "35051", "86944"],
+                "g4": ["3748", "6738", "0334", "1736"],
+                "g5": ["6318", "9384", "1206", "7167", "8446", "7367"]
+            },
+            "filled_count": 19,
+            "total_count": 19,
+            "is_g5_finished": true,
+            "top_1": "82",
+            "top_1_display": "82 (3d)",
+            "top_4": ["82", "32", "87", "37"],
+            "top_4_display": ["★ 82 (3d)", "★ 32 (3d)", "★ 87 (3d)", "★ 37 (3d)"],
+            "dan_ngay_1_tinhtuy": ["32", "37", "82", "87"],
+            "dan_giao_thoa": ["32", "37", "82", "87"],
+            "dan_lot": ["01", "02", "03", "04", "05", "08", "09", "11", "12", "13", "15", "17", "18", "19", "20", "21", "22", "23", "24", "26", "28", "29", "31", "33", "34", "35", "38", "42", "44", "45", "51", "53", "55", "58", "59", "60", "61", "62", "63", "65", "67", "68", "69", "72", "80", "81", "83", "84", "85", "88", "91", "92", "95", "97", "98", "99"],
+            "dan_lot_display": ["01 (lót)", "02 (lót)", "03 (lót)", "04 (lót)", "05 (lót)", "08 (lót)", "09 (lót)", "11 (lót)", "12 (lót)", "13 (lót)", "15 (lót)", "17 (lót)", "18 (lót)", "19 (lót)", "20 (lót)", "21 (lót)", "22 (lót)", "23 (lót)", "24 (lót)", "26 (lót)", "28 (lót)", "29 (lót)", "31 (lót)", "33 (lót)", "34 (lót)", "35 (lót)", "38 (lót)", "42 (lót)", "44 (lót)", "45 (lót)", "51 (lót)", "53 (lót)", "55 (lót)", "58 (lót)", "59 (lót)", "60 (lót)", "61 (lót)", "62 (lót)", "63 (lót)", "65 (lót)", "67 (lót)", "68 (lót)", "69 (lót)", "72 (lót)", "80 (lót)", "81 (lót)", "83 (lót)", "84 (lót)", "85 (lót)", "88 (lót)", "91 (lót)", "92 (lót)", "95 (lót)", "97 (lót)", "98 (lót)", "99 (lót)"],
+            "dan_n1": ["01","02","03","04","05","08","09","11","12","13","15","17","18","19","20","21","22","23","24","26","28","29","31","32","33","34","35","37","38","42","44","45","51","53","55","58","59","60","61","62","63","65","67","68","69","72","80","81","82","83","84","85","87","88","91","92","95","97","98","99"],
+            "dan_n2": ["11","12","13","15","17","18","19","21","22","23","28","29","31","32","33","35","37","38","42","44","45","51","53","55","58","59","61","62","63","65","67","81","82","83","85","87"],
+            "dan_n3": ["11","12","13","15","17","18","19","21","22","23","28","29","31","32","33","35","37","38","42","44","45","51","53","55","58","59","61","62","63","65","67","81","82","83","85","87"],
+            "frame_transition": {
+                "last_result": "Kỳ gần nhất (22/09) đã trúng N1 → RESET CẦU MỚI",
+                "status_badge": "ĐÃ TRÚNG N1 → RESET CẦU MỚI",
+                "schedule_n1": "Đánh chính: Thứ Tư 23/09 (Dàn 60 Số N1)",
+                "schedule_n2": "Dự phòng N2: Thứ Năm 24/09 (36 số)",
+                "schedule_n3": "Dự phòng N3: Thứ Sáu 25/09 (36 số)"
+            }
+        };
+
+        let currentData = DEFAULT_PAYLOAD;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadLiveData();
+            loadLichSu();
+
+            // Tự động kiểm tra và cập nhật mỗi 5 giây trong lúc quay thưởng (18h15 - 18h35)
+            setInterval(loadLiveData, 5000);
+            setInterval(loadLichSu, 15000);
+
+            // Nút bấm làm mới dữ liệu tức thì
+            const btnRefresh = document.getElementById('btn-manual-refresh');
+            if (btnRefresh) {
+                btnRefresh.onclick = () => {
+                    btnRefresh.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang tải...';
+                    Promise.all([loadLiveData(), loadLichSu()]).then(() => {
+                        setTimeout(() => {
+                            btnRefresh.innerHTML = '<i class="fa-solid fa-arrows-rotate"></i> Làm mới';
+                            showToast('Đã cập nhật dữ liệu radar & lịch sử mới nhất!');
+                        }, 500);
+                    });
+                };
+            }
+        });
+
+        // BƯỚC 4A: HÀM LOAD LỊCH SỬ KHUNG 3 NGÀY (58_UP_TO_75)
+        function loadKhung3Ngay(khungData) {
+            if (!khungData || !khungData.tong_quan) return;
+            const tq = khungData.tong_quan;
+
+            const elTong = document.getElementById('k-stat-tong');
+            if (elTong) elTong.textContent = tq.tong_khung || 0;
+
+            const elN1 = document.getElementById('k-stat-n1');
+            if (elN1) elN1.textContent = `${tq.trung_n1 || 0} (${tq.ty_le_n1 || 0}%)`;
+
+            const elN2 = document.getElementById('k-stat-n2');
+            if (elN2) elN2.textContent = `${tq.trung_n2 || 0} (${tq.ty_le_n2 || 0}%)`;
+
+            const elN3 = document.getElementById('k-stat-n3');
+            if (elN3) elN3.textContent = `${tq.trung_n3 || 0} (${tq.ty_le_n3 || 0}%)`;
+
+            const elTruot = document.getElementById('k-stat-truot');
+            if (elTruot) elTruot.textContent = `${tq.truot_khung || 0} (${tq.ty_le_truot || 0}%)`;
+
+            const elBadge = document.getElementById('badge-khung-summary');
+            if (elBadge) elBadge.textContent = `${tq.tong_khung || 0} KHUNG (ĂN N1: ${tq.ty_le_n1 || 0}%)`;
+
+            const container = document.getElementById('list-history-khung');
+            if (container && Array.isArray(khungData.lich_su)) {
+                container.innerHTML = khungData.lich_su.map(item => {
+                    let icon = (item.ket_qua || '').includes('trung') ? '🎯' : '❌';
+                    let sttTag = item.khung_stt ? `<small style="color:#94a3b8; margin-right:4px;">#K${item.khung_stt}</small>` : '';
+                    return `
+                        <div class="lich-su-item">
+                            <div class="ngay">${sttTag}${item.ngay}</div>
+                            <div class="de">Đề: <strong>${item.de}</strong></div>
+                            <div class="ket-qua ${item.ket_qua}">${item.ghi_chu || item.ket_qua} ${icon}</div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+        window.loadKhung3Ngay = loadKhung3Ngay;
+
+        // BƯỚC 4B: HÀM LOAD LỊCH SỬ SOI TRỰC TIẾP (BẠCH THỦ & TỨ THỦ G1-G5)
+        function loadSoiTrucTiep(directData) {
+            if (!directData || !directData.tong_quan) return;
+            const tq = directData.tong_quan;
+
+            const elTong = document.getElementById('d-stat-tong');
+            if (elTong) elTong.textContent = tq.tong_ngay || 0;
+
+            const elBT = document.getElementById('d-stat-bt');
+            if (elBT) elBT.textContent = `${tq.trung_bach_thu || 0} (${tq.ty_le_bach_thu || 0}%)`;
+
+            const elTT = document.getElementById('d-stat-tt');
+            if (elTT) elTT.textContent = `${tq.trung_tu_thu || 0} (${tq.ty_le_tu_thu || 0}%)`;
+
+            const elLot = document.getElementById('d-stat-lot');
+            if (elLot) elLot.textContent = `${tq.trung_lot || 0} (${tq.ty_le_lot || 0}%)`;
+
+            const elRate = document.getElementById('d-stat-rate');
+            if (elRate) elRate.textContent = `Top 4: ${tq.ty_le_tu_thu || 0}%`;
+
+            const elBadge = document.getElementById('badge-direct-summary');
+            if (elBadge) elBadge.textContent = `${tq.tong_ngay || 0} NGÀY (TỨ THỦ: ${tq.ty_le_tu_thu || 0}%)`;
+
+            const container = document.getElementById('list-history-direct');
+            if (container && Array.isArray(directData.lich_su)) {
+                container.innerHTML = directData.lich_su.map(item => {
+                    let icon = (item.ket_qua || '').includes('trung') ? '✨' : '❌';
+                    let top1Display = item.top1 ? `<small style="color:#94a3b8; font-weight:normal; margin-left:6px;">[Top 1: ${item.top1}]</small>` : '';
+                    return `
+                        <div class="lich-su-item">
+                            <div class="ngay">${item.ngay}</div>
+                            <div class="de">Đề: <strong>${item.de}</strong></div>
+                            <div class="ket-qua ${item.ket_qua}">${item.ghi_chu || item.ket_qua} ${icon}${top1Display}</div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+        window.loadSoiTrucTiep = loadSoiTrucTiep;
+
+        // HÀM ĐIỀU PHỐI CHUNG NẠP FILE JSON LỊCH SỬ
+        async function loadLichSu() {
+            try {
+                const res = await fetch('lich_su_phuong_phap.json?t=' + Date.now());
+                if (!res.ok) return;
+                const data = await res.json();
+                if (!data) return;
+
+                if (data.khung_3_ngay) {
+                    loadKhung3Ngay(data.khung_3_ngay);
+                }
+                if (data.soi_truc_tiep) {
+                    loadSoiTrucTiep(data.soi_truc_tiep);
+                }
+            } catch (err) {
+                console.warn('Lỗi load lịch sử phương pháp:', err);
+            }
+        }
+        window.loadLichSu = loadLichSu;
+
+        async function loadLiveData() {
+            try {
+                const res = await fetch('ket_qua_soi_cau_g1_g5.json?t=' + Date.now());
+                if (res.ok) {
+                    const json = await res.json();
+                    if (json && (json.top_1 || json.target_date)) {
+                        currentData = json;
+                    }
+                }
+            } catch (err) {
+                console.warn('Dùng dữ liệu dự phòng cục bộ:', err);
+            }
+
+            renderApp(currentData);
+            setupCopyButtons();
+        }
+
+        // Expose ra window để hỗ trợ cả 3 giải pháp (fetchData, renderApp, WebSocket)
+        window.fetchData = loadLiveData;
+        window.renderApp = renderApp;
+
+        
+        function renderDanTinh(dt) {
+            if (!dt) {
+                dt = {
+                    target_date: "Thứ sáu ngày 25-09-2026",
+                    bach_thu: "41",
+                    song_thu: ["41", "14"],
+                    tu_thu: ["41", "14", "67", "31"],
+                    cang_3d: ["0", "2", "4", "5", "7"],
+                    dan_9_so: ["67", "61", "62", "37", "31", "32", "47", "41", "42"],
+                    dan_cap2_38so: [
+                        "01", "02", "04", "07", "09", "11", "12", "14", "16", "17", 
+                        "20", "22", "23", "25", "27", "31", "32", "37", "40", "41", 
+                        "42", "45", "47", "49", "61", "62", "67", "68", "70", "72", 
+                        "75", "77", "81", "82", "84", "86", "87", "89"
+                    ],
+                    dan_60_cap4: [
+                        "01", "02", "03", "04", "05", "08", "09", "11", "12", "13", 
+                        "15", "17", "18", "19", "21", "22", "23", "24", "26", "28", 
+                        "29", "31", "32", "33", "34", "35", "37", "38", "39", "42", 
+                        "43", "44", "45", "51", "53", "55", "58", "59", "60", "61", 
+                        "62", "63", "65", "67", "68", "69", "72", "80", "81", "82", 
+                        "83", "84", "85", "87", "88", "91", "92", "95", "96", "97", "99"
+                    ]
+                };
+            }
+
+            const txtDate = document.getElementById('txt-tinh-date');
+            if (txtDate) txtDate.textContent = dt.target_date || '25/09/2026';
+
+            const elBt = document.getElementById('badge-tinh-bt');
+            if (elBt) {
+                elBt.textContent = dt.bach_thu || '41';
+                elBt.onclick = () => copyText(dt.bach_thu, 'Đã sao chép Bạch thủ: ' + dt.bach_thu);
+            }
+
+            const elSt = document.getElementById('badge-tinh-st');
+            if (elSt) {
+                const stStr = (dt.song_thu || ['41', '14']).join(' - ');
+                elSt.textContent = stStr;
+                elSt.onclick = () => copyText((dt.song_thu || []).join(', '), 'Đã sao chép Song thủ: ' + stStr);
+            }
+
+            const elTt = document.getElementById('badge-tinh-tt');
+            if (elTt) {
+                const ttStr = (dt.tu_thu || ['41', '14', '67', '31']).join(' - ');
+                elTt.textContent = ttStr;
+                elTt.onclick = () => copyText((dt.tu_thu || []).join(', '), 'Đã sao chép Tứ thủ: ' + ttStr);
+            }
+
+            // Dàn 9 số Cội Nguồn
+            const grid9 = document.getElementById('tinh-grid-dan9');
+            if (grid9 && dt.dan_9_so) {
+                grid9.innerHTML = dt.dan_9_so.map(n => {
+                    const isBt = (n === dt.bach_thu);
+                    const cls = isBt ? 'num-badge-gold' : 'num-badge-blue';
+                    const style = isBt ? 'font-size:15px; padding:3px 9px;' : 'font-size:13px; padding:3px 8px;';
+                    return `<span class="${cls}" style="${style}" onclick="copyText('${n}', 'Đã sao chép số ${n}')">${n}</span>`;
+                }).join(' ');
+            }
+
+            // Dàn 38 số Cấp 2
+            const grid38 = document.getElementById('tinh-grid-dan38');
+            if (grid38 && dt.dan_cap2_38so) {
+                grid38.innerHTML = dt.dan_cap2_38so.map(n => {
+                    const isBt = (n === dt.bach_thu);
+                    const cls = isBt ? 'num-badge-gold' : 'num-badge-blue';
+                    const style = isBt ? 'font-size:13px; padding:2px 7px;' : 'font-size:12px; padding:2px 6px;';
+                    return `<span class="${cls}" style="${style}" onclick="copyText('${n}', 'Đã sao chép số ${n}')">${n}</span>`;
+                }).join(' ');
+            }
+
+            // Dàn 60 số Cấp 1
+            const grid60 = document.getElementById('tinh-grid-dan60');
+            if (grid60 && dt.dan_60_cap4) {
+                grid60.innerHTML = dt.dan_60_cap4.map(n => {
+                    const isBt = (n === dt.bach_thu);
+                    const cls = isBt ? 'num-badge-gold' : 'num-badge-green';
+                    const style = isBt ? 'font-size:13px; padding:2px 7px;' : 'font-size:11.5px; padding:2px 5px;';
+                    return `<span class="${cls}" style="${style}" onclick="copyText('${n}', 'Đã sao chép số ${n}')">${n}</span>`;
+                }).join(' ');
+            }
+
+            // Gán nút sao chép dàn tĩnh
+            const btnCopy9 = document.getElementById('btn-copy-tinh-dan9');
+            if (btnCopy9) {
+                btnCopy9.onclick = () => {
+                    const s = (dt.dan_9_so || []).join(', ');
+                    copyText(s, 'Đã sao chép Dàn 9 Số Cội Nguồn: ' + s);
+                };
+            }
+            const btnCopy38 = document.getElementById('btn-copy-tinh-dan38');
+            if (btnCopy38) {
+                btnCopy38.onclick = () => {
+                    const s = (dt.dan_cap2_38so || []).join(', ');
+                    copyText(s, `Đã sao chép Dàn Cấp 2 (${dt.dan_cap2_38so.length} số): ` + s);
+                };
+            }
+            const btnCopy60 = document.getElementById('btn-copy-tinh-dan60');
+            if (btnCopy60) {
+                btnCopy60.onclick = () => {
+                    const s = (dt.dan_60_cap4 || []).join(', ');
+                    copyText(s, `Đã sao chép Dàn Gốc Cấp 1 (${dt.dan_60_cap4.length} số): ` + s);
+                };
+            }
+        }
+        window.renderDanTinh = renderDanTinh;
+
+        function renderApp(data) {
+            if (data && typeof data === 'object') {
+                currentData = data;
+            }
+
+            // Header date & progress
+            document.getElementById('txt-draw-date').textContent = currentData.target_date || '24/09/2026';
+            renderDanTinh(currentData.dan_tinh_4cap);
+            
+            const filled = currentData.filled_count !== undefined ? currentData.filled_count : 19;
+            const total = currentData.total_count || 19;
+            const badgeEl = document.getElementById('txt-progress-badge');
+            const radarStatusEl = document.getElementById('txt-radar-status');
+
+            if (badgeEl) {
+                if (filled < total) {
+                    badgeEl.innerHTML = `<i class="fa-solid fa-bolt fa-fade" style="color: #fbbf24;"></i> ĐANG QUAY: ${filled}/${total} GIẢI`;
+                    badgeEl.style.background = 'rgba(245, 158, 11, 0.2)';
+                    badgeEl.style.color = '#fbbf24';
+                    badgeEl.style.borderColor = 'rgba(245, 158, 11, 0.5)';
+                    if (radarStatusEl) radarStatusEl.textContent = `ĐANG QUAY ${filled}/${total} GIẢI`;
+                } else {
+                    badgeEl.innerHTML = `<i class="fa-solid fa-circle-check" style="color: #10b981;"></i> ${filled}/${total} GIẢI (ĐÃ HOÀN TẤT)`;
+                    badgeEl.style.background = 'rgba(16, 185, 129, 0.15)';
+                    badgeEl.style.color = '#34d399';
+                    badgeEl.style.borderColor = 'rgba(16, 185, 129, 0.4)';
+                    if (radarStatusEl) radarStatusEl.textContent = `HOÀN TẤT G5.6 - ĐÃ CHỐT DÀN`;
+                }
+            }
+
+            // PHẦN 1: Live Prizes Table With Position Highlights
+            const lp = currentData.live_prizes || {};
+            renderPrizeWithHighlights('live-g1', ['G1'], [lp.g1]);
+            renderPrizeWithHighlights('live-g2', ['G2.1', 'G2.2'], lp.g2 || []);
+            renderPrizeWithHighlights('live-g3', ['G3.1', 'G3.2', 'G3.3', 'G3.4', 'G3.5', 'G3.6'], lp.g3 || []);
+            renderPrizeWithHighlights('live-g4', ['G4.1', 'G4.2', 'G4.3', 'G4.4'], lp.g4 || []);
+            renderPrizeWithHighlights('live-g5', ['G5.1', 'G5.2', 'G5.3', 'G5.4', 'G5.5', 'G5.6'], lp.g5 || []);
+
+            // PHẦN 2: DÀN SỐ TINH TÚY
+            // Top 1: Phóng to, viền vàng đậm, kèm hậu tố (3d/4d)
+            let top1Val = currentData.top_1_display || (currentData.top_1 ? `${currentData.top_1} (3d)` : '');
+            if (!top1Val) {
+                if (filled < total) {
+                    top1Val = '⚡ Đang quay... (Chốt sau G5.6)';
+                } else {
+                    top1Val = '--';
+                }
+            }
+            document.getElementById('val-top1').textContent = top1Val;
+
+            // Top 4: Thêm dấu sao (★) và hậu tố chu kỳ (3d/4d)
+            let top4List = currentData.top_4_display || (currentData.top_4 || []).map(x => `★ ${x} (3d)`);
+            const containerTop4 = document.getElementById('list-top4');
+            if (containerTop4) {
+                containerTop4.innerHTML = '';
+                if (top4List.length === 0 && filled < total) {
+                    containerTop4.innerHTML = '<span style="color:#fbbf24; font-size:12px; font-weight:700;"><i class="fa-solid fa-bolt fa-fade"></i> Đang quét vị trí cầu... (Chốt sau G5.6)</span>';
+                } else {
+                    top4List.forEach(itemStr => {
+                        const badge = document.createElement('span');
+                        badge.className = 'num-badge-top4-star';
+                        badge.textContent = itemStr;
+                        containerTop4.appendChild(badge);
+                    });
+                }
+            }
+
+            // Dàn Tinh Túy Ngày 1 (Mới chạm giao thoa 60 số Cấp 4)
+            const tinhtuyList = currentData.dan_ngay_1_tinhtuy || currentData.dan_giao_thoa || [];
+            const containerTinhTuy = document.getElementById('list-tinhtuy-ngay1');
+            if (containerTinhTuy) {
+                containerTinhTuy.innerHTML = '';
+                if (tinhtuyList.length === 0 && filled < total) {
+                    containerTinhTuy.innerHTML = '<span style="color:#94a3b8; font-size:12px;"><i class="fa-solid fa-spinner fa-spin"></i> Đang tổng hợp các vị trí nổ...</span>';
+                } else {
+                    tinhtuyList.forEach(itemStr => {
+                        const badge = document.createElement('span');
+                        badge.className = 'num-badge-yellow';
+                        badge.style.borderColor = 'rgba(56, 189, 248, 0.6)';
+                        badge.style.color = '#fff';
+                        badge.textContent = itemStr;
+                        containerTinhTuy.appendChild(badge);
+                    });
+                }
+            }
+
+            // Dàn Số Lót (Lấy từ 60 số N1)
+            const lotList = currentData.dan_lot || [];
+            const containerLot = document.getElementById('list-lot');
+            if (containerLot) {
+                containerLot.innerHTML = '';
+                lotList.forEach(itemStr => {
+                    const badge = document.createElement('span');
+                    badge.className = 'num-badge-blue';
+                    badge.textContent = itemStr;
+                    containerLot.appendChild(badge);
+                });
+            }
+
+            // PHẦN 3: DÀN SỐ N1, N2, N3
+            renderDan(currentData.dan_n1, 'dan-n1');
+            renderDan(currentData.dan_n2, 'dan-n2');
+            renderDan(currentData.dan_n3, 'dan-n3');
+            renderDan(currentData.dan_n1, 'list-n1');
+            renderDan(currentData.dan_n2, 'list-n2');
+            renderDan(currentData.dan_n3, 'list-n3');
+
+            // Cập nhật nhãn số lượng động cho N1, N2, N3
+            const n1Count = (currentData.dan_n1 || []).length;
+            const n2Count = (currentData.dan_n2 || []).length;
+            const n3Count = (currentData.dan_n3 || []).length;
+            const lblN1 = document.getElementById('lbl-dan-n1');
+            if (lblN1) lblN1.innerHTML = `<i class="fa-solid fa-circle"></i> 🟢 DÀN N1 (${n1Count} SỐ):`;
+            const lblN2 = document.getElementById('lbl-dan-n2');
+            if (lblN2) lblN2.innerHTML = `<i class="fa-solid fa-circle"></i> 🟡 DÀN N2 (${n2Count} SỐ - MỞ RỘNG CỨU N1):`;
+            const lblN3 = document.getElementById('lbl-dan-n3');
+            if (lblN3) lblN3.innerHTML = `<i class="fa-solid fa-circle"></i> 🟠 DÀN N3 (${n3Count} SỐ - CƠ HỘI CUỐI):`;
+
+            // Chu kỳ 7 ngày
+            const wc = currentData.weekly_cycle || {};
+            const wcBadge = document.getElementById('weekly-cycle-badge');
+            if (wcBadge && wc.week) {
+                wcBadge.textContent = `${wc.week} • ${wc.model} (${wc.note || ''})`;
+            }
+
+            // KHUNG CHUYỂN CẦU NGÀY MỚI
+            const ft = currentData.frame_transition || {};
+            if (ft.status_badge) document.getElementById('badge-reset-status').textContent = ft.status_badge;
+            if (ft.last_result) document.getElementById('desc-last-result').textContent = ft.last_result;
+            if (ft.schedule_n1) document.getElementById('sched-n1').textContent = ft.schedule_n1;
+            if (ft.schedule_n2) document.getElementById('sched-n2').textContent = ft.schedule_n2;
+            if (ft.schedule_n3) document.getElementById('sched-n3').textContent = ft.schedule_n3;
+        }
+
+        // BƯỚC 5: HÀM RENDER DÀN N1, N2, N3
+        function renderDan(dan, containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            if (!dan || dan.length === 0) {
+                container.innerHTML = '<span style="color:#8b9ac0; font-size:12px;">Chưa có dữ liệu</span>';
+                return;
+            }
+
+            let badgeClass = 'num-badge-green';
+            if (containerId.includes('n2')) badgeClass = 'num-badge-yellow';
+            else if (containerId.includes('n3')) badgeClass = 'num-badge-orange-sm';
+
+            container.innerHTML = dan.map(so => 
+                `<span class="${badgeClass} num">${so}</span>`
+            ).join(' ');
+        }
+        window.renderDan = renderDan;
+
+        // BƯỚC 6: HÀM COPY DÀN SỐ CHO TẤT CẢ CÁC DÀN
+        function copyDan(containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const items = Array.from(container.querySelectorAll('.num, span')).map(e => e.textContent.trim()).filter(x => x && !x.includes('Chưa có'));
+            const text = items.length > 0 ? items.join(', ') : container.innerText.trim();
+            if (!text) return;
+            const title = containerId.toUpperCase().replace('-', ' ');
+            copyText(text, `Đã copy ${title} (${items.length} số)`);
+        }
+        window.copyDan = copyDan;
+
+        function renderNumberList(elementId, arr, cssClass, inlineStyle = '') {
+            const el = document.getElementById(elementId);
+            if (!el) return;
+            el.innerHTML = '';
+            arr.forEach(num => {
+                const span = document.createElement('span');
+                span.className = cssClass;
+                if (inlineStyle) span.style.cssText = inlineStyle;
+                span.textContent = num;
+                el.appendChild(span);
+            });
+        }
+
+        function renderPrizeWithHighlights(elementId, prizeCodes, prizeValues) {
+            const el = document.getElementById(elementId);
+            if (!el) return;
+            el.innerHTML = '';
+
+            const hp = currentData.highlight_positions || {};
+
+            prizeCodes.forEach((code, idx) => {
+                const val = prizeValues[idx];
+                if (!val) {
+                    const chip = document.createElement('span');
+                    chip.className = 'prize-num-chip prize-waiting-chip';
+                    chip.innerHTML = `<span style="letter-spacing:2px; font-family:'JetBrains Mono'; opacity:0.5; font-size:12px;">• • • • •</span>`;
+                    el.appendChild(chip);
+                    return;
+                }
+
+                const chip = document.createElement('span');
+                chip.className = 'prize-num-chip';
+
+                for (let posIdx = 1; posIdx <= val.length; posIdx++) {
+                    const char = val[posIdx - 1];
+                    const posKey = `${code}_${posIdx}`;
+                    const info = hp[posKey];
+
+                    const digitSpan = document.createElement('span');
+                    digitSpan.className = 'prize-digit';
+
+                    const charSpan = document.createElement('span');
+                    charSpan.textContent = char;
+                    digitSpan.appendChild(charSpan);
+
+                    if (info) {
+                        const cycle = info.cycle || 1;
+                        let dotChar = '○';
+                        let dotClass = 'dot-dim-sm';
+                        // 1. Chỉ đạo (3-4 ngày) -> 🟡 VÀNG
+                        if (info.color_type === 'cycle_main' || cycle >= 3) {
+                            digitSpan.classList.add('digit-cycle-main');
+                            dotChar = '●';
+                            dotClass = 'dot-gold-sm';
+                            const tag = document.createElement('span');
+                            tag.className = 'digit-cycle-tag';
+                            tag.innerHTML = `<span class="tag-text">${cycle}d</span><span class="tag-dot ${dotClass}">${dotChar}</span>`;
+                            digitSpan.appendChild(tag);
+                        }
+                        // 2. Lót (2 ngày) -> 🔵 XANH
+                        else if (info.color_type === 'cycle_lot' || cycle === 2) {
+                            digitSpan.classList.add('digit-cycle-lot');
+                            dotChar = '●';
+                            dotClass = 'dot-blue-sm';
+                            const tag = document.createElement('span');
+                            tag.className = 'digit-cycle-tag';
+                            tag.innerHTML = `<span class="tag-text">2d</span><span class="tag-dot ${dotClass}">${dotChar}</span>`;
+                            digitSpan.appendChild(tag);
+                        }
+                        // 3. Theo dõi (1 ngày) -> ⚪ TRẮNG / MỜ
+                        else {
+                            digitSpan.classList.add('digit-cycle-watch');
+                            dotChar = '○';
+                            dotClass = 'dot-dim-sm';
+                            const tag = document.createElement('span');
+                            tag.className = 'digit-cycle-tag';
+                            tag.innerHTML = `<span class="tag-text">1d</span><span class="tag-dot ${dotClass}">${dotChar}</span>`;
+                            digitSpan.appendChild(tag);
+                        }
+                        digitSpan.setAttribute('title', info.tooltip || `${code} vị trí ${posIdx}: ${char} (${cycle}d)`);
+                    } else {
+                        digitSpan.classList.add('digit-cycle-watch');
+                    }
+
+                    chip.appendChild(digitSpan);
+                }
+                el.appendChild(chip);
+            });
+        }
+
+        function setupCopyButtons() {
+            // Phần 2 (PC)
+            const btnCopyTop1 = document.getElementById('btn-copy-top1');
+            if (btnCopyTop1) {
+                btnCopyTop1.onclick = () => copyText(currentData.top_1 || '', 'Đã sao chép Top 1: ' + currentData.top_1);
+            }
+
+            const btnCopyTop4 = document.getElementById('btn-copy-top4');
+            if (btnCopyTop4) {
+                btnCopyTop4.onclick = () => {
+                    const text = (currentData.top_4 || []).join(', ');
+                    copyText(text, 'Đã sao chép Top 4: ' + text);
+                };
+            }
+
+            const btnCopyTinhTuy = document.getElementById('btn-copy-tinh-tuy');
+            if (btnCopyTinhTuy) {
+                btnCopyTinhTuy.onclick = () => {
+                    const list = currentData.dan_ngay_1_tinhtuy || currentData.dan_giao_thoa || [];
+                    const text = list.join(', ');
+                    copyText(text, `Đã sao chép Dàn Tinh Túy Ngày 1 (${list.length} số)`);
+                };
+            }
+
+            const btnCopyLot = document.getElementById('btn-copy-lot');
+            if (btnCopyLot) {
+                btnCopyLot.onclick = () => {
+                    const text = (currentData.dan_lot || []).join(', ');
+                    copyText(text, `Đã sao chép Dàn Số Lót N1 (${(currentData.dan_lot || []).length} số)`);
+                };
+            }
+
+            // Phần 3 (PC)
+            const btnCopyN1 = document.getElementById('btn-copy-n1');
+            if (btnCopyN1) {
+                btnCopyN1.onclick = () => {
+                    const text = (currentData.dan_n1 || []).join(', ');
+                    copyText(text, `Đã sao chép Dàn N1 (${(currentData.dan_n1 || []).length} số)`);
+                };
+            }
+
+            const btnCopyN2 = document.getElementById('btn-copy-n2');
+            if (btnCopyN2) {
+                btnCopyN2.onclick = () => {
+                    const text = (currentData.dan_n2 || []).join(', ');
+                    copyText(text, `Đã sao chép Dàn N2 (${(currentData.dan_n2 || []).length} số)`);
+                };
+            }
+
+            const btnCopyN3 = document.getElementById('btn-copy-n3');
+            if (btnCopyN3) {
+                btnCopyN3.onclick = () => {
+                    const text = (currentData.dan_n3 || []).join(', ');
+                    copyText(text, `Đã sao chép Dàn N3 (${(currentData.dan_n3 || []).length} số)`);
+                };
+            }
+
+            // Mobile Action Sheet Trigger & Close
+            const sheet = document.getElementById('mobileActionSheet');
+            const trigger = document.getElementById('btn-mobile-copy-trigger');
+            const closeBtn = document.getElementById('sheetCloseBtn');
+            const backdrop = document.getElementById('sheetBackdrop');
+
+            if (trigger && sheet) {
+                trigger.onclick = () => {
+                    // Update dynamic labels in mobile sheet
+                    const lblTop1 = document.getElementById('m-label-top1');
+                    if (lblTop1) lblTop1.textContent = 'Số: ' + (currentData.top_1 || '--');
+
+                    const lblTop4 = document.getElementById('m-label-top4');
+                    if (lblTop4) lblTop4.textContent = (currentData.top_4 || []).join(', ');
+
+                    const tinhtuyList = currentData.dan_ngay_1_tinhtuy || currentData.dan_giao_thoa || [];
+                    const lblTinhTuy = document.getElementById('m-label-tinhtuy');
+                    if (lblTinhTuy) lblTinhTuy.textContent = `Giao thoa 60 số Cấp 4 (${tinhtuyList.length} số)`;
+
+                    const lblLot = document.getElementById('m-label-lot');
+                    if (lblLot) lblLot.textContent = `Toàn bộ số lót từ 60 số N1 (${(currentData.dan_lot || []).length} số)`;
+
+                    sheet.classList.add('active');
+                };
+            }
+
+            const closeSheet = () => {
+                if (sheet) sheet.classList.remove('active');
+            };
+
+            if (closeBtn) closeBtn.onclick = closeSheet;
+            if (backdrop) backdrop.onclick = closeSheet;
+
+            // Mobile Sheet Options Click Handlers
+            const mBtnTop1 = document.getElementById('m-btn-copy-top1');
+            if (mBtnTop1) {
+                mBtnTop1.onclick = () => {
+                    copyText(currentData.top_1 || '', 'Đã sao chép Top 1: ' + currentData.top_1);
+                    closeSheet();
+                };
+            }
+
+            const mBtnTop4 = document.getElementById('m-btn-copy-top4');
+            if (mBtnTop4) {
+                mBtnTop4.onclick = () => {
+                    const text = (currentData.top_4 || []).join(', ');
+                    copyText(text, 'Đã sao chép Top 4: ' + text);
+                    closeSheet();
+                };
+            }
+
+            const mBtnTinhTuy = document.getElementById('m-btn-copy-tinhtuy');
+            if (mBtnTinhTuy) {
+                mBtnTinhTuy.onclick = () => {
+                    const list = currentData.dan_ngay_1_tinhtuy || currentData.dan_giao_thoa || [];
+                    const text = list.join(', ');
+                    copyText(text, `Đã sao chép Dàn Tinh Túy Ngày 1 (${list.length} số)`);
+                    closeSheet();
+                };
+            }
+
+            const mBtnLot = document.getElementById('m-btn-copy-lot');
+            if (mBtnLot) {
+                mBtnLot.onclick = () => {
+                    const text = (currentData.dan_lot || []).join(', ');
+                    copyText(text, `Đã sao chép Dàn Số Lót N1 (${(currentData.dan_lot || []).length} số)`);
+                    closeSheet();
+                };
+            }
+
+            const mBtnN1 = document.getElementById('m-btn-copy-n1');
+            if (mBtnN1) {
+                mBtnN1.onclick = () => {
+                    const text = (currentData.dan_n1 || []).join(', ');
+                    copyText(text, `Đã sao chép Dàn N1 (${(currentData.dan_n1 || []).length} số)`);
+                    closeSheet();
+                };
+            }
+
+            const mBtnN2 = document.getElementById('m-btn-copy-n2');
+            if (mBtnN2) {
+                mBtnN2.onclick = () => {
+                    const text = (currentData.dan_n2 || []).join(', ');
+                    copyText(text, `Đã sao chép Dàn N2 (${(currentData.dan_n2 || []).length} số)`);
+                    closeSheet();
+                };
+            }
+
+            const mBtnN3 = document.getElementById('m-btn-copy-n3');
+            if (mBtnN3) {
+                mBtnN3.onclick = () => {
+                    const text = (currentData.dan_n3 || []).join(', ');
+                    copyText(text, `Đã sao chép Dàn N3 (${(currentData.dan_n3 || []).length} số)`);
+                    closeSheet();
+                };
+            }
+
+            // Legend Info Help Button Click
+            const btnLegendHelp = document.getElementById('btn-legend-help');
+            if (btnLegendHelp) {
+                btnLegendHelp.onclick = () => {
+                    showToast('🟡 Chỉ đạo (3-4 ngày): Vẫn lấy bình thường | 🔵 Lót (2 ngày): Nổ ngày 2 → Tổng lực ngày 3 | ⚪ Theo dõi (1 ngày): Mới chạm ngày 1 | ❌ Cầu gãy: Loại bỏ hoàn toàn');
+                };
+            }
+        }
+
+        function copyText(text, msg) {
+            if (!text) return;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast(msg || 'Đã sao chép thành công!');
+            }).catch(() => {
+                showToast('Không thể sao chép tự động!');
+            });
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toastBox');
+            document.getElementById('toastMsg').textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+
+        // ĐIỀU KHIỂN XEM TRỰC TIẾP ĐÀI QUAY XSMB
+        function toggleLiveMedia(type) {
+            const box = document.getElementById('mediaLiveBox');
+            const content = document.getElementById('mediaBoxContent');
+            if (!box || !content) return;
+
+            if (box.style.display === 'block' && box.getAttribute('data-active-type') === type) {
+                box.style.display = 'none';
+                content.innerHTML = '';
+                return;
+            }
+
+            box.style.display = 'block';
+            box.setAttribute('data-active-type', type);
+
+            if (type === 'video') {
+                content.innerHTML = `
+                    <div style="margin-bottom: 10px; font-size: 13px; font-weight: 700; color: #fca5a5; display:flex; justify-content:space-between; align-items:center;">
+                        <span><i class="fa-brands fa-youtube" style="color:#ef4444;"></i> Phát Trực Tiếp Trường Quay XSMB (18h15 - 18h35)</span>
+                        <a href="https://www.youtube.com/results?search_query=tr%E1%BB%B1c+ti%E1%BA%BFp+xsmb+h%C3%B4m+nay" target="_blank" style="color:#38bdf8; text-decoration:none; font-size:12px; font-weight:bold;">Mở App YouTube <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                    </div>
+                    <div class="media-iframe-wrapper">
+                        <iframe src="https://www.youtube.com/embed?listType=search&list=truc+tiep+xo+so+mien+bac+hom+nay" title="Trực tiếp XSMB" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div style="margin-top: 10px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+                        <a href="https://www.youtube.com/results?search_query=tr%E1%BB%B1c+ti%E1%BA%BFp+xsmb+h%C3%B4m+nay" target="_blank" class="btn-live-media btn-live-video" style="text-decoration:none; font-size:11.5px; padding:7px 14px;">
+                            <i class="fa-brands fa-youtube"></i> Xem Trực Tiếp Trên YouTube
+                        </a>
+                        <a href="https://xosodaiphat.com/xsmb-xo-so-mien-bac.html" target="_blank" class="btn-live-media btn-live-audio" style="text-decoration:none; font-size:11.5px; padding:7px 14px;">
+                            <i class="fa-solid fa-bolt"></i> Bảng Quay Tốc Độ Cao
+                        </a>
+                    </div>
+                `;
+            } else if (type === 'audio') {
+                content.innerHTML = `
+                    <div style="padding: 18px 14px; background: rgba(15, 23, 42, 0.95); border-radius: 12px; border: 1px solid rgba(56, 189, 248, 0.3);">
+                        <div style="font-size: 14px; font-weight: 800; color: #38bdf8; margin-bottom: 8px;">
+                            <i class="fa-solid fa-radio fa-fade"></i> TƯỜNG THUẬT ÂM THANH TRƯỜNG QUAY 53 HÀNG CHUỐI
+                        </div>
+                        <p style="font-size: 12px; color: #94a3b8; margin-bottom: 14px;">
+                            Kênh tường thuật âm thanh quay thưởng trực tiếp cùng lúc với lồng cầu quay (18h15 - 18h35)
+                        </p>
+                        <audio controls autoplay style="width: 100%; max-width: 420px; height: 38px; border-radius: 20px;">
+                            <source src="https://stream.radiovietnam.vn/vov1" type="audio/mpeg">
+                            Trình duyệt không hỗ trợ phát âm thanh trực tiếp.
+                        </audio>
+                        <div style="margin-top: 10px;">
+                            <span style="font-size: 11px; color: #fbbf24;"><i class="fa-solid fa-circle-info"></i> Từng giải nổ sẽ tự động sáng đèn &amp; nhảy số trên bảng phía dưới</span>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+        window.toggleLiveMedia = toggleLiveMedia;
+
+        function forceCheckLiveNow() {
+            showToast('Đang kết nối trường quay và làm mới dàn...');
+            loadLiveData();
+            loadLichSu();
+        }
+        window.forceCheckLiveNow = forceCheckLiveNow;
+    </script>
+</body>
+</html>
