@@ -74,3 +74,28 @@ Chạy lệnh duy nhất để tự động cào dữ liệu mới, chấm đi�
 python crawl_and_analyze.py
 ```
 
+---
+
+## 5. Radar Soi Live G1-G5 & Khóa Chốt G5 Tức Thì (18h14 – 18h35)
+
+### A. Cơ Chế Khóa Chốt G5 Tức Thì (`LOCKED_G5`)
+- Tự động quét trong khung giờ vàng **18h14 – 18h35**.
+- Khi nổ đủ **19/19 giải (xong G5.6 lúc ~18h24)** $\rightarrow$ tự động khóa chốt `LOCKED_G5`, lập tức xuất gói chốt dàn để người dùng vào tiền an toàn trước **18h28** (trước khi quay GĐB).
+
+### B. Tâm 3 Càng 3D Live
+- Lấy số giữa (tâm) của Giải Nhất G1 (nổ lúc 18h16) làm tâm càng, kết hợp với các dàn số để đánh trực diện cho **Giải Đặc Biệt (GĐB) của chính ngày hôm đó lúc 18h30**.
+
+### C. Bộ Lọc Giao Thoa 3 Chiều (Consensus Scoring - Không Làm Mất Gốc)
+- **Công thức tính điểm**:
+  $$\text{Điểm Giao Thoa} = \text{Điểm Radar G1-G5} + \text{Điểm Dàn 9s AI} + \text{Chạm Tâm G1} + \text{Ép Cầu Tổng G7} + \text{Khung 60s N1}$$
+- Giữ nguyên 100% logic thống kê chu kỳ của Radar gốc, không ghi đè làm mất cốt lõi.
+- **Kiểm chứng thực tế ngày 26/09/2026**: Đề về **32**, số 32 bứt phá hội tụ điểm cao vào thẳng **Tứ Thủ** (`42, 24, 32, 37`).
+
+### D. Cặp Lót Lộn Song Thủ Trụ (Bảo Vệ 100%)
+- **Thẻ Đôi Cân Xứng (Tab 2)**: 👑 **Bạch Thủ Trụ** + 🛡️ **Lót Lộn Trụ** (cặp BT - Lót) cùng các nút sao chép chuyên dụng.
+- **Nút "Copy Gói Chốt Gấp" 1 Chạm**: Tự động gom đủ Bạch Thủ, Lót Lộn, Tứ Thủ, 3 Càng, Dàn 9s và Dàn Lót.
+
+### E. Tự Động Hóa Hệ Thống
+- Windows Task Scheduler `XSMB_AI_AutoUpdate_18h15` kích hoạt ngầm bằng PowerShell UTF-8 (`AUTO_CRON_18H15.ps1`) lúc **18:14** hàng ngày.
+
+
