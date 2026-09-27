@@ -1160,7 +1160,7 @@ def ghi_lich_su_truc_tiep(date_str, de_str, top1_val, top4_list, lot_list):
         except Exception as e:
             print(f"[!] Lỗi ghi lịch sử trực tiếp vào {file_path}: {e}")
 
-def push_live_update(filled, total, is_done=False):
+def push_live_update(filled, total, is_done=False, actual_de=None):
     """Đồng bộ nhanh kết quả giải mới nổ lên GitHub để mobile cập nhật"""
     try:
         targets = ['ket_qua_soi_cau_g1_g5.json', 'lich_su_phuong_phap.json']
@@ -1169,7 +1169,12 @@ def push_live_update(filled, total, is_done=False):
         if os.path.exists('58_up_to_75/lich_su_phuong_phap.json'):
             targets.append('58_up_to_75/lich_su_phuong_phap.json')
         subprocess.run(['git', 'add'] + targets, timeout=10, check=False)
-        status_txt = "HOAN TAT G5.6" if is_done else f"Da quay {filled}/{total} giai"
+        if actual_de:
+            status_txt = f"NO GDB [{actual_de}]"
+        elif is_done:
+            status_txt = "HOAN TAT G5.6 - KHOA CHOT"
+        else:
+            status_txt = f"Da quay {filled}/{total} giai"
         msg = f"auto: Live XSMB {status_txt} [skip ci]"
         subprocess.run(['git', 'commit', '-m', msg], timeout=10, check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         res = subprocess.run(['git', 'push', 'origin', 'main'], timeout=20, check=False, capture_output=True, text=True)
@@ -1202,6 +1207,7 @@ if __name__ == '__main__':
             print(" [*] CHẾ ĐỘ CLOUD SYNC: Tự động push lên GitHub Pages mỗi khi nổ giải mới!")
         print("=" * 78)
         last_filled = -1
+        g5_locked = False
         start_time = time.time()
         max_duration = args.max_minutes * 60
         while True:
@@ -1214,18 +1220,28 @@ if __name__ == '__main__':
                     filled = res.get('filled_count', 0)
                     total = res.get('total_count', 19)
                     now_str = datetime.now().strftime('%H:%M:%S')
-                    if filled != last_filled:
+                    actual_de_val = res.get('actual_de')
+
+                    if filled != last_filled and not g5_locked:
                         print(f"\n>>> [{now_str}] CẬP NHẬT MỚI: Đã quay {filled}/{total} giải.")
                         if args.push and filled > 0:
                             push_live_update(filled, total, is_done=False)
                         last_filled = filled
                     
-                    if res.get('is_g5_finished'):
+                    if res.get('is_g5_finished') and not g5_locked:
+                        g5_locked = True
                         print(f"\n[★ {now_str}] ĐÃ HOÀN TẤT GIẢI 5.6! XUẤT THÀNH CÔNG DÀN TINH TÚY & TÔ MÀU VỊ TRÍ CẦU.")
                         print(f"      Top 1: {res.get('top_1')} | Top 4: {res.get('top_4')}")
                         if args.push:
                             push_live_update(filled, total, is_done=True)
+
+                    if actual_de_val:
+                        print(f"\n[🏆 {now_str}] ĐÃ CÓ GIẢI ĐẶC BIỆT: {actual_de_val}!")
+                        if args.push:
+                            push_live_update(filled, total, is_done=True, actual_de=actual_de_val)
+                        print(f"[*] Kết thúc phiên live thành công mỹ mãn.")
                         break
+
                 time.sleep(args.interval)
             except KeyboardInterrupt:
                 print("\n[*] Đã dừng chế độ giám sát Real-time.")

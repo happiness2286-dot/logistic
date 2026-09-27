@@ -62,19 +62,25 @@ def main():
 
     # BƯỚC 2: Chạy soi_cau_g1_g5.py (cập nhật radar & Dàn Tĩnh 4 Cấp ngày mới)
     step2_cmd = f'"{PYTHON_EXE}" soi_cau_g1_g5.py'
-    ok2, out2 = run_step("Soi cầu G1-G5 & Chốt Dàn Tĩnh mới", step2_cmd, NEW_FOLDER_LOGIC_DIR, timeout=120)
+    ok2, out2 = run_step("Soi cầu G1-G5 & Chốt Dàn Tĩnh mới", step2_cmd, BASE_LOGIC_DIR, timeout=120)
 
-    # BƯỚC 3: Đồng bộ các file sang 58_up_to_75
-    log("-> Đồng bộ các file sang repo 58_up_to_75...")
+    # BƯỚC 3: Đồng bộ các file sang 58_up_to_75 và New folder/Logic
+    log("-> Đồng bộ các file sang repo 58_up_to_75 & New folder/Logic...")
     sync_files = ['soi_cau_g1_g5_app.html', 'ket_qua_soi_cau_g1_g5.json', 'lich_su_phuong_phap.json', 'soi_cau_g1_g5.py']
     for sf in sync_files:
-        src = os.path.join(NEW_FOLDER_LOGIC_DIR, sf)
-        dst = os.path.join(DIR_58_UP_75, sf)
+        src = os.path.join(BASE_LOGIC_DIR, sf)
+        dst_58 = os.path.join(DIR_58_UP_75, sf)
         if os.path.exists(src):
             try:
-                shutil.copy2(src, dst)
+                shutil.copy2(src, dst_58)
             except Exception as e:
-                log(f"   [Lỗi copy {sf}]: {e}")
+                log(f"   [Lỗi copy sang 58_up_to_75 {sf}]: {e}")
+            if os.path.exists(NEW_FOLDER_LOGIC_DIR):
+                try:
+                    dst_nf = os.path.join(NEW_FOLDER_LOGIC_DIR, sf)
+                    shutil.copy2(src, dst_nf)
+                except Exception as e:
+                    log(f"   [Lỗi copy sang New folder {sf}]: {e}")
 
     # BƯỚC 4: Chạy update_daily.py trong 58_up_to_75 (nếu có)
     update_daily_script = os.path.join(DIR_58_UP_75, "update_daily.py")
@@ -84,17 +90,18 @@ def main():
     # BƯỚC 5: Tự động Push Git lên GitHub Cloud
     date_str = datetime.now().strftime("%d/%m/%Y %H:%M")
     
-    # 5.1 Push repo New folder/Logic
-    git_cmd_nf = f'git add . && git commit -m "auto: Cap nhat ket qua ngay {date_str} [skip ci]" && git push origin main'
-    run_step("Git Push repo New folder/Logic", git_cmd_nf, NEW_FOLDER_LOGIC_DIR, timeout=60)
+    # 5.1 Push repo Logic gốc (chính)
+    git_cmd_lg = f'git add . && git commit -m "auto: Cap nhat Excel Master va Tong Hop ngay {date_str} [skip ci]" && git push origin main'
+    run_step("Git Push repo Logic goc", git_cmd_lg, BASE_LOGIC_DIR, timeout=60)
 
     # 5.2 Push repo 58_up_to_75
     git_cmd_58 = f'git add . && git commit -m "auto: Cap nhat ket qua ngay {date_str} [skip ci]" && git push origin main'
     run_step("Git Push repo 58_up_to_75", git_cmd_58, DIR_58_UP_75, timeout=60)
 
-    # 5.3 Push repo Logic gốc
-    git_cmd_lg = f'git add . && git commit -m "auto: Cap nhat Excel Master va Tong Hop ngay {date_str} [skip ci]" && git push origin main'
-    run_step("Git Push repo Logic goc", git_cmd_lg, BASE_LOGIC_DIR, timeout=60)
+    # 5.3 Push repo New folder/Logic
+    if os.path.exists(NEW_FOLDER_LOGIC_DIR):
+        git_cmd_nf = f'git add . && git commit -m "auto: Dong bo ket qua ngay {date_str} [skip ci]" && git push origin main'
+        run_step("Git Push repo New folder/Logic", git_cmd_nf, NEW_FOLDER_LOGIC_DIR, timeout=60)
 
     log("="*65)
     log("HOÀN TẤT CHU TRÌNH TỰ ĐỘNG CẬP NHẬT XSMB HÀNG NGÀY!")
