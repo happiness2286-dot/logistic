@@ -1,17 +1,24 @@
 {
   "khung_3_ngay": {
     "tong_quan": {
-      "tong_khung": 41,
-      "trung_n1": 32,
+      "tong_khung": 42,
+      "trung_n1": 33,
       "trung_n2": 3,
       "trung_n3": 2,
       "truot_khung": 4,
-      "ty_le_n1": 78.0,
-      "ty_le_n2": 7.3,
-      "ty_le_n3": 4.9,
-      "ty_le_truot": 9.8
+      "ty_le_n1": 78.6,
+      "ty_le_n2": 7.1,
+      "ty_le_n3": 4.8,
+      "ty_le_truot": 9.5
     },
     "lich_su": [
+      {
+        "khung_stt": 42,
+        "ngay": "03/10/2026",
+        "de": "61",
+        "ket_qua": "trung_n1",
+        "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
+      },
       {
         "khung_stt": 42,
         "ngay": "02/10/2026",
@@ -303,15 +310,28 @@
   },
   "soi_truc_tiep": {
     "tong_quan": {
-      "tong_ngay": 41,
+      "tong_ngay": 42,
       "trung_bach_thu": 12,
       "trung_tu_thu": 22,
-      "trung_lot": 37,
-      "ty_le_bach_thu": 29.3,
-      "ty_le_tu_thu": 53.7,
-      "ty_le_lot": 90.2
+      "trung_lot": 38,
+      "ty_le_bach_thu": 28.6,
+      "ty_le_tu_thu": 52.4,
+      "ty_le_lot": 90.5
     },
     "lich_su": [
+      {
+        "ngay": "03/10/2026",
+        "de": "61",
+        "top1": "90",
+        "top4": [
+          "90",
+          "95",
+          "40",
+          "45"
+        ],
+        "ket_qua": "trung_lot",
+        "ghi_chu": "🛡️ Trúng Dàn Số Lót [61]"
+      },
       {
         "ngay": "02/10/2026",
         "de": "83",
