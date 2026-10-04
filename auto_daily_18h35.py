@@ -38,7 +38,7 @@ def log(msg):
 def run_step(step_name, cmd, cwd, timeout=120):
     log(f"-> Đang chạy: {step_name} (Thư mục: {cwd})...")
     try:
-        res = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, timeout=timeout, shell=True)
+        res = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=timeout, shell=True)
         if res.returncode == 0:
             log(f"   [Thành công] {step_name}")
             return True, res.stdout
