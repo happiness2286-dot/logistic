@@ -1017,6 +1017,9 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
         # Cơ chế 4B: Soi trực tiếp (Bạch thủ, Tứ thủ, Lót)
         ghi_lich_su_truc_tiep(target_draw['date'], actual_de, top_1, top_4_nums, dan_lot_list)
 
+        # Cơ chế 4C: Dàn Tinh Túy Ngày 1 (Theo dõi 60 ngày)
+        ghi_lich_su_tinh_tuy(target_draw['date'], actual_de, dan_ngay1_tinhtuy)
+
     return output_data
 
 def ghi_lich_su_khung(date_str, de_str, kq_status, frame_stt=None):
@@ -1160,7 +1163,83 @@ def ghi_lich_su_truc_tiep(date_str, de_str, top1_val, top4_list, lot_list):
         except Exception as e:
             print(f"[!] Lỗi ghi lịch sử trực tiếp vào {file_path}: {e}")
 
-def push_live_update(filled, total, is_done=False):
+def ghi_lich_su_tinh_tuy(date_str, de_str, dan_tinhtuy_list):
+    """Ghi nhận lịch sử Dàn Tinh Túy Ngày 1 (Theo dõi khoảng 60 ngày)"""
+    for file_path in ['lich_su_phuong_phap.json', os.path.join('58_up_to_75', 'lich_su_phuong_phap.json')]:
+        if not os.path.exists(os.path.dirname(file_path) or '.'):
+            continue
+        try:
+            if os.path.exists(file_path):
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+            else:
+                data = {}
+            if 'dan_tinh_tuy_ngay_1' not in data:
+                data['dan_tinh_tuy_ngay_1'] = {"tong_quan": {}, "lich_su": []}
+
+            clean_date = date_str.split()[-1].replace('-', '/') if date_str else datetime.now().strftime('%d/%m/%Y')
+            de_clean = str(de_str).zfill(2)
+            is_hit = (de_clean in dan_tinhtuy_list) if dan_tinhtuy_list else False
+            count_nums = len(dan_tinhtuy_list) if dan_tinhtuy_list else 0
+
+            existing_idx = None
+            for idx, item in enumerate(data['dan_tinh_tuy_ngay_1'].get("lich_su", [])):
+                if item.get("ngay") == clean_date:
+                    existing_idx = idx
+                    break
+
+            entry = {
+                "stt": 1,
+                "ngay": clean_date,
+                "de": de_clean,
+                "so_luong": count_nums,
+                "ket_qua": "trung" if is_hit else "truot",
+                "ghi_chu": f"Trúng Đề {de_clean} ✅ (Dàn {count_nums} số)" if is_hit else f"Trượt Đề {de_clean} ❌ ({count_nums} số)"
+            }
+
+            if existing_idx is not None:
+                data['dan_tinh_tuy_ngay_1']["lich_su"][existing_idx] = entry
+            else:
+                data['dan_tinh_tuy_ngay_1']["lich_su"].insert(0, entry)
+
+            # Cập nhật số thứ tự STT chuẩn
+            tot = len(data['dan_tinh_tuy_ngay_1']["lich_su"])
+            for i, itm in enumerate(data['dan_tinh_tuy_ngay_1']["lich_su"]):
+                itm["stt"] = tot - i
+
+            # Giới hạn giữ 60 kỳ gần nhất
+            data['dan_tinh_tuy_ngay_1']["lich_su"] = data['dan_tinh_tuy_ngay_1']["lich_su"][:60]
+            tot = len(data['dan_tinh_tuy_ngay_1']["lich_su"])
+
+            c_trung = sum(1 for x in data['dan_tinh_tuy_ngay_1']["lich_su"] if x.get("ket_qua") == "trung")
+            c_truot = sum(1 for x in data['dan_tinh_tuy_ngay_1']["lich_su"] if x.get("ket_qua") == "truot")
+            avg_sz = round(sum(x.get("so_luong", 0) for x in data['dan_tinh_tuy_ngay_1']["lich_su"]) / tot, 1) if tot > 0 else 0
+
+            # Tính chuỗi thắng thông gần nhất
+            streak = 0
+            for item in data['dan_tinh_tuy_ngay_1']["lich_su"]:
+                if item.get("ket_qua") == "trung":
+                    streak += 1
+                else:
+                    break
+
+            data['dan_tinh_tuy_ngay_1']["tong_quan"] = {
+                "tong_ngay": tot,
+                "trung": c_trung,
+                "truot": c_truot,
+                "ty_le_trung": round(c_trung / tot * 100, 1) if tot > 0 else 0,
+                "ty_le_truot": round(c_truot / tot * 100, 1) if tot > 0 else 0,
+                "dan_tb": avg_sz,
+                "chuoi_thong": streak
+            }
+
+            with open(file_path, 'w', encoding='utf-8') as f:
+                json.dump(data, f, ensure_ascii=False, indent=2)
+            print(f"[*] Đã cập nhật lịch sử Dàn Tinh Túy Ngày 1 vào: {file_path}")
+        except Exception as e:
+            print(f"[!] Lỗi ghi lịch sử Dàn Tinh Túy vào {file_path}: {e}")
+
+def push_live_update(filled, total, is_done=False, actual_de=None):
     """Đồng bộ nhanh kết quả giải mới nổ lên GitHub để mobile cập nhật"""
     try:
         targets = ['ket_qua_soi_cau_g1_g5.json', 'lich_su_phuong_phap.json']
@@ -1169,7 +1248,12 @@ def push_live_update(filled, total, is_done=False):
         if os.path.exists('58_up_to_75/lich_su_phuong_phap.json'):
             targets.append('58_up_to_75/lich_su_phuong_phap.json')
         subprocess.run(['git', 'add'] + targets, timeout=10, check=False)
-        status_txt = "HOAN TAT G5.6" if is_done else f"Da quay {filled}/{total} giai"
+        if actual_de:
+            status_txt = f"NO GDB [{actual_de}]"
+        elif is_done:
+            status_txt = "HOAN TAT G5.6 - KHOA CHOT"
+        else:
+            status_txt = f"Da quay {filled}/{total} giai"
         msg = f"auto: Live XSMB {status_txt} [skip ci]"
         subprocess.run(['git', 'commit', '-m', msg], timeout=10, check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         res = subprocess.run(['git', 'push', 'origin', 'main'], timeout=20, check=False, capture_output=True, text=True)
@@ -1202,6 +1286,7 @@ if __name__ == '__main__':
             print(" [*] CHẾ ĐỘ CLOUD SYNC: Tự động push lên GitHub Pages mỗi khi nổ giải mới!")
         print("=" * 78)
         last_filled = -1
+        g5_locked = False
         start_time = time.time()
         max_duration = args.max_minutes * 60
         while True:
@@ -1214,18 +1299,28 @@ if __name__ == '__main__':
                     filled = res.get('filled_count', 0)
                     total = res.get('total_count', 19)
                     now_str = datetime.now().strftime('%H:%M:%S')
-                    if filled != last_filled:
+                    actual_de_val = res.get('actual_de')
+
+                    if filled != last_filled and not g5_locked:
                         print(f"\n>>> [{now_str}] CẬP NHẬT MỚI: Đã quay {filled}/{total} giải.")
                         if args.push and filled > 0:
                             push_live_update(filled, total, is_done=False)
                         last_filled = filled
                     
-                    if res.get('is_g5_finished'):
+                    if res.get('is_g5_finished') and not g5_locked:
+                        g5_locked = True
                         print(f"\n[★ {now_str}] ĐÃ HOÀN TẤT GIẢI 5.6! XUẤT THÀNH CÔNG DÀN TINH TÚY & TÔ MÀU VỊ TRÍ CẦU.")
                         print(f"      Top 1: {res.get('top_1')} | Top 4: {res.get('top_4')}")
                         if args.push:
                             push_live_update(filled, total, is_done=True)
+
+                    if actual_de_val:
+                        print(f"\n[🏆 {now_str}] ĐÃ CÓ GIẢI ĐẶC BIỆT: {actual_de_val}!")
+                        if args.push:
+                            push_live_update(filled, total, is_done=True, actual_de=actual_de_val)
+                        print(f"[*] Kết thúc phiên live thành công mỹ mãn.")
                         break
+
                 time.sleep(args.interval)
             except KeyboardInterrupt:
                 print("\n[*] Đã dừng chế độ giám sát Real-time.")
