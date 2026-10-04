@@ -146,6 +146,56 @@ def get_super_filtered_dan(dan_set, n1_head_freq, n1_tail_freq, n1_sum_freq, con
     super_set = set(x[0] for x in scored_items[:target_size])
     return super_set
 
+def crawl_daiphat_records():
+    """Nguồn dự phòng cào XSMB từ xosodaiphat.com khi mketqua.net gặp sự cố."""
+    dow_map = {0: 'Thứ Hai', 1: 'Thứ Ba', 2: 'Thứ Tư', 3: 'Thứ Năm', 4: 'Thứ Sáu', 5: 'Thứ Bảy', 6: 'Chủ Nhật'}
+    records = []
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0.0.0 Safari/537.36'}
+    for url in ['https://xosodaiphat.com/xsmb-xo-so-mien-bac.html', 'https://xosodaiphat.com/xsmb-30-ngay.html']:
+        try:
+            req = urllib.request.Request(url, headers=headers)
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                html = resp.read().decode('utf-8', errors='ignore')
+            blocks = re.split(r'<table[^>]*table-xsmb[^>]*>', html)
+            for i, b in enumerate(blocks[1:]):
+                pre_text = blocks[i]
+                date_m = re.findall(r'(\d{2})[/-](\d{2})[/-](\d{4})', pre_text)
+                if not date_m: continue
+                d, mth, y = date_m[-1]
+                if y != '2026': continue
+                try:
+                    dt = datetime.date(int(y), int(mth), int(d))
+                    date_str = f"{dow_map[dt.weekday()]} ngày {d}-{mth}-{y}"
+                except Exception:
+                    date_str = f"ngày {d}-{mth}-{y}"
+
+                m_db = re.search(r'G\.ĐB.*?<td[^>]*>(.*?)<tr>', b, re.DOTALL)
+                db_nums = [x.strip() for x in re.findall(r'>\s*(\d{5})\s*<', m_db.group(1))] if m_db else []
+                db_val = db_nums[0] if db_nums else ''
+                if not db_val: continue
+
+                m_g7 = re.search(r'G\.7.*?<td[^>]*>(.*)', b, re.DOTALL)
+                g7_nums = [x.strip() for x in re.findall(r'>\s*(\d{2})\s*<', m_g7.group(1))] if m_g7 else []
+
+                all_nums = [x.strip() for x in re.findall(r'>\s*(\d{2,5})\s*<', b)]
+                all_lo = [p[-2:] for p in all_nums if len(p) >= 2]
+
+                records.append({
+                    'date': date_str,
+                    'db': db_val,
+                    'de': db_val[-2:] if len(db_val) >= 2 else '',
+                    'g7_1': g7_nums[0] if len(g7_nums) > 0 else '',
+                    'g7_2': g7_nums[1] if len(g7_nums) > 1 else '',
+                    'g7_3': g7_nums[2] if len(g7_nums) > 2 else '',
+                    'g7_4': g7_nums[3] if len(g7_nums) > 3 else '',
+                    'all_lo': all_lo
+                })
+            if records:
+                break
+        except Exception as e:
+            print(f"[!] Lỗi cào dự phòng từ {url}: {e}")
+    return records
+
 def crawl_xsmb():
     url = "https://mketqua.net/so-ket-qua"
     headers = {
@@ -158,7 +208,7 @@ def crawl_xsmb():
 
     print("Fetching lottery data from mketqua.net...", flush=True)
     try:
-        with urllib.request.urlopen(req, timeout=10) as response:
+        with urllib.request.urlopen(req, timeout=8) as response:
             html = response.read().decode('utf-8')
             blocks = html.split('<table class="table table-condensed kqcenter kqvertimarginw table-kq-border table-kq-hover-div table-bordered kqbackground table-kq-bold-border tb-phoi-border watermark table-striped" id="result_tab_mb">')
             
@@ -200,12 +250,42 @@ def crawl_xsmb():
                     })
                     
             results_2026 = [r for r in results if '2026' in r['date']]
-            print(f"Extracted {len(results_2026)} records for 2026.")
-            return results_2026
-
+            if results_2026:
+                print(f"Extracted {len(results_2026)} records for 2026 from mketqua.net.")
+                return results_2026
     except Exception as e:
-        print("Error during crawl:", e)
-        return []
+        print("Notice mketqua crawl fallback:", e)
+
+    # Nguồn dự phòng xosodaiphat.com
+    print("Notice: Đang chuyển sang nguồn dự phòng xosodaiphat.com...", flush=True)
+    try:
+        daiphat_recs = crawl_daiphat_records()
+        if daiphat_recs:
+            existing_records = []
+            if os.path.exists('data_2026.json'):
+                try:
+                    with open('data_2026.json', 'r', encoding='utf-8') as f:
+                        existing_records = json.load(f)
+                except Exception:
+                    pass
+            seen_dates = set()
+            merged = []
+            for r in daiphat_recs:
+                d_key = r['date'].split()[-1]
+                if d_key not in seen_dates:
+                    seen_dates.add(d_key)
+                    merged.append(r)
+            for r in existing_records:
+                d_key = r['date'].split()[-1]
+                if d_key not in seen_dates:
+                    seen_dates.add(d_key)
+                    merged.append(r)
+            print(f"[✓ Dự phòng] Cào thành công từ xosodaiphat.com! Tổng hợp được {len(merged)} bản ghi 2026.")
+            return merged
+    except Exception as e:
+        print("Error during fallback crawl xosodaiphat:", e)
+
+    return []
 
 def analyze_all(data_2026):
     chrono = list(reversed(data_2026))
