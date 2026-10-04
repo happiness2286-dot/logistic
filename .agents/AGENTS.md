@@ -57,6 +57,17 @@
 
 ---
 
+### C. HỆ THỐNG KIỂM CHỨNG & THEO DÕI LỊCH SỬ 3 TRỤ CỘT (PHẦN 4A, 4B, 4C)
+1. **Phần 4A (Khung 3 Ngày - 58_up_to_75)**: Theo dõi độc lập chu kỳ nuôi N1, N2, N3.
+2. **Phần 4B (Soi Trực Tiếp G1-G5)**: Đánh giá hiệu suất Bạch Thủ Top 1, Tứ Thủ Top 4 và Dàn Lót.
+3. **Phần 4C (Dàn Tinh Túy Ngày 1 - 60 Ngày)**:
+   - Theo dõi độc lập 60 kỳ gần nhất của Dàn Tinh Túy Ngày 1 (Giao thoa 60 số Cấp 4).
+   - Tự động cập nhật liên tục khi chốt dàn và khi có kết quả Đề qua hàm `ghi_lich_su_tinh_tuy()` trong `soi_cau_g1_g5.py`.
+   - Kết quả kiểm chứng 60 kỳ thực tế: Ăn **52/60 ngày (86.7%)**, Trượt 8/60 ngày (13.3%), Quy mô dàn trung bình ~34 số/kỳ, Chuỗi ăn thông 6 ngày.
+   - Giao diện đồng bộ: Badge phong độ 60N tại Phần 2 và Bảng 5 thẻ thống kê + danh sách 60 dòng cuộn dọc tại Phần 4C Web App.
+
+---
+
 ## 4. CHIẾN LƯỢC QUẢN TRỊ RỦI RO 4 TẦNG (GIẢI PHÓNG TÂM LÝ & THỜI GIAN)
 - **Mục tiêu**: Loại bỏ hoàn toàn áp lực tâm lý và tình trạng mất hàng giờ kiểm định thủ công mỗi ngày.
 - **Phân bổ tỷ trọng vốn**:

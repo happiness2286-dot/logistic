@@ -83,9 +83,14 @@ Output được tự động xuất ra console và lưu thành file JSON: `ket_q
 
 ## 5. Chuẩn Hóa Kiến Trúc Đóng Băng (Frozen Baseline)
 
-1. **Phân Tách 2 Cơ Chế Độc Lập (PHẦN 4)**:
+1. **Phân Tách 3 Cơ Chế Độc Lập (PHẦN 4 Kiểm Chứng)**:
    - **PHẦN 4A: ĐÁNH GIÁ KHUNG 3 NGÀY (`58_up_to_75`)**: Theo dõi độc lập chu kỳ nuôi N1 $\rightarrow$ N2 $\rightarrow$ N3.
    - **PHẦN 4B: ĐÁNH GIÁ SOI TRỰC TIẾP**: Đánh giá hiệu suất độc lập của Bạch Thủ (Top 1), Tứ Thủ (Top 4) và Dàn Lót.
+   - **PHẦN 4C: ĐÁNH GIÁ DÀN TINH TÚY NGÀY 1 (THEO DÕI 60 NGÀY)**:
+     - Ghi nhận độc lập lịch sử 60 kỳ gần nhất của Dàn Tinh Túy Ngày 1 (Giao thoa 60 số Cấp 4) vào nhánh `dan_tinh_tuy_ngay_1` của `lich_su_phuong_phap.json`.
+     - Tự động cập nhật tức thì qua `ghi_lich_su_tinh_tuy()` khi có kết quả Đề trong cả phiên Live 18h14 và phiên Tổng hợp 18h35.
+     - Kiểm chứng 60 kỳ: Trúng **52/60 (86.7%)**, Trượt 8/60 (13.3%), Dàn trung bình **~34 số**, Chuỗi ăn thông **6 ngày liên tiếp**.
+     - Hiển thị badge phong độ 60N trực quan tại Phần 2 và Bảng 5 thẻ thống kê + danh sách 60 dòng cuộn dọc tại Phần 4C.
 2. **Cơ Chế Cứu Khung N2/N3 (AI Score)**:
    - **Dàn N2 Mở Rộng (42 số)**: Tuyển chọn số điểm AI cao từ N1 và ứng viên; **Loại bỏ số bệt 2 ngày liên tiếp**.
    - **Dàn N3 Cơ Hội Cuối (40 số)**: Tuyển chọn từ Dàn N2; **Loại bỏ số gan cực đại (> 45 ngày) và cầu gãy**.
@@ -99,4 +104,6 @@ Output được tự động xuất ra console và lưu thành file JSON: `ket_q
    - Trúng N2 (Cứu N1): **10.3%**
    - Trượt khung: **0.0%** (100% trúng khung trên 32 kỳ gần nhất).
    - Bạch thủ Top 1: **34.4%** | Tứ thủ Top 4: **65.6%**.
+   - Dàn Tinh Túy Ngày 1 (60 Ngày): **86.7%** (Ăn 52/60 kỳ, quy mô dàn ~34 số).
+
 
