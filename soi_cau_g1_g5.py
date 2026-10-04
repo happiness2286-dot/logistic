@@ -297,6 +297,88 @@ def parse_lottery_blocks(html):
         
     return draws
 
+def fetch_daiphat_draws(is_live=False):
+    """Nguồn dự phòng cào các kỳ quay gần nhất từ xosodaiphat.com khi mketqua.net gặp sự cố."""
+    dow_map = {0: 'Thứ hai', 1: 'Thứ ba', 2: 'Thứ tư', 3: 'Thứ năm', 4: 'Thứ sáu', 5: 'Thứ bảy', 6: 'Chủ nhật'}
+    url = 'https://xosodaiphat.com/xsmb-xo-so-mien-bac.html'
+    html = ""
+    try:
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0.0.0 Safari/537.36'}
+        if HAS_BS4:
+            r = requests.get(url, headers=headers, timeout=8)
+            html = r.text if r.status_code == 200 else ""
+        else:
+            req = urllib.request.Request(url, headers=headers)
+            with urllib.request.urlopen(req, timeout=8) as resp:
+                html = resp.read().decode('utf-8', errors='ignore')
+    except Exception as e:
+        print(f"[!] Không thể kết nối xosodaiphat.com: {e}")
+        return []
+
+    if not html:
+        return []
+
+    blocks = re.split(r'<table[^>]*table-xsmb[^>]*>', html)
+    draws = []
+    for i, b in enumerate(blocks[1:]):
+        pre_text = blocks[i]
+        date_m = re.findall(r'(\d{2})[/-](\d{2})[/-](\d{4})', pre_text)
+        if not date_m: continue
+        d, mth, y = date_m[-1]
+        try:
+            dt = datetime(int(y), int(mth), int(d))
+            date_str = f"{dow_map[dt.weekday()]} ngày {d}-{mth}-{y}"
+        except Exception:
+            date_str = f"ngày {d}-{mth}-{y}"
+
+        m_db = re.search(r'G\.ĐB.*?<td[^>]*>(.*?)<tr>', b, re.DOTALL)
+        db_nums = [x.strip() for x in re.findall(r'>\s*(\d{5})\s*<', m_db.group(1))] if m_db else []
+        db_val = db_nums[0] if db_nums else ''
+
+        prizes = {}
+        # G1
+        m_g1 = re.search(r'G\.1.*?<td[^>]*>(.*?)<tr>', b, re.DOTALL)
+        g1_nums = [x.strip() for x in re.findall(r'>\s*(\d{5})\s*<', m_g1.group(1))] if m_g1 else []
+        prizes['G1'] = g1_nums[0] if g1_nums else ''
+
+        # G2 (2 giải)
+        m_g2 = re.search(r'G\.2.*?<td[^>]*>(.*?)<tr>', b, re.DOTALL)
+        g2_nums = [x.strip() for x in re.findall(r'>\s*(\d{5})\s*<', m_g2.group(1))] if m_g2 else []
+        for idx in range(1, 3):
+            prizes[f'G2.{idx}'] = g2_nums[idx-1] if len(g2_nums) >= idx else ''
+
+        # G3 (6 giải)
+        m_g3 = re.search(r'G\.3.*?<td[^>]*>(.*?)<tr>', b, re.DOTALL)
+        g3_nums = [x.strip() for x in re.findall(r'>\s*(\d{5})\s*<', m_g3.group(1))] if m_g3 else []
+        for idx in range(1, 7):
+            prizes[f'G3.{idx}'] = g3_nums[idx-1] if len(g3_nums) >= idx else ''
+
+        # G4 (4 giải)
+        m_g4 = re.search(r'G\.4.*?<td[^>]*>(.*?)<tr>', b, re.DOTALL)
+        g4_nums = [x.strip() for x in re.findall(r'>\s*(\d{4})\s*<', m_g4.group(1))] if m_g4 else []
+        for idx in range(1, 5):
+            prizes[f'G4.{idx}'] = g4_nums[idx-1] if len(g4_nums) >= idx else ''
+
+        # G5 (6 giải)
+        m_g5 = re.search(r'G\.5.*?<td[^>]*>(.*?)<tr>', b, re.DOTALL)
+        g5_nums = [x.strip() for x in re.findall(r'>\s*(\d{4})\s*<', m_g5.group(1))] if m_g5 else []
+        for idx in range(1, 7):
+            prizes[f'G5.{idx}'] = g5_nums[idx-1] if len(g5_nums) >= idx else ''
+
+        # G7 (4 giải)
+        m_g7 = re.search(r'G\.7.*?<td[^>]*>(.*)', b, re.DOTALL)
+        g7_nums = [x.strip() for x in re.findall(r'>\s*(\d{2})\s*<', m_g7.group(1))] if m_g7 else []
+        for idx in range(1, 5):
+            prizes[f'G7.{idx}'] = g7_nums[idx-1] if len(g7_nums) >= idx else ''
+
+        draws.append({
+            'date': date_str,
+            'db': db_val,
+            'de': db_val[-2:] if len(db_val) >= 2 else '',
+            'prizes': prizes
+        })
+    return draws
+
 def get_physical_positions(prizes):
     """
     Trả về danh sách tất cả các vị trí vật lý kèm chữ số:
@@ -466,11 +548,13 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
     print("=" * 78)
     
     html = fetch_mketqua_html(count=10, is_live=is_live)
-    if not html:
-        print("[!] Không thể lấy dữ liệu từ mketqua.net!")
-        return None
-        
-    draws = parse_lottery_blocks(html)
+    draws = parse_lottery_blocks(html) if html else []
+    if len(draws) < 2:
+        print("[!] mketqua.net không phản hồi hoặc không đủ dữ liệu. Đang chuyển sang nguồn dự phòng xosodaiphat.com...")
+        daiphat_draws = fetch_daiphat_draws(is_live=is_live)
+        if len(daiphat_draws) >= 2:
+            draws = daiphat_draws
+            print(f"[✓ Dự phòng] Đã lấy thành công {len(draws)} kỳ từ xosodaiphat.com!")
     if len(draws) < 2:
         print("[!] Dữ liệu cào về không đủ số kỳ để phân tích.")
         return None
