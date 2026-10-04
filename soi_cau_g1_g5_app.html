@@ -1681,8 +1681,11 @@
 
             <!-- Dòng 3: Dàn Tinh Túy Ngày 1 Giao Thoa (Trắng/Ánh kim) -->
             <div class="tier-row">
-                <div class="tier-label" style="color: #cbd5e1; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.06); padding: 4px 10px; border-radius: 8px;">
-                    <i class="fa-solid fa-gem" style="color: #38bdf8;"></i> ⚪ DÀN TINH TÚY NGÀY 1
+                <div class="tier-label" style="color: #cbd5e1; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.06); padding: 4px 10px; border-radius: 8px; display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap;">
+                    <span><i class="fa-solid fa-gem" style="color: #38bdf8;"></i> ⚪ DÀN TINH TÚY NGÀY 1</span>
+                    <a href="#sec-tinh-tuy-ngay1" id="badge-tinhtuy-perf" style="font-size: 10px; color: #38bdf8; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); padding: 2px 8px; border-radius: 6px; text-decoration: none; font-weight: 700; white-space: nowrap; transition: all 0.2s ease;">
+                        <i class="fa-solid fa-chart-line"></i> Phong độ 60N: 86.7%
+                    </a>
                 </div>
                 <div class="tier-content" id="list-tinhtuy-ngay1">
                     <!-- Dynamic badges for Tinh Túy Ngày 1 -->
@@ -1880,6 +1883,45 @@
             <!-- Lịch sử soi trực tiếp cuộn dọc -->
             <div class="lich-su-container" id="list-history-direct">
                 <!-- Nạp tự động từ lich_su_phuong_phap.json -> soi_truc_tiep -->
+            </div>
+        </section>
+
+        <!-- PHẦN 4C: ĐÁNH GIÁ DÀN TINH TÚY NGÀY 1 (THEO DÕI 60 NGÀY) -->
+        <section class="history-box" id="sec-tinh-tuy-ngay1">
+            <div class="section-header">
+                <h2 style="color: #38bdf8;"><i class="fa-solid fa-gem" style="color: #38bdf8;"></i> PHẦN 4C: THEO DÕI HIỆU QUẢ DÀN TINH TÚY NGÀY 1 (60 NGÀY)</h2>
+                <span class="tag-info" id="badge-tinhtuy-summary" style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.4); background: rgba(56, 189, 248, 0.1);">
+                    KIỂM CHỨNG 60 KỲ
+                </span>
+            </div>
+
+            <!-- Tổng quan 4C -->
+            <div class="tong-quan">
+                <div class="stat-card">
+                    <div class="stat-label">Tổng số ngày</div>
+                    <div class="stat-value" id="tt-stat-tong">60 ngày</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Số ngày Trúng</div>
+                    <div class="stat-value green" id="tt-stat-trung">52 (86.7%)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Số ngày Trượt</div>
+                    <div class="stat-value red" id="tt-stat-truot">8 (13.3%)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Dàn trung bình</div>
+                    <div class="stat-value gold" id="tt-stat-avg">~34 số</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Chuỗi Thông Gần Nhất</div>
+                    <div class="stat-value orange" id="tt-stat-streak">Ăn 6 ngày thông</div>
+                </div>
+            </div>
+
+            <!-- Lịch sử Dàn Tinh Túy cuộn dọc -->
+            <div class="lich-su-container" id="list-history-tinhtuy">
+                <!-- Nạp tự động từ lich_su_phuong_phap.json -> dan_tinh_tuy_ngay_1 -->
             </div>
         </section>
     </div>
@@ -2098,6 +2140,54 @@
         }
         window.loadSoiTrucTiep = loadSoiTrucTiep;
 
+        // BƯỚC 4C: HÀM LOAD LỊCH SỬ DÀN TINH TÚY NGÀY 1 (THEO DÕI 60 NGÀY)
+        function loadDanTinhTuyNgay1(ttData) {
+            if (!ttData || !ttData.tong_quan) return;
+            const tq = ttData.tong_quan;
+
+            const elTong = document.getElementById('tt-stat-tong');
+            if (elTong) elTong.textContent = `${tq.tong_ngay || 0} ngày`;
+
+            const elTrung = document.getElementById('tt-stat-trung');
+            if (elTrung) elTrung.textContent = `${tq.trung || 0} (${tq.ty_le_trung || 0}%)`;
+
+            const elTruot = document.getElementById('tt-stat-truot');
+            if (elTruot) elTruot.textContent = `${tq.truot || 0} (${tq.ty_le_truot || 0}%)`;
+
+            const elAvg = document.getElementById('tt-stat-avg');
+            if (elAvg) elAvg.textContent = `~${tq.dan_tb || 34} số`;
+
+            const elStreak = document.getElementById('tt-stat-streak');
+            if (elStreak) elStreak.textContent = `Ăn ${tq.chuoi_thong || 0} ngày thông`;
+
+            const elBadge = document.getElementById('badge-tinhtuy-summary');
+            if (elBadge) elBadge.textContent = `${tq.tong_ngay || 0} NGÀY (ĂN: ${tq.ty_le_trung || 0}%)`;
+
+            const elPerf = document.getElementById('badge-tinhtuy-perf');
+            if (elPerf) elPerf.innerHTML = `<i class="fa-solid fa-chart-line"></i> Phong độ ${tq.tong_ngay || 60}N: ${tq.ty_le_trung || 0}%`;
+
+            const container = document.getElementById('list-history-tinhtuy');
+            if (container && Array.isArray(ttData.lich_su)) {
+                container.innerHTML = ttData.lich_su.map((item, idx) => {
+                    const isHit = item.ket_qua === 'trung';
+                    const icon = isHit ? '🎯' : '❌';
+                    const cls = isHit ? 'trung_n1' : 'truot_khung';
+                    const stt = item.stt || (ttData.lich_su.length - idx);
+                    const sl = item.so_luong ? `(${item.so_luong} số)` : '';
+                    return `
+                        <div class="lich-su-item">
+                            <div class="ngay"><small style="color:#94a3b8; margin-right:4px;">#${stt}</small>${item.ngay}</div>
+                            <div class="de">Đề: <strong>${item.de}</strong></div>
+                            <div class="ket-qua ${cls}">
+                                ${item.ghi_chu || (isHit ? `Trúng Đề ${item.de} ✅ ${sl}` : `Trượt Đề ${item.de} ❌ ${sl}`)} ${icon}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+        window.loadDanTinhTuyNgay1 = loadDanTinhTuyNgay1;
+
         // HÀM ĐIỀU PHỐI CHUNG NẠP FILE JSON LỊCH SỬ
         async function loadLichSu() {
             try {
@@ -2111,6 +2201,9 @@
                 }
                 if (data.soi_truc_tiep) {
                     loadSoiTrucTiep(data.soi_truc_tiep);
+                }
+                if (data.dan_tinh_tuy_ngay_1) {
+                    loadDanTinhTuyNgay1(data.dan_tinh_tuy_ngay_1);
                 }
             } catch (err) {
                 console.warn('Lỗi load lịch sử phương pháp:', err);
