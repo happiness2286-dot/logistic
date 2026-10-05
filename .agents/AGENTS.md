@@ -8,6 +8,10 @@
 
 ## 2. QUY CHUẨN TUYỆT ĐỐI VỀ ĐÀI QUAY & DÒNG DỮ LIỆU (100% CÙNG ĐÀI XSMB)
 - **Đồng nhất nguồn cào**: Toàn bộ hệ thống (`crawl_and_analyze.py`, `live_radar_scanner.py`, `soi_cau_g1_g5.py`) được khóa cố định theo mã định danh `code=mb` (Xổ số kiến thiết Miền Bắc truyền thống, 27 giải mở thưởng lúc 18h15). Tuyệt đối không kết nối với XSMT, XSMN hay Vietlott.
+- **Nguồn cấp dữ liệu chuẩn hóa (Tuyệt đối không dùng mketqua.net/ketqua.net)**:
+  - ❌ **CẤM HOÀN TOÀN**: `mketqua.net` và `ketqua.net` (bị ISP sinkhole chặn cổng 443 làm treo tiến trình quét và mất giờ chốt số).
+  - ⚡ **Ưu tiên 1 (Live Real-time ~50ms)**: `https://api.383.im/lottery/live.json` — quét trực tiếp từng giải trong giờ quay (18h14 - 18h35).
+  - 🛡️ **Ưu tiên 2 (Lịch sử & Dự phòng)**: `https://xosodaiphat.com/xsmb-xo-so-mien-bac.html` và `xsmb-30-ngay.html`.
 - **Bản chất đài quay XSMB**: Cả 7 ngày trong tuần đều mở thưởng tại chung 1 trường quay (số 1 Tăng Bạt Hổ, Hà Nội), dùng chung 1 hệ thống lồng quay và 1 Hội đồng giám sát.
 - **Phân lập 2 tầng chu kỳ**:
   1. *Tầng 1 (Hàng ngày)*: Radar Live G1-G5, Dàn Tĩnh 4 Cấp và Khung 3N chạy theo nhịp rơi liên tục hàng ngày ($N-1 \rightarrow N \rightarrow N+1$).
@@ -78,24 +82,26 @@
 ---
 
 ## 5. HỆ THỐNG LẬP LỊCH TỰ ĐỘNG KÉP (WINDOWS TASK SCHEDULER)
+- **Đường dẫn thực thi an toàn**: Dùng Windows 8.3 Short Path (`E:\DONGBO~1\NEWHAG~1\NM2026~1\DNAI_A~1\Logic\...`) để loại bỏ hoàn toàn lỗi mã hóa tiếng Việt có dấu (`Năm 2026` / `Dự Án`).
+- **Quy chuẩn Git Push**: Luôn thực hiện `git pull --rebase origin main` trước khi `git push origin main` trong mọi file Python/batch để chống xung đột/từ chối đẩy mã.
 
-### A. Tác Vụ Quét Live Giờ Vàng: `XSMB_AI_AutoUpdate_18h15`
-- **Thời gian chạy**: Kích hoạt lúc **18:14:00** hàng ngày (`DAILY`).
-- **File thực thi**: `AUTO_CRON_18H15.ps1` (chạy ngầm qua PowerShell UTF-8).
+### A. Tác Vụ Quét Live Giờ Vàng: `XSMB_AI_AutoLive_18h14`
+- **Thời gian chạy**: Kích hoạt đúng **18:14:00** hàng ngày (`DAILY`).
+- **Lệnh thực thi**: `cmd.exe /c E:\DONGBO~1\NEWHAG~1\NM2026~1\DNAI_A~1\Logic\auto_live_18h14.bat`.
 - **Quy trình**:
-  1. Quét Live liên tục mỗi 5s - 30s qua `live_radar_scanner.py`.
-  2. Bắt đủ 19 giải (xong G5.6 ~18h24) $\rightarrow$ Khóa chốt `LOCKED_G5`, tự động commit & push GitHub Pages ngay trước 18h28.
-  3. Đợi có GĐB (sau 18h31) $\rightarrow$ Phân tích và ghi nhận kết quả thực tế.
+  1. Quét Live liên tục mỗi 5s - 30s qua API `383.im` (Primary) và `xosodaiphat.com` (Fallback).
+  2. Bắt đủ 19 giải (xong G5.6 ~18h23 - 18h24) $\rightarrow$ Khóa chốt `LOCKED_G5`, tự động commit & push GitHub Pages ngay trước 18h28.
+  3. Đợi có GĐB (sau 18h31) $\rightarrow$ Phân tích và ghi nhận kết quả thực tế vào `lich_su_phuong_phap.json`.
 
-### B. Tác Vụ Cập Nhật Tổng Hợp Tối: `XSMB_Auto_Update_Daily_18h35`
+### B. Tác Vụ Cập Nhật Tổng Hợp Tối: `XSMB_AI_AutoDaily_18h35`
 - **Thời gian chạy**: Đúng **18:35:00** hàng ngày (`DAILY`).
-- **File thực thi**: `auto_daily_18h35.bat` $\rightarrow$ gọi `auto_daily_18h35.py`.
+- **Lệnh thực thi**: `cmd.exe /c E:\DONGBO~1\NEWHAG~1\NM2026~1\DNAI_A~1\Logic\auto_daily_18h35.bat`.
 - **Quy trình tự động**:
-  1. Cào kết quả XSMB mới nhất hôm nay (27 giải).
+  1. Cào kết quả XSMB 27 giải đầy đủ hôm nay qua `xosodaiphat.com` & `383.im`.
   2. Chạy phân tích G7, ma trận Lucky26, xuất Excel Master 18 Sheet và cập nhật `analysis_summary.json`.
   3. Chạy `soi_cau_g1_g5.py`, tính Dàn Tĩnh 4 Cấp mới cho ngày mai, nạp vào `ket_qua_soi_cau_g1_g5.json`.
   4. Đồng bộ file sang thư mục `58_up_to_75`.
-  5. Tự động `git commit` và `git push` lên GitHub Pages (`logistic.git` & `57_up_to_75.git`).
+  5. Tự động `git pull --rebase` và `git push` lên GitHub Pages (`logistic.git`).
   6. Ghi log kiểm tra vào `cron_update.log`.
 
 ---

@@ -67,7 +67,7 @@ python soi_cau_g1_g5.py
 ```
 
 ### Chạy chế độ giám sát Real-time trong lúc quay thưởng (18h15 - 18h35):
-Tự động quét mỗi 15 giây từ `mketqua.net`, cập nhật ngay khi từng giải trong G1 $\rightarrow$ G5 xuất hiện:
+Tự động quét siêu tốc ~50ms từ API `https://api.383.im/lottery/live.json` (dự phòng: `xosodaiphat.com`), cập nhật ngay khi từng giải trong G1 $\rightarrow$ G5 xuất hiện:
 ```bash
 python soi_cau_g1_g5.py --live
 ```
