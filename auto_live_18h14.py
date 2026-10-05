@@ -72,12 +72,11 @@ def main():
     threads.append(t1)
     t1.start()
 
-    # 2. Tiến trình 67_up_95 (Radar Scanner nếu tồn tại)
-    if os.path.exists(DIR_67_UP_95):
-        cmd_67 = f'"{PYTHON_EXE}" live_radar_scanner.py --live --interval 8 --auto_push'
-        t2 = threading.Thread(target=run_process, args=("Radar_67UP95", cmd_67, DIR_67_UP_95), daemon=True)
-        threads.append(t2)
-        t2.start()
+    # 2. Tiến trình Live Radar Scanner trong Logic
+    cmd_radar = f'"{PYTHON_EXE}" live_radar_scanner.py --live --interval 8 --auto_push'
+    t2 = threading.Thread(target=run_process, args=("Radar_Scanner", cmd_radar, BASE_LOGIC_DIR), daemon=True)
+    threads.append(t2)
+    t2.start()
 
     # Chờ các tiến trình hoàn thành (tối đa 25 phút đến ~18h39)
     for t in threads:

@@ -91,7 +91,7 @@ def main():
     date_str = datetime.now().strftime("%d/%m/%Y %H:%M")
     
     # 5.1 Push repo Logic gốc (chính)
-    git_cmd_lg = f'git add . && git commit -m "auto: Cap nhat Excel Master va Tong Hop ngay {date_str} [skip ci]" && git push origin main'
+    git_cmd_lg = f'git add . && git commit -m "auto: Cap nhat Excel Master va Tong Hop ngay {date_str} [skip ci]" && git pull --rebase origin main && git push origin main'
     run_step("Git Push repo Logic goc", git_cmd_lg, BASE_LOGIC_DIR, timeout=60)
 
     # 5.2 Push repo 58_up_to_75
