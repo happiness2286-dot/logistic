@@ -189,3 +189,198 @@
 [2026-09-27 10:21:19] HOÀN TẤT PHIÊN GIÁM SÁT LIVE XSMB HÔM NAY!
 [2026-09-27 10:21:19] ======================================================================
 
+[2026-10-06 18:14:01] ======================================================================
+[2026-10-06 18:14:01] BẮT ĐẦU CHU TRÌNH GIÁM SÁT LIVE TRỰC TIẾP XSMB (18H14)
+[2026-10-06 18:14:01] ======================================================================
+[2026-10-06 18:14:01] -> KHỞI ĐỘNG TIẾN TRÌNH LIVE: Logic_G1_G5 (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)
+[2026-10-06 18:14:01] -> KHỞI ĐỘNG TIẾN TRÌNH LIVE: Radar_Scanner (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)
+[2026-10-06 18:14:04] [Radar_Scanner] [*] Bắt đầu radar live polling mỗi 8 giây (Thời lượng tối đa: Vô hạns)...
+[2026-10-06 18:14:04] [Radar_Scanner] =======================================================
+[2026-10-06 18:14:04] [Radar_Scanner] 🔒 [CHỐT KHÓA G5 - 18:14:04] ĐÃ HOÀN TẤT 19/19 GIẢI G1->G5 KỲ Thứ hai ngày 05-10-2026!
+[2026-10-06 18:14:04] [Radar_Scanner] 👑 BẠCH THỦ TOP 1: 92 | 🔥 TỨ THỦ: ['92', '29', '22', '26']
+[2026-10-06 18:14:04] [Radar_Scanner] 🌟 TOP 3 CÀNG: ['6', '2', '7'] (ĐÁNH NGAY CHO GIẢI ĐẶC BIỆT HÔM NAY QUAY LÚC 18H30)
+[2026-10-06 18:14:04] [Radar_Scanner] ⏱️ HẠN CHỐT VÀO TIỀN: TRƯỚC 18H28!
+[2026-10-06 18:14:04] [Radar_Scanner] =======================================================
+[2026-10-06 18:14:06] [Logic_G1_G5] ==============================================================================
+[2026-10-06 18:14:06] [Logic_G1_G5] [*] ĐANG CHẠY CHẾ ĐỘ GIÁM SÁT REAL-TIME (Tự động cập nhật mỗi 8 giây)
+[2026-10-06 18:14:06] [Logic_G1_G5] [*] Radar tự động lấy kết quả trực tiếp từ Giải 1 -> Giải 5.6 (bỏ qua G6, G7)
+[2026-10-06 18:14:06] [Logic_G1_G5] [*] Ngay khi Giải 5.6 nổ xong, hệ thống sẽ tự động chốt Dàn Tinh Túy & Tô Màu Cầu
+[2026-10-06 18:14:06] [Logic_G1_G5] [*] CHẾ ĐỘ CLOUD SYNC: Tự động push lên GitHub Pages mỗi khi nổ giải mới!
+[2026-10-06 18:14:06] [Logic_G1_G5] ==============================================================================
+[2026-10-06 18:14:06] [Logic_G1_G5] ==============================================================================
+[2026-10-06 18:14:06] [Logic_G1_G5] XSMB AI - SOI VỊ TRÍ G1->G5 & CHU KỲ NỔ THEO 5 BƯỚC CHUẨN HÓA
+[2026-10-06 18:14:06] [Logic_G1_G5] ==============================================================================
+[2026-10-06 18:14:06] [Logic_G1_G5] [*] Kỳ đang soi/quay:  [Thứ hai ngày 05-10-2026] - GDB: 19654 (Đề: 54)
+[2026-10-06 18:14:06] [Logic_G1_G5] [*] Kỳ trước làm gốc: [Chủ nhật ngày 04-10-2026] - GDB: 82951 (Đề: 51)
+[2026-10-06 18:14:06] [Logic_G1_G5] ------------------------------------------------------------------------------
+[2026-10-06 18:14:06] [Logic_G1_G5] BƯỚC 1: ĐỀ HÔM TRƯỚC [Chủ nhật ngày 04-10-2026] & TẬP CHẠM ĐẦU / ĐUÔI
+[2026-10-06 18:14:06] [Logic_G1_G5] ------------------------------------------------------------------------------
+[2026-10-06 18:14:06] [Logic_G1_G5] • Đề ngày hôm trước: 51 (Giải ĐB: 82951)
+[2026-10-06 18:14:06] [Logic_G1_G5] • Chạm Đầu = 5  --> Bóng dương = 0  ==> Tập Đầu: [5, 0]
+[2026-10-06 18:14:06] [Logic_G1_G5] • Chạm Đuôi = 1  --> Bóng dương = 6  ==> Tập Đuôi: [1, 6]
+[2026-10-06 18:14:06] [Logic_G1_G5] ------------------------------------------------------------------------------
+[2026-10-06 18:14:06] [Logic_G1_G5] BƯỚC 2 & 3: VỊ TRÍ CẦU VÀ CHỮ SỐ NỔ THỰC TẾ HÔM NAY (G1 -> G5.6)
+[2026-10-06 18:14:06] [Logic_G1_G5] ------------------------------------------------------------------------------
+[2026-10-06 18:14:06] [Logic_G1_G5] • Tổng vị trí Cầu Đầu: 21 vị trí
+[2026-10-06 18:14:06] [Logic_G1_G5] - Chạy 3-4 ngày (Chỉ đạo): 0 vị trí
+[2026-10-06 18:14:06] [Logic_G1_G5] - Chạy 2 ngày (Lót):      3 vị trí
+[2026-10-06 18:14:06] [Logic_G1_G5] - Mới chạm 1 ngày:        18 vị trí
+[2026-10-06 18:14:06] [Logic_G1_G5] • Tổng vị trí Cầu Đuôi: 12 vị trí
+[2026-10-06 18:14:06] [Logic_G1_G5] - Chạy 3-4 ngày (Chỉ đạo): 0 vị trí
+[2026-10-06 18:14:06] [Logic_G1_G5] - Mới chạm 1 ngày:        10 vị trí
+[2026-10-06 18:14:06] [Logic_G1_G5] ==============================================================================
+[2026-10-06 18:14:06] [Logic_G1_G5] BẢNG PHÂN TẦNG 5 CỘT (ƯU TIÊN 3D/4D BẠCH THỦ - LOẠI BỎ SỐ LÓT NGOÀI 60 SỐ)
+[2026-10-06 18:14:06] [Logic_G1_G5] ==============================================================================
+[2026-10-06 18:14:06] [Logic_G1_G5] Con Số  |  Vị Trí Lặp  |          Phân Loại           |  Trong 60 Số?  |     Phân Hạng Top
+[2026-10-06 18:14:06] [Logic_G1_G5] ------------------------------------------------------------------------------
+[2026-10-06 18:14:06] [Logic_G1_G5] 65    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |       Có       |   👑 Top 1 (Bạch thủ)
+[2026-10-06 18:14:06] [Logic_G1_G5] 60    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |       Có       |    🔥 Top 4 (Tứ thủ)
+[2026-10-06 18:14:06] [Logic_G1_G5] 66    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |     Không      |    🔥 Top 4 (Tứ thủ)
+[2026-10-06 18:14:06] [Logic_G1_G5] 64    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |     Không      |    🔥 Top 4 (Tứ thủ)
+[2026-10-06 18:14:06] [Logic_G1_G5] 69    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:06] [Logic_G1_G5] 95    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:06] [Logic_G1_G5] 45    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:06] [Logic_G1_G5] 96    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:06] [Logic_G1_G5] 99    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:06] [Logic_G1_G5] 44    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:06] [Logic_G1_G5] 26    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:06] [Logic_G1_G5] 24    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:06] [Logic_G1_G5] 29    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:06] [Logic_G1_G5] 15    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:06] [Logic_G1_G5] 19    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:06] [Logic_G1_G5] 35    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:06] [Logic_G1_G5] 34    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:06] [Logic_G1_G5] 39    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:06] [Logic_G1_G5] 05    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:06] [Logic_G1_G5] 04    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:06] [Logic_G1_G5] 09    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:06] [Logic_G1_G5] 61    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:06] [Logic_G1_G5] 91    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:06] [Logic_G1_G5] 21    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:06] [Logic_G1_G5] 11    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:06] [Logic_G1_G5] 85    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:06] [Logic_G1_G5] 80    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:06] [Logic_G1_G5] 31    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:06] [Logic_G1_G5] 84    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:06] [Logic_G1_G5] 55    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:06] [Logic_G1_G5] 01    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:06] [Logic_G1_G5] 59    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:06] [Logic_G1_G5] 81    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:06] [Logic_G1_G5] 51    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:07] [Logic_G1_G5] 62    |    2 ngày    | Lót ngày 2                   |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:07] [Logic_G1_G5] 92    |    2 ngày    | Lót ngày 2                   |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:07] [Logic_G1_G5] 42    |    2 ngày    | Lót ngày 2                   |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:07] [Logic_G1_G5] 22    |    2 ngày    | Lót ngày 2                   |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:07] [Logic_G1_G5] 12    |    2 ngày    | Lót ngày 2                   |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:07] [Logic_G1_G5] 68    |    2 ngày    | Lót ngày 2                   |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:07] [Logic_G1_G5] 32    |    2 ngày    | Lót ngày 2                   |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:07] [Logic_G1_G5] 02    |    2 ngày    | Lót ngày 2                   |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:07] [Logic_G1_G5] 67    |    2 ngày    | Lót ngày 2                   |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:07] [Logic_G1_G5] 97    |    2 ngày    | Lót ngày 2                   |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:07] [Logic_G1_G5] 72    |    2 ngày    | Lót ngày 2                   |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:07] [Logic_G1_G5] 17    |    2 ngày    | Lót ngày 2                   |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:07] [Logic_G1_G5] 63    |    2 ngày    | Lót ngày 2                   |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:07] [Logic_G1_G5] 18    |    2 ngày    | Lót ngày 2                   |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:07] [Logic_G1_G5] 37    |    2 ngày    | Lót ngày 2                   |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:07] [Radar_Scanner] 🚀 [GIT PUSH] Lock Radar G5 Thứ hai ngày 05-10-2026 (BT 92, TT ['92', '29', '22', '26']) -> Đã đồng bộ lên GitHub thành công!
+[2026-10-06 18:14:07] [Radar_Scanner] 🎯 [KẾT THÚC QUAY - 18:14:07] Đã có Giải Đặc Biệt: 54.
+[2026-10-06 18:14:07] [Radar_Scanner] ⚠️ Không thể git push nhanh: Command '['C:\\Program Files\\Git\\cmd\\git.exe', 'add', 'live_radar_state.json']' returned non-zero exit status 128.
+[2026-10-06 18:14:08] -> TIẾN TRÌNH Radar_Scanner KẾT THÚC VỚI MÃ: 0
+[2026-10-06 18:14:15] [Logic_G1_G5] 82    |    2 ngày    | Lót ngày 2                   |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:16] [Logic_G1_G5] 13    |    2 ngày    | Lót ngày 2                   |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:16] [Logic_G1_G5] 87    |    2 ngày    | Lót ngày 2                   |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:16] [Logic_G1_G5] 88    |    2 ngày    | Lót ngày 2                   |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:16] [Logic_G1_G5] 38    |    2 ngày    | Lót ngày 2                   |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:16] [Logic_G1_G5] 83    |    2 ngày    | Lót ngày 2                   |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:16] [Logic_G1_G5] 33    |    2 ngày    | Lót ngày 2                   |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:16] [Logic_G1_G5] 28    |    1 ngày    | Theo dõi ngày 1 (Mới chạm)   |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:16] [Logic_G1_G5] 08    |    1 ngày    | Theo dõi ngày 1 (Mới chạm)   |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:16] [Logic_G1_G5] 43    |    1 ngày    | Theo dõi ngày 1 (Mới chạm)   |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:16] [Logic_G1_G5] 23    |    1 ngày    | Theo dõi ngày 1 (Mới chạm)   |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:16] [Logic_G1_G5] 58    |    1 ngày    | Theo dõi ngày 1 (Mới chạm)   |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:16] [Logic_G1_G5] 03    |    1 ngày    | Theo dõi ngày 1 (Mới chạm)   |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:16] [Logic_G1_G5] 53    |    1 ngày    | Theo dõi ngày 1 (Mới chạm)   |       Có       |     🛡️ Lót hợp lệ
+[2026-10-06 18:14:16] [Logic_G1_G5] 90    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |     Không      | ❌ Loại bỏ (Ngoài 60s)
+[2026-10-06 18:14:16] [Logic_G1_G5] 40    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |     Không      | ❌ Loại bỏ (Ngoài 60s)
+[2026-10-06 18:14:16] [Logic_G1_G5] 46    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |     Không      | ❌ Loại bỏ (Ngoài 60s)
+[2026-10-06 18:14:16] [Logic_G1_G5] 94    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |     Không      | ❌ Loại bỏ (Ngoài 60s)
+[2026-10-06 18:14:16] [Logic_G1_G5] 49    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |     Không      | ❌ Loại bỏ (Ngoài 60s)
+[2026-10-06 18:14:16] [Logic_G1_G5] 25    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |     Không      | ❌ Loại bỏ (Ngoài 60s)
+[2026-10-06 18:14:16] [Logic_G1_G5] 20    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |     Không      | ❌ Loại bỏ (Ngoài 60s)
+[2026-10-06 18:14:16] [Logic_G1_G5] 10    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |     Không      | ❌ Loại bỏ (Ngoài 60s)
+[2026-10-06 18:14:16] [Logic_G1_G5] 16    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |     Không      | ❌ Loại bỏ (Ngoài 60s)
+[2026-10-06 18:14:16] [Logic_G1_G5] 14    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |     Không      | ❌ Loại bỏ (Ngoài 60s)
+[2026-10-06 18:14:16] [Logic_G1_G5] 30    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |     Không      | ❌ Loại bỏ (Ngoài 60s)
+[2026-10-06 18:14:16] [Logic_G1_G5] 36    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |     Không      | ❌ Loại bỏ (Ngoài 60s)
+[2026-10-06 18:14:16] [Logic_G1_G5] 00    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |     Không      | ❌ Loại bỏ (Ngoài 60s)
+[2026-10-06 18:14:16] [Logic_G1_G5] 06    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |     Không      | ❌ Loại bỏ (Ngoài 60s)
+[2026-10-06 18:14:16] [Logic_G1_G5] 41    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |     Không      | ❌ Loại bỏ (Ngoài 60s)
+[2026-10-06 18:14:16] [Logic_G1_G5] 75    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |     Không      | ❌ Loại bỏ (Ngoài 60s)
+[2026-10-06 18:14:16] [Logic_G1_G5] 70    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |     Không      | ❌ Loại bỏ (Ngoài 60s)
+[2026-10-06 18:14:16] [Logic_G1_G5] 76    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |     Không      | ❌ Loại bỏ (Ngoài 60s)
+[2026-10-06 18:14:16] [Logic_G1_G5] 74    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |     Không      | ❌ Loại bỏ (Ngoài 60s)
+[2026-10-06 18:14:16] [Logic_G1_G5] 79    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |     Không      | ❌ Loại bỏ (Ngoài 60s)
+[2026-10-06 18:14:16] [Logic_G1_G5] 86    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |     Không      | ❌ Loại bỏ (Ngoài 60s)
+[2026-10-06 18:14:16] [Logic_G1_G5] 89    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |     Không      | ❌ Loại bỏ (Ngoài 60s)
+[2026-10-06 18:14:16] [Logic_G1_G5] 50    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |     Không      | ❌ Loại bỏ (Ngoài 60s)
+[2026-10-06 18:14:16] [Logic_G1_G5] 56    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |     Không      | ❌ Loại bỏ (Ngoài 60s)
+[2026-10-06 18:14:16] [Logic_G1_G5] 54    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |     Không      | ❌ Loại bỏ (Ngoài 60s)
+[2026-10-06 18:14:16] [Logic_G1_G5] 71    |    3 ngày    | ✅ CHỈ ĐẠO (3 ngày)           |     Không      | ❌ Loại bỏ (Ngoài 60s)
+[2026-10-06 18:14:16] [Logic_G1_G5] 47    |    2 ngày    | Lót ngày 2                   |     Không      | ❌ Loại bỏ (Ngoài 60s)
+[2026-10-06 18:14:16] [Logic_G1_G5] 27    |    2 ngày    | Lót ngày 2                   |     Không      | ❌ Loại bỏ (Ngoài 60s)
+[2026-10-06 18:14:16] [Logic_G1_G5] 52    |    2 ngày    | Lót ngày 2                   |     Không      | ❌ Loại bỏ (Ngoài 60s)
+[2026-10-06 18:14:16] [Logic_G1_G5] 07    |    2 ngày    | Lót ngày 2                   |     Không      | ❌ Loại bỏ (Ngoài 60s)
+[2026-10-06 18:14:16] [Logic_G1_G5] 77    |    2 ngày    | Lót ngày 2                   |     Không      | ❌ Loại bỏ (Ngoài 60s)
+[2026-10-06 18:14:16] [Logic_G1_G5] 57    |    2 ngày    | Lót ngày 2                   |     Không      | ❌ Loại bỏ (Ngoài 60s)
+[2026-10-06 18:14:16] [Logic_G1_G5] 98    |    1 ngày    | Theo dõi ngày 1 (Mới chạm)   |     Không      | ❌ Loại bỏ (Ngoài 60s)
+[2026-10-06 18:14:16] [Logic_G1_G5] 48    |    1 ngày    | Theo dõi ngày 1 (Mới chạm)   |     Không      | ❌ Loại bỏ (Ngoài 60s)
+[2026-10-06 18:14:16] [Logic_G1_G5] 93    |    1 ngày    | Theo dõi ngày 1 (Mới chạm)   |     Không      | ❌ Loại bỏ (Ngoài 60s)
+[2026-10-06 18:14:16] [Logic_G1_G5] 78    |    1 ngày    | Theo dõi ngày 1 (Mới chạm)   |     Không      | ❌ Loại bỏ (Ngoài 60s)
+[2026-10-06 18:14:16] [Logic_G1_G5] 73    |    1 ngày    | Theo dõi ngày 1 (Mới chạm)   |     Không      | ❌ Loại bỏ (Ngoài 60s)
+[2026-10-06 18:14:16] [Logic_G1_G5] ==============================================================================
+[2026-10-06 18:14:16] [Logic_G1_G5] KẾT QUẢ TOP 1 & TOP 4 (ƯU TIÊN CẦU CHẠY NGÀY 3, 4 NỔ BẠCH THỦ)
+[2026-10-06 18:14:16] [Logic_G1_G5] ==============================================================================
+[2026-10-06 18:14:16] [Logic_G1_G5] ★ TOP 01 BẠCH THỦ: [65] (Vị trí lặp 3 ngày - ✅ CHỈ ĐẠO (3 ngày))
+[2026-10-06 18:14:16] [Logic_G1_G5] -> Trong 60 số: Có (Được đặc cách ưu tiên tuyệt đối nổ Bạch thủ)
+[2026-10-06 18:14:16] [Logic_G1_G5] ★ TOP 04 TỨ THỦ TINH TÚY:
+[2026-10-06 18:14:16] [Logic_G1_G5] 1. Con [65]  --  Vị trí lặp: 3 ngày  --  [✅ CHỈ ĐẠO (3 ngày)]
+[2026-10-06 18:14:16] [Logic_G1_G5] 2. Con [60]  --  Vị trí lặp: 3 ngày  --  [✅ CHỈ ĐẠO (3 ngày)]
+[2026-10-06 18:14:16] [Logic_G1_G5] 3. Con [66]  --  Vị trí lặp: 3 ngày  --  [✅ CHỈ ĐẠO (3 ngày)]
+[2026-10-06 18:14:16] [Logic_G1_G5] 4. Con [64]  --  Vị trí lặp: 3 ngày  --  [✅ CHỈ ĐẠO (3 ngày)]
+[2026-10-06 18:14:16] [Logic_G1_G5] ★ DÀN TINH TÚY GIAO THOA 60 SỐ CẤP 4 (61 số):
+[2026-10-06 18:14:16] [Logic_G1_G5] ['01', '02', '03', '04', '05', '08', '09', '11', '12', '13', '15', '17', '18', '19', '21', '22', '23', '24', '26', '28', '29', '31', '32', '33', '34', '35', '37', '38', '39', '42', '43', '44', '45', '51', '53', '55', '58', '59', '60', '61', '62', '63', '65', '67', '68', '69', '72', '80', '81', '82', '83', '84', '85', '87', '88', '91', '92', '95', '96', '97', '99']
+[2026-10-06 18:14:16] [Logic_G1_G5] ★ QUY TẮC: DÀN SỐ LÓT ĐÃ LỌC SẠCH (THUỘC 60 SỐ N1 - 59 số):
+[2026-10-06 18:14:16] [Logic_G1_G5] ['01', '02', '03', '04', '05', '08', '09', '11', '12', '13', '15', '17', '18', '19', '21', '22', '23', '24', '26', '28', '29', '31', '32', '33', '34', '35', '37', '38', '39', '42', '43', '44', '45', '51', '53', '55', '58', '59', '61', '62', '63', '67', '68', '69', '72', '80', '81', '82', '83', '84', '85', '87', '88', '91', '92', '95', '96', '97', '99']
+[2026-10-06 18:14:16] [Logic_G1_G5] ★ SỐ LÓT BỊ LOẠI BỎ DO KHÔNG NẰM TRONG KHUNG 60 SỐ (37 số):
+[2026-10-06 18:14:16] [Logic_G1_G5] ['00', '06', '07', '10', '14', '16', '20', '25', '27', '30', '36', '40', '41', '46', '47', '48', '49', '50', '52', '54', '56', '57', '70', '71', '73', '74', '75', '76', '77', '78', '79', '86', '89', '90', '93', '94', '98']
+[2026-10-06 18:14:16] [Logic_G1_G5] ------------------------------------------------------------------------------
+[2026-10-06 18:14:16] [Logic_G1_G5] KIỂM CHỨNG THỰC TẾ KỲ QUAY [Thứ hai ngày 05-10-2026]: ĐỀ VỀ 54
+[2026-10-06 18:14:16] [Logic_G1_G5] ------------------------------------------------------------------------------
+[2026-10-06 18:14:16] [Logic_G1_G5] • Con 54 thuộc nhóm: ✅ CHỈ ĐẠO (3 ngày) (Lặp 3 ngày)
+[2026-10-06 18:14:16] [Logic_G1_G5] • Nằm trong 60 số Cấp 4: Không
+[2026-10-06 18:14:16] [Logic_G1_G5] • Trúng Top 1: Không
+[2026-10-06 18:14:16] [Logic_G1_G5] • Trúng Top 4: Không
+[2026-10-06 18:14:16] [Logic_G1_G5] [*] Đã lưu toàn bộ kết quả phân tầng 5 cột vào: ket_qua_soi_cau_g1_g5.json
+[2026-10-06 18:14:16] [Logic_G1_G5] [*] Đã đồng bộ sang: 58_up_to_75\ket_qua_soi_cau_g1_g5.json
+[2026-10-06 18:14:16] [Logic_G1_G5] [*] Đã cập nhật lịch sử khung vào: lich_su_phuong_phap.json
+[2026-10-06 18:14:16] [Logic_G1_G5] [*] Đã cập nhật lịch sử khung vào: 58_up_to_75\lich_su_phuong_phap.json
+[2026-10-06 18:14:16] [Logic_G1_G5] [*] Đã cập nhật lịch sử soi trực tiếp vào: lich_su_phuong_phap.json
+[2026-10-06 18:14:16] [Logic_G1_G5] [*] Đã cập nhật lịch sử soi trực tiếp vào: 58_up_to_75\lich_su_phuong_phap.json
+[2026-10-06 18:14:16] [Logic_G1_G5] [*] Đã cập nhật lịch sử Dàn Tinh Túy Ngày 1 vào: lich_su_phuong_phap.json
+[2026-10-06 18:14:16] [Logic_G1_G5] [*] Đã cập nhật lịch sử Dàn Tinh Túy Ngày 1 vào: 58_up_to_75\lich_su_phuong_phap.json
+[2026-10-06 18:14:16] [Logic_G1_G5] >>> [18:14:06] CẬP NHẬT MỚI: Đã quay 19/19 giải.
+[2026-10-06 18:14:16] [Logic_G1_G5] [!] Git push error: To https://github.com/happiness2286-dot/logistic.git
+[2026-10-06 18:14:16] [Logic_G1_G5] ! [rejected]        main -> main (non-fast-for
+[2026-10-06 18:14:16] [Logic_G1_G5] [★ 18:14:06] ĐÃ HOÀN TẤT GIẢI 5.6! XUẤT THÀNH CÔNG DÀN TINH TÚY & TÔ MÀU VỊ TRÍ CẦU.
+[2026-10-06 18:14:16] [Logic_G1_G5] Top 1: 65 | Top 4: ['65', '60', '66', '64']
+[2026-10-06 18:14:16] [Logic_G1_G5] [!] Git push error: To https://github.com/happiness2286-dot/logistic.git
+[2026-10-06 18:14:16] [Logic_G1_G5] ! [rejected]        main -> main (non-fast-for
+[2026-10-06 18:14:16] [Logic_G1_G5] [🏆 18:14:06] ĐÃ CÓ GIẢI ĐẶC BIỆT: 54!
+[2026-10-06 18:14:16] [Logic_G1_G5] [!] Git push error: To https://github.com/happiness2286-dot/logistic.git
+[2026-10-06 18:14:16] [Logic_G1_G5] ! [rejected]        main -> main (non-fast-for
+[2026-10-06 18:14:16] [Logic_G1_G5] [*] Kết thúc phiên live thành công mỹ mãn.
+[2026-10-06 18:14:16] -> TIẾN TRÌNH Logic_G1_G5 KẾT THÚC VỚI MÃ: 0
+[2026-10-06 18:14:16] ======================================================================
+[2026-10-06 18:14:16] HOÀN TẤT PHIÊN GIÁM SÁT LIVE XSMB HÔM NAY!
+[2026-10-06 18:14:16] ======================================================================
+
