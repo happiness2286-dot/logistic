@@ -1,17 +1,24 @@
 {
   "khung_3_ngay": {
     "tong_quan": {
-      "tong_khung": 45,
-      "trung_n1": 34,
+      "tong_khung": 46,
+      "trung_n1": 35,
       "trung_n2": 3,
       "trung_n3": 2,
       "truot_khung": 6,
-      "ty_le_n1": 75.6,
-      "ty_le_n2": 6.7,
-      "ty_le_n3": 4.4,
-      "ty_le_truot": 13.3
+      "ty_le_n1": 76.1,
+      "ty_le_n2": 6.5,
+      "ty_le_n3": 4.3,
+      "ty_le_truot": 13.0
     },
     "lich_su": [
+      {
+        "khung_stt": 46,
+        "ngay": "07/10/2026",
+        "de": "88",
+        "ket_qua": "trung_n1",
+        "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
+      },
       {
         "khung_stt": 46,
         "ngay": "06/10/2026",
@@ -331,15 +338,28 @@
   },
   "soi_truc_tiep": {
     "tong_quan": {
-      "tong_ngay": 45,
+      "tong_ngay": 46,
       "trung_bach_thu": 12,
       "trung_tu_thu": 22,
-      "trung_lot": 39,
-      "ty_le_bach_thu": 26.7,
-      "ty_le_tu_thu": 48.9,
-      "ty_le_lot": 86.7
+      "trung_lot": 40,
+      "ty_le_bach_thu": 26.1,
+      "ty_le_tu_thu": 47.8,
+      "ty_le_lot": 87.0
     },
     "lich_su": [
+      {
+        "ngay": "07/10/2026",
+        "de": "88",
+        "top1": "61",
+        "top4": [
+          "61",
+          "91",
+          "64",
+          "11"
+        ],
+        "ket_qua": "trung_lot",
+        "ghi_chu": "🛡️ Trúng Dàn Số Lót [88]"
+      },
       {
         "ngay": "06/10/2026",
         "de": "54",
@@ -932,10 +952,18 @@
       "truot": 9,
       "ty_le_trung": 85.0,
       "ty_le_truot": 15.0,
-      "dan_tb": 35.1,
-      "chuoi_thong": 0
+      "dan_tb": 35.5,
+      "chuoi_thong": 1
     },
     "lich_su": [
+      {
+        "stt": 61,
+        "ngay": "07/10/2026",
+        "de": "88",
+        "so_luong": 61,
+        "ket_qua": "trung",
+        "ghi_chu": "Trúng Đề 88 ✅ (Dàn 61 số)"
+      },
       {
         "stt": 60,
         "ngay": "06/10/2026",
@@ -1407,14 +1435,6 @@
         "so_luong": 33,
         "ket_qua": "trung",
         "ghi_chu": "Trúng Đề 21 ✅ (Dàn 33 số)"
-      },
-      {
-        "stt": 1,
-        "ngay": "08/08/2026",
-        "de": "22",
-        "so_luong": 35,
-        "ket_qua": "trung",
-        "ghi_chu": "Trúng Đề 22 ✅ (Dàn 35 số)"
       }
     ]
   }
