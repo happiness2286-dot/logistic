@@ -1320,6 +1320,8 @@ def push_live_update(filled, total, is_done=False, actual_de=None):
     """Đồng bộ nhanh kết quả giải mới nổ lên GitHub để mobile cập nhật"""
     try:
         targets = ['ket_qua_soi_cau_g1_g5.json', 'lich_su_phuong_phap.json']
+        if os.path.exists('live_radar_state.json'):
+            targets.append('live_radar_state.json')
         if os.path.exists('58_up_to_75/ket_qua_soi_cau_g1_g5.json'):
             targets.append('58_up_to_75/ket_qua_soi_cau_g1_g5.json')
         if os.path.exists('58_up_to_75/lich_su_phuong_phap.json'):
@@ -1333,8 +1335,20 @@ def push_live_update(filled, total, is_done=False, actual_de=None):
             status_txt = f"Da quay {filled}/{total} giai"
         msg = f"auto: Live XSMB {status_txt} [skip ci]"
         subprocess.run(['git', 'commit', '-m', msg], timeout=10, check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        subprocess.run(['git', 'pull', '--rebase', 'origin', 'main'], timeout=20, check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        
+        # Thử push trực tiếp
         res = subprocess.run(['git', 'push', 'origin', 'main'], timeout=20, check=False, capture_output=True, text=True)
+        if res.returncode != 0:
+            # Nếu remote có commit khác, fetch và auto-merge ưu tiên local
+            subprocess.run(['git', 'fetch', 'origin', 'main'], timeout=15, check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            subprocess.run(['git', 'merge', 'origin/main', '-X', 'ours', '--no-edit', '-m', 'auto: Sync live [skip ci]'], timeout=15, check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            subprocess.run(['git', 'add'] + targets, timeout=10, check=False)
+            subprocess.run(['git', 'commit', '-m', f"auto: Resolve live [skip ci]"], timeout=10, check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            res = subprocess.run(['git', 'push', 'origin', 'main'], timeout=20, check=False, capture_output=True, text=True)
+        
+        # Đảm bảo hủy mọi rebase kẹt (nếu có)
+        subprocess.run(['git', 'rebase', '--abort'], timeout=5, check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        
         if res.returncode == 0:
             print(f"      [✓ Cloud Sync] Đã đẩy thành công {status_txt} lên GitHub Pages!")
         else:
