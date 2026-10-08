@@ -24,7 +24,7 @@ import re
 import json
 import time
 import argparse
-from datetime import datetime
+from datetime import datetime, timedelta
 from collections import Counter
 import subprocess
 import pandas as pd
@@ -43,8 +43,9 @@ except ImportError:
     import urllib.parse
     HAS_BS4 = False
 
-MKETQUA_SO_KQ_URL = "https://mketqua.net/so-ket-qua"
-MKETQUA_LIVE_URL = "https://mketqua.net/"
+API_383_LIVE_URL = "https://api.383.im/lottery/live.json"
+DAIPHAT_LIVE_URL = "https://xosodaiphat.com/xsmb-xo-so-mien-bac.html"
+DAIPHAT_30N_URL = "https://xosodaiphat.com/xsmb-30-ngay.html"
 DEFAULT_CAP4_CSV = "dan_60_cap_4.csv"
 
 # Bảng bóng dương chính xác (0-5, 1-6, 2-7, 3-8, 4-9)
@@ -193,100 +194,154 @@ def compute_ai_scores(all_draws, target_idx, unique_numbers_map=None):
         
     return scores, gan_dict, prev_de, prev_prev_de
 
-def fetch_mketqua_html(count=10, is_live=False):
-    """
-    Lấy mã HTML các kỳ xổ số gần nhất từ mketqua.net.
-    Khi is_live=True (hoặc trong khung giờ quay 18h10 - 18h38):
-    Ưu tiên lấy bảng trực tiếp từ trang chủ https://mketqua.net/ ghép với quá khứ từ so-ket-qua.
-    """
+def fetch_383_live():
+    """Lấy dữ liệu kết quả XSMB trực tiếp siêu tốc (50ms) từ API 383.im."""
     headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
     }
-    table_tag = '<table class="table table-condensed kqcenter kqvertimarginw table-kq-border table-kq-hover-div table-bordered kqbackground table-kq-bold-border tb-phoi-border watermark table-striped" id="result_tab_mb">'
-    
-    # 1. Lấy sổ kết quả cho các kỳ trước
-    so_kq_html = ""
-    if HAS_BS4:
-        try:
-            resp = requests.post(MKETQUA_SO_KQ_URL, data={'code': 'mb', 'count': str(count), 'dow': '7'}, headers=headers, timeout=12)
-            if resp.status_code == 200:
-                so_kq_html = resp.text
-        except Exception as e:
-            print(f"[!] Requests failed: {e}, chuyển sang urllib...")
-            
-    if not so_kq_html:
-        try:
-            import urllib.request
-            import urllib.parse
-            data = urllib.parse.urlencode({'code': 'mb', 'count': str(count), 'dow': '7'}).encode('utf-8')
-            req = urllib.request.Request(MKETQUA_SO_KQ_URL, data=data, headers=headers)
-            with urllib.request.urlopen(req, timeout=12) as response:
-                so_kq_html = response.read().decode('utf-8')
-        except Exception as e:
-            print(f"[!] Lỗi kết nối mketqua.net: {e}")
+    dow_map = {0: 'Thứ hai', 1: 'Thứ ba', 2: 'Thứ tư', 3: 'Thứ năm', 4: 'Thứ sáu', 5: 'Thứ bảy', 6: 'Chủ nhật'}
+    raw_text = ""
+    try:
+        if HAS_BS4:
+            r = requests.get(API_383_LIVE_URL, headers=headers, timeout=4)
+            if r.status_code == 200:
+                raw_text = r.text
+        else:
+            req = urllib.request.Request(API_383_LIVE_URL, headers=headers)
+            with urllib.request.urlopen(req, timeout=4) as resp:
+                raw_text = resp.read().decode('utf-8', errors='ignore')
+    except Exception:
+        return None
 
-    # 2. Nếu đang ở chế độ live: lấy trang chủ để bắt kỳ đang quay
-    if is_live:
-        home_html = ""
-        try:
-            resp_home = requests.get(MKETQUA_LIVE_URL, headers=headers, timeout=8)
-            if resp_home.status_code == 200 and table_tag in resp_home.text:
-                home_html = resp_home.text
-        except Exception as e:
-            print(f"[!] Không lấy được trang chủ mketqua: {e}")
-            
-        if home_html and so_kq_html:
-            h_blocks = home_html.split(table_tag)
-            s_blocks = so_kq_html.split(table_tag)
-            if len(h_blocks) > 1 and len(s_blocks) > 1:
-                home_first = h_blocks[1]
-                h_date_m = re.search(r'id="result_date">([^<]+)</span>', home_first)
-                h_date = h_date_m.group(1).strip() if h_date_m else ""
-                
-                s_first = s_blocks[1]
-                s_date_m = re.search(r'id="result_date">([^<]+)</span>', s_first)
-                s_date = s_date_m.group(1).strip() if s_date_m else ""
-                
-                # Nếu ngày trên trang chủ khác với ngày đầu sổ kết quả (ví dụ trang chủ là hôm nay, sổ kết quả chưa có)
-                if h_date and h_date != s_date:
-                    return s_blocks[0] + table_tag + home_first + table_tag + table_tag.join(s_blocks[1:])
-                # Nếu trùng ngày nhưng trang chủ có dữ liệu live mới hơn
-                elif h_date and h_date == s_date:
-                    return s_blocks[0] + table_tag + home_first + table_tag + table_tag.join(s_blocks[2:])
-        elif home_html and not so_kq_html:
-            return home_html
+    if not raw_text:
+        return None
 
-    return so_kq_html
+    try:
+        data = json.loads(raw_text)
+        mb = data.get('mb', {})
+        if not mb:
+            return None
+        d_str = mb.get('d', '')
+        if d_str:
+            parts = d_str.split('-')
+            if len(parts) == 3:
+                y, mth, d = parts
+                dt = datetime(int(y), int(mth), int(d))
+                date_str = f"{dow_map[dt.weekday()]} ngày {d}-{mth}-{y}"
+            else:
+                date_str = d_str
+        else:
+            now = datetime.now()
+            date_str = f"{dow_map[now.weekday()]} ngày {now.strftime('%d-%m-%Y')}"
 
-def parse_lottery_blocks(html):
-    """Phân tách từng kỳ quay và trích xuất đúng 85 vị trí vật lý trong G1 -> G5"""
-    blocks = html.split('<table class="table table-condensed kqcenter kqvertimarginw table-kq-border table-kq-hover-div table-bordered kqbackground table-kq-bold-border tb-phoi-border watermark table-striped" id="result_tab_mb">')
-    draws = []
-    
-    for b in blocks[1:]:
-        date_m = re.search(r'id="result_date">([^<]+)</span>', b)
-        date_str = date_m.group(1).strip() if date_m else ""
-        
-        # Đặc biệt
-        db_m = re.search(r'id="rs_0_0"[^>]*>(\d{5})</div>', b)
-        if not db_m:
-            db_m = re.search(r'id="rs_0_0"[^>]*data-sofar="(\d{5})"', b)
-        db_val = db_m.group(1).strip() if db_m else ""
-        de_val = db_val[-2:] if len(db_val) >= 2 else ""
+        pr = mb.get('pr', {})
+        db_list = pr.get('db', [])
+        db_val = db_list[0].strip() if db_list else ''
+        de_val = db_val[-2:] if len(db_val) >= 2 else ''
 
-        # Trích xuất 85 vị trí vật lý trong G1 -> G5
+        g1_list = pr.get('g1', [])
+        g1_val = g1_list[0].strip() if g1_list else ''
+        g2_list = [str(x).strip() for x in pr.get('g2', [])]
+        g3_list = [str(x).strip() for x in pr.get('g3', [])]
+        g4_list = [str(x).strip() for x in pr.get('g4', [])]
+        g5_list = [str(x).strip() for x in pr.get('g5', [])]
+        g6_list = [str(x).strip() for x in pr.get('g6', [])]
+        g7_list = [str(x).strip() for x in pr.get('g7', [])]
+
         prizes = {}
-        config = [(1, 1), (2, 2), (3, 6), (4, 4), (5, 6)]
-        for g_num, total_subs in config:
-            for sub_idx in range(total_subs):
-                g_code = f"G{g_num}" if g_num == 1 else f"G{g_num}.{sub_idx+1}"
-                elem_id = f"rs_{g_num}_{sub_idx}"
-                v_m = re.search(rf'id="{elem_id}"[^>]*>([^<]*)</div>', b)
-                if not v_m:
-                    v_m = re.search(rf'id="{elem_id}"[^>]*data-sofar="([^"]*)"', b)
-                val = v_m.group(1).strip() if v_m else ""
-                prizes[g_code] = val
+        prizes['G1'] = g1_val
+        for idx in range(1, 3):
+            prizes[f'G2.{idx}'] = g2_list[idx-1] if len(g2_list) >= idx else ''
+        for idx in range(1, 7):
+            prizes[f'G3.{idx}'] = g3_list[idx-1] if len(g3_list) >= idx else ''
+        for idx in range(1, 5):
+            prizes[f'G4.{idx}'] = g4_list[idx-1] if len(g4_list) >= idx else ''
+        for idx in range(1, 7):
+            prizes[f'G5.{idx}'] = g5_list[idx-1] if len(g5_list) >= idx else ''
+        for idx in range(1, 4):
+            prizes[f'G6.{idx}'] = g6_list[idx-1] if len(g6_list) >= idx else ''
+        for idx in range(1, 5):
+            prizes[f'G7.{idx}'] = g7_list[idx-1] if len(g7_list) >= idx else ''
+
+        return {
+            'date': date_str,
+            'db': db_val,
+            'de': de_val,
+            'prizes': prizes
+        }
+    except Exception:
+        return None
+
+def fetch_daiphat_draws(use_30days=True):
+    """Nguồn dự phòng và lịch sử các kỳ quay từ xosodaiphat.com."""
+    dow_map = {0: 'Thứ hai', 1: 'Thứ ba', 2: 'Thứ tư', 3: 'Thứ năm', 4: 'Thứ sáu', 5: 'Thứ bảy', 6: 'Chủ nhật'}
+    url = DAIPHAT_30N_URL if use_30days else DAIPHAT_LIVE_URL
+    html = ""
+    try:
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0.0.0 Safari/537.36'}
+        if HAS_BS4:
+            r = requests.get(url, headers=headers, timeout=6)
+            html = r.text if r.status_code == 200 else ""
+        else:
+            req = urllib.request.Request(url, headers=headers)
+            with urllib.request.urlopen(req, timeout=6) as resp:
+                html = resp.read().decode('utf-8', errors='ignore')
+    except Exception as e:
+        print(f"[!] Không thể kết nối xosodaiphat.com: {e}")
+        return []
+
+    if not html:
+        return []
+
+    blocks = re.split(r'<table[^>]*table-xsmb[^>]*>', html)
+    draws = []
+    for i, b in enumerate(blocks[1:]):
+        pre_text = blocks[i]
+        date_m = re.findall(r'(\d{2})[/-](\d{2})[/-](\d{4})', pre_text)
+        if not date_m: continue
+        d, mth, y = date_m[-1]
+        try:
+            dt = datetime(int(y), int(mth), int(d))
+            date_str = f"{dow_map[dt.weekday()]} ngày {d}-{mth}-{y}"
+        except Exception:
+            date_str = f"ngày {d}-{mth}-{y}"
+
+        def get_row_numbers(label, max_len=None):
+            pattern = rf'{re.escape(label)}.*?(?:<td[^>]*>)(.*?)(?:<tr>|</table>)'
+            m = re.search(pattern, b, re.DOTALL)
+            if not m:
+                return []
+            raw_nums = re.findall(r'>\s*([0-9]{2,5})\s*<', m.group(1))
+            if max_len:
+                raw_nums = [n for n in raw_nums if len(n) == max_len]
+            return raw_nums
+
+        db_nums = get_row_numbers('G.ĐB', 5)
+        db_val = db_nums[0] if db_nums else ''
+        de_val = db_val[-2:] if len(db_val) >= 2 else ''
+
+        g1_nums = get_row_numbers('G.1', 5)
+        g2_nums = get_row_numbers('G.2', 5)
+        g3_nums = get_row_numbers('G.3', 5)
+        g4_nums = get_row_numbers('G.4', 4)
+        g5_nums = get_row_numbers('G.5', 4)
+        g6_nums = get_row_numbers('G.6', 3)
+        g7_nums = get_row_numbers('G.7', 2)
+
+        prizes = {}
+        prizes['G1'] = g1_nums[0] if g1_nums else ''
+        for idx in range(1, 3):
+            prizes[f'G2.{idx}'] = g2_nums[idx-1] if len(g2_nums) >= idx else ''
+        for idx in range(1, 7):
+            prizes[f'G3.{idx}'] = g3_nums[idx-1] if len(g3_nums) >= idx else ''
+        for idx in range(1, 5):
+            prizes[f'G4.{idx}'] = g4_nums[idx-1] if len(g4_nums) >= idx else ''
+        for idx in range(1, 7):
+            prizes[f'G5.{idx}'] = g5_nums[idx-1] if len(g5_nums) >= idx else ''
+        for idx in range(1, 4):
+            prizes[f'G6.{idx}'] = g6_nums[idx-1] if len(g6_nums) >= idx else ''
+        for idx in range(1, 5):
+            prizes[f'G7.{idx}'] = g7_nums[idx-1] if len(g7_nums) >= idx else ''
 
         draws.append({
             'date': date_str,
@@ -294,8 +349,35 @@ def parse_lottery_blocks(html):
             'de': de_val,
             'prizes': prizes
         })
-        
     return draws
+
+def get_combined_draws(is_live=False):
+    """
+    Hệ thống nguồn kép độc lập:
+    - Trực tiếp: Ưu tiên số 1 API 383.im (50ms)
+    - Quá khứ & Dự phòng: xosodaiphat.com
+    """
+    past_draws = fetch_daiphat_draws(use_30days=True)
+    if is_live:
+        live_draw = fetch_383_live()
+        if live_draw:
+            if past_draws and live_draw['date'] == past_draws[0]['date']:
+                past_draws[0] = live_draw
+            elif past_draws and live_draw['date'] != past_draws[0]['date']:
+                past_draws.insert(0, live_draw)
+            elif not past_draws:
+                past_draws = [live_draw]
+    else:
+        live_draw = fetch_383_live()
+        if live_draw and past_draws:
+            if live_draw['date'] == past_draws[0]['date']:
+                past_draws[0] = live_draw
+            elif live_draw['date'] != past_draws[0]['date']:
+                past_draws.insert(0, live_draw)
+        elif live_draw and not past_draws:
+            past_draws = [live_draw]
+            
+    return past_draws
 
 def get_physical_positions(prizes):
     """
@@ -465,14 +547,9 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
     print("      XSMB AI - SOI VỊ TRÍ G1->G5 & CHU KỲ NỔ THEO 5 BƯỚC CHUẨN HÓA")
     print("=" * 78)
     
-    html = fetch_mketqua_html(count=10, is_live=is_live)
-    if not html:
-        print("[!] Không thể lấy dữ liệu từ mketqua.net!")
-        return None
-        
-    draws = parse_lottery_blocks(html)
+    draws = get_combined_draws(is_live=is_live)
     if len(draws) < 2:
-        print("[!] Dữ liệu cào về không đủ số kỳ để phân tích.")
+        print("[!] Dữ liệu cào về không đủ số kỳ để phân tích (từ cả API 383.im và xosodaiphat.com).")
         return None
 
     target_draw = draws[target_draw_idx]
@@ -833,23 +910,125 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
 
     # Xuất kết quả JSON
     
-    # TÍNH TOÁN DÀN TĨNH 4 CẤP (CHỐT TRƯỚC 18H15 CHO KỲ MỚI)
+    # TÍNH TOÁN DÀN TĨNH 4 CẤP (CHỐT TRƯỚC 18H15 CHO KỲ MỚI - TỰ ĐỘNG NHẢY NGÀY & SỐ)
+    dow_vn = {
+        0: "Thứ hai", 1: "Thứ ba", 2: "Thứ tư", 3: "Thứ năm",
+        4: "Thứ sáu", 5: "Thứ bảy", 6: "Chủ nhật"
+    }
+    date_m = re.search(r'(\d{1,2})[-/](\d{1,2})[-/](\d{4})', target_draw['date'])
+    if date_m:
+        d_val, m_val, y_val = map(int, date_m.groups())
+        cur_dt = datetime(y_val, m_val, d_val)
+        if actual_de:
+            next_dt = cur_dt + timedelta(days=1)
+            tinh_target_date = f"{dow_vn[next_dt.weekday()]} ngày {next_dt.strftime('%d-%m-%Y')}"
+            tinh_status_text = f"ĐANG HIỆU LỰC CHO KỲ TỚI (VÀO TIỀN TRƯỚC 18H15 NGÀY {next_dt.strftime('%d/%m')})"
+        else:
+            tinh_target_date = target_draw['date']
+            tinh_status_text = "ĐANG CÓ HIỆU LỰC (VÀO TIỀN TRƯỚC 18H15)"
+    else:
+        tinh_target_date = target_draw['date']
+        tinh_status_text = "ĐANG CÓ HIỆU LỰC (VÀO TIỀN TRƯỚC 18H15)"
+
+    # Đọc kết quả phân tích thống kê từ analysis_summary.json nếu có
+    summary_data = None
+    for s_path in ['analysis_summary.json', os.path.join(os.path.dirname(__file__), 'analysis_summary.json')]:
+        if os.path.exists(s_path):
+            try:
+                with open(s_path, 'r', encoding='utf-8') as sf:
+                    summary_data = json.load(sf)
+                    break
+            except Exception:
+                pass
+
+    top_dau_list = []
+    if summary_data and summary_data.get('top_predicted_heads'):
+        top_dau_list = [h.get('head', '') for h in summary_data['top_predicted_heads'][:3]]
+    if not top_dau_list or len(top_dau_list) < 3:
+        top_dau_list = [f"Đầu {analysis.get('head', 6)}", f"Đầu {analysis.get('head_bong', 1)}", f"Đầu {(analysis.get('head', 6) + 2) % 10}"]
+
+    top_duoi_list = []
+    if summary_data and summary_data.get('top_predicted_tails'):
+        top_duoi_list = [t.get('tail', '') for t in summary_data['top_predicted_tails'][:3]]
+    if not top_duoi_list or len(top_duoi_list) < 3:
+        top_duoi_list = [f"Đuôi {analysis.get('tail', 7)}", f"Đuôi {analysis.get('tail_bong', 2)}", f"Đuôi {(analysis.get('tail', 7) + 2) % 10}"]
+
+    # Ghép Dàn 9 số Cội Nguồn (Top 3 Đầu x Top 3 Đuôi)
+    dan_9_so_calc = []
+    for h in top_dau_list:
+        h_d = re.search(r'\d+', h)
+        if not h_d: continue
+        for t in top_duoi_list:
+            t_d = re.search(r'\d+', t)
+            if not t_d: continue
+            num_str = f"{h_d.group(0)}{t_d.group(0)}"
+            if num_str not in dan_9_so_calc:
+                dan_9_so_calc.append(num_str)
+
+    def calc_lot_lon(n):
+        if not n or len(n) < 2: return n
+        if n[0] != n[1]: return f"{n[1]}{n[0]}"
+        d = int(n[0])
+        b = BONG_DUONG.get(d, (d + 5) % 10)
+        return f"{b}{b}"
+
+    # Cầu Ghép Góc G7: G7.1[0] + G7.4[1]
+    bt_candidate = None
+    for d_path in ['data_2026.json', os.path.join(os.path.dirname(__file__), 'data_2026.json')]:
+        if os.path.exists(d_path):
+            try:
+                with open(d_path, 'r', encoding='utf-8') as df:
+                    raw_d = json.load(df)
+                    d_list = raw_d if isinstance(raw_d, list) else raw_d.get('draws', [])
+                    if d_list and d_list[0].get('g7_1') and d_list[0].get('g7_4'):
+                        g1 = str(d_list[0]['g7_1'])
+                        g4 = str(d_list[0]['g7_4'])
+                        if len(g1) >= 2 and len(g4) >= 2 and g1[0].isdigit() and g4[-1].isdigit():
+                            bt_candidate = f"{g1[0]}{g4[-1]}"
+                            break
+            except Exception:
+                pass
+
+    if not bt_candidate:
+        if summary_data and summary_data.get('top_20_consensus'):
+            bt_candidate = str(summary_data['top_20_consensus'][0].get('number', ''))
+        elif top_1:
+            bt_candidate = top_1
+        else:
+            bt_candidate = dan_9_so_calc[0] if dan_9_so_calc else '65'
+
+    bach_thu_tinh = bt_candidate
+    lot_lon_tinh = calc_lot_lon(bach_thu_tinh)
+    song_thu_tinh = [bach_thu_tinh, lot_lon_tinh]
+
+    tu_thu_tinh = [bach_thu_tinh]
+    if lot_lon_tinh not in tu_thu_tinh:
+        tu_thu_tinh.append(lot_lon_tinh)
+    for num in dan_9_so_calc:
+        if num not in tu_thu_tinh:
+            tu_thu_tinh.append(num)
+        if len(tu_thu_tinh) >= 4:
+            break
+
+    dan_cap2_38so = [
+        '01', '02', '04', '07', '09', '11', '12', '14', '16', '17', 
+        '20', '22', '23', '25', '27', '31', '32', '37', '40', '41', 
+        '42', '45', '47', '49', '61', '62', '67', '68', '70', '72', 
+        '75', '77', '81', '82', '84', '86', '87', '89'
+    ]
+
     dan_tinh_4cap = {
-        'target_date': 'Thứ sáu ngày 25-09-2026',
-        'status_text': 'ĐANG CÓ HIỆU LỰC (VÀO TIỀN TRƯỚC 18H15)',
-        'bach_thu': '41',
-        'song_thu': ['41', '14'],
-        'tu_thu': ['41', '14', '67', '31'],
+        'target_date': tinh_target_date,
+        'status_text': tinh_status_text,
+        'bach_thu': bach_thu_tinh,
+        'lot_lon': lot_lon_tinh,
+        'song_thu': song_thu_tinh,
+        'tu_thu': tu_thu_tinh,
         'cang_3d': ['0', '2', '4', '5', '7'],
-        'dan_9_so': ['67', '61', '62', '37', '31', '32', '47', '41', '42'],
-        'top_dau': ['Đầu 6', 'Đầu 3', 'Đầu 4'],
-        'top_duoi': ['Đuôi 7', 'Đuôi 1', 'Đuôi 2'],
-        'dan_cap2_38so': [
-            '01', '02', '04', '07', '09', '11', '12', '14', '16', '17', 
-            '20', '22', '23', '25', '27', '31', '32', '37', '40', '41', 
-            '42', '45', '47', '49', '61', '62', '67', '68', '70', '72', 
-            '75', '77', '81', '82', '84', '86', '87', '89'
-        ],
+        'dan_9_so': dan_9_so_calc,
+        'top_dau': top_dau_list,
+        'top_duoi': top_duoi_list,
+        'dan_cap2_38so': dan_cap2_38so,
         'dan_60_cap4': [f"{x:02d}" for x in DEFAULT_60_CAP4]
     }
 
@@ -914,6 +1093,9 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
 
         # Cơ chế 4B: Soi trực tiếp (Bạch thủ, Tứ thủ, Lót)
         ghi_lich_su_truc_tiep(target_draw['date'], actual_de, top_1, top_4_nums, dan_lot_list)
+
+        # Cơ chế 4C: Dàn Tinh Túy Ngày 1 (Theo dõi 60 ngày)
+        ghi_lich_su_tinh_tuy(target_draw['date'], actual_de, dan_ngay1_tinhtuy)
 
     return output_data
 
@@ -1058,7 +1240,83 @@ def ghi_lich_su_truc_tiep(date_str, de_str, top1_val, top4_list, lot_list):
         except Exception as e:
             print(f"[!] Lỗi ghi lịch sử trực tiếp vào {file_path}: {e}")
 
-def push_live_update(filled, total, is_done=False):
+def ghi_lich_su_tinh_tuy(date_str, de_str, dan_tinhtuy_list):
+    """Ghi nhận lịch sử Dàn Tinh Túy Ngày 1 (Theo dõi khoảng 60 ngày)"""
+    for file_path in ['lich_su_phuong_phap.json', os.path.join('58_up_to_75', 'lich_su_phuong_phap.json')]:
+        if not os.path.exists(os.path.dirname(file_path) or '.'):
+            continue
+        try:
+            if os.path.exists(file_path):
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+            else:
+                data = {}
+            if 'dan_tinh_tuy_ngay_1' not in data:
+                data['dan_tinh_tuy_ngay_1'] = {"tong_quan": {}, "lich_su": []}
+
+            clean_date = date_str.split()[-1].replace('-', '/') if date_str else datetime.now().strftime('%d/%m/%Y')
+            de_clean = str(de_str).zfill(2)
+            is_hit = (de_clean in dan_tinhtuy_list) if dan_tinhtuy_list else False
+            count_nums = len(dan_tinhtuy_list) if dan_tinhtuy_list else 0
+
+            existing_idx = None
+            for idx, item in enumerate(data['dan_tinh_tuy_ngay_1'].get("lich_su", [])):
+                if item.get("ngay") == clean_date:
+                    existing_idx = idx
+                    break
+
+            entry = {
+                "stt": 1,
+                "ngay": clean_date,
+                "de": de_clean,
+                "so_luong": count_nums,
+                "ket_qua": "trung" if is_hit else "truot",
+                "ghi_chu": f"Trúng Đề {de_clean} ✅ (Dàn {count_nums} số)" if is_hit else f"Trượt Đề {de_clean} ❌ ({count_nums} số)"
+            }
+
+            if existing_idx is not None:
+                data['dan_tinh_tuy_ngay_1']["lich_su"][existing_idx] = entry
+            else:
+                data['dan_tinh_tuy_ngay_1']["lich_su"].insert(0, entry)
+
+            # Cập nhật số thứ tự STT chuẩn
+            tot = len(data['dan_tinh_tuy_ngay_1']["lich_su"])
+            for i, itm in enumerate(data['dan_tinh_tuy_ngay_1']["lich_su"]):
+                itm["stt"] = tot - i
+
+            # Giới hạn giữ 60 kỳ gần nhất
+            data['dan_tinh_tuy_ngay_1']["lich_su"] = data['dan_tinh_tuy_ngay_1']["lich_su"][:60]
+            tot = len(data['dan_tinh_tuy_ngay_1']["lich_su"])
+
+            c_trung = sum(1 for x in data['dan_tinh_tuy_ngay_1']["lich_su"] if x.get("ket_qua") == "trung")
+            c_truot = sum(1 for x in data['dan_tinh_tuy_ngay_1']["lich_su"] if x.get("ket_qua") == "truot")
+            avg_sz = round(sum(x.get("so_luong", 0) for x in data['dan_tinh_tuy_ngay_1']["lich_su"]) / tot, 1) if tot > 0 else 0
+
+            # Tính chuỗi thắng thông gần nhất
+            streak = 0
+            for item in data['dan_tinh_tuy_ngay_1']["lich_su"]:
+                if item.get("ket_qua") == "trung":
+                    streak += 1
+                else:
+                    break
+
+            data['dan_tinh_tuy_ngay_1']["tong_quan"] = {
+                "tong_ngay": tot,
+                "trung": c_trung,
+                "truot": c_truot,
+                "ty_le_trung": round(c_trung / tot * 100, 1) if tot > 0 else 0,
+                "ty_le_truot": round(c_truot / tot * 100, 1) if tot > 0 else 0,
+                "dan_tb": avg_sz,
+                "chuoi_thong": streak
+            }
+
+            with open(file_path, 'w', encoding='utf-8') as f:
+                json.dump(data, f, ensure_ascii=False, indent=2)
+            print(f"[*] Đã cập nhật lịch sử Dàn Tinh Túy Ngày 1 vào: {file_path}")
+        except Exception as e:
+            print(f"[!] Lỗi ghi lịch sử Dàn Tinh Túy vào {file_path}: {e}")
+
+def push_live_update(filled, total, is_done=False, actual_de=None):
     """Đồng bộ nhanh kết quả giải mới nổ lên GitHub để mobile cập nhật"""
     try:
         targets = ['ket_qua_soi_cau_g1_g5.json', 'lich_su_phuong_phap.json']
@@ -1067,9 +1325,15 @@ def push_live_update(filled, total, is_done=False):
         if os.path.exists('58_up_to_75/lich_su_phuong_phap.json'):
             targets.append('58_up_to_75/lich_su_phuong_phap.json')
         subprocess.run(['git', 'add'] + targets, timeout=10, check=False)
-        status_txt = "HOAN TAT G5.6" if is_done else f"Da quay {filled}/{total} giai"
+        if actual_de:
+            status_txt = f"NO GDB [{actual_de}]"
+        elif is_done:
+            status_txt = "HOAN TAT G5.6 - KHOA CHOT"
+        else:
+            status_txt = f"Da quay {filled}/{total} giai"
         msg = f"auto: Live XSMB {status_txt} [skip ci]"
         subprocess.run(['git', 'commit', '-m', msg], timeout=10, check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        subprocess.run(['git', 'pull', '--rebase', 'origin', 'main'], timeout=20, check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         res = subprocess.run(['git', 'push', 'origin', 'main'], timeout=20, check=False, capture_output=True, text=True)
         if res.returncode == 0:
             print(f"      [✓ Cloud Sync] Đã đẩy thành công {status_txt} lên GitHub Pages!")
@@ -1100,6 +1364,7 @@ if __name__ == '__main__':
             print(" [*] CHẾ ĐỘ CLOUD SYNC: Tự động push lên GitHub Pages mỗi khi nổ giải mới!")
         print("=" * 78)
         last_filled = -1
+        g5_locked = False
         start_time = time.time()
         max_duration = args.max_minutes * 60
         while True:
@@ -1112,18 +1377,28 @@ if __name__ == '__main__':
                     filled = res.get('filled_count', 0)
                     total = res.get('total_count', 19)
                     now_str = datetime.now().strftime('%H:%M:%S')
-                    if filled != last_filled:
+                    actual_de_val = res.get('actual_de')
+
+                    if filled != last_filled and not g5_locked:
                         print(f"\n>>> [{now_str}] CẬP NHẬT MỚI: Đã quay {filled}/{total} giải.")
                         if args.push and filled > 0:
                             push_live_update(filled, total, is_done=False)
                         last_filled = filled
                     
-                    if res.get('is_g5_finished'):
+                    if res.get('is_g5_finished') and not g5_locked:
+                        g5_locked = True
                         print(f"\n[★ {now_str}] ĐÃ HOÀN TẤT GIẢI 5.6! XUẤT THÀNH CÔNG DÀN TINH TÚY & TÔ MÀU VỊ TRÍ CẦU.")
                         print(f"      Top 1: {res.get('top_1')} | Top 4: {res.get('top_4')}")
                         if args.push:
                             push_live_update(filled, total, is_done=True)
+
+                    if actual_de_val:
+                        print(f"\n[🏆 {now_str}] ĐÃ CÓ GIẢI ĐẶC BIỆT: {actual_de_val}!")
+                        if args.push:
+                            push_live_update(filled, total, is_done=True, actual_de=actual_de_val)
+                        print(f"[*] Kết thúc phiên live thành công mỹ mãn.")
                         break
+
                 time.sleep(args.interval)
             except KeyboardInterrupt:
                 print("\n[*] Đã dừng chế độ giám sát Real-time.")

@@ -11,7 +11,6 @@ from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from openpyxl.utils import get_column_letter
 from openpyxl.worksheet.datavalidation import DataValidation
 
-import requests
 sys.stdout.reconfigure(encoding='utf-8')
 
 dow_names = {
@@ -200,34 +199,14 @@ def crawl_daiphat_records():
 def crawl_xsmb():
     print("Fetching lottery data from xosodaiphat.com & 383.im...", flush=True)
     try:
-        with urllib.request.urlopen(req, timeout=8) as response:
-            html = response.read().decode('utf-8')
-            blocks = html.split('<table class="table table-condensed kqcenter kqvertimarginw table-kq-border table-kq-hover-div table-bordered kqbackground table-kq-bold-border tb-phoi-border watermark table-striped" id="result_tab_mb">')
-            
-            results = []
-            for block in blocks[1:]:
-                date_match = re.search(r'id="result_date">([^<]+)</span>', block)
-                date_str = date_match.group(1).strip() if date_match else ""
-                
-                db_match = re.search(r'id="rs_0_0"[^>]*>(\d{5})</div>', block)
-                if not db_match:
-                    db_match = re.search(r'id="rs_0_0"[^>]*data-sofar="(\d{5})"', block)
-                db = db_match.group(1).strip() if db_match else ""
-                
-                g7_1_match = re.search(r'id="rs_7_0"[^>]*>(\d{2})</div>', block)
-                g7_2_match = re.search(r'id="rs_7_1"[^>]*>(\d{2})</div>', block)
-                g7_3_match = re.search(r'id="rs_7_2"[^>]*>(\d{2})</div>', block)
-                g7_4_match = re.search(r'id="rs_7_3"[^>]*>(\d{2})</div>', block)
-                
-                g7_1 = g7_1_match.group(1).strip() if g7_1_match else ""
-                g7_2 = g7_2_match.group(1).strip() if g7_2_match else ""
-                g7_3 = g7_3_match.group(1).strip() if g7_3_match else ""
-                g7_4 = g7_4_match.group(1).strip() if g7_4_match else ""
-                
-                raw_prizes = re.findall(r'id="rs_\d+_\d+"[^>]*>(\d+)</div>', block)
-                if not raw_prizes:
-                    raw_prizes = re.findall(r'id="rs_\d+_\d+"[^>]*data-sofar="(\d+)"', block)
-                all_lo = [p[-2:] for p in raw_prizes if len(p) >= 2]
+        daiphat_recs = crawl_daiphat_records()
+        existing_records = []
+        if os.path.exists('data_2026.json'):
+            try:
+                with open('data_2026.json', 'r', encoding='utf-8') as f:
+                    existing_records = json.load(f)
+            except Exception:
+                pass
 
         # Bổ sung bản ghi trực tiếp từ 383.im nếu có
         try:
@@ -260,45 +239,31 @@ def crawl_xsmb():
                         'g7_3': g7_list[2] if len(g7_list) > 2 else '',
                         'g7_4': g7_list[3] if len(g7_list) > 3 else '',
                         'all_lo': all_lo
-                    })
-                    
-            results_2026 = [r for r in results if '2026' in r['date']]
-            if results_2026:
-                print(f"Extracted {len(results_2026)} records for 2026 from mketqua.net.")
-                return results_2026
-    except Exception as e:
-        print("Notice mketqua crawl fallback:", e)
+                    }
+                    daiphat_recs.insert(0, live_rec)
+        except Exception:
+            pass
 
-    # Nguồn dự phòng xosodaiphat.com
-    print("Notice: Đang chuyển sang nguồn dự phòng xosodaiphat.com...", flush=True)
-    try:
-        daiphat_recs = crawl_daiphat_records()
-        if daiphat_recs:
-            existing_records = []
-            if os.path.exists('data_2026.json'):
-                try:
-                    with open('data_2026.json', 'r', encoding='utf-8') as f:
-                        existing_records = json.load(f)
-                except Exception:
-                    pass
-            seen_dates = set()
-            merged = []
-            for r in daiphat_recs:
-                d_key = r['date'].split()[-1]
-                if d_key not in seen_dates:
-                    seen_dates.add(d_key)
-                    merged.append(r)
-            for r in existing_records:
-                d_key = r['date'].split()[-1]
-                if d_key not in seen_dates:
-                    seen_dates.add(d_key)
-                    merged.append(r)
-            print(f"[✓ Dự phòng] Cào thành công từ xosodaiphat.com! Tổng hợp được {len(merged)} bản ghi 2026.")
-            return merged
+        seen_dates = set()
+        merged = []
+        for r in daiphat_recs:
+            d_key = r['date'].split()[-1]
+            if d_key not in seen_dates:
+                seen_dates.add(d_key)
+                merged.append(r)
+        for r in existing_records:
+            d_key = r['date'].split()[-1]
+            if d_key not in seen_dates:
+                seen_dates.add(d_key)
+                merged.append(r)
+        print(f"[✓ Thành công] Tổng hợp được {len(merged)} bản ghi năm 2026 từ xosodaiphat.com & 383.im.")
+        return merged
     except Exception as e:
-        print("Error during fallback crawl xosodaiphat:", e)
-
-    return []
+        print("[!] Lỗi crawl xosodaiphat:", e)
+        if os.path.exists('data_2026.json'):
+            with open('data_2026.json', 'r', encoding='utf-8') as f:
+                return json.load(f)
+        return []
 
 def analyze_all(data_2026):
     chrono = list(reversed(data_2026))

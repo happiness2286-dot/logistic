@@ -1,0 +1,350 @@
+[2026-09-25 18:35:00] =================================================================
+[2026-09-25 18:35:00] BẮT ĐẦU CHU TRÌNH AUTO-UPDATE XSMB 18H35 HÀNG NGÀY
+[2026-09-25 18:35:00] =================================================================
+[2026-09-25 18:35:00] -> Đang chạy: Cào dữ liệu & Phân tích G7 Master (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-09-25 18:35:09]    [Thành công] Cào dữ liệu & Phân tích G7 Master
+[2026-09-25 18:35:09] -> Đang chạy: Soi cầu G1-G5 & Chốt Dàn Tĩnh mới (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\New folder\Logic)...
+[2026-09-25 18:35:11]    [Thành công] Soi cầu G1-G5 & Chốt Dàn Tĩnh mới
+[2026-09-25 18:35:11] -> Đồng bộ các file sang repo 58_up_to_75...
+[2026-09-25 18:35:12] -> Đang chạy: Update Daily 58_up_to_75 (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\58_up_to_75)...
+[2026-09-25 18:35:22]    [Thành công] Update Daily 58_up_to_75
+[2026-09-25 18:35:22] -> Đang chạy: Git Push repo New folder/Logic (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\New folder\Logic)...
+[2026-09-25 18:35:27]    [Thành công] Git Push repo New folder/Logic
+[2026-09-25 18:35:27] -> Đang chạy: Git Push repo 58_up_to_75 (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\58_up_to_75)...
+[2026-09-25 18:35:27]    [Cảnh báo] Git Push repo 58_up_to_75 kết thúc với mã 1
+[2026-09-25 18:35:27] -> Đang chạy: Git Push repo Logic goc (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-09-25 18:35:32]    [Cảnh báo] Git Push repo Logic goc kết thúc với mã 1
+[2026-09-25 18:35:32]    Stderr: To https://github.com/happiness2286-dot/logistic.git
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'https://github.com/happiness2286-dot/logistic.git'
+hint: Update
+[2026-09-25 18:35:32] =================================================================
+[2026-09-25 18:35:32] HOÀN TẤT CHU TRÌNH TỰ ĐỘNG CẬP NHẬT XSMB HÀNG NGÀY!
+[2026-09-25 18:35:32] =================================================================
+
+[2026-09-26 18:35:01] =================================================================
+[2026-09-26 18:35:01] BẮT ĐẦU CHU TRÌNH AUTO-UPDATE XSMB 18H35 HÀNG NGÀY
+[2026-09-26 18:35:01] =================================================================
+[2026-09-26 18:35:01] -> Đang chạy: Cào dữ liệu & Phân tích G7 Master (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-09-26 18:35:07]    [Thành công] Cào dữ liệu & Phân tích G7 Master
+[2026-09-26 18:35:07] -> Đang chạy: Soi cầu G1-G5 & Chốt Dàn Tĩnh mới (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\New folder\Logic)...
+[2026-09-26 18:35:10]    [Thành công] Soi cầu G1-G5 & Chốt Dàn Tĩnh mới
+[2026-09-26 18:35:10] -> Đồng bộ các file sang repo 58_up_to_75...
+[2026-09-26 18:35:10] -> Đang chạy: Update Daily 58_up_to_75 (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\58_up_to_75)...
+[2026-09-26 18:35:17]    [Thành công] Update Daily 58_up_to_75
+[2026-09-26 18:35:17] -> Đang chạy: Git Push repo New folder/Logic (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\New folder\Logic)...
+[2026-09-26 18:35:20]    [Cảnh báo] Git Push repo New folder/Logic kết thúc với mã 1
+[2026-09-26 18:35:20]    Stderr: To https://github.com/happiness2286-dot/logistic.git
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'https://github.com/happiness2286-dot/logistic.git'
+hint: Update
+[2026-09-26 18:35:20] -> Đang chạy: Git Push repo 58_up_to_75 (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\58_up_to_75)...
+[2026-09-26 18:35:20]    [Cảnh báo] Git Push repo 58_up_to_75 kết thúc với mã 1
+[2026-09-26 18:35:20] -> Đang chạy: Git Push repo Logic goc (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-09-26 18:35:22]    [Cảnh báo] Git Push repo Logic goc kết thúc với mã 1
+[2026-09-26 18:35:22]    Stderr: To https://github.com/happiness2286-dot/logistic.git
+ ! [rejected]        main -> main (non-fast-forward)
+error: failed to push some refs to 'https://github.com/happiness2286-dot/logistic.git'
+hint: U
+[2026-09-26 18:35:22] =================================================================
+[2026-09-26 18:35:22] HOÀN TẤT CHU TRÌNH TỰ ĐỘNG CẬP NHẬT XSMB HÀNG NGÀY!
+[2026-09-26 18:35:22] =================================================================
+
+[2026-09-27 18:35:02] =================================================================
+[2026-09-27 18:35:02] BẮT ĐẦU CHU TRÌNH AUTO-UPDATE XSMB 18H35 HÀNG NGÀY
+[2026-09-27 18:35:02] =================================================================
+[2026-09-27 18:35:02] -> Đang chạy: Cào dữ liệu & Phân tích G7 Master (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-09-27 18:35:09]    [Thành công] Cào dữ liệu & Phân tích G7 Master
+[2026-09-27 18:35:09] -> Đang chạy: Soi cầu G1-G5 & Chốt Dàn Tĩnh mới (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-09-27 18:35:12]    [Thành công] Soi cầu G1-G5 & Chốt Dàn Tĩnh mới
+[2026-09-27 18:35:12] -> Đồng bộ các file sang repo 58_up_to_75 & New folder/Logic...
+[2026-09-27 18:35:12] -> Đang chạy: Update Daily 58_up_to_75 (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\58_up_to_75)...
+[2026-09-27 18:35:19]    [Thành công] Update Daily 58_up_to_75
+[2026-09-27 18:35:19] -> Đang chạy: Git Push repo Logic goc (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-09-27 18:35:23]    [Thành công] Git Push repo Logic goc
+[2026-09-27 18:35:23] -> Đang chạy: Git Push repo 58_up_to_75 (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\58_up_to_75)...
+[2026-09-27 18:35:23]    [Cảnh báo] Git Push repo 58_up_to_75 kết thúc với mã 1
+[2026-09-27 18:35:23] -> Đang chạy: Git Push repo New folder/Logic (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\New folder\Logic)...
+[2026-09-27 18:35:25]    [Cảnh báo] Git Push repo New folder/Logic kết thúc với mã 1
+[2026-09-27 18:35:25]    Stderr: To https://github.com/happiness2286-dot/logistic.git
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'https://github.com/happiness2286-dot/logistic.git'
+hint: Update
+[2026-09-27 18:35:25] =================================================================
+[2026-09-27 18:35:25] HOÀN TẤT CHU TRÌNH TỰ ĐỘNG CẬP NHẬT XSMB HÀNG NGÀY!
+[2026-09-27 18:35:25] =================================================================
+
+[2026-09-28 18:35:02] =================================================================
+[2026-09-28 18:35:02] BẮT ĐẦU CHU TRÌNH AUTO-UPDATE XSMB 18H35 HÀNG NGÀY
+[2026-09-28 18:35:02] =================================================================
+[2026-09-28 18:35:02] -> Đang chạy: Cào dữ liệu & Phân tích G7 Master (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-09-28 18:35:14]    [Thành công] Cào dữ liệu & Phân tích G7 Master
+[2026-09-28 18:35:14] -> Đang chạy: Soi cầu G1-G5 & Chốt Dàn Tĩnh mới (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-09-28 18:35:17]    [Thành công] Soi cầu G1-G5 & Chốt Dàn Tĩnh mới
+[2026-09-28 18:35:17] -> Đồng bộ các file sang repo 58_up_to_75 & New folder/Logic...
+[2026-09-28 18:35:17] -> Đang chạy: Update Daily 58_up_to_75 (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\58_up_to_75)...
+[2026-09-28 18:35:29]    [Thành công] Update Daily 58_up_to_75
+[2026-09-28 18:35:29] -> Đang chạy: Git Push repo Logic goc (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-09-28 18:35:32]    [Cảnh báo] Git Push repo Logic goc kết thúc với mã 1
+[2026-09-28 18:35:32]    Stderr: To https://github.com/happiness2286-dot/logistic.git
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'https://github.com/happiness2286-dot/logistic.git'
+hint: Update
+[2026-09-28 18:35:32] -> Đang chạy: Git Push repo 58_up_to_75 (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\58_up_to_75)...
+[2026-09-28 18:35:32]    [Cảnh báo] Git Push repo 58_up_to_75 kết thúc với mã 1
+[2026-09-28 18:35:32] -> Đang chạy: Git Push repo New folder/Logic (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\New folder\Logic)...
+[2026-09-28 18:35:38]    [Cảnh báo] Git Push repo New folder/Logic kết thúc với mã 1
+[2026-09-28 18:35:38]    Stderr: To https://github.com/happiness2286-dot/logistic.git
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'https://github.com/happiness2286-dot/logistic.git'
+hint: Update
+[2026-09-28 18:35:38] =================================================================
+[2026-09-28 18:35:38] HOÀN TẤT CHU TRÌNH TỰ ĐỘNG CẬP NHẬT XSMB HÀNG NGÀY!
+[2026-09-28 18:35:38] =================================================================
+
+[2026-09-29 18:35:02] =================================================================
+[2026-09-29 18:35:02] BẮT ĐẦU CHU TRÌNH AUTO-UPDATE XSMB 18H35 HÀNG NGÀY
+[2026-09-29 18:35:02] =================================================================
+[2026-09-29 18:35:02] -> Đang chạy: Cào dữ liệu & Phân tích G7 Master (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-09-29 18:35:14]    [Thành công] Cào dữ liệu & Phân tích G7 Master
+[2026-09-29 18:35:14] -> Đang chạy: Soi cầu G1-G5 & Chốt Dàn Tĩnh mới (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-09-29 18:35:21]    [Thành công] Soi cầu G1-G5 & Chốt Dàn Tĩnh mới
+[2026-09-29 18:35:21] -> Đồng bộ các file sang repo 58_up_to_75 & New folder/Logic...
+[2026-09-29 18:35:21] -> Đang chạy: Update Daily 58_up_to_75 (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\58_up_to_75)...
+[2026-09-29 18:35:30]    [Thành công] Update Daily 58_up_to_75
+[2026-09-29 18:35:30] -> Đang chạy: Git Push repo Logic goc (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-09-29 18:35:34]    [Cảnh báo] Git Push repo Logic goc kết thúc với mã 1
+[2026-09-29 18:35:34]    Stderr: To https://github.com/happiness2286-dot/logistic.git
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'https://github.com/happiness2286-dot/logistic.git'
+hint: Update
+[2026-09-29 18:35:34] -> Đang chạy: Git Push repo 58_up_to_75 (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\58_up_to_75)...
+[2026-09-29 18:35:34]    [Cảnh báo] Git Push repo 58_up_to_75 kết thúc với mã 1
+[2026-09-29 18:35:34] -> Đang chạy: Git Push repo New folder/Logic (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\New folder\Logic)...
+[2026-09-29 18:35:38]    [Cảnh báo] Git Push repo New folder/Logic kết thúc với mã 1
+[2026-09-29 18:35:38]    Stderr: To https://github.com/happiness2286-dot/logistic.git
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'https://github.com/happiness2286-dot/logistic.git'
+hint: Update
+[2026-09-29 18:35:38] =================================================================
+[2026-09-29 18:35:38] HOÀN TẤT CHU TRÌNH TỰ ĐỘNG CẬP NHẬT XSMB HÀNG NGÀY!
+[2026-09-29 18:35:38] =================================================================
+
+[2026-09-30 18:35:02] =================================================================
+[2026-09-30 18:35:02] BẮT ĐẦU CHU TRÌNH AUTO-UPDATE XSMB 18H35 HÀNG NGÀY
+[2026-09-30 18:35:02] =================================================================
+[2026-09-30 18:35:02] -> Đang chạy: Cào dữ liệu & Phân tích G7 Master (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-09-30 18:35:14]    [Thành công] Cào dữ liệu & Phân tích G7 Master
+[2026-09-30 18:35:14] -> Đang chạy: Soi cầu G1-G5 & Chốt Dàn Tĩnh mới (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-09-30 18:35:19]    [Thành công] Soi cầu G1-G5 & Chốt Dàn Tĩnh mới
+[2026-09-30 18:35:19] -> Đồng bộ các file sang repo 58_up_to_75 & New folder/Logic...
+[2026-09-30 18:35:19]    [Lỗi copy sang 58_up_to_75 soi_cau_g1_g5_app.html]: [Errno 22] Invalid argument: 'E:\\DONG BO\\New Ha GCCK\\Năm 2026\\Dự Án AI_ Antigravity\\58_up_to_75\\soi_cau_g1_g5_app.html'
+[2026-09-30 18:35:19] -> Đang chạy: Update Daily 58_up_to_75 (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\58_up_to_75)...
+[2026-09-30 18:35:27]    [Thành công] Update Daily 58_up_to_75
+[2026-09-30 18:35:27] -> Đang chạy: Git Push repo Logic goc (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-09-30 18:35:31]    [Cảnh báo] Git Push repo Logic goc kết thúc với mã 1
+[2026-09-30 18:35:31]    Stderr: To https://github.com/happiness2286-dot/logistic.git
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'https://github.com/happiness2286-dot/logistic.git'
+hint: Update
+[2026-09-30 18:35:31] -> Đang chạy: Git Push repo 58_up_to_75 (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\58_up_to_75)...
+[2026-09-30 18:35:31]    [Cảnh báo] Git Push repo 58_up_to_75 kết thúc với mã 1
+[2026-09-30 18:35:31] -> Đang chạy: Git Push repo New folder/Logic (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\New folder\Logic)...
+[2026-09-30 18:35:35]    [Cảnh báo] Git Push repo New folder/Logic kết thúc với mã 1
+[2026-09-30 18:35:35]    Stderr: To https://github.com/happiness2286-dot/logistic.git
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'https://github.com/happiness2286-dot/logistic.git'
+hint: Update
+[2026-09-30 18:35:35] =================================================================
+[2026-09-30 18:35:35] HOÀN TẤT CHU TRÌNH TỰ ĐỘNG CẬP NHẬT XSMB HÀNG NGÀY!
+[2026-09-30 18:35:35] =================================================================
+
+[2026-10-01 18:35:02] =================================================================
+[2026-10-01 18:35:02] BẮT ĐẦU CHU TRÌNH AUTO-UPDATE XSMB 18H35 HÀNG NGÀY
+[2026-10-01 18:35:02] =================================================================
+[2026-10-01 18:35:02] -> Đang chạy: Cào dữ liệu & Phân tích G7 Master (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-10-01 18:35:17]    [Thành công] Cào dữ liệu & Phân tích G7 Master
+[2026-10-01 18:35:17] -> Đang chạy: Soi cầu G1-G5 & Chốt Dàn Tĩnh mới (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-10-01 18:35:22]    [Thành công] Soi cầu G1-G5 & Chốt Dàn Tĩnh mới
+[2026-10-01 18:35:22] -> Đồng bộ các file sang repo 58_up_to_75 & New folder/Logic...
+[2026-10-01 18:35:22] -> Đang chạy: Update Daily 58_up_to_75 (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\58_up_to_75)...
+[2026-10-01 18:35:29]    [Thành công] Update Daily 58_up_to_75
+[2026-10-01 18:35:29] -> Đang chạy: Git Push repo Logic goc (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-10-01 18:35:32]    [Cảnh báo] Git Push repo Logic goc kết thúc với mã 1
+[2026-10-01 18:35:32]    Stderr: To https://github.com/happiness2286-dot/logistic.git
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'https://github.com/happiness2286-dot/logistic.git'
+hint: Update
+[2026-10-01 18:35:32] -> Đang chạy: Git Push repo 58_up_to_75 (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\58_up_to_75)...
+[2026-10-01 18:35:33]    [Cảnh báo] Git Push repo 58_up_to_75 kết thúc với mã 1
+[2026-10-01 18:35:33] -> Đang chạy: Git Push repo New folder/Logic (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\New folder\Logic)...
+[2026-10-01 18:35:39]    [Cảnh báo] Git Push repo New folder/Logic kết thúc với mã 1
+[2026-10-01 18:35:39]    Stderr: To https://github.com/happiness2286-dot/logistic.git
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'https://github.com/happiness2286-dot/logistic.git'
+hint: Update
+[2026-10-01 18:35:39] =================================================================
+[2026-10-01 18:35:39] HOÀN TẤT CHU TRÌNH TỰ ĐỘNG CẬP NHẬT XSMB HÀNG NGÀY!
+[2026-10-01 18:35:39] =================================================================
+
+[2026-10-02 18:35:02] =================================================================
+[2026-10-02 18:35:02] BẮT ĐẦU CHU TRÌNH AUTO-UPDATE XSMB 18H35 HÀNG NGÀY
+[2026-10-02 18:35:02] =================================================================
+[2026-10-02 18:35:02] -> Đang chạy: Cào dữ liệu & Phân tích G7 Master (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-10-02 18:35:09]    [Thành công] Cào dữ liệu & Phân tích G7 Master
+[2026-10-02 18:35:09] -> Đang chạy: Soi cầu G1-G5 & Chốt Dàn Tĩnh mới (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-10-02 18:35:11]    [Thành công] Soi cầu G1-G5 & Chốt Dàn Tĩnh mới
+[2026-10-02 18:35:11] -> Đồng bộ các file sang repo 58_up_to_75 & New folder/Logic...
+[2026-10-02 18:35:11] -> Đang chạy: Update Daily 58_up_to_75 (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\58_up_to_75)...
+[2026-10-02 18:35:18]    [Thành công] Update Daily 58_up_to_75
+[2026-10-02 18:35:18] -> Đang chạy: Git Push repo Logic goc (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-10-02 18:35:21]    [Cảnh báo] Git Push repo Logic goc kết thúc với mã 1
+[2026-10-02 18:35:21]    Stderr: To https://github.com/happiness2286-dot/logistic.git
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'https://github.com/happiness2286-dot/logistic.git'
+hint: Update
+[2026-10-02 18:35:21] -> Đang chạy: Git Push repo 58_up_to_75 (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\58_up_to_75)...
+[2026-10-02 18:35:21]    [Cảnh báo] Git Push repo 58_up_to_75 kết thúc với mã 1
+[2026-10-02 18:35:21] -> Đang chạy: Git Push repo New folder/Logic (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\New folder\Logic)...
+[2026-10-02 18:35:24]    [Cảnh báo] Git Push repo New folder/Logic kết thúc với mã 1
+[2026-10-02 18:35:24]    Stderr: To https://github.com/happiness2286-dot/logistic.git
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'https://github.com/happiness2286-dot/logistic.git'
+hint: Update
+[2026-10-02 18:35:24] =================================================================
+[2026-10-02 18:35:24] HOÀN TẤT CHU TRÌNH TỰ ĐỘNG CẬP NHẬT XSMB HÀNG NGÀY!
+[2026-10-02 18:35:24] =================================================================
+
+[2026-10-03 18:35:02] =================================================================
+[2026-10-03 18:35:02] BẮT ĐẦU CHU TRÌNH AUTO-UPDATE XSMB 18H35 HÀNG NGÀY
+[2026-10-03 18:35:02] =================================================================
+[2026-10-03 18:35:02] -> Đang chạy: Cào dữ liệu & Phân tích G7 Master (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-10-03 18:35:14]    [Thành công] Cào dữ liệu & Phân tích G7 Master
+[2026-10-03 18:35:14] -> Đang chạy: Soi cầu G1-G5 & Chốt Dàn Tĩnh mới (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-10-03 18:35:19]    [Thành công] Soi cầu G1-G5 & Chốt Dàn Tĩnh mới
+[2026-10-03 18:35:19] -> Đồng bộ các file sang repo 58_up_to_75 & New folder/Logic...
+[2026-10-03 18:35:19] -> Đang chạy: Update Daily 58_up_to_75 (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\58_up_to_75)...
+[2026-10-03 18:35:26]    [Thành công] Update Daily 58_up_to_75
+[2026-10-03 18:35:26] -> Đang chạy: Git Push repo Logic goc (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-10-03 18:35:31]    [Cảnh báo] Git Push repo Logic goc kết thúc với mã 1
+[2026-10-03 18:35:31]    Stderr: To https://github.com/happiness2286-dot/logistic.git
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'https://github.com/happiness2286-dot/logistic.git'
+hint: Update
+[2026-10-03 18:35:32] -> Đang chạy: Git Push repo 58_up_to_75 (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\58_up_to_75)...
+[2026-10-03 18:35:32]    [Cảnh báo] Git Push repo 58_up_to_75 kết thúc với mã 1
+[2026-10-03 18:35:32] -> Đang chạy: Git Push repo New folder/Logic (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\New folder\Logic)...
+[2026-10-03 18:35:35]    [Cảnh báo] Git Push repo New folder/Logic kết thúc với mã 1
+[2026-10-03 18:35:35]    Stderr: To https://github.com/happiness2286-dot/logistic.git
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'https://github.com/happiness2286-dot/logistic.git'
+hint: Update
+[2026-10-03 18:35:35] =================================================================
+[2026-10-03 18:35:35] HOÀN TẤT CHU TRÌNH TỰ ĐỘNG CẬP NHẬT XSMB HÀNG NGÀY!
+[2026-10-03 18:35:35] =================================================================
+
+[2026-10-04 18:35:01] =================================================================
+[2026-10-04 18:35:01] BẮT ĐẦU CHU TRÌNH AUTO-UPDATE XSMB 18H35 HÀNG NGÀY
+[2026-10-04 18:35:01] =================================================================
+[2026-10-04 18:35:01] -> Đang chạy: Cào dữ liệu & Phân tích G7 Master (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-10-04 18:35:04]    [Thành công] Cào dữ liệu & Phân tích G7 Master
+[2026-10-04 18:35:04] -> Đang chạy: Soi cầu G1-G5 & Chốt Dàn Tĩnh mới (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-10-04 18:35:09]    [Thành công] Soi cầu G1-G5 & Chốt Dàn Tĩnh mới
+[2026-10-04 18:35:09] -> Đồng bộ các file sang repo 58_up_to_75 & New folder/Logic...
+[2026-10-04 18:35:09] -> Đang chạy: Update Daily 58_up_to_75 (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\58_up_to_75)...
+[2026-10-04 18:35:20]    [Thành công] Update Daily 58_up_to_75
+[2026-10-04 18:35:20] -> Đang chạy: Git Push repo Logic goc (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-10-04 18:35:24]    [Thành công] Git Push repo Logic goc
+[2026-10-04 18:35:24] -> Đang chạy: Git Push repo 58_up_to_75 (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\58_up_to_75)...
+[2026-10-04 18:35:24]    [Cảnh báo] Git Push repo 58_up_to_75 kết thúc với mã 1
+[2026-10-04 18:35:24] -> Đang chạy: Git Push repo New folder/Logic (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\New folder\Logic)...
+[2026-10-04 18:35:26]    [Cảnh báo] Git Push repo New folder/Logic kết thúc với mã 1
+[2026-10-04 18:35:26]    Stderr: To https://github.com/happiness2286-dot/logistic.git
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'https://github.com/happiness2286-dot/logistic.git'
+hint: Update
+[2026-10-04 18:35:26] =================================================================
+[2026-10-04 18:35:26] HOÀN TẤT CHU TRÌNH TỰ ĐỘNG CẬP NHẬT XSMB HÀNG NGÀY!
+[2026-10-04 18:35:26] =================================================================
+
+[2026-10-04 20:44:29] =================================================================
+[2026-10-04 20:44:29] BẮT ĐẦU CHU TRÌNH AUTO-UPDATE XSMB 18H35 HÀNG NGÀY
+[2026-10-04 20:44:29] =================================================================
+[2026-10-04 20:44:29] -> Đang chạy: Cào dữ liệu & Phân tích G7 Master (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-10-04 20:44:47]    [Thành công] Cào dữ liệu & Phân tích G7 Master
+[2026-10-04 20:44:47] -> Đang chạy: Soi cầu G1-G5 & Chốt Dàn Tĩnh mới (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-10-04 20:44:56]    [Thành công] Soi cầu G1-G5 & Chốt Dàn Tĩnh mới
+[2026-10-04 20:44:56] -> Đồng bộ các file sang repo 58_up_to_75 & New folder/Logic...
+[2026-10-04 20:44:56] -> Đang chạy: Update Daily 58_up_to_75 (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\58_up_to_75)...
+[2026-10-04 20:45:10]    [Thành công] Update Daily 58_up_to_75
+[2026-10-04 20:45:10] -> Đang chạy: Git Push repo Logic goc (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-10-05 23:20:08] =================================================================
+[2026-10-05 23:20:08] BẮT ĐẦU CHU TRÌNH AUTO-UPDATE XSMB 18H35 HÀNG NGÀY
+[2026-10-05 23:20:08] =================================================================
+[2026-10-05 23:20:08] -> Đang chạy: Cào dữ liệu & Phân tích G7 Master (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-10-05 23:20:23]    [Thành công] Cào dữ liệu & Phân tích G7 Master
+[2026-10-05 23:20:23] -> Đang chạy: Soi cầu G1-G5 & Chốt Dàn Tĩnh mới (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-10-05 23:20:29]    [Thành công] Soi cầu G1-G5 & Chốt Dàn Tĩnh mới
+[2026-10-05 23:20:29] -> Đồng bộ các file sang repo 58_up_to_75 & New folder/Logic...
+[2026-10-05 23:20:29] -> Đang chạy: Update Daily 58_up_to_75 (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\58_up_to_75)...
+[2026-10-05 23:20:43]    [Thành công] Update Daily 58_up_to_75
+[2026-10-05 23:20:43] -> Đang chạy: Git Push repo Logic goc (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-10-05 23:20:56]    [Thành công] Git Push repo Logic goc
+[2026-10-05 23:20:56] -> Đang chạy: Git Push repo 58_up_to_75 (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\58_up_to_75)...
+[2026-10-05 23:20:56]    [Cảnh báo] Git Push repo 58_up_to_75 kết thúc với mã 1
+[2026-10-05 23:20:56] -> Đang chạy: Git Push repo New folder/Logic (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\New folder\Logic)...
+[2026-10-05 23:21:02]    [Cảnh báo] Git Push repo New folder/Logic kết thúc với mã 1
+[2026-10-05 23:21:02]    Stderr: To https://github.com/happiness2286-dot/logistic.git
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'https://github.com/happiness2286-dot/logistic.git'
+hint: Update
+[2026-10-05 23:21:02] =================================================================
+[2026-10-05 23:21:02] HOÀN TẤT CHU TRÌNH TỰ ĐỘNG CẬP NHẬT XSMB HÀNG NGÀY!
+[2026-10-05 23:21:02] =================================================================
+
+[2026-10-06 18:35:01] =================================================================
+[2026-10-06 18:35:01] BẮT ĐẦU CHU TRÌNH AUTO-UPDATE XSMB 18H35 HÀNG NGÀY
+[2026-10-06 18:35:01] =================================================================
+[2026-10-06 18:35:01] -> Đang chạy: Cào dữ liệu & Phân tích G7 Master (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-10-06 18:35:10]    [Thành công] Cào dữ liệu & Phân tích G7 Master
+[2026-10-06 18:35:10] -> Đang chạy: Soi cầu G1-G5 & Chốt Dàn Tĩnh mới (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-10-06 18:35:13]    [Thành công] Soi cầu G1-G5 & Chốt Dàn Tĩnh mới
+[2026-10-06 18:35:13] -> Đồng bộ các file sang repo 58_up_to_75 & New folder/Logic...
+[2026-10-06 18:35:13] -> Đang chạy: Update Daily 58_up_to_75 (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\58_up_to_75)...
+[2026-10-06 18:35:23]    [Thành công] Update Daily 58_up_to_75
+[2026-10-06 18:35:23] -> Đang chạy: Git Push repo Logic goc (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-10-06 18:35:29]    [Thành công] Git Push repo Logic goc
+[2026-10-06 18:35:29] -> Đang chạy: Git Push repo 58_up_to_75 (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\58_up_to_75)...
+[2026-10-06 18:35:30]    [Cảnh báo] Git Push repo 58_up_to_75 kết thúc với mã 1
+[2026-10-06 18:35:30] -> Đang chạy: Git Push repo New folder/Logic (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\New folder\Logic)...
+[2026-10-06 18:35:33]    [Cảnh báo] Git Push repo New folder/Logic kết thúc với mã 1
+[2026-10-06 18:35:33]    Stderr: To https://github.com/happiness2286-dot/logistic.git
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'https://github.com/happiness2286-dot/logistic.git'
+hint: Update
+[2026-10-06 18:35:33] =================================================================
+[2026-10-06 18:35:33] HOÀN TẤT CHU TRÌNH TỰ ĐỘNG CẬP NHẬT XSMB HÀNG NGÀY!
+[2026-10-06 18:35:33] =================================================================
+
+[2026-10-07 18:35:01] =================================================================
+[2026-10-07 18:35:01] BẮT ĐẦU CHU TRÌNH AUTO-UPDATE XSMB 18H35 HÀNG NGÀY
+[2026-10-07 18:35:01] =================================================================
+[2026-10-07 18:35:01] -> Đang chạy: Cào dữ liệu & Phân tích G7 Master (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-10-07 18:35:10]    [Thành công] Cào dữ liệu & Phân tích G7 Master
+[2026-10-07 18:35:10] -> Đang chạy: Soi cầu G1-G5 & Chốt Dàn Tĩnh mới (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-10-07 18:35:16]    [Thành công] Soi cầu G1-G5 & Chốt Dàn Tĩnh mới
+[2026-10-07 18:35:16] -> Đồng bộ các file sang repo 58_up_to_75 & New folder/Logic...
+[2026-10-07 18:35:16] -> Đang chạy: Update Daily 58_up_to_75 (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\58_up_to_75)...
+[2026-10-07 18:35:24]    [Thành công] Update Daily 58_up_to_75
+[2026-10-07 18:35:24] -> Đang chạy: Git Push repo Logic goc (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-10-08 18:35:01] =================================================================
+[2026-10-08 18:35:01] BẮT ĐẦU CHU TRÌNH AUTO-UPDATE XSMB 18H35 HÀNG NGÀY
+[2026-10-08 18:35:01] =================================================================
+[2026-10-08 18:35:02] -> Đang chạy: Cào dữ liệu & Phân tích G7 Master (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-10-08 18:35:14]    [Thành công] Cào dữ liệu & Phân tích G7 Master
+[2026-10-08 18:35:14] -> Đang chạy: Soi cầu G1-G5 & Chốt Dàn Tĩnh mới (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-10-08 18:35:20]    [Thành công] Soi cầu G1-G5 & Chốt Dàn Tĩnh mới
+[2026-10-08 18:35:20] -> Đồng bộ các file sang repo 58_up_to_75 & New folder/Logic...
+[2026-10-08 18:35:20] -> Đang chạy: Update Daily 58_up_to_75 (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\58_up_to_75)...
+[2026-10-08 18:35:29]    [Thành công] Update Daily 58_up_to_75
+[2026-10-08 18:35:29] -> Đang đồng bộ Git Cloud an toàn (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...

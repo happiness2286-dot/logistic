@@ -1501,9 +1501,9 @@
                     </div>
                 </div>
                 <div style="display: flex; gap: 6px; margin-top: 6px;">
-                    <button class="btn-copy-dan" style="padding: 5px 10px; font-size: 11px;" onclick="copyText('41', 'Đã chép Bạch thủ 41')"><i class="fa-regular fa-copy"></i> Copy BT 41</button>
-                    <button class="btn-copy-dan" style="padding: 5px 10px; font-size: 11px;" onclick="copyText('41, 14', 'Đã chép Song thủ 41, 14')"><i class="fa-regular fa-copy"></i> Copy Song Thủ</button>
-                    <button class="btn-copy-dan" style="padding: 5px 10px; font-size: 11px;" onclick="copyText('41, 14, 67, 31', 'Đã chép Tứ thủ 41, 14, 67, 31')"><i class="fa-regular fa-copy"></i> Copy Tứ Thủ</button>
+                    <button class="btn-copy-dan" id="btn-copy-tinh-bt" style="padding: 5px 10px; font-size: 11px;"><i class="fa-regular fa-copy"></i> Copy BT</button>
+                    <button class="btn-copy-dan" id="btn-copy-tinh-st" style="padding: 5px 10px; font-size: 11px;"><i class="fa-regular fa-copy"></i> Copy Song Thủ</button>
+                    <button class="btn-copy-dan" id="btn-copy-tinh-tt" style="padding: 5px 10px; font-size: 11px;"><i class="fa-regular fa-copy"></i> Copy Tứ Thủ</button>
                 </div>
             </div>
 
@@ -1511,7 +1511,7 @@
             <div class="tier-row" style="background: rgba(56, 189, 248, 0.04); padding: 12px; border-radius: 12px; margin-bottom: 10px; border: 1px solid rgba(56, 189, 248, 0.15);">
                 <div class="tier-label label-blue" style="min-width: 175px;">
                     <div><i class="fa-solid fa-dice"></i> CẤP 3 (DÀN 9 SỐ)</div>
-                    <div style="font-size: 10.5px; color: #94a3b8; font-weight: 600; margin-top: 2px;">Top 3 Đầu [6,3,4] × Top 3 Đuôi [7,1,2]</div>
+                    <div style="font-size: 10.5px; color: #94a3b8; font-weight: 600; margin-top: 2px;" id="txt-tinh-dan9-meta">Top 3 Đầu × Top 3 Đuôi</div>
                 </div>
                 <div class="tier-content" id="tinh-grid-dan9" style="gap: 8px;">
                     <span class="num-badge-blue" onclick="copyText('67', 'Đã copy 67')">67</span>
@@ -1681,8 +1681,11 @@
 
             <!-- Dòng 3: Dàn Tinh Túy Ngày 1 Giao Thoa (Trắng/Ánh kim) -->
             <div class="tier-row">
-                <div class="tier-label" style="color: #cbd5e1; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.06); padding: 4px 10px; border-radius: 8px;">
-                    <i class="fa-solid fa-gem" style="color: #38bdf8;"></i> ⚪ DÀN TINH TÚY NGÀY 1
+                <div class="tier-label" style="color: #cbd5e1; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.06); padding: 4px 10px; border-radius: 8px; display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap;">
+                    <span><i class="fa-solid fa-gem" style="color: #38bdf8;"></i> ⚪ DÀN TINH TÚY NGÀY 1</span>
+                    <a href="#sec-tinh-tuy-ngay1" id="badge-tinhtuy-perf" style="font-size: 10px; color: #38bdf8; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); padding: 2px 8px; border-radius: 6px; text-decoration: none; font-weight: 700; white-space: nowrap; transition: all 0.2s ease;">
+                        <i class="fa-solid fa-chart-line"></i> Phong độ 60N: 86.7%
+                    </a>
                 </div>
                 <div class="tier-content" id="list-tinhtuy-ngay1">
                     <!-- Dynamic badges for Tinh Túy Ngày 1 -->
@@ -1880,6 +1883,45 @@
             <!-- Lịch sử soi trực tiếp cuộn dọc -->
             <div class="lich-su-container" id="list-history-direct">
                 <!-- Nạp tự động từ lich_su_phuong_phap.json -> soi_truc_tiep -->
+            </div>
+        </section>
+
+        <!-- PHẦN 4C: ĐÁNH GIÁ DÀN TINH TÚY NGÀY 1 (THEO DÕI 60 NGÀY) -->
+        <section class="history-box" id="sec-tinh-tuy-ngay1">
+            <div class="section-header">
+                <h2 style="color: #38bdf8;"><i class="fa-solid fa-gem" style="color: #38bdf8;"></i> PHẦN 4C: THEO DÕI HIỆU QUẢ DÀN TINH TÚY NGÀY 1 (60 NGÀY)</h2>
+                <span class="tag-info" id="badge-tinhtuy-summary" style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.4); background: rgba(56, 189, 248, 0.1);">
+                    KIỂM CHỨNG 60 KỲ
+                </span>
+            </div>
+
+            <!-- Tổng quan 4C -->
+            <div class="tong-quan">
+                <div class="stat-card">
+                    <div class="stat-label">Tổng số ngày</div>
+                    <div class="stat-value" id="tt-stat-tong">60 ngày</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Số ngày Trúng</div>
+                    <div class="stat-value green" id="tt-stat-trung">52 (86.7%)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Số ngày Trượt</div>
+                    <div class="stat-value red" id="tt-stat-truot">8 (13.3%)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Dàn trung bình</div>
+                    <div class="stat-value gold" id="tt-stat-avg">~34 số</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Chuỗi Thông Gần Nhất</div>
+                    <div class="stat-value orange" id="tt-stat-streak">Ăn 6 ngày thông</div>
+                </div>
+            </div>
+
+            <!-- Lịch sử Dàn Tinh Túy cuộn dọc -->
+            <div class="lich-su-container" id="list-history-tinhtuy">
+                <!-- Nạp tự động từ lich_su_phuong_phap.json -> dan_tinh_tuy_ngay_1 -->
             </div>
         </section>
     </div>
@@ -2098,6 +2140,54 @@
         }
         window.loadSoiTrucTiep = loadSoiTrucTiep;
 
+        // BƯỚC 4C: HÀM LOAD LỊCH SỬ DÀN TINH TÚY NGÀY 1 (THEO DÕI 60 NGÀY)
+        function loadDanTinhTuyNgay1(ttData) {
+            if (!ttData || !ttData.tong_quan) return;
+            const tq = ttData.tong_quan;
+
+            const elTong = document.getElementById('tt-stat-tong');
+            if (elTong) elTong.textContent = `${tq.tong_ngay || 0} ngày`;
+
+            const elTrung = document.getElementById('tt-stat-trung');
+            if (elTrung) elTrung.textContent = `${tq.trung || 0} (${tq.ty_le_trung || 0}%)`;
+
+            const elTruot = document.getElementById('tt-stat-truot');
+            if (elTruot) elTruot.textContent = `${tq.truot || 0} (${tq.ty_le_truot || 0}%)`;
+
+            const elAvg = document.getElementById('tt-stat-avg');
+            if (elAvg) elAvg.textContent = `~${tq.dan_tb || 34} số`;
+
+            const elStreak = document.getElementById('tt-stat-streak');
+            if (elStreak) elStreak.textContent = `Ăn ${tq.chuoi_thong || 0} ngày thông`;
+
+            const elBadge = document.getElementById('badge-tinhtuy-summary');
+            if (elBadge) elBadge.textContent = `${tq.tong_ngay || 0} NGÀY (ĂN: ${tq.ty_le_trung || 0}%)`;
+
+            const elPerf = document.getElementById('badge-tinhtuy-perf');
+            if (elPerf) elPerf.innerHTML = `<i class="fa-solid fa-chart-line"></i> Phong độ ${tq.tong_ngay || 60}N: ${tq.ty_le_trung || 0}%`;
+
+            const container = document.getElementById('list-history-tinhtuy');
+            if (container && Array.isArray(ttData.lich_su)) {
+                container.innerHTML = ttData.lich_su.map((item, idx) => {
+                    const isHit = item.ket_qua === 'trung';
+                    const icon = isHit ? '🎯' : '❌';
+                    const cls = isHit ? 'trung_n1' : 'truot_khung';
+                    const stt = item.stt || (ttData.lich_su.length - idx);
+                    const sl = item.so_luong ? `(${item.so_luong} số)` : '';
+                    return `
+                        <div class="lich-su-item">
+                            <div class="ngay"><small style="color:#94a3b8; margin-right:4px;">#${stt}</small>${item.ngay}</div>
+                            <div class="de">Đề: <strong>${item.de}</strong></div>
+                            <div class="ket-qua ${cls}">
+                                ${item.ghi_chu || (isHit ? `Trúng Đề ${item.de} ✅ ${sl}` : `Trượt Đề ${item.de} ❌ ${sl}`)} ${icon}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+        window.loadDanTinhTuyNgay1 = loadDanTinhTuyNgay1;
+
         // HÀM ĐIỀU PHỐI CHUNG NẠP FILE JSON LỊCH SỬ
         async function loadLichSu() {
             try {
@@ -2111,6 +2201,9 @@
                 }
                 if (data.soi_truc_tiep) {
                     loadSoiTrucTiep(data.soi_truc_tiep);
+                }
+                if (data.dan_tinh_tuy_ngay_1) {
+                    loadDanTinhTuyNgay1(data.dan_tinh_tuy_ngay_1);
                 }
             } catch (err) {
                 console.warn('Lỗi load lịch sử phương pháp:', err);
@@ -2167,26 +2260,54 @@
             }
 
             const txtDate = document.getElementById('txt-tinh-date');
-            if (txtDate) txtDate.textContent = dt.target_date || '25/09/2026';
+            if (txtDate) txtDate.textContent = dt.target_date || '27/09/2026';
+
+            const txtBadge = document.getElementById('txt-tinh-badge');
+            if (txtBadge && dt.status_text) {
+                txtBadge.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${dt.status_text}`;
+            }
 
             const elBt = document.getElementById('badge-tinh-bt');
             if (elBt) {
-                elBt.textContent = dt.bach_thu || '41';
+                elBt.textContent = dt.bach_thu || '65';
                 elBt.onclick = () => copyText(dt.bach_thu, 'Đã sao chép Bạch thủ: ' + dt.bach_thu);
             }
 
+            const btnBt = document.getElementById('btn-copy-tinh-bt');
+            if (btnBt) {
+                btnBt.innerHTML = `<i class="fa-regular fa-copy"></i> Copy BT ${dt.bach_thu || ''}`;
+                btnBt.onclick = () => copyText(dt.bach_thu, 'Đã sao chép Bạch thủ: ' + dt.bach_thu);
+            }
+
             const elSt = document.getElementById('badge-tinh-st');
+            const stArr = dt.song_thu || ['65', '56'];
+            const stStr = stArr.join(' - ');
             if (elSt) {
-                const stStr = (dt.song_thu || ['41', '14']).join(' - ');
                 elSt.textContent = stStr;
-                elSt.onclick = () => copyText((dt.song_thu || []).join(', '), 'Đã sao chép Song thủ: ' + stStr);
+                elSt.onclick = () => copyText(stArr.join(', '), 'Đã sao chép Song thủ: ' + stStr);
+            }
+
+            const btnSt = document.getElementById('btn-copy-tinh-st');
+            if (btnSt) {
+                btnSt.onclick = () => copyText(stArr.join(', '), 'Đã sao chép Song thủ: ' + stStr);
             }
 
             const elTt = document.getElementById('badge-tinh-tt');
+            const ttArr = dt.tu_thu || ['65', '56', '22', '21'];
+            const ttStr = ttArr.join(' - ');
             if (elTt) {
-                const ttStr = (dt.tu_thu || ['41', '14', '67', '31']).join(' - ');
                 elTt.textContent = ttStr;
-                elTt.onclick = () => copyText((dt.tu_thu || []).join(', '), 'Đã sao chép Tứ thủ: ' + ttStr);
+                elTt.onclick = () => copyText(ttArr.join(', '), 'Đã sao chép Tứ thủ: ' + ttStr);
+            }
+
+            const btnTt = document.getElementById('btn-copy-tinh-tt');
+            if (btnTt) {
+                btnTt.onclick = () => copyText(ttArr.join(', '), 'Đã sao chép Tứ thủ: ' + ttStr);
+            }
+
+            const metaDan9 = document.getElementById('txt-tinh-dan9-meta');
+            if (metaDan9 && dt.top_dau && dt.top_duoi) {
+                metaDan9.textContent = `${dt.top_dau.join(', ')} × ${dt.top_duoi.join(', ')}`;
             }
 
             // Dàn 9 số Cội Nguồn
