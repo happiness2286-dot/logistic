@@ -64,16 +64,26 @@ def main():
     log("BẮT ĐẦU CHU TRÌNH GIÁM SÁT LIVE TRỰC TIẾP XSMB (18H14)")
     log("=" * 70)
 
+    # Tự động dọn dẹp cặn Git trước phiên live
+    try:
+        subprocess.run("git rebase --abort", cwd=BASE_LOGIC_DIR, shell=True, capture_output=True)
+        subprocess.run("git merge --abort", cwd=BASE_LOGIC_DIR, shell=True, capture_output=True)
+        lock_file = os.path.join(BASE_LOGIC_DIR, ".git", "index.lock")
+        if os.path.exists(lock_file):
+            os.remove(lock_file)
+    except Exception:
+        pass
+
     threads = []
 
-    # 1. Tiến trình Logic G1->G5 (Mini App trên điện thoại)
+    # 1. Tiến trình Logic G1->G5 (Đảm nhiệm vai trò Single-Writer độc quyền đẩy Cloud)
     cmd_logic = f'"{PYTHON_EXE}" soi_cau_g1_g5.py --live --interval 8 --push'
     t1 = threading.Thread(target=run_process, args=("Logic_G1_G5", cmd_logic, BASE_LOGIC_DIR), daemon=True)
     threads.append(t1)
     t1.start()
 
-    # 2. Tiến trình Live Radar Scanner trong Logic
-    cmd_radar = f'"{PYTHON_EXE}" live_radar_scanner.py --live --interval 8 --auto_push'
+    # 2. Tiến trình Live Radar Scanner (Tính toán radar độc lập, không tranh chấp Git)
+    cmd_radar = f'"{PYTHON_EXE}" live_radar_scanner.py --live --interval 8'
     t2 = threading.Thread(target=run_process, args=("Radar_Scanner", cmd_radar, BASE_LOGIC_DIR), daemon=True)
     threads.append(t2)
     t2.start()

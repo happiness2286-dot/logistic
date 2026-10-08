@@ -970,11 +970,19 @@ if __name__ == "__main__":
         try:
             import subprocess
             git_path = r"C:\Program Files\Git\cmd\git.exe"
+            subprocess.run([git_path, 'rebase', '--abort'], capture_output=True)
             subprocess.run([git_path, 'add', 'live_radar_state.json'], check=True, capture_output=True)
             subprocess.run([git_path, 'commit', '-m', commit_msg], capture_output=True, text=True)
-            subprocess.run(['git', 'pull', '--rebase', 'origin', 'main'], capture_output=True, text=True)
-            subprocess.run([git_path, 'push', 'origin', 'main'], capture_output=True, text=True)
-            print(f"🚀 [GIT PUSH] {commit_msg} -> Đã đồng bộ lên GitHub thành công!", flush=True)
+            p_res = subprocess.run([git_path, 'push', 'origin', 'main'], capture_output=True, text=True)
+            if p_res.returncode != 0:
+                subprocess.run([git_path, 'fetch', 'origin', 'main'], capture_output=True)
+                subprocess.run([git_path, 'merge', 'origin/main', '-X', 'ours', '--no-edit', '-m', 'auto: Sync radar [skip ci]'], capture_output=True)
+                subprocess.run([git_path, 'add', 'live_radar_state.json'], capture_output=True)
+                subprocess.run([git_path, 'commit', '-m', 'auto: Resolve radar [skip ci]'], capture_output=True)
+                p_res = subprocess.run([git_path, 'push', 'origin', 'main'], capture_output=True, text=True)
+            subprocess.run([git_path, 'rebase', '--abort'], capture_output=True)
+            if p_res.returncode == 0:
+                print(f"🚀 [GIT PUSH] {commit_msg} -> Đã đồng bộ lên GitHub thành công!", flush=True)
         except Exception as ex:
             print(f"⚠️ Không thể git push nhanh: {ex}", flush=True)
 
