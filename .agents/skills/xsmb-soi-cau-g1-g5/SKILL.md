@@ -106,4 +106,29 @@ Output được tự động xuất ra console và lưu thành file JSON: `ket_q
    - Bạch thủ Top 1: **34.4%** | Tứ thủ Top 4: **65.6%**.
    - Dàn Tinh Túy Ngày 1 (60 Ngày): **86.7%** (Ăn 52/60 kỳ, quy mô dàn ~34 số).
 
+---
+
+## 6. Quy Chuẩn Live Giờ Vàng (18h14 - 18h32)
+1. **Nguồn Kép Tự Động Fallback**:
+   - Ưu tiên 1: API `https://api.383.im/lottery/live.json` (~50ms siêu tốc).
+   - Dự phòng tức thì: `https://xosodaiphat.com/xsmb-xo-so-mien-bac.html` nếu API 383.im mất kết nối hoặc timeout.
+2. **Cơ Chế Date Guard**:
+   - Trước 18h15 khi đài chưa bắt đầu quay hôm nay, nếu API còn lưu kết quả ngày hôm qua, hệ thống tự động khởi tạo trạng thái "Chờ mở thưởng hôm nay" (0/19 giải), tuyệt đối không nhận nhầm giải ĐB cũ để dừng sớm. Tiến trình chạy xuyên suốt từ 18h14 đến 18h32.
+3. **Khóa Chốt G5.6 Tức Thì (`LOCKED_G5`)**:
+   - Khi nổ đủ 19/19 giải (xong G5.6 lúc ~18h23 - 18h24) $\rightarrow$ Khóa chốt toàn bộ Phần 2 (Bạch Thủ Top 1, Tứ Thủ Top 4, Càng 3D, Dàn Tinh Túy Ngày 1, Số Lót N1) và đẩy Git lên GitHub Pages trước **18h28**.
+   - Chỉ kết thúc phiên live sau **18h30** khi đã thực sự có Giải Đặc Biệt của ngày hôm nay.
+
+---
+
+## 7. Giao Diện Phần 3: Phân Cấp Màu Sắc Số Mạnh (N1 60 Số)
+1. **Thanh Chú Thích Phân Loại (Legend Chips)**:
+   - 👑 **Bạch thủ**: Nền vàng viền gold rực rỡ + glow (`.tag-bach-thu`).
+   - 🔥 **Tứ thủ**: Nền cam viền orange + glow (`.tag-tu-thu`).
+   - ⭐ **Dàn 9**: Nền xanh dương viền cyan + glow (`.tag-dan-9`).
+   - 🔄 **Dàn đảo**: Nền xanh ngọc viền emerald + glow (`.tag-dan-dao`).
+   - 📦 **Dàn lót**: Nền slate tối viền mờ tinh tế (`.tag-dan-lot`).
+2. **Lưới 60 Số N1**: Tự động phân cấp và gắn icon tương ứng giúp người dùng nhận diện ngay số mạnh để phân bổ tỷ trọng vốn an toàn.
+3. **1-Click Copy Thông Minh**: Khi bấm vào từng số hoặc nút Copy Dàn N1, hệ thống tự động bóc tách sạch sẽ các icon và chỉ sao chép dãy số 2D chuẩn (`01, 02...`), không bị dính icon hay ký tự lạ.
+
+
 
