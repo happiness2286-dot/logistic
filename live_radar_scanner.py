@@ -221,41 +221,20 @@ def get_positions(prizes):
     return res
 
 def fetch_daiphat_draws(is_live=False):
-    """Nguồn dự phòng cào các kỳ quay gần nhất từ xosodaiphat.com khi mketqua.net gặp sự cố."""
-    dow_map = {0: 'Thứ hai', 1: 'Thứ ba', 2: 'Thứ tư', 3: 'Thứ năm', 4: 'Thứ sáu', 5: 'Thứ bảy', 6: 'Chủ nhật'}
-    url = 'https://xosodaiphat.com/xsmb-xo-so-mien-bac.html'
-    html = ""
+    """Lấy dữ liệu các kỳ quay từ xosodaiphat.com qua hàm chuẩn của soi_cau_g1_g5."""
     try:
-        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0.0.0 Safari/537.36'}
-        if HAS_LIBS:
-            r = requests.get(url, headers=headers, timeout=8)
-            html = r.text if r.status_code == 200 else ""
-        else:
-            req = urllib.request.Request(url, headers=headers)
-            with urllib.request.urlopen(req, timeout=8) as resp:
-                html = resp.read().decode('utf-8', errors='ignore')
+        from soi_cau_g1_g5 import fetch_daiphat_draws as f_dd
+        return f_dd(use_30days=not is_live)
     except Exception as e:
+        print(f"[!] Lỗi gọi fetch_daiphat_draws: {e}")
         return []
 
-    if not html:
-        return []
-
-    blocks = re.split(r'<table[^>]*table-xsmb[^>]*>', html)
-    draws = []
-    for i, b in enumerate(blocks[1:]):
-        pre_text = blocks[i]
-        date_m = re.findall(r'(\d{2})[/-](\d{2})[/-](\d{4})', pre_text)
-        if not date_m: continue
-        d, mth, y = date_m[-1]
-        try:
-            dt = datetime(int(y), int(mth), int(d))
-            date_str = f"{dow_map[dt.weekday()]} ngày {d}-{mth}-{y}"
-        except Exception:
-            date_str = f"ngày {d}-{mth}-{y}"
-
+def scan_radar(is_live=False):
+    """Quét và phân tích radar cầu live hoặc offline cho kỳ hiện tại."""
+    dow_map = {0: 'Thứ hai', 1: 'Thứ ba', 2: 'Thứ tư', 3: 'Thứ năm', 4: 'Thứ sáu', 5: 'Thứ bảy', 6: 'Chủ nhật'}
+    draws = fetch_daiphat_draws(is_live=is_live)
     today_dt = datetime.now()
     today_str = today_dt.strftime('%d-%m-%Y')
-    dow_map = {0: 'Thứ hai', 1: 'Thứ ba', 2: 'Thứ tư', 3: 'Thứ năm', 4: 'Thứ sáu', 5: 'Thứ bảy', 6: 'Chủ nhật'}
     today_date_str = f"{dow_map[today_dt.weekday()]} ngày {today_str}"
 
     if is_live:

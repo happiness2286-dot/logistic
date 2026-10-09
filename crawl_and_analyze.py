@@ -200,78 +200,6 @@ def crawl_daiphat_records():
 def crawl_xsmb():
     print("Fetching lottery data from xosodaiphat.com & 383.im...", flush=True)
     try:
-        with urllib.request.urlopen(req, timeout=8) as response:
-            html = response.read().decode('utf-8')
-            blocks = html.split('<table class="table table-condensed kqcenter kqvertimarginw table-kq-border table-kq-hover-div table-bordered kqbackground table-kq-bold-border tb-phoi-border watermark table-striped" id="result_tab_mb">')
-            
-            results = []
-            for block in blocks[1:]:
-                date_match = re.search(r'id="result_date">([^<]+)</span>', block)
-                date_str = date_match.group(1).strip() if date_match else ""
-                
-                db_match = re.search(r'id="rs_0_0"[^>]*>(\d{5})</div>', block)
-                if not db_match:
-                    db_match = re.search(r'id="rs_0_0"[^>]*data-sofar="(\d{5})"', block)
-                db = db_match.group(1).strip() if db_match else ""
-                
-                g7_1_match = re.search(r'id="rs_7_0"[^>]*>(\d{2})</div>', block)
-                g7_2_match = re.search(r'id="rs_7_1"[^>]*>(\d{2})</div>', block)
-                g7_3_match = re.search(r'id="rs_7_2"[^>]*>(\d{2})</div>', block)
-                g7_4_match = re.search(r'id="rs_7_3"[^>]*>(\d{2})</div>', block)
-                
-                g7_1 = g7_1_match.group(1).strip() if g7_1_match else ""
-                g7_2 = g7_2_match.group(1).strip() if g7_2_match else ""
-                g7_3 = g7_3_match.group(1).strip() if g7_3_match else ""
-                g7_4 = g7_4_match.group(1).strip() if g7_4_match else ""
-                
-                raw_prizes = re.findall(r'id="rs_\d+_\d+"[^>]*>(\d+)</div>', block)
-                if not raw_prizes:
-                    raw_prizes = re.findall(r'id="rs_\d+_\d+"[^>]*data-sofar="(\d+)"', block)
-                all_lo = [p[-2:] for p in raw_prizes if len(p) >= 2]
-
-        # Bổ sung bản ghi trực tiếp từ 383.im nếu có
-        try:
-            r = requests.get("https://api.383.im/lottery/live.json", headers={'User-Agent': 'Mozilla/5.0'}, timeout=3)
-            if r.status_code == 200:
-                mb = r.json().get('mb', {})
-                pr = mb.get('pr', {})
-                db_list = pr.get('db', [])
-                if db_list and db_list[0].strip():
-                    db_val = db_list[0].strip()
-                    g7_list = [str(x).strip() for x in pr.get('g7', [])]
-                    d_str = mb.get('d', '')
-                    dow_map = {0: 'Thứ Hai', 1: 'Thứ Ba', 2: 'Thứ Tư', 3: 'Thứ Năm', 4: 'Thứ Sáu', 5: 'Thứ Bảy', 6: 'Chủ Nhật'}
-                    if d_str:
-                        y, mth, d = d_str.split('-')
-                        dt = datetime.date(int(y), int(mth), int(d))
-                        d_text = f"{dow_map[dt.weekday()]} ngày {d}-{mth}-{y}"
-                    else:
-                        today = datetime.date.today()
-                        d_text = f"{dow_map[today.weekday()]} ngày {today.strftime('%d-%m-%Y')}"
-
-                    all_p = [db_val] + [str(x) for k in ['g1','g2','g3','g4','g5','g6','g7'] for x in pr.get(k, [])]
-                    all_lo = [x[-2:] for x in all_p if len(str(x)) >= 2]
-                    live_rec = {
-                        'date': d_text,
-                        'db': db_val,
-                        'de': db_val[-2:] if len(db_val)>=2 else '',
-                        'g7_1': g7_list[0] if len(g7_list) > 0 else '',
-                        'g7_2': g7_list[1] if len(g7_list) > 1 else '',
-                        'g7_3': g7_list[2] if len(g7_list) > 2 else '',
-                        'g7_4': g7_list[3] if len(g7_list) > 3 else '',
-                        'all_lo': all_lo
-                    })
-                    
-            results_2026 = [r for r in results if '2026' in r['date']]
-            if results_2026:
-                print(f"Extracted {len(results_2026)} records for 2026 from mketqua.net.")
-                return results_2026
-    except Exception as e:
-        print("Notice mketqua crawl fallback:", e)
-
-    # Nguồn dự phòng xosodaiphat.com
-    print("Notice: Đang chuyển sang nguồn dự phòng xosodaiphat.com...", flush=True)
-    try:
         daiphat_recs = crawl_daiphat_records()
         if daiphat_recs:
             existing_records = []
@@ -293,12 +221,13 @@ def crawl_xsmb():
                 if d_key not in seen_dates:
                     seen_dates.add(d_key)
                     merged.append(r)
-            print(f"[✓ Dự phòng] Cào thành công từ xosodaiphat.com! Tổng hợp được {len(merged)} bản ghi 2026.")
+            print(f"[✓] Cào thành công từ xosodaiphat.com! Tổng hợp được {len(merged)} bản ghi 2026.")
             return merged
     except Exception as e:
-        print("Error during fallback crawl xosodaiphat:", e)
+        print("Error during crawl xosodaiphat:", e)
 
     return []
+
 
 def analyze_all(data_2026):
     chrono = list(reversed(data_2026))
