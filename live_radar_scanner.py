@@ -35,9 +35,8 @@ except ImportError:
 
 STATE_JSON_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'live_radar_state.json')
 SUMMARY_JSON_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'analysis_summary.json')
-API_383_LIVE_URL = "https://api.383.im/lottery/live.json"
-DAIPHAT_LIVE_URL = "https://xosodaiphat.com/xsmb-xo-so-mien-bac.html"
-DAIPHAT_30N_URL = "https://xosodaiphat.com/xsmb-30-ngay.html"
+MKETQUA_SO_KQ_URL = "https://mketqua.net/so-ket-qua"
+MKETQUA_LIVE_URL = "https://mketqua.net/"
 
 BONG_DUONG = {
     0: 5, 1: 6, 2: 7, 3: 8, 4: 9,
@@ -127,186 +126,91 @@ DEFAULT_60_N1 = [
     "69", "72", "80", "81", "82", "83", "84", "85", "87", "88", "91", "92", "95", "96", "97", "99"
 ]
 
-def parse_daiphat_block(block, pre_text):
-    dow_map = {0: 'Thứ hai', 1: 'Thứ ba', 2: 'Thứ tư', 3: 'Thứ năm', 4: 'Thứ sáu', 5: 'Thứ bảy', 6: 'Chủ nhật'}
-    date_m = re.findall(r'(\d{2})[/-](\d{2})[/-](\d{4})', pre_text)
-    if not date_m:
-        return None
-    d, mth, y = date_m[-1]
-    try:
-        dt = datetime(int(y), int(mth), int(d))
-        date_str = f"{dow_map[dt.weekday()]} ngày {d}-{mth}-{y}"
-    except Exception:
-        date_str = f"ngày {d}-{mth}-{y}"
-
-    def get_row_numbers(label, max_len=None):
-        pattern = rf'{re.escape(label)}.*?(?:<td[^>]*>)(.*?)(?:<tr>|</table>)'
-        m = re.search(pattern, block, re.DOTALL)
-        if not m:
-            return []
-        raw_nums = re.findall(r'>\s*([0-9]{2,5})\s*<', m.group(1))
-        if max_len:
-            raw_nums = [n for n in raw_nums if len(n) == max_len]
-        return raw_nums
-
-    db_nums = get_row_numbers('G.ĐB', 5)
-    db_val = db_nums[0] if db_nums else ''
-    de_val = db_val[-2:] if len(db_val) >= 2 else ''
-
-    g1_nums = get_row_numbers('G.1', 5)
-    g2_nums = get_row_numbers('G.2', 5)
-    g3_nums = get_row_numbers('G.3', 5)
-    g4_nums = get_row_numbers('G.4', 4)
-    g5_nums = get_row_numbers('G.5', 4)
-    g6_nums = get_row_numbers('G.6', 3)
-    g7_nums = get_row_numbers('G.7', 2)
-
-    prizes = {}
-    prizes['G1'] = g1_nums[0] if g1_nums else ''
-    for idx in range(1, 3):
-        prizes[f'G2.{idx}'] = g2_nums[idx-1] if len(g2_nums) >= idx else ''
-    for idx in range(1, 7):
-        prizes[f'G3.{idx}'] = g3_nums[idx-1] if len(g3_nums) >= idx else ''
-    for idx in range(1, 5):
-        prizes[f'G4.{idx}'] = g4_nums[idx-1] if len(g4_nums) >= idx else ''
-    for idx in range(1, 7):
-        prizes[f'G5.{idx}'] = g5_nums[idx-1] if len(g5_nums) >= idx else ''
-    for idx in range(1, 4):
-        prizes[f'G6.{idx}'] = g6_nums[idx-1] if len(g6_nums) >= idx else ''
-    for idx in range(1, 5):
-        prizes[f'G7.{idx}'] = g7_nums[idx-1] if len(g7_nums) >= idx else ''
-
-    return {
-        'date': date_str,
-        'db': db_val,
-        'de': de_val,
-        'prizes': prizes
-    }
-
-def fetch_383_live():
-    """Lấy dữ liệu kết quả XSMB trực tiếp siêu tốc (50ms) từ API 383.im."""
+def fetch_html(is_live=True, count=35):
     headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15 Chrome/120.0.0.0 Safari/604.1',
+        'Content-Type': 'application/x-www-form-urlencoded'
     }
-    dow_map = {0: 'Thứ hai', 1: 'Thứ ba', 2: 'Thứ tư', 3: 'Thứ năm', 4: 'Thứ sáu', 5: 'Thứ bảy', 6: 'Chủ nhật'}
-    raw_text = ""
-    try:
-        if HAS_LIBS:
-            r = requests.get(API_383_LIVE_URL, headers=headers, timeout=3)
-            if r.status_code == 200:
-                raw_text = r.text
-        else:
-            req = urllib.request.Request(API_383_LIVE_URL, headers=headers)
-            with urllib.request.urlopen(req, timeout=3) as resp:
-                raw_text = resp.read().decode('utf-8', errors='ignore')
-    except Exception:
-        return None
+    table_tag = '<table class="table table-condensed kqcenter kqvertimarginw table-kq-border table-kq-hover-div table-bordered kqbackground table-kq-bold-border tb-phoi-border watermark table-striped" id="result_tab_mb">'
+    
+    so_kq_html = ""
+    if HAS_LIBS:
+        try:
+            resp = requests.post(MKETQUA_SO_KQ_URL, data={'code': 'mb', 'count': str(count), 'dow': '7'}, headers=headers, timeout=10)
+            if resp.status_code == 200:
+                so_kq_html = resp.text
+        except Exception:
+            pass
 
-    if not raw_text:
-        return None
+    if not so_kq_html:
+        try:
+            data = urllib.parse.urlencode({'code': 'mb', 'count': str(count), 'dow': '7'}).encode('utf-8')
+            req = urllib.request.Request(MKETQUA_SO_KQ_URL, data=data, headers=headers)
+            with urllib.request.urlopen(req, timeout=10) as response:
+                so_kq_html = response.read().decode('utf-8', errors='ignore')
+        except Exception:
+            pass
 
-    try:
-        data = json.loads(raw_text)
-        mb = data.get('mb', {})
-        if not mb:
-            return None
-        d_str = mb.get('d', '')
-        if d_str:
-            parts = d_str.split('-')
-            if len(parts) == 3:
-                y, mth, d = parts
-                dt = datetime(int(y), int(mth), int(d))
-                date_str = f"{dow_map[dt.weekday()]} ngày {d}-{mth}-{y}"
-            else:
-                date_str = d_str
-        else:
-            now = datetime.now()
-            date_str = f"{dow_map[now.weekday()]} ngày {now.strftime('%d-%m-%Y')}"
+    if is_live:
+        home_html = ""
+        try:
+            if HAS_LIBS:
+                resp_h = requests.get(MKETQUA_LIVE_URL, headers=headers, timeout=7)
+                if resp_h.status_code == 200 and table_tag in resp_h.text:
+                    home_html = resp_h.text
+        except Exception:
+            pass
 
-        pr = mb.get('pr', {})
-        db_list = pr.get('db', [])
-        db_val = db_list[0].strip() if db_list else ''
-        de_val = db_val[-2:] if len(db_val) >= 2 else ''
+        if home_html and so_kq_html:
+            h_b = home_html.split(table_tag)
+            s_b = so_kq_html.split(table_tag)
+            if len(h_b) > 1 and len(s_b) > 1:
+                return s_b[0] + table_tag + h_b[1] + table_tag + table_tag.join(s_b[1:])
+        elif home_html:
+            return home_html
 
-        g1_list = pr.get('g1', [])
-        g1_val = g1_list[0].strip() if g1_list else ''
-        g2_list = [str(x).strip() for x in pr.get('g2', [])]
-        g3_list = [str(x).strip() for x in pr.get('g3', [])]
-        g4_list = [str(x).strip() for x in pr.get('g4', [])]
-        g5_list = [str(x).strip() for x in pr.get('g5', [])]
-        g6_list = [str(x).strip() for x in pr.get('g6', [])]
-        g7_list = [str(x).strip() for x in pr.get('g7', [])]
+    return so_kq_html
+
+def parse_draws(html):
+    blocks = html.split('<table class="table table-condensed kqcenter kqvertimarginw table-kq-border table-kq-hover-div table-bordered kqbackground table-kq-bold-border tb-phoi-border watermark table-striped" id="result_tab_mb">')
+    draws = []
+    seen_dates = set()
+    
+    for b in blocks[1:]:
+        date_m = re.search(r'id="result_date">([^<]+)</span>', b)
+        date_str = date_m.group(1).strip() if date_m else ""
+        if not date_str:
+            continue
+        norm_date = re.sub(r'\s+', ' ', date_str).strip()
+        if norm_date in seen_dates:
+            continue
+        seen_dates.add(norm_date)
+        
+        db_m = re.search(r'id="rs_0_0"[^>]*>(\d{5})</div>', b)
+        if not db_m:
+            db_m = re.search(r'id="rs_0_0"[^>]*data-sofar="(\d{5})"', b)
+        db_val = db_m.group(1).strip() if db_m else ""
+        de_val = db_val[-2:] if len(db_val) >= 2 else ""
 
         prizes = {}
-        prizes['G1'] = g1_val
-        for idx in range(1, 3):
-            prizes[f'G2.{idx}'] = g2_list[idx-1] if len(g2_list) >= idx else ''
-        for idx in range(1, 7):
-            prizes[f'G3.{idx}'] = g3_list[idx-1] if len(g3_list) >= idx else ''
-        for idx in range(1, 5):
-            prizes[f'G4.{idx}'] = g4_list[idx-1] if len(g4_list) >= idx else ''
-        for idx in range(1, 7):
-            prizes[f'G5.{idx}'] = g5_list[idx-1] if len(g5_list) >= idx else ''
-        for idx in range(1, 4):
-            prizes[f'G6.{idx}'] = g6_list[idx-1] if len(g6_list) >= idx else ''
-        for idx in range(1, 5):
-            prizes[f'G7.{idx}'] = g7_list[idx-1] if len(g7_list) >= idx else ''
+        config = [(1, 1), (2, 2), (3, 6), (4, 4), (5, 6), (7, 4)]
+        for g_num, total_subs in config:
+            for sub_idx in range(total_subs):
+                g_code = f"G{g_num}" if g_num == 1 else f"G{g_num}.{sub_idx+1}"
+                elem_id = f"rs_{g_num}_{sub_idx}"
+                v_m = re.search(rf'id="{elem_id}"[^>]*>([^<]*)</div>', b)
+                if not v_m:
+                    v_m = re.search(rf'id="{elem_id}"[^>]*data-sofar="([^"]*)"', b)
+                val = v_m.group(1).strip() if v_m else ""
+                prizes[g_code] = val
 
-        return {
+        draws.append({
             'date': date_str,
             'db': db_val,
             'de': de_val,
             'prizes': prizes
-        }
-    except Exception:
-        return None
-
-def fetch_daiphat_draws(is_live=False):
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-    }
-    urls = [DAIPHAT_LIVE_URL, DAIPHAT_30N_URL] if not is_live else [DAIPHAT_LIVE_URL]
-    draws = []
-    seen_dates = set()
-    for url in urls:
-        html = ""
-        try:
-            if HAS_LIBS:
-                r = requests.get(url, headers=headers, timeout=5)
-                html = r.text if r.status_code == 200 else ""
-            else:
-                req = urllib.request.Request(url, headers=headers)
-                with urllib.request.urlopen(req, timeout=5) as resp:
-                    html = resp.read().decode('utf-8', errors='ignore')
-        except Exception:
-            pass
-
-        if not html:
-            continue
-
-        blocks = re.split(r'<table[^>]*table-xsmb[^>]*>', html)
-        for i in range(1, len(blocks)):
-            pre_text = blocks[i-1][-400:]
-            rec = parse_daiphat_block(blocks[i], pre_text)
-            if rec and rec['date'] not in seen_dates:
-                seen_dates.add(rec['date'])
-                draws.append(rec)
+        })
     return draws
-
-def fetch_html(is_live=True, count=35):
-    draws = fetch_daiphat_draws(is_live=is_live)
-    return json.dumps(draws, ensure_ascii=False) if draws else ""
-
-def parse_draws(html):
-    if not html:
-        return []
-    try:
-        data = json.loads(html)
-        if isinstance(data, list):
-            return data
-    except Exception:
-        pass
-    return fetch_daiphat_draws(is_live=False)
 
 def get_positions(prizes):
     res = {}
@@ -316,23 +220,38 @@ def get_positions(prizes):
             res[f"{code}_{idx}"] = (char, f"{code} vị trí {idx}")
     return res
 
-def scan_radar(is_live=True):
-    live_383 = None
-    if is_live:
-        try:
-            live_383 = fetch_383_live()
-        except Exception:
-            live_383 = None
+def fetch_daiphat_draws(is_live=False):
+    """Nguồn dự phòng cào các kỳ quay gần nhất từ xosodaiphat.com khi mketqua.net gặp sự cố."""
+    dow_map = {0: 'Thứ hai', 1: 'Thứ ba', 2: 'Thứ tư', 3: 'Thứ năm', 4: 'Thứ sáu', 5: 'Thứ bảy', 6: 'Chủ nhật'}
+    url = 'https://xosodaiphat.com/xsmb-xo-so-mien-bac.html'
+    html = ""
+    try:
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0.0.0 Safari/537.36'}
+        if HAS_LIBS:
+            r = requests.get(url, headers=headers, timeout=8)
+            html = r.text if r.status_code == 200 else ""
+        else:
+            req = urllib.request.Request(url, headers=headers)
+            with urllib.request.urlopen(req, timeout=8) as resp:
+                html = resp.read().decode('utf-8', errors='ignore')
+    except Exception as e:
+        return []
 
-    daiphat_draws = fetch_daiphat_draws(is_live=is_live)
+    if not html:
+        return []
+
+    blocks = re.split(r'<table[^>]*table-xsmb[^>]*>', html)
     draws = []
-    if live_383:
-        draws = [live_383]
-        for d in daiphat_draws:
-            if d['date'].split()[-1] != live_383['date'].split()[-1]:
-                draws.append(d)
-    else:
-        draws = daiphat_draws
+    for i, b in enumerate(blocks[1:]):
+        pre_text = blocks[i]
+        date_m = re.findall(r'(\d{2})[/-](\d{2})[/-](\d{4})', pre_text)
+        if not date_m: continue
+        d, mth, y = date_m[-1]
+        try:
+            dt = datetime(int(y), int(mth), int(d))
+            date_str = f"{dow_map[dt.weekday()]} ngày {d}-{mth}-{y}"
+        except Exception:
+            date_str = f"ngày {d}-{mth}-{y}"
 
     today_dt = datetime.now()
     today_str = today_dt.strftime('%d-%m-%Y')
@@ -993,19 +912,10 @@ if __name__ == "__main__":
         try:
             import subprocess
             git_path = r"C:\Program Files\Git\cmd\git.exe"
-            subprocess.run([git_path, 'rebase', '--abort'], capture_output=True)
             subprocess.run([git_path, 'add', 'live_radar_state.json'], check=True, capture_output=True)
             subprocess.run([git_path, 'commit', '-m', commit_msg], capture_output=True, text=True)
-            p_res = subprocess.run([git_path, 'push', 'origin', 'main'], capture_output=True, text=True)
-            if p_res.returncode != 0:
-                subprocess.run([git_path, 'fetch', 'origin', 'main'], capture_output=True)
-                subprocess.run([git_path, 'merge', 'origin/main', '-X', 'ours', '--no-edit', '-m', 'auto: Sync radar [skip ci]'], capture_output=True)
-                subprocess.run([git_path, 'add', 'live_radar_state.json'], capture_output=True)
-                subprocess.run([git_path, 'commit', '-m', 'auto: Resolve radar [skip ci]'], capture_output=True)
-                p_res = subprocess.run([git_path, 'push', 'origin', 'main'], capture_output=True, text=True)
-            subprocess.run([git_path, 'rebase', '--abort'], capture_output=True)
-            if p_res.returncode == 0:
-                print(f"🚀 [GIT PUSH] {commit_msg} -> Đã đồng bộ lên GitHub thành công!", flush=True)
+            subprocess.run([git_path, 'push', 'origin', 'main'], capture_output=True, text=True)
+            print(f"🚀 [GIT PUSH] {commit_msg} -> Đã đồng bộ lên GitHub thành công!", flush=True)
         except Exception as ex:
             print(f"⚠️ Không thể git push nhanh: {ex}", flush=True)
 
