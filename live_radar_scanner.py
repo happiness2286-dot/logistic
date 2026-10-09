@@ -334,6 +334,29 @@ def scan_radar(is_live=True):
     else:
         draws = daiphat_draws
 
+    today_dt = datetime.now()
+    today_str = today_dt.strftime('%d-%m-%Y')
+    dow_map = {0: 'Thứ hai', 1: 'Thứ ba', 2: 'Thứ tư', 3: 'Thứ năm', 4: 'Thứ sáu', 5: 'Thứ bảy', 6: 'Chủ nhật'}
+    today_date_str = f"{dow_map[today_dt.weekday()]} ngày {today_str}"
+
+    if is_live:
+        is_today = False
+        if draws and draws[0].get('date'):
+            m_d = re.search(r'(\d{2})[-/](\d{2})[-/](\d{4})', draws[0]['date'])
+            if m_d and f"{m_d.group(1)}-{m_d.group(2)}-{m_d.group(3)}" == today_str:
+                is_today = True
+        if not is_today:
+            # Chưa bắt đầu mở thưởng kỳ hôm nay (ví dụ lúc 18h14) -> Khởi tạo kỳ hôm nay chờ mở thưởng
+            empty_p = {
+                'G1': '', 'G2.1': '', 'G2.2': '',
+                'G3.1': '', 'G3.2': '', 'G3.3': '', 'G3.4': '', 'G3.5': '', 'G3.6': '',
+                'G4.1': '', 'G4.2': '', 'G4.3': '', 'G4.4': '',
+                'G5.1': '', 'G5.2': '', 'G5.3': '', 'G5.4': '', 'G5.5': '', 'G5.6': '',
+                'G6.1': '', 'G6.2': '', 'G6.3': '',
+                'G7.1': '', 'G7.2': '', 'G7.3': '', 'G7.4': ''
+            }
+            draws.insert(0, {'date': today_date_str, 'db': '', 'de': '', 'prizes': empty_p})
+
     if len(draws) < 2:
         if os.path.exists(STATE_JSON_PATH):
             with open(STATE_JSON_PATH, encoding='utf-8') as f:
@@ -1012,9 +1035,10 @@ if __name__ == "__main__":
                         if args.auto_push:
                             do_quick_git_push(f"Lock Radar G5 {t_date} (BT {top1}, TT {top4})")
 
-                    # 2. BƯỚC ĐỐI CHIẾU KHI CÓ GIẢI ĐẶC BIỆT (sau 18h30)
-                    if res.get('actual_de'):
-                        print(f"\n🎯 [KẾT THÚC QUAY - {datetime.now().strftime('%H:%M:%S')}] Đã có Giải Đặc Biệt: {res.get('actual_de')}.", flush=True)
+                    # 2. BƯỚC ĐỐI CHIẾU KHI CÓ GIẢI ĐẶC BIỆT (chỉ kết thúc sau 18h30 khi thực sự có GĐB hôm nay)
+                    now_t = datetime.now()
+                    if res.get('actual_de') and (now_t.hour > 18 or (now_t.hour == 18 and now_t.minute >= 30)):
+                        print(f"\n🎯 [KẾT THÚC QUAY - {now_t.strftime('%H:%M:%S')}] Đã có Giải Đặc Biệt: {res.get('actual_de')}.", flush=True)
                         final_completed = True
                         if args.auto_push:
                             do_quick_git_push(f"Finish XSMB {res.get('target_date')} (DB {res.get('actual_de')})")

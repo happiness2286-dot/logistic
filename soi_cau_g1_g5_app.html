@@ -765,6 +765,140 @@
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
         }
 
+        .tier3-legend-bar {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .legend-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .legend-chip.legend-bt {
+            border: 1.5px solid #F59E0B;
+            background: rgba(245, 158, 11, 0.15);
+            color: #FEF08A;
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.25);
+        }
+
+        .legend-chip.legend-tt {
+            border: 1.5px solid #F97316;
+            background: rgba(249, 115, 22, 0.15);
+            color: #FDBA74;
+            box-shadow: 0 0 8px rgba(249, 115, 22, 0.25);
+        }
+
+        .legend-chip.legend-d9 {
+            border: 1.5px solid #38BDF8;
+            background: rgba(56, 189, 248, 0.15);
+            color: #BAE6FD;
+            box-shadow: 0 0 8px rgba(56, 189, 248, 0.25);
+        }
+
+        .legend-chip.legend-dao {
+            border: 1.5px solid #10B981;
+            background: rgba(16, 185, 129, 0.15);
+            color: #A7F3D0;
+            box-shadow: 0 0 8px rgba(16, 185, 129, 0.25);
+        }
+
+        .legend-chip.legend-lot {
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            background: rgba(30, 41, 59, 0.5);
+            color: #94A3B8;
+        }
+
+        .tier3-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            padding: 12px;
+            background: rgba(10, 15, 29, 0.65);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            width: 100%;
+        }
+
+        .num-tag {
+            min-width: 44px;
+            height: 38px;
+            padding: 0 8px;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', Consolas, monospace;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            user-select: none;
+        }
+
+        .num-tag:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.15);
+        }
+
+        .num-tag.tag-bach-thu {
+            background: rgba(245, 158, 11, 0.25) !important;
+            border: 2px solid #F59E0B !important;
+            color: #FEF08A !important;
+            font-weight: 900;
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.5);
+            transform: scale(1.05);
+            z-index: 2;
+        }
+
+        .num-tag.tag-tu-thu {
+            background: rgba(249, 115, 22, 0.22) !important;
+            border: 1.8px solid #F97316 !important;
+            color: #FDBA74 !important;
+            font-weight: 800;
+            box-shadow: 0 0 10px rgba(249, 115, 22, 0.4);
+        }
+
+        .num-tag.tag-dan-9 {
+            background: rgba(56, 189, 248, 0.2) !important;
+            border: 1.5px solid #38BDF8 !important;
+            color: #BAE6FD !important;
+            font-weight: 800;
+            box-shadow: 0 0 8px rgba(56, 189, 248, 0.3);
+        }
+
+        .num-tag.tag-dan-dao {
+            background: rgba(16, 185, 129, 0.2) !important;
+            border: 1.5px solid #10B981 !important;
+            color: #A7F3D0 !important;
+            font-weight: 800;
+            box-shadow: 0 0 8px rgba(16, 185, 129, 0.3);
+        }
+
+        .num-tag.tag-dan-lot {
+            background: rgba(30, 41, 59, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #94A3B8;
+        }
+
+        .num-tag .num-badge-icon {
+            font-size: 11px;
+            margin-right: 3px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
         /* BUTTON BAR */
         .btn-copy-bar {
             display: grid;
@@ -1434,7 +1568,7 @@
             </div>
         </header>
 
-        <!-- THANH TRỰC TIẾP ĐÀI QUAY XSMB (TRƯỜNG QUAY 53 HÀNG CHUỐI) -->
+        <!-- THANH TRỰC TIẾP ĐÀI QUAY XSMB (TRƯỜNG QUAY SỐ 1 TĂNG BẠT HỔ) -->
         <div class="live-broadcast-card">
             <div class="live-broadcast-header">
                 <div class="live-badge-glow">
@@ -1443,7 +1577,7 @@
                 </div>
                 <div class="live-station-info">
                     <i class="fa-solid fa-tower-broadcast" style="color: #ef4444;"></i>
-                    <span>Trường quay 53 Hàng Chuối • Đài PT-TH Hà Nội / VTC9 (18h15 - 18h35)</span>
+                    <span>Trường quay số 1 Tăng Bạt Hổ, Hà Nội • Đài PT-TH Hà Nội / VTC9 (18h15 - 18h35)</span>
                 </div>
             </div>
             <div class="live-broadcast-controls">
@@ -1735,13 +1869,23 @@
                 </span>
             </div>
 
-            <!-- Dòng N1 (60 số - Xanh lá) -->
-            <div class="tier-row">
-                <div class="tier-label label-green" id="lbl-dan-n1">
-                    <i class="fa-solid fa-circle"></i> 🟢 DÀN N1 (60 SỐ):
+            <!-- Dòng N1 (60 số - Phân cấp số mạnh) -->
+            <div class="tier-row" style="flex-direction: column; align-items: stretch; gap: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+                    <div class="tier-label label-green" id="lbl-dan-n1" style="min-width: unset;">
+                        <i class="fa-solid fa-circle"></i> 🟢 DÀN N1 (60 SỐ):
+                    </div>
+                    <!-- Thanh Legend phân loại số mạnh theo màu sắc -->
+                    <div class="tier3-legend-bar" style="margin-bottom: 0;">
+                        <span class="legend-chip legend-bt">👑 Bạch thủ</span>
+                        <span class="legend-chip legend-tt">🔥 Tứ thủ</span>
+                        <span class="legend-chip legend-d9">⭐ Dàn 9</span>
+                        <span class="legend-chip legend-dao">🔄 Dàn đảo</span>
+                        <span class="legend-chip legend-lot">📦 Dàn lót</span>
+                    </div>
                 </div>
-                <div class="tier-content" id="dan-n1">
-                    <!-- Dynamic green badges for N1 -->
+                <div class="tier3-grid" id="dan-n1">
+                    <!-- Dynamic styled badges for N1 -->
                 </div>
             </div>
 
@@ -2512,12 +2656,50 @@
                 return;
             }
 
+            // DÀN N1: ÁP DỤNG PHÂN CẤP SỐ MẠNH (Bạch thủ, Tứ thủ, Dàn 9, Dàn đảo, Dàn lót)
+            if (containerId === 'dan-n1' || containerId === 'list-n1') {
+                const dt = currentData.dan_tinh_4cap || {};
+                const bachThu = currentData.top_1 || dt.bach_thu || '';
+                const tuThu = Array.isArray(currentData.top_4) && currentData.top_4.length ? currentData.top_4 : (Array.isArray(dt.tu_thu) ? dt.tu_thu : []);
+                const dan9 = Array.isArray(dt.dan_9_so) && dt.dan_9_so.length ? dt.dan_9_so : (Array.isArray(currentData.dan_9) ? currentData.dan_9 : []);
+                
+                // Lấy số lót lộn / cặp đảo
+                const lotLon = dt.lot_lon || (bachThu && bachThu.length === 2 && bachThu[0] !== bachThu[1] ? bachThu[1] + bachThu[0] : '');
+                const danDao = [];
+                if (lotLon && lotLon !== bachThu && !tuThu.includes(lotLon)) danDao.push(lotLon);
+                tuThu.forEach(tt => {
+                    if (tt && tt.length === 2 && tt[0] !== tt[1]) {
+                        const rev = tt[1] + tt[0];
+                        if (rev !== bachThu && !tuThu.includes(rev) && !danDao.includes(rev)) {
+                            danDao.push(rev);
+                        }
+                    }
+                });
+
+                container.className = 'tier3-grid';
+                container.innerHTML = dan.map(num => {
+                    const numStr = String(num).padStart(2, '0');
+                    if (bachThu && numStr === String(bachThu).padStart(2, '0')) {
+                        return `<div class="num-tag tag-bach-thu num" onclick="copyText('${numStr}', 'Đã copy Bạch thủ ${numStr}')" title="👑 Bạch thủ: ${numStr}"><span class="num-badge-icon">👑</span>${numStr}</div>`;
+                    } else if (tuThu.map(x => String(x).padStart(2, '0')).includes(numStr)) {
+                        return `<div class="num-tag tag-tu-thu num" onclick="copyText('${numStr}', 'Đã copy Tứ thủ ${numStr}')" title="🔥 Tứ thủ: ${numStr}"><span class="num-badge-icon">🔥</span>${numStr}</div>`;
+                    } else if (dan9.map(x => String(x).padStart(2, '0')).includes(numStr)) {
+                        return `<div class="num-tag tag-dan-9 num" onclick="copyText('${numStr}', 'Đã copy Dàn 9: ${numStr}')" title="⭐ Dàn 9: ${numStr}"><span class="num-badge-icon">⭐</span>${numStr}</div>`;
+                    } else if (danDao.map(x => String(x).padStart(2, '0')).includes(numStr)) {
+                        return `<div class="num-tag tag-dan-dao num" onclick="copyText('${numStr}', 'Đã copy Dàn đảo: ${numStr}')" title="🔄 Dàn đảo: ${numStr}"><span class="num-badge-icon">🔄</span>${numStr}</div>`;
+                    } else {
+                        return `<div class="num-tag tag-dan-lot num" onclick="copyText('${numStr}', 'Đã copy ${numStr}')" title="📦 Dàn lót: ${numStr}">${numStr}</div>`;
+                    }
+                }).join('');
+                return;
+            }
+
             let badgeClass = 'num-badge-green';
             if (containerId.includes('n2')) badgeClass = 'num-badge-yellow';
             else if (containerId.includes('n3')) badgeClass = 'num-badge-orange-sm';
 
             container.innerHTML = dan.map(so => 
-                `<span class="${badgeClass} num">${so}</span>`
+                `<span class="${badgeClass} num" onclick="copyText('${so}', 'Đã copy ${so}')">${so}</span>`
             ).join(' ');
         }
         window.renderDan = renderDan;
@@ -2526,7 +2708,10 @@
         function copyDan(containerId) {
             const container = document.getElementById(containerId);
             if (!container) return;
-            const items = Array.from(container.querySelectorAll('.num, span')).map(e => e.textContent.trim()).filter(x => x && !x.includes('Chưa có'));
+            const items = Array.from(container.querySelectorAll('.num, span')).map(e => {
+                const m = e.textContent.match(/\d{2}/);
+                return m ? m[0] : '';
+            }).filter(x => x);
             const text = items.length > 0 ? items.join(', ') : container.innerText.trim();
             if (!text) return;
             const title = containerId.toUpperCase().replace('-', ' ');
@@ -2842,7 +3027,7 @@
                 content.innerHTML = `
                     <div style="padding: 18px 14px; background: rgba(15, 23, 42, 0.95); border-radius: 12px; border: 1px solid rgba(56, 189, 248, 0.3);">
                         <div style="font-size: 14px; font-weight: 800; color: #38bdf8; margin-bottom: 8px;">
-                            <i class="fa-solid fa-radio fa-fade"></i> TƯỜNG THUẬT ÂM THANH TRƯỜNG QUAY 53 HÀNG CHUỐI
+                            <i class="fa-solid fa-radio fa-fade"></i> TƯỜNG THUẬT ÂM THANH TRƯỜNG QUAY SỐ 1 TĂNG BẠT HỔ
                         </div>
                         <p style="font-size: 12px; color: #94a3b8; margin-bottom: 14px;">
                             Kênh tường thuật âm thanh quay thưởng trực tiếp cùng lúc với lồng cầu quay (18h15 - 18h35)

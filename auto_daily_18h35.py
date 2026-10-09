@@ -119,6 +119,10 @@ def main():
     step2_cmd = f'"{PYTHON_EXE}" soi_cau_g1_g5.py'
     ok2, out2 = run_step("Soi cầu G1-G5 & Chốt Dàn Tĩnh mới", step2_cmd, BASE_LOGIC_DIR, timeout=120)
 
+    # BƯỚC 2.5: Chạy live_radar_scanner.py (làm mới live_radar_state.json)
+    step25_cmd = f'"{PYTHON_EXE}" live_radar_scanner.py'
+    ok25, out25 = run_step("Làm mới Live Radar Scanner State", step25_cmd, BASE_LOGIC_DIR, timeout=90)
+
     # BƯỚC 3: Đồng bộ các file sang 58_up_to_75 và New folder/Logic
     log("-> Đồng bộ các file sang repo 58_up_to_75 & New folder/Logic...")
     sync_files = ['soi_cau_g1_g5_app.html', 'ket_qua_soi_cau_g1_g5.json', 'lich_su_phuong_phap.json', 'soi_cau_g1_g5.py', 'live_radar_state.json']
