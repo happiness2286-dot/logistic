@@ -253,61 +253,29 @@ def fetch_daiphat_draws(is_live=False):
         except Exception:
             date_str = f"ngày {d}-{mth}-{y}"
 
-        m_db = re.search(r'G\.ĐB.*?<td[^>]*>(.*?)<tr>', b, re.DOTALL)
-        db_nums = [x.strip() for x in re.findall(r'>\s*(\d{5})\s*<', m_db.group(1))] if m_db else []
-        db_val = db_nums[0] if db_nums else ''
+    today_dt = datetime.now()
+    today_str = today_dt.strftime('%d-%m-%Y')
+    dow_map = {0: 'Thứ hai', 1: 'Thứ ba', 2: 'Thứ tư', 3: 'Thứ năm', 4: 'Thứ sáu', 5: 'Thứ bảy', 6: 'Chủ nhật'}
+    today_date_str = f"{dow_map[today_dt.weekday()]} ngày {today_str}"
 
-        prizes = {}
-        # G1
-        m_g1 = re.search(r'G\.1.*?<td[^>]*>(.*?)<tr>', b, re.DOTALL)
-        g1_nums = [x.strip() for x in re.findall(r'>\s*(\d{5})\s*<', m_g1.group(1))] if m_g1 else []
-        prizes['G1'] = g1_nums[0] if g1_nums else ''
+    if is_live:
+        is_today = False
+        if draws and draws[0].get('date'):
+            m_d = re.search(r'(\d{2})[-/](\d{2})[-/](\d{4})', draws[0]['date'])
+            if m_d and f"{m_d.group(1)}-{m_d.group(2)}-{m_d.group(3)}" == today_str:
+                is_today = True
+        if not is_today:
+            # Chưa bắt đầu mở thưởng kỳ hôm nay (ví dụ lúc 18h14) -> Khởi tạo kỳ hôm nay chờ mở thưởng
+            empty_p = {
+                'G1': '', 'G2.1': '', 'G2.2': '',
+                'G3.1': '', 'G3.2': '', 'G3.3': '', 'G3.4': '', 'G3.5': '', 'G3.6': '',
+                'G4.1': '', 'G4.2': '', 'G4.3': '', 'G4.4': '',
+                'G5.1': '', 'G5.2': '', 'G5.3': '', 'G5.4': '', 'G5.5': '', 'G5.6': '',
+                'G6.1': '', 'G6.2': '', 'G6.3': '',
+                'G7.1': '', 'G7.2': '', 'G7.3': '', 'G7.4': ''
+            }
+            draws.insert(0, {'date': today_date_str, 'db': '', 'de': '', 'prizes': empty_p})
 
-        # G2
-        m_g2 = re.search(r'G\.2.*?<td[^>]*>(.*?)<tr>', b, re.DOTALL)
-        g2_nums = [x.strip() for x in re.findall(r'>\s*(\d{5})\s*<', m_g2.group(1))] if m_g2 else []
-        for idx in range(1, 3):
-            prizes[f'G2.{idx}'] = g2_nums[idx-1] if len(g2_nums) >= idx else ''
-
-        # G3
-        m_g3 = re.search(r'G\.3.*?<td[^>]*>(.*?)<tr>', b, re.DOTALL)
-        g3_nums = [x.strip() for x in re.findall(r'>\s*(\d{5})\s*<', m_g3.group(1))] if m_g3 else []
-        for idx in range(1, 7):
-            prizes[f'G3.{idx}'] = g3_nums[idx-1] if len(g3_nums) >= idx else ''
-
-        # G4
-        m_g4 = re.search(r'G\.4.*?<td[^>]*>(.*?)<tr>', b, re.DOTALL)
-        g4_nums = [x.strip() for x in re.findall(r'>\s*(\d{4})\s*<', m_g4.group(1))] if m_g4 else []
-        for idx in range(1, 5):
-            prizes[f'G4.{idx}'] = g4_nums[idx-1] if len(g4_nums) >= idx else ''
-
-        # G5
-        m_g5 = re.search(r'G\.5.*?<td[^>]*>(.*?)<tr>', b, re.DOTALL)
-        g5_nums = [x.strip() for x in re.findall(r'>\s*(\d{4})\s*<', m_g5.group(1))] if m_g5 else []
-        for idx in range(1, 7):
-            prizes[f'G5.{idx}'] = g5_nums[idx-1] if len(g5_nums) >= idx else ''
-
-        # G7
-        m_g7 = re.search(r'G\.7.*?<td[^>]*>(.*)', b, re.DOTALL)
-        g7_nums = [x.strip() for x in re.findall(r'>\s*(\d{2})\s*<', m_g7.group(1))] if m_g7 else []
-        for idx in range(1, 5):
-            prizes[f'G7.{idx}'] = g7_nums[idx-1] if len(g7_nums) >= idx else ''
-
-        draws.append({
-            'date': date_str,
-            'db': db_val,
-            'de': db_val[-2:] if len(db_val) >= 2 else '',
-            'prizes': prizes
-        })
-    return draws
-
-def scan_radar():
-    html = fetch_html(is_live=True)
-    draws = parse_draws(html) if html else []
-    if len(draws) < 2:
-        daiphat_draws = fetch_daiphat_draws(is_live=True)
-        if len(daiphat_draws) >= 2:
-            draws = daiphat_draws
     if len(draws) < 2:
         if os.path.exists(STATE_JSON_PATH):
             with open(STATE_JSON_PATH, encoding='utf-8') as f:
@@ -977,9 +945,10 @@ if __name__ == "__main__":
                         if args.auto_push:
                             do_quick_git_push(f"Lock Radar G5 {t_date} (BT {top1}, TT {top4})")
 
-                    # 2. BƯỚC ĐỐI CHIẾU KHI CÓ GIẢI ĐẶC BIỆT (sau 18h30)
-                    if res.get('actual_de'):
-                        print(f"\n🎯 [KẾT THÚC QUAY - {datetime.now().strftime('%H:%M:%S')}] Đã có Giải Đặc Biệt: {res.get('actual_de')}.", flush=True)
+                    # 2. BƯỚC ĐỐI CHIẾU KHI CÓ GIẢI ĐẶC BIỆT (chỉ kết thúc sau 18h30 khi thực sự có GĐB hôm nay)
+                    now_t = datetime.now()
+                    if res.get('actual_de') and (now_t.hour > 18 or (now_t.hour == 18 and now_t.minute >= 30)):
+                        print(f"\n🎯 [KẾT THÚC QUAY - {now_t.strftime('%H:%M:%S')}] Đã có Giải Đặc Biệt: {res.get('actual_de')}.", flush=True)
                         final_completed = True
                         if args.auto_push:
                             do_quick_git_push(f"Finish XSMB {res.get('target_date')} (DB {res.get('actual_de')})")

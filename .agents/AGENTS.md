@@ -11,8 +11,8 @@
 - **Nguồn cấp dữ liệu chuẩn hóa (Tuyệt đối không dùng mketqua.net/ketqua.net)**:
   - ❌ **CẤM HOÀN TOÀN**: `mketqua.net` và `ketqua.net` (bị ISP sinkhole chặn cổng 443 làm treo tiến trình quét và mất giờ chốt số).
   - ⚡ **Ưu tiên 1 (Live Real-time ~50ms)**: `https://api.383.im/lottery/live.json` — quét trực tiếp từng giải trong giờ quay (18h14 - 18h35).
-  - 🛡️ **Ưu tiên 2 (Lịch sử & Dự phòng)**: `https://xosodaiphat.com/xsmb-xo-so-mien-bac.html` và `xsmb-30-ngay.html`.
-- **Bản chất đài quay XSMB**: Cả 7 ngày trong tuần đều mở thưởng tại chung 1 trường quay (số 1 Tăng Bạt Hổ, Hà Nội), dùng chung 1 hệ thống lồng quay và 1 Hội đồng giám sát.
+  - 🛡️ **Ưu tiên 2 (Lịch sử & Dự phòng Tức thì)**: `https://xosodaiphat.com/xsmb-xo-so-mien-bac.html` và `xsmb-30-ngay.html`. Tự động fallback sang Đại Phát ngay lập tức nếu API 383.im gặp lỗi mạng hoặc timeout.
+- **Bản chất đài quay XSMB**: Cả 7 ngày trong tuần đều mở thưởng tại chung 1 trường quay (**Số 1 Tăng Bạt Hổ, Hà Nội • Đài PT-TH Hà Nội / VTC9, 18h15 - 18h35**), dùng chung 1 hệ thống lồng quay và 1 Hội đồng giám sát.
 - **Phân lập 2 tầng chu kỳ**:
   1. *Tầng 1 (Hàng ngày)*: Radar Live G1-G5, Dàn Tĩnh 4 Cấp và Khung 3N chạy theo nhịp rơi liên tục hàng ngày ($N-1 \rightarrow N \rightarrow N+1$).
   2. *Tầng 2 (Theo Thứ - DOW Model)*: Phân tích phong độ riêng theo từng thứ (chu kỳ 7 ngày) trong Excel Master 18 Sheet để bắt đúng quy luật riêng của từng đài thành viên.
@@ -40,10 +40,14 @@
 ---
 
 ### B. RADAR SOI LIVE G1-G5 & KHÓA CHỐT G5 TỨC THÌ (GIỜ QUAY)
-1. **Khung Giờ Quét Live**: Tự động quét trong khung giờ vàng **18h14 – 18h35**.
+1. **Khung Giờ Quét Live & Cơ Chế Date Guard**:
+   - Tự động kích hoạt lúc **18:14:00**.
+   - **Date Guard chống dừng sớm**: Trước 18h15 nếu API còn lưu kết quả ngày hôm qua, hệ thống tự động khởi tạo trạng thái "Chờ mở thưởng kỳ hôm nay" (0/19 giải), tuyệt đối không nhận nhầm giải ĐB cũ để dừng sớm. Tiến trình chạy xuyên suốt từ 18h14 đến 18h32.
 2. **Cơ Chế Khóa Chốt G5 Tức Thì (`LOCKED_G5`)**:
-   - Khi nổ đủ **19/19 giải (xong G5.6 lúc ~18h24)** $\rightarrow$ Hệ thống tự động chuyển trạng thái `LOCKED_G5`.
-   - Lập tức tính toán và xuất toàn bộ dàn chốt để người dùng vào tiền an toàn **trước 18h28** (trước khi quay Giải Đặc Biệt GĐB).
+   - Khi nổ đủ **19/19 giải (xong G5.6 lúc ~18h23 - 18h24)** $\rightarrow$ Hệ thống tự động chuyển trạng thái `LOCKED_G5`.
+   - Lập tức tính toán và xuất toàn bộ dàn chốt ở Phần 2: Bạch Thủ Top 1 👑, Tứ Thủ Top 4 🔥, Càng 3D 🔮, Dàn Tinh Túy Ngày 1 ⭐, Số Lót N1 🛡️.
+   - Tự động đẩy Git commit & push lên GitHub Pages ngay trước **18h28** để người dùng vào tiền an toàn trước khi quay Giải Đặc Biệt.
+   - Phiên live chỉ kết thúc sau **18h30** khi đã thực sự có Giải Đặc Biệt của ngày hôm nay.
 3. **Tâm 3 Càng 3D Live**:
    - Lấy số giữa (tâm) của Giải Nhất G1 (nổ lúc **18h16**) làm càng 3D.
    - Kết hợp trực tiếp với các dàn số để đánh trực diện cho **Giải Đặc Biệt (GĐB) của chính ngày hôm đó lúc 18h30**.
@@ -51,7 +55,6 @@
    - **Nguyên tắc**: Giữ nguyên 100% logic thống kê chu kỳ của Radar gốc, không ghi đè làm mất cốt lõi.
    - **Công thức Điểm Hội Tụ Đồng Thuận**:
      $$\text{Điểm Giao Thoa} = \text{Radar G1-G5} + \text{Dàn 9s AI} + \text{Chạm Tâm G1} + \text{Ép Cầu Tổng G7} + \text{Khung 60s N1}$$
-   - **Kiểm chứng thực tế ngày 26/09/2026**: Đề về **32**, số 32 bứt phá hội tụ điểm cao vào thẳng **Tứ Thủ** (`42, 24, 32, 37`) và trúng càng 3D `232`.
 5. **Cặp Lót Lộn Song Thủ Trụ (Bảo Vệ 100%)**:
    - Triệt tiêu hoàn toàn rủi ro nổ lộn vị trí đầu/đuôi (bắt 42 về 24, hoặc bắt 23 về 32).
    - **Giao diện Thẻ Đôi Cân Xứng (Tab 2)**:
@@ -61,7 +64,19 @@
 
 ---
 
-### C. HỆ THỐNG KIỂM CHỨNG & THEO DÕI LỊCH SỬ 3 TRỤ CỘT (PHẦN 4A, 4B, 4C)
+### C. PHẦN 3: DÀN SỐ N1 (60 SỐ) - PHÂN CẤP MÀU SẮC SỐ MẠNH (CHUẨN GIAO DIỆN)
+- **Thanh Chú Thích Phân Loại (Legend Chips)**:
+  - 👑 **Bạch thủ**: Nền vàng viền gold rực rỡ + glow (`.tag-bach-thu`).
+  - 🔥 **Tứ thủ**: Nền cam viền orange + glow (`.tag-tu-thu`).
+  - ⭐ **Dàn 9**: Nền xanh dương viền cyan + glow (`.tag-dan-9`).
+  - 🔄 **Dàn đảo**: Nền xanh ngọc viền emerald + glow (`.tag-dan-dao`).
+  - 📦 **Dàn lót**: Nền slate tối viền mờ tinh tế (`.tag-dan-lot`).
+- **Lưới Ma Trận 60 Số N1**: Tự động phân cấp và khoác lên màu sắc, icon tương ứng giúp người dùng nhận diện ngay số mạnh để phân bổ tỷ trọng vốn.
+- **Tính Năng 1-Click Copy Thông Minh**: Khi bấm vào từng số hoặc nút Copy Dàn N1, hệ thống tự động bóc tách sạch sẽ các icon và chỉ sao chép dãy số 2D chuẩn (`01, 02...`), không bị dính icon hay ký tự lạ.
+
+---
+
+### D. HỆ THỐNG KIỂM CHỨNG & THEO DÕI LỊCH SỬ 3 TRỤ CỘT (PHẦN 4A, 4B, 4C)
 1. **Phần 4A (Khung 3 Ngày - 58_up_to_75)**: Theo dõi độc lập chu kỳ nuôi N1, N2, N3.
 2. **Phần 4B (Soi Trực Tiếp G1-G5)**: Đánh giá hiệu suất Bạch Thủ Top 1, Tứ Thủ Top 4 và Dàn Lót.
 3. **Phần 4C (Dàn Tinh Túy Ngày 1 - 60 Ngày)**:
