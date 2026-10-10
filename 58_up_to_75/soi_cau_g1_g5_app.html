@@ -2408,9 +2408,8 @@
             const min18h14 = 18 * 60 + 14;     // 18h14: 1094 phút
             const min18h35 = 18 * 60 + 35;     // 18h35: 1115 phút
 
-            // Trước 18h14 là thời gian CHỜ MỞ THƯỞNG KỲ HÔM NAY (Đặc biệt từ 17h00 đến 18h14)
-            const isWaitingForDraw = (curTotalMin < min18h14);
-            const isAfter17h = (curTotalMin >= min17h00 && curTotalMin < min18h14);
+            // CHẾ ĐỘ CHUẨN BỊ QUAY CỦA PHẦN 1: CHỈ TỪ 17H00 ĐẾN 18H14
+            const isPreparingForDraw = (curTotalMin >= min17h00 && curTotalMin < min18h14);
             const isLiveHour = (curTotalMin >= min18h14 && curTotalMin <= min18h35);
             const isAfter18h35 = (curTotalMin > min18h35);
 
@@ -2421,8 +2420,8 @@
                 curTotalMin,
                 todayStr,
                 todayFullStr,
-                isWaitingForDraw,
-                isAfter17h,
+                isPreparingForDraw,
+                isWaitingForDraw: isPreparingForDraw,
                 isLiveHour,
                 isAfter18h35
             };
@@ -2459,8 +2458,8 @@
 
             const txtDate = document.getElementById('txt-tinh-date');
             if (txtDate) {
-                // Trước 18h31: giữ ngày hôm nay
-                if (timeStatus.curTotalMin < (18 * 60 + 31)) {
+                // Trước 18h35: giữ ngày hôm nay
+                if (timeStatus.curTotalMin < (18 * 60 + 35)) {
                     txtDate.textContent = timeStatus.todayFullStr || dt.target_date;
                 } else {
                     txtDate.textContent = dt.target_date || timeStatus.todayFullStr;
@@ -2469,7 +2468,7 @@
 
             const txtBadge = document.getElementById('txt-tinh-badge');
             if (txtBadge) {
-                if (timeStatus.curTotalMin < (18 * 60 + 31)) {
+                if (timeStatus.curTotalMin < (18 * 60 + 35)) {
                     txtBadge.innerHTML = `<i class="fa-solid fa-circle-check"></i> ĐANG CÓ HIỆU LỰC (VÀO TIỀN TRƯỚC 18H15 HÔM NAY)`;
                     txtBadge.style.color = '#34d399';
                     txtBadge.style.borderColor = 'rgba(16, 185, 129, 0.4)';
@@ -2593,9 +2592,10 @@
 
             renderDanTinh(currentData.dan_tinh_4cap);
 
-            // TRƯỜNG HỢP 1: TRƯỚC 18H14 (ĐẶC BIỆT TỪ 17H00 ĐẾN 18H14)
-            // Đưa Phần 1 về CHẾ ĐỘ CHỜ MỞ THƯỞNG KỲ HÔM NAY rõ ràng cụ thể cùng đài
-            if (timeStatus.isWaitingForDraw) {
+            // TRƯỜNG HỢP 1: TỪ ĐÚNG 17H00 ĐẾN 18H14 (CHUẨN BỊ QUAY)
+            // Từ 18h35 hôm trước đến 17h00 hôm sau: Phần 1 giữ nguyên 19 giải kỳ gần nhất để tra cứu.
+            // Chỉ trong khung 17h00 - 18h14: Tự động đưa về CHẾ ĐỘ CHỜ MỞ THƯỞNG KỲ HÔM NAY.
+            if (timeStatus.isPreparingForDraw) {
                 if (dateEl) dateEl.textContent = timeStatus.todayFullStr;
                 if (badgeEl) {
                     badgeEl.innerHTML = `<i class="fa-solid fa-clock fa-fade" style="color: #fbbf24;"></i> ⏳ CHỜ MỞ THƯỞNG KỲ HÔM NAY (18H15 - 18H32)`;
