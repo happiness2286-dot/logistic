@@ -99,3 +99,26 @@ Dự án **XSMB AI - Mini App Real-Time (Repo Logic)** vận hành theo mô hìn
 - Loại bỏ hoàn toàn thao tác kiểm chứng thủ công.
 - 100% tự động điều phối theo thời gian thực (GMT+7).
 - Dữ liệu luôn đồng bộ và nhất quán giữa Local và Cloud GitHub Pages.
+
+---
+
+## 6. NHẬT KÝ KHẮC PHỤC SỰ CỐ & CẬP NHẬT KỲ 09/10/2026 -> 10/10/2026
+- **Nguyên nhân sự cố kẹt ngày 08/10**:
+  1. `crawl_and_analyze.py` (dòng 263) dính `SyntaxError: unmatched ')'` do cặn code mketqua.net cũ làm treo tiến trình.
+  2. `live_radar_scanner.py` (dòng 964) dính `NameError: name 'scan_radar' is not defined`.
+  3. Windows Task Scheduler ở chế độ `Interactive only` khiến tiến trình bị bỏ qua khi máy tính ở trạng thái khóa/ngủ lúc 18h35.
+- **Biện pháp xử lý triệt để**:
+  1. Đã dọn sạch 100% lỗi cú pháp trong `crawl_and_analyze.py`, khóa cứng nguồn cấp số chuẩn hóa sang `xosodaiphat.com` (100% tuân thủ Rule 2).
+  2. Khai báo hoàn chỉnh hàm `scan_radar()` trong `live_radar_scanner.py`.
+  3. Chạy thông mạch chu trình 18h35 thành công mỹ mãn:
+     - Ghi nhận đầy đủ 27 giải ngày **09/10/2026** (GĐB: `20635` - **Đề 35**).
+     - Tự động nhảy sang chu kỳ ngày mai: **Thứ Bảy, ngày 10/10/2026**.
+     - Bảng Chốt Dàn Tĩnh Cấp 4 ngày 10/10:
+       * 👑 **Bạch Thủ**: `03`
+       * 🔥 **Song Thủ**: `03 - 30`
+       * ⭐ **Tứ Thủ**: `03 - 30 - 62 - 61`
+       * 🔮 **Càng 3D**: `0, 2, 4, 5, 7`
+       * ⭐ **Dàn 9 số Cội Nguồn**: `13, 10, 11, 23, 20, 21, 63, 60, 61`
+       * 🛡️ **Dàn 38 số Cấp 2** & **Dàn 60 số Cấp 1**.
+  4. Đã tự động đồng bộ sang thư mục `58_up_to_75` và đẩy commit lên GitHub Pages (`happiness2286-dot/logistic.git`).
+

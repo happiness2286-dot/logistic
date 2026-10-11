@@ -354,25 +354,79 @@ def fetch_daiphat_draws(use_30days=True):
 def get_combined_draws(is_live=False):
     """
     Hệ thống nguồn kép độc lập:
-    - Trực tiếp: Ưu tiên số 1 API 383.im (50ms)
+    - Trực tiếp: Ưu tiên số 1 API 383.im (~50ms)
     - Quá khứ & Dự phòng: xosodaiphat.com
     """
     past_draws = fetch_daiphat_draws(use_30days=True)
+    today_dt = datetime.now()
+    today_str = today_dt.strftime('%d-%m-%Y')
+    dow_map = {0: 'Thứ hai', 1: 'Thứ ba', 2: 'Thứ tư', 3: 'Thứ năm', 4: 'Thứ sáu', 5: 'Thứ bảy', 6: 'Chủ nhật'}
+    today_date_str = f"{dow_map[today_dt.weekday()]} ngày {today_str}"
+
     if is_live:
-        live_draw = fetch_383_live()
-        if live_draw:
-            if past_draws and live_draw['date'] == past_draws[0]['date']:
+        # 1. ƯU TIÊN SỐ 1: API 383.im
+        live_draw = None
+        try:
+            live_draw = fetch_383_live()
+        except Exception as e:
+            print(f"[!] Lỗi kết nối 383.im: {e}")
+            live_draw = None
+
+        # 2. DỰ PHÒNG TỨC THÌ: Nếu 383.im không phản hồi hoặc lỗi, chuyển sang xosodaiphat.com
+        if not live_draw:
+            print("[*] API 383.im không phản hồi -> Chuyển sang nguồn dự phòng xosodaiphat.com...", flush=True)
+            daiphat_live = fetch_daiphat_draws(use_30days=False)
+            if daiphat_live:
+                live_draw = daiphat_live[0]
+
+        # 3. DATE GUARD: Kiểm tra xem kết quả cào về có phải của ngày hôm nay không
+        is_today_draw = False
+        if live_draw and live_draw.get('date'):
+            # Kiểm tra ngày trong chuỗi date
+            m_date = re.search(r'(\d{2})[-/](\d{2})[-/](\d{4})', live_draw['date'])
+            if m_date:
+                draw_date_formatted = f"{m_date.group(1)}-{m_date.group(2)}-{m_date.group(3)}"
+                if draw_date_formatted == today_str:
+                    is_today_draw = True
+
+        if is_today_draw and live_draw:
+            if past_draws and live_draw['date'].split()[-1] == past_draws[0]['date'].split()[-1]:
                 past_draws[0] = live_draw
-            elif past_draws and live_draw['date'] != past_draws[0]['date']:
+            else:
                 past_draws.insert(0, live_draw)
-            elif not past_draws:
-                past_draws = [live_draw]
+        else:
+            # Đài chưa bắt đầu quay kỳ hôm nay (ví dụ lúc 18h14) -> Khởi tạo kỳ hôm nay chờ mở thưởng
+            empty_prizes = {
+                'G1': '', 'G2.1': '', 'G2.2': '',
+                'G3.1': '', 'G3.2': '', 'G3.3': '', 'G3.4': '', 'G3.5': '', 'G3.6': '',
+                'G4.1': '', 'G4.2': '', 'G4.3': '', 'G4.4': '',
+                'G5.1': '', 'G5.2': '', 'G5.3': '', 'G5.4': '', 'G5.5': '', 'G5.6': '',
+                'G6.1': '', 'G6.2': '', 'G6.3': '',
+                'G7.1': '', 'G7.2': '', 'G7.3': '', 'G7.4': ''
+            }
+            live_pending = {
+                'date': today_date_str,
+                'db': '',
+                'de': '',
+                'prizes': empty_prizes
+            }
+            if not past_draws or past_draws[0]['date'].split()[-1] != today_str:
+                past_draws.insert(0, live_pending)
     else:
-        live_draw = fetch_383_live()
+        live_draw = None
+        try:
+            live_draw = fetch_383_live()
+        except Exception:
+            live_draw = None
+        if not live_draw:
+            daiphat_live = fetch_daiphat_draws(use_30days=False)
+            if daiphat_live:
+                live_draw = daiphat_live[0]
+
         if live_draw and past_draws:
-            if live_draw['date'] == past_draws[0]['date']:
+            if live_draw['date'].split()[-1] == past_draws[0]['date'].split()[-1]:
                 past_draws[0] = live_draw
-            elif live_draw['date'] != past_draws[0]['date']:
+            elif live_draw['date'].split()[-1] != past_draws[0]['date'].split()[-1]:
                 past_draws.insert(0, live_draw)
         elif live_draw and not past_draws:
             past_draws = [live_draw]
@@ -1063,6 +1117,7 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
         'frame_transition': frame_transition,
         'table_5cols': found_numbers,
         'actual_de': actual_de,
+        'dan_dao': [calc_lot_lon(top_1)] if top_1 else ([calc_lot_lon(tu_thu_tinh[0])] if tu_thu_tinh else []),
         'dan_tinh_4cap': dan_tinh_4cap
     }
     
@@ -1401,16 +1456,26 @@ if __name__ == '__main__':
                     
                     if res.get('is_g5_finished') and not g5_locked:
                         g5_locked = True
-                        print(f"\n[★ {now_str}] ĐÃ HOÀN TẤT GIẢI 5.6! XUẤT THÀNH CÔNG DÀN TINH TÚY & TÔ MÀU VỊ TRÍ CẦU.")
-                        print(f"      Top 1: {res.get('top_1')} | Top 4: {res.get('top_4')}")
+                        t_date = res.get('target_date', '')
+                        top1_v = res.get('top_1', '')
+                        top4_v = res.get('top_4', [])
+                        cang_v = res.get('dan_tinh_4cap', {}).get('cang_3d', [])
+                        print(f"\n=======================================================", flush=True)
+                        print(f"🔒 [CHỐT KHÓA G5 - {now_str}] ĐÃ HOÀN TẤT 19/19 GIẢI G1->G5 KỲ {t_date}!", flush=True)
+                        print(f"👑 BẠCH THỦ TOP 1: {top1_v} | 🔥 TỨ THỦ TOP 4: {top4_v}", flush=True)
+                        print(f"🌟 TOP 3 CÀNG: {cang_v} (ĐÁNH NGAY CHO GIẢI ĐẶC BIỆT QUAY LÚC 18H30)", flush=True)
+                        print(f"⏱️ HẠN CHỐT VÀO TIỀN: TRƯỚC 18H28!", flush=True)
+                        print(f"=======================================================\n", flush=True)
                         if args.push:
                             push_live_update(filled, total, is_done=True)
 
-                    if actual_de_val:
-                        print(f"\n[🏆 {now_str}] ĐÃ CÓ GIẢI ĐẶC BIỆT: {actual_de_val}!")
+                    # CHỈ THOÁT KHI ĐÃ QUA 18H30 VÀ THỰC SỰ CÓ GIẢI ĐẶC BIỆT KỲ HÔM NAY
+                    now_t = datetime.now()
+                    if actual_de_val and (now_t.hour > 18 or (now_t.hour == 18 and now_t.minute >= 30)):
+                        print(f"\n[🏆 {now_str}] ĐÃ CÓ GIẢI ĐẶC BIỆT HÔM NAY: {actual_de_val}!", flush=True)
                         if args.push:
                             push_live_update(filled, total, is_done=True, actual_de=actual_de_val)
-                        print(f"[*] Kết thúc phiên live thành công mỹ mãn.")
+                        print(f"[*] Kết thúc phiên live thành công mỹ mãn.", flush=True)
                         break
 
                 time.sleep(args.interval)
