@@ -25,7 +25,7 @@
       "70045"
     ],
     "g4": [
-      "",
+      "1882",
       "",
       "",
       ""
@@ -136,6 +136,18 @@
       "color_type": "cycle_watch",
       "tooltip": "G3.6 vị trí 1: Đầu 7 (1d) | Theo dõi ngày 1 (Mới chạm)"
     },
+    "G4.1_4": {
+      "pos_raw": "G4.1 vị trí 4",
+      "role": "head",
+      "role_name": "Đầu",
+      "digit": "2",
+      "cycle": 1,
+      "cycle_suffix": "1d",
+      "category": "Theo dõi",
+      "label": "Theo dõi ngày 1 (Mới chạm)",
+      "color_type": "cycle_watch",
+      "tooltip": "G4.1 vị trí 4: Đầu 2 (1d) | Theo dõi ngày 1 (Mới chạm)"
+    },
     "G2.1_3": {
       "pos_raw": "G2.1 vị trí 3",
       "role": "tail",
@@ -243,9 +255,21 @@
       "label": "Theo dõi ngày 1 (Mới chạm)",
       "color_type": "cycle_watch",
       "tooltip": "G3.4 vị trí 5: Đuôi 8 (1d) | Theo dõi ngày 1 (Mới chạm)"
+    },
+    "G4.1_3": {
+      "pos_raw": "G4.1 vị trí 3",
+      "role": "tail",
+      "role_name": "Đuôi",
+      "digit": "8",
+      "cycle": 1,
+      "cycle_suffix": "1d",
+      "category": "Theo dõi",
+      "label": "Theo dõi ngày 1 (Mới chạm)",
+      "color_type": "cycle_watch",
+      "tooltip": "G4.1 vị trí 3: Đuôi 8 (1d) | Theo dõi ngày 1 (Mới chạm)"
     }
   },
-  "filled_count": 9,
+  "filled_count": 10,
   "total_count": 19,
   "is_g5_finished": false,
   "dan_ghep": [
