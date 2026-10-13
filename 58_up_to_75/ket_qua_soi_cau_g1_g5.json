@@ -20,7 +20,7 @@
       "58777",
       "33062",
       "70578",
-      "",
+      "29945",
       "",
       ""
     ],
@@ -160,6 +160,18 @@
       "color_type": "cycle_lot",
       "tooltip": "G3.3 vị trí 2: Đầu 0 (2d) | Lót ngày 2"
     },
+    "G3.4_5": {
+      "pos_raw": "G3.4 vị trí 5",
+      "role": "head",
+      "role_name": "Đầu",
+      "digit": "5",
+      "cycle": 1,
+      "cycle_suffix": "1d",
+      "category": "Theo dõi",
+      "label": "Theo dõi ngày 1 (Mới chạm)",
+      "color_type": "cycle_watch",
+      "tooltip": "G3.4 vị trí 5: Đầu 5 (1d) | Theo dõi ngày 1 (Mới chạm)"
+    },
     "G1_2": {
       "pos_raw": "G1 vị trí 2",
       "role": "tail",
@@ -221,7 +233,7 @@
       "tooltip": "G3.1 vị trí 5: Đuôi 7 (1d) | Theo dõi ngày 1 (Mới chạm)"
     }
   },
-  "filled_count": 6,
+  "filled_count": 7,
   "total_count": 19,
   "is_g5_finished": false,
   "dan_ghep": [
@@ -471,20 +483,20 @@
   "top_4": [
     "08",
     "28",
-    "78",
-    "68"
+    "58",
+    "78"
   ],
   "top4": [
     "08",
     "28",
-    "78",
-    "68"
+    "58",
+    "78"
   ],
   "top_4_display": [
     "★ 08 (3d)",
     "★ 28 (3d)",
-    "★ 78 (3d)",
-    "★ 68 (3d)"
+    "★ 58 (3d)",
+    "★ 78 (3d)"
   ],
   "dan_lot": [
     "01",
@@ -521,7 +533,6 @@
     "51",
     "53",
     "55",
-    "58",
     "59",
     "60",
     "61",
@@ -529,6 +540,7 @@
     "63",
     "65",
     "67",
+    "68",
     "69",
     "72",
     "80",
@@ -581,7 +593,6 @@
     "51 (lót)",
     "53 (lót)",
     "55 (lót)",
-    "58 (lót)",
     "59 (lót)",
     "60 (lót)",
     "61 (lót)",
@@ -589,6 +600,7 @@
     "63 (lót)",
     "65 (lót)",
     "67 (lót)",
+    "68 (lót)",
     "69 (lót)",
     "72 (lót)",
     "80 (lót)",
@@ -908,6 +920,24 @@
       "top_rank": "🔥 Top 4 (Tứ thủ)"
     },
     {
+      "num": "58",
+      "c_digit": "5",
+      "d_digit": "8",
+      "c_cycle": 1,
+      "d_cycle": 3,
+      "cycle_days": 3,
+      "category": "Chỉ đạo",
+      "cat_label": "✅ CHỈ ĐẠO (3 ngày)",
+      "weight": 1.0,
+      "combo_type": "chính diện",
+      "score": 154.0,
+      "h_pos": "G3.4 vị trí 5",
+      "t_pos": "G2.2 vị trí 3",
+      "in_cap4": true,
+      "in_cap4_str": "Có",
+      "top_rank": "🔥 Top 4 (Tứ thủ)"
+    },
+    {
       "num": "78",
       "c_digit": "7",
       "d_digit": "8",
@@ -941,7 +971,7 @@
       "t_pos": "G2.2 vị trí 3",
       "in_cap4": true,
       "in_cap4_str": "Có",
-      "top_rank": "🔥 Top 4 (Tứ thủ)"
+      "top_rank": "🛡️ Lót hợp lệ"
     },
     {
       "num": "88",
@@ -956,24 +986,6 @@
       "combo_type": "chính diện",
       "score": 154.0,
       "h_pos": "G3.1 vị trí 2",
-      "t_pos": "G2.2 vị trí 3",
-      "in_cap4": true,
-      "in_cap4_str": "Có",
-      "top_rank": "🛡️ Lót hợp lệ"
-    },
-    {
-      "num": "58",
-      "c_digit": "0",
-      "d_digit": "8",
-      "c_cycle": 2,
-      "d_cycle": 3,
-      "cycle_days": 3,
-      "category": "Chỉ đạo",
-      "cat_label": "✅ CHỈ ĐẠO (3 ngày)",
-      "weight": 0.85,
-      "combo_type": "bóng đầu",
-      "score": 152.0,
-      "h_pos": "G3.3 vị trí 2",
       "t_pos": "G2.2 vị trí 3",
       "in_cap4": true,
       "in_cap4_str": "Có",
@@ -1047,6 +1059,24 @@
       "score": 152.0,
       "h_pos": "G3.1 vị trí 2",
       "t_pos": "G3.1 vị trí 5",
+      "in_cap4": true,
+      "in_cap4_str": "Có",
+      "top_rank": "🛡️ Lót hợp lệ"
+    },
+    {
+      "num": "53",
+      "c_digit": "5",
+      "d_digit": "8",
+      "c_cycle": 1,
+      "d_cycle": 3,
+      "cycle_days": 3,
+      "category": "Chỉ đạo",
+      "cat_label": "✅ CHỈ ĐẠO (3 ngày)",
+      "weight": 0.85,
+      "combo_type": "bóng đuôi",
+      "score": 151.0,
+      "h_pos": "G3.4 vị trí 5",
+      "t_pos": "G2.2 vị trí 3",
       "in_cap4": true,
       "in_cap4_str": "Có",
       "top_rank": "🛡️ Lót hợp lệ"
@@ -1155,24 +1185,6 @@
       "score": 150.0,
       "h_pos": "G3.2 vị trí 5",
       "t_pos": "G3.1 vị trí 5",
-      "in_cap4": true,
-      "in_cap4_str": "Có",
-      "top_rank": "🛡️ Lót hợp lệ"
-    },
-    {
-      "num": "53",
-      "c_digit": "0",
-      "d_digit": "8",
-      "c_cycle": 2,
-      "d_cycle": 3,
-      "cycle_days": 3,
-      "category": "Chỉ đạo",
-      "cat_label": "✅ CHỈ ĐẠO (3 ngày)",
-      "weight": 0.7,
-      "combo_type": "bóng cả hai",
-      "score": 149.0,
-      "h_pos": "G3.3 vị trí 2",
-      "t_pos": "G2.2 vị trí 3",
       "in_cap4": true,
       "in_cap4_str": "Có",
       "top_rank": "🛡️ Lót hợp lệ"
@@ -1844,6 +1856,24 @@
       "top_rank": "❌ Loại bỏ (Ngoài 60s)"
     },
     {
+      "num": "57",
+      "c_digit": "5",
+      "d_digit": "7",
+      "c_cycle": 1,
+      "d_cycle": 1,
+      "cycle_days": 3,
+      "category": "Chỉ đạo",
+      "cat_label": "✅ CHỈ ĐẠO (3 ngày)",
+      "weight": 1.0,
+      "combo_type": "chính diện",
+      "score": 152.0,
+      "h_pos": "G3.4 vị trí 5",
+      "t_pos": "G3.1 vị trí 5",
+      "in_cap4": false,
+      "in_cap4_str": "Không",
+      "top_rank": "❌ Loại bỏ (Ngoài 60s)"
+    },
+    {
       "num": "77",
       "c_digit": "7",
       "d_digit": "7",
@@ -1880,36 +1910,18 @@
       "top_rank": "❌ Loại bỏ (Ngoài 60s)"
     },
     {
-      "num": "57",
-      "c_digit": "0",
+      "num": "52",
+      "c_digit": "5",
       "d_digit": "7",
-      "c_cycle": 2,
+      "c_cycle": 1,
       "d_cycle": 1,
       "cycle_days": 3,
       "category": "Chỉ đạo",
       "cat_label": "✅ CHỈ ĐẠO (3 ngày)",
       "weight": 0.85,
-      "combo_type": "bóng đầu",
-      "score": 150.0,
-      "h_pos": "G3.3 vị trí 2",
-      "t_pos": "G3.1 vị trí 5",
-      "in_cap4": false,
-      "in_cap4_str": "Không",
-      "top_rank": "❌ Loại bỏ (Ngoài 60s)"
-    },
-    {
-      "num": "52",
-      "c_digit": "0",
-      "d_digit": "7",
-      "c_cycle": 2,
-      "d_cycle": 1,
-      "cycle_days": 3,
-      "category": "Chỉ đạo",
-      "cat_label": "✅ CHỈ ĐẠO (3 ngày)",
-      "weight": 0.7,
-      "combo_type": "bóng cả hai",
-      "score": 147.0,
-      "h_pos": "G3.3 vị trí 2",
+      "combo_type": "bóng đuôi",
+      "score": 149.0,
+      "h_pos": "G3.4 vị trí 5",
       "t_pos": "G3.1 vị trí 5",
       "in_cap4": false,
       "in_cap4_str": "Không",
