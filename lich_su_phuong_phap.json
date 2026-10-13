@@ -14,6 +14,13 @@
     "lich_su": [
       {
         "khung_stt": 51,
+        "ngay": "13/10/2026",
+        "de": "18",
+        "ket_qua": "trung_n1",
+        "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
+      },
+      {
+        "khung_stt": 51,
         "ngay": "12/10/2026",
         "de": "87",
         "ket_qua": "trung_n1",
@@ -354,13 +361,6 @@
         "de": "00",
         "ket_qua": "trung_n1",
         "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
-      },
-      {
-        "khung_stt": 229,
-        "ngay": "21/08/2026",
-        "de": "00",
-        "ket_qua": "trung_n1",
-        "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
       }
     ]
   },
@@ -375,6 +375,19 @@
       "ty_le_lot": 88.0
     },
     "lich_su": [
+      {
+        "ngay": "13/10/2026",
+        "de": "18",
+        "top1": "66",
+        "top4": [
+          "66",
+          "61",
+          "16",
+          "11"
+        ],
+        "ket_qua": "trung_lot",
+        "ghi_chu": "🛡️ Trúng Dàn Số Lót [18]"
+      },
       {
         "ngay": "12/10/2026",
         "de": "87",
@@ -1009,19 +1022,6 @@
         ],
         "ket_qua": "trung_tu_thu",
         "ghi_chu": "⭐ Trúng Tứ Thủ Top 4 [17]"
-      },
-      {
-        "ngay": "23/08/2026",
-        "de": "38",
-        "top1": "68",
-        "top4": [
-          "68",
-          "87",
-          "38",
-          "99"
-        ],
-        "ket_qua": "trung_lot",
-        "ghi_chu": "🛡️ Trúng Dàn Số Lót [38]"
       }
     ]
   },
@@ -1032,10 +1032,18 @@
       "truot": 8,
       "ty_le_trung": 86.7,
       "ty_le_truot": 13.3,
-      "dan_tb": 37.8,
-      "chuoi_thong": 6
+      "dan_tb": 38.3,
+      "chuoi_thong": 7
     },
     "lich_su": [
+      {
+        "stt": 61,
+        "ngay": "13/10/2026",
+        "de": "18",
+        "so_luong": 61,
+        "ket_qua": "trung",
+        "ghi_chu": "Trúng Đề 18 ✅ (Dàn 61 số)"
+      },
       {
         "stt": 60,
         "ngay": "12/10/2026",
@@ -1507,14 +1515,6 @@
         "so_luong": 36,
         "ket_qua": "truot",
         "ghi_chu": "Trượt Đề 78 ❌ (36 số)"
-      },
-      {
-        "stt": 1,
-        "ngay": "14/08/2026",
-        "de": "18",
-        "so_luong": 33,
-        "ket_qua": "trung",
-        "ghi_chu": "Trúng Đề 18 ✅ (Dàn 33 số)"
       }
     ]
   }
