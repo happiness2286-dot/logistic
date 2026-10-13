@@ -34,7 +34,7 @@
       "8274",
       "4475",
       "3487",
-      "",
+      "5399",
       "",
       ""
     ]
@@ -268,6 +268,18 @@
       "color_type": "cycle_watch",
       "tooltip": "G5.2 vị trí 3: Đầu 7 (1d) | Theo dõi ngày 1 (Mới chạm)"
     },
+    "G5.4_1": {
+      "pos_raw": "G5.4 vị trí 1",
+      "role": "head",
+      "role_name": "Đầu",
+      "digit": "5",
+      "cycle": 1,
+      "cycle_suffix": "1d",
+      "category": "Theo dõi",
+      "label": "Theo dõi ngày 1 (Mới chạm)",
+      "color_type": "cycle_watch",
+      "tooltip": "G5.4 vị trí 1: Đầu 5 (1d) | Theo dõi ngày 1 (Mới chạm)"
+    },
     "G1_2": {
       "pos_raw": "G1 vị trí 2",
       "role": "tail",
@@ -449,7 +461,7 @@
       "tooltip": "G5.3 vị trí 3: Đuôi 8 (1d) | Theo dõi ngày 1 (Mới chạm)"
     }
   },
-  "filled_count": 16,
+  "filled_count": 17,
   "total_count": 19,
   "is_g5_finished": false,
   "dan_ghep": [
