@@ -34,7 +34,7 @@
       "1552",
       "0465",
       "1416",
-      "",
+      "1979",
       "",
       ""
     ]
@@ -267,9 +267,21 @@
       "label": "Lót ngày 2",
       "color_type": "cycle_lot",
       "tooltip": "G5.3 vị trí 3: Đuôi 1 (2d) | Lót ngày 2"
+    },
+    "G5.4_2": {
+      "pos_raw": "G5.4 vị trí 2",
+      "role": "tail",
+      "role_name": "Đuôi",
+      "digit": "9",
+      "cycle": 1,
+      "cycle_suffix": "1d",
+      "category": "Theo dõi",
+      "label": "Theo dõi ngày 1 (Mới chạm)",
+      "color_type": "cycle_watch",
+      "tooltip": "G5.4 vị trí 2: Đuôi 9 (1d) | Theo dõi ngày 1 (Mới chạm)"
     }
   },
-  "filled_count": 16,
+  "filled_count": 17,
   "total_count": 19,
   "is_g5_finished": false,
   "dan_ghep": [
