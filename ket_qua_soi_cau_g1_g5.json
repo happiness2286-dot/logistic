@@ -36,7 +36,7 @@
       "0789",
       "5956",
       "6899",
-      ""
+      "4148"
     ]
   },
   "highlight_positions": {
@@ -208,6 +208,18 @@
       "color_type": "cycle_watch",
       "tooltip": "G5.2 vị trí 2: Đầu 9 (1d) | Theo dõi ngày 1 (Mới chạm)"
     },
+    "G5.6_3": {
+      "pos_raw": "G5.6 vị trí 3",
+      "role": "head",
+      "role_name": "Đầu",
+      "digit": "4",
+      "cycle": 2,
+      "cycle_suffix": "2d",
+      "category": "Lót",
+      "label": "Lót ngày 2",
+      "color_type": "cycle_lot",
+      "tooltip": "G5.6 vị trí 3: Đầu 4 (2d) | Lót ngày 2"
+    },
     "G1_2": {
       "pos_raw": "G1 vị trí 2",
       "role": "tail",
@@ -353,9 +365,9 @@
       "tooltip": "G5.5 vị trí 4: Đuôi 9 (1d) | Theo dõi ngày 1 (Mới chạm)"
     }
   },
-  "filled_count": 18,
+  "filled_count": 19,
   "total_count": 19,
-  "is_g5_finished": false,
+  "is_g5_finished": true,
   "dan_ghep": [
     "00",
     "02",
