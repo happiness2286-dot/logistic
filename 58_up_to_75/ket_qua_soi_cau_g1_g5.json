@@ -219,6 +219,18 @@
       "label": "Theo dõi ngày 1 (Mới chạm)",
       "color_type": "cycle_watch",
       "tooltip": "G5.6 vị trí 4: Đuôi 3 (1d) | Theo dõi ngày 1 (Mới chạm)"
+    },
+    "G6.3_2": {
+      "pos_raw": "G6.3 vị trí 2",
+      "role": "tail",
+      "role_name": "Đuôi",
+      "digit": "4",
+      "cycle": 1,
+      "cycle_suffix": "1d",
+      "category": "Theo dõi",
+      "label": "Theo dõi ngày 1 (Mới chạm)",
+      "color_type": "cycle_watch",
+      "tooltip": "G6.3 vị trí 2: Đuôi 4 (1d) | Theo dõi ngày 1 (Mới chạm)"
     }
   },
   "filled_count": 19,
@@ -918,8 +930,8 @@
     "99": 7.0
   },
   "frame_transition": {
-    "last_result": "Kỳ gần nhất (Chủ nhật ngày 18-10-2026) đã ĐANG THEO DÕI KHUNG",
-    "status_badge": "ĐANG THEO DÕI KHUNG",
+    "last_result": "Kỳ gần nhất (Chủ nhật ngày 18-10-2026) đã ĐÃ TRÚNG N1 → RESET CẦU MỚI",
+    "status_badge": "ĐÃ TRÚNG N1 → RESET CẦU MỚI",
     "schedule_n1": "Đánh chính N1: Kỳ tiếp theo (61 Số N1)",
     "schedule_n2": "Dự phòng N2: Ngày thứ 2 (45 số - Mở rộng cứu N1)",
     "schedule_n3": "Dự phòng N3: Ngày thứ 3 (42 số - Cơ hội cuối)",
@@ -2733,13 +2745,13 @@
       "top_rank": "❌ Loại bỏ (Ngoài 60s)"
     }
   ],
-  "actual_de": "",
+  "actual_de": "42",
   "dan_dao": [
     "81"
   ],
   "dan_tinh_4cap": {
-    "target_date": "Chủ nhật ngày 18-10-2026",
-    "status_text": "ĐANG CÓ HIỆU LỰC (VÀO TIỀN TRƯỚC 18H15)",
+    "target_date": "Thứ hai ngày 19-10-2026",
+    "status_text": "ĐANG HIỆU LỰC CHO KỲ TỚI (VÀO TIỀN TRƯỚC 18H15 NGÀY 19/10)",
     "bach_thu": "51",
     "lot_lon": "15",
     "song_thu": [
