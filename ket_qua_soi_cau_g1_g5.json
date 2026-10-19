@@ -21,7 +21,7 @@
       "39537",
       "36650",
       "54434",
-      "",
+      "52274",
       ""
     ],
     "g4": [
@@ -148,6 +148,30 @@
       "color_type": "cycle_watch",
       "tooltip": "G3.4 vị trí 1: Đầu 5 (1d) | Theo dõi ngày 1 (Mới chạm)"
     },
+    "G3.5_1": {
+      "pos_raw": "G3.5 vị trí 1",
+      "role": "head",
+      "role_name": "Đầu",
+      "digit": "5",
+      "cycle": 1,
+      "cycle_suffix": "1d",
+      "category": "Theo dõi",
+      "label": "Theo dõi ngày 1 (Mới chạm)",
+      "color_type": "cycle_watch",
+      "tooltip": "G3.5 vị trí 1: Đầu 5 (1d) | Theo dõi ngày 1 (Mới chạm)"
+    },
+    "G3.5_2": {
+      "pos_raw": "G3.5 vị trí 2",
+      "role": "head",
+      "role_name": "Đầu",
+      "digit": "2",
+      "cycle": 1,
+      "cycle_suffix": "1d",
+      "category": "Theo dõi",
+      "label": "Theo dõi ngày 1 (Mới chạm)",
+      "color_type": "cycle_watch",
+      "tooltip": "G3.5 vị trí 2: Đầu 2 (1d) | Theo dõi ngày 1 (Mới chạm)"
+    },
     "G2.1_2": {
       "pos_raw": "G2.1 vị trí 2",
       "role": "tail",
@@ -185,7 +209,7 @@
       "tooltip": "G3.2 vị trí 4: Đuôi 3 (2d) | Lót ngày 2"
     }
   },
-  "filled_count": 7,
+  "filled_count": 8,
   "total_count": 19,
   "is_g5_finished": false,
   "dan_ghep": [
