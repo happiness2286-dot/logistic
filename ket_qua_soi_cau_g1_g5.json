@@ -33,7 +33,7 @@
     "g5": [
       "9396",
       "4695",
-      "",
+      "2557",
       "",
       "",
       ""
@@ -363,9 +363,33 @@
       "label": "Theo dõi ngày 1 (Mới chạm)",
       "color_type": "cycle_watch",
       "tooltip": "G5.2 vị trí 3: Đuôi 9 (1d) | Theo dõi ngày 1 (Mới chạm)"
+    },
+    "G5.3_3": {
+      "pos_raw": "G5.3 vị trí 3",
+      "role": "tail",
+      "role_name": "Đuôi",
+      "digit": "5",
+      "cycle": 2,
+      "cycle_suffix": "2d",
+      "category": "Lót",
+      "label": "Lót ngày 2",
+      "color_type": "cycle_lot",
+      "tooltip": "G5.3 vị trí 3: Đuôi 5 (2d) | Lót ngày 2"
+    },
+    "G5.3_4": {
+      "pos_raw": "G5.3 vị trí 4",
+      "role": "tail",
+      "role_name": "Đuôi",
+      "digit": "7",
+      "cycle": 1,
+      "cycle_suffix": "1d",
+      "category": "Theo dõi",
+      "label": "Theo dõi ngày 1 (Mới chạm)",
+      "color_type": "cycle_watch",
+      "tooltip": "G5.3 vị trí 4: Đuôi 7 (1d) | Theo dõi ngày 1 (Mới chạm)"
     }
   },
-  "filled_count": 15,
+  "filled_count": 16,
   "total_count": 19,
   "is_g5_finished": false,
   "dan_ghep": [
