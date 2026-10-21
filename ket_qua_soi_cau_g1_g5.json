@@ -14,7 +14,7 @@
     "g1": "74291",
     "g2": [
       "73098",
-      ""
+      "39445"
     ],
     "g3": [
       "",
@@ -89,7 +89,7 @@
       "tooltip": "G2.1 vị trí 3: Đuôi 0 (2d) | Lót ngày 2"
     }
   },
-  "filled_count": 2,
+  "filled_count": 3,
   "total_count": 19,
   "is_g5_finished": false,
   "dan_ghep": [],
