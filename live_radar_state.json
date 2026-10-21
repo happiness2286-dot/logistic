@@ -36,7 +36,7 @@
       "2557",
       "0949",
       "0872",
-      ""
+      "6942"
     ]
   },
   "highlight_positions": {
@@ -468,14 +468,92 @@
       "label": "Lót ngày 2",
       "color_type": "cycle_lot",
       "tooltip": "G5.5 vị trí 4: Đuôi 2 (2d) | Lót ngày 2"
+    },
+    "G5.6_3": {
+      "pos_raw": "G5.6 vị trí 3",
+      "role": "head",
+      "role_name": "Đầu",
+      "digit": "4",
+      "digit_bong": "9",
+      "cycle": 1,
+      "cycle_suffix": "1d",
+      "category": "Theo dõi",
+      "label": "Theo dõi ngày 1 (Mới chạm)",
+      "color_type": "cycle_watch",
+      "tooltip": "G5.6 vị trí 3: Đầu 4 (1d) | Theo dõi ngày 1 (Mới chạm)"
+    },
+    "G6.1_1": {
+      "pos_raw": "G6.1 vị trí 1",
+      "role": "head",
+      "role_name": "Đầu",
+      "digit": "2",
+      "digit_bong": "7",
+      "cycle": 1,
+      "cycle_suffix": "1d",
+      "category": "Theo dõi",
+      "label": "Theo dõi ngày 1 (Mới chạm)",
+      "color_type": "cycle_watch",
+      "tooltip": "G6.1 vị trí 1: Đầu 2 (1d) | Theo dõi ngày 1 (Mới chạm)"
+    },
+    "G6.1_2": {
+      "pos_raw": "G6.1 vị trí 2",
+      "role": "head",
+      "role_name": "Đầu",
+      "digit": "4",
+      "digit_bong": "9",
+      "cycle": 1,
+      "cycle_suffix": "1d",
+      "category": "Theo dõi",
+      "label": "Theo dõi ngày 1 (Mới chạm)",
+      "color_type": "cycle_watch",
+      "tooltip": "G6.1 vị trí 2: Đầu 4 (1d) | Theo dõi ngày 1 (Mới chạm)"
+    },
+    "G6.2_2": {
+      "pos_raw": "G6.2 vị trí 2",
+      "role": "tail",
+      "role_name": "Đuôi",
+      "digit": "6",
+      "digit_bong": "1",
+      "cycle": 1,
+      "cycle_suffix": "1d",
+      "category": "Theo dõi",
+      "label": "Theo dõi ngày 1 (Mới chạm)",
+      "color_type": "cycle_watch",
+      "tooltip": "G6.2 vị trí 2: Đuôi 6 (1d) | Theo dõi ngày 1 (Mới chạm)"
+    },
+    "G6.2_3": {
+      "pos_raw": "G6.2 vị trí 3",
+      "role": "tail",
+      "role_name": "Đuôi",
+      "digit": "2",
+      "digit_bong": "7",
+      "cycle": 1,
+      "cycle_suffix": "1d",
+      "category": "Theo dõi",
+      "label": "Theo dõi ngày 1 (Mới chạm)",
+      "color_type": "cycle_watch",
+      "tooltip": "G6.2 vị trí 3: Đuôi 2 (1d) | Theo dõi ngày 1 (Mới chạm)"
+    },
+    "G6.3_1": {
+      "pos_raw": "G6.3 vị trí 1",
+      "role": "head",
+      "role_name": "Đầu",
+      "digit": "0",
+      "digit_bong": "5",
+      "cycle": 1,
+      "cycle_suffix": "1d",
+      "category": "Theo dõi",
+      "label": "Theo dõi ngày 1 (Mới chạm)",
+      "color_type": "cycle_watch",
+      "tooltip": "G6.3 vị trí 1: Đầu 0 (1d) | Theo dõi ngày 1 (Mới chạm)"
     }
   },
-  "filled_count": 18,
+  "filled_count": 19,
   "total_count": 19,
-  "is_g5_finished": false,
-  "radar_status": "SCANNING_LIVE",
-  "status_text": "⚡ ĐANG QUAY TRỰC TIẾP (18/19 GIẢI) - CHỐT KHI XONG G5",
-  "lock_badge": "⚡ ĐANG QUAY (18/19)",
+  "is_g5_finished": true,
+  "radar_status": "LOCKED_G5",
+  "status_text": "🔒 ĐÃ CHỐT KHÓA KHI HẾT G5 (19/19 GIẢI) - VÀO TIỀN NGAY TRƯỚC 18H28!",
+  "lock_badge": "🔒 ĐÃ KHÓA CHỐT DÀN (HẾT G5)",
   "top_1": "32",
   "lot_lon": "23",
   "song_thu_tru": [
@@ -6272,5 +6350,5 @@
     "cang_bt_hits": 0,
     "cang_bt_rate": 0.0
   },
-  "last_updated": "18:23:44 21/10/2026"
+  "last_updated": "18:32:11 21/10/2026"
 }
