@@ -36,7 +36,7 @@
       "1891",
       "7956",
       "7998",
-      ""
+      "8415"
     ]
   },
   "highlight_positions": {
@@ -220,6 +220,18 @@
       "color_type": "cycle_watch",
       "tooltip": "G5.2 vị trí 2: Đầu 8 (1d) | Theo dõi ngày 1 (Mới chạm)"
     },
+    "G5.6_1": {
+      "pos_raw": "G5.6 vị trí 1",
+      "role": "head",
+      "role_name": "Đầu",
+      "digit": "8",
+      "cycle": 1,
+      "cycle_suffix": "1d",
+      "category": "Theo dõi",
+      "label": "Theo dõi ngày 1 (Mới chạm)",
+      "color_type": "cycle_watch",
+      "tooltip": "G5.6 vị trí 1: Đầu 8 (1d) | Theo dõi ngày 1 (Mới chạm)"
+    },
     "G2.1_2": {
       "pos_raw": "G2.1 vị trí 2",
       "role": "tail",
@@ -401,9 +413,9 @@
       "tooltip": "G5.5 vị trí 2: Đuôi 9 (1d) | Theo dõi ngày 1 (Mới chạm)"
     }
   },
-  "filled_count": 18,
+  "filled_count": 19,
   "total_count": 19,
-  "is_g5_finished": false,
+  "is_g5_finished": true,
   "dan_ghep": [
     "00",
     "01",
