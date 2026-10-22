@@ -512,20 +512,20 @@
   "filled_count": 19,
   "total_count": 19,
   "is_g5_finished": true,
-  "radar_status": "LOCKED_G5",
-  "status_text": "🔒 ĐÃ CHỐT KHÓA KHI HẾT G5 (19/19 GIẢI) - VÀO TIỀN NGAY TRƯỚC 18H28!",
-  "lock_badge": "🔒 ĐÃ KHÓA CHỐT DÀN (HẾT G5)",
-  "top_1": "85",
-  "lot_lon": "58",
+  "radar_status": "FINISHED_RESULT",
+  "status_text": "ĐÃ HOÀN TẤT KỲ QUAY (ĐỀ VỀ 14)",
+  "lock_badge": "🎯 ĐÃ CÓ KẾT QUẢ ĐỀ: 14",
+  "top_1": "60",
+  "lot_lon": "06",
   "song_thu_tru": [
-    "85",
-    "58"
+    "60",
+    "06"
   ],
   "top_4": [
-    "85",
-    "58",
-    "35",
-    "60"
+    "60",
+    "62",
+    "67",
+    "65"
   ],
   "cang_3d_live": {
     "tam_g1": "6",
@@ -542,50 +542,50 @@
       "3"
     ],
     "cang_bt_3s": [
-      "185",
-      "685",
-      "985"
-    ],
-    "cang_tt_12s": [
-      "185",
-      "158",
-      "135",
       "160",
-      "685",
-      "658",
-      "635",
       "660",
-      "985",
-      "958",
-      "935",
       "960"
     ],
+    "cang_tt_12s": [
+      "160",
+      "162",
+      "167",
+      "165",
+      "660",
+      "662",
+      "667",
+      "665",
+      "960",
+      "962",
+      "967",
+      "965"
+    ],
     "cang_d9_27s": [
-      "135",
+      "132",
       "136",
       "138",
-      "155",
+      "152",
       "156",
       "158",
-      "185",
+      "182",
       "186",
       "188",
-      "635",
+      "632",
       "636",
       "638",
-      "655",
+      "652",
       "656",
       "658",
-      "685",
+      "682",
       "686",
       "688",
-      "935",
+      "932",
       "936",
       "938",
-      "955",
+      "952",
       "956",
       "958",
-      "985",
+      "982",
       "986",
       "988"
     ],
@@ -602,16 +602,16 @@
   "dan_9_tails": [
     "6",
     "8",
-    "5"
+    "2"
   ],
   "dan_9_so": [
-    "35",
+    "32",
     "36",
     "38",
-    "55",
+    "52",
     "56",
     "58",
-    "85",
+    "82",
     "86",
     "88"
   ],
@@ -635,6 +635,7 @@
     "31",
     "32",
     "34",
+    "35",
     "37",
     "38",
     "39",
@@ -643,11 +644,9 @@
     "45",
     "51",
     "55",
+    "58",
     "59",
     "61",
-    "62",
-    "65",
-    "67",
     "68",
     "69",
     "72",
@@ -655,6 +654,7 @@
     "81",
     "82",
     "84",
+    "85",
     "87",
     "88",
     "91",
@@ -665,60 +665,6 @@
     "99"
   ],
   "table_5cols": [
-    {
-      "num": "85",
-      "c_digit": "8",
-      "d_digit": "0",
-      "c_cycle": 4,
-      "d_cycle": 2,
-      "cycle_days": 4,
-      "category": "Chỉ đạo",
-      "cat_label": "✅ CHỈ ĐẠO (4 ngày)",
-      "weight": 0.85,
-      "combo_type": "bóng đuôi",
-      "score": 241.25,
-      "h_pos": "G3.2 vị trí 2",
-      "t_pos": "G3.5 vị trí 2",
-      "in_cap4": true,
-      "in_cap4_str": "Có",
-      "consensus_score": 162.0,
-      "in_d9": true,
-      "in_tam": false,
-      "in_sum": true,
-      "convergence_badges": [
-        "N1",
-        "Dàn 9s AI",
-        "Tổng G7 (3)"
-      ],
-      "top_rank": "👑 Top 1 (Bạch thủ)"
-    },
-    {
-      "num": "35",
-      "c_digit": "8",
-      "d_digit": "0",
-      "c_cycle": 4,
-      "d_cycle": 2,
-      "cycle_days": 4,
-      "category": "Chỉ đạo",
-      "cat_label": "✅ CHỈ ĐẠO (4 ngày)",
-      "weight": 0.7,
-      "combo_type": "bóng cả hai",
-      "score": 237.5,
-      "h_pos": "G3.2 vị trí 2",
-      "t_pos": "G3.5 vị trí 2",
-      "in_cap4": true,
-      "in_cap4_str": "Có",
-      "consensus_score": 159.0,
-      "in_d9": true,
-      "in_tam": false,
-      "in_sum": true,
-      "convergence_badges": [
-        "N1",
-        "Dàn 9s AI",
-        "Tổng G7 (8)"
-      ],
-      "top_rank": "🔥 Top 4 (Tứ thủ)"
-    },
     {
       "num": "60",
       "c_digit": "1",
@@ -744,7 +690,7 @@
         "Tâm G1 (6)",
         "Tổng G7 (6)"
       ],
-      "top_rank": "🔥 Top 4 (Tứ thủ)"
+      "top_rank": "👑 Top 1 (Bạch thủ)"
     },
     {
       "num": "62",
@@ -771,7 +717,7 @@
         "Tâm G1 (6)",
         "Tổng G7 (8)"
       ],
-      "top_rank": "🛡️ Lót hợp lệ"
+      "top_rank": "🔥 Top 4 (Tứ thủ)"
     },
     {
       "num": "67",
@@ -798,7 +744,7 @@
         "Tâm G1 (6)",
         "Tổng G7 (3)"
       ],
-      "top_rank": "🛡️ Lót hợp lệ"
+      "top_rank": "🔥 Top 4 (Tứ thủ)"
     },
     {
       "num": "65",
@@ -825,7 +771,7 @@
         "Tâm G1 (6)",
         "Tổng G7 (1)"
       ],
-      "top_rank": "🛡️ Lót hợp lệ"
+      "top_rank": "🔥 Top 4 (Tứ thủ)"
     },
     {
       "num": "12",
@@ -909,22 +855,22 @@
       "top_rank": "🛡️ Lót hợp lệ"
     },
     {
-      "num": "55",
-      "c_digit": "5",
-      "d_digit": "0",
-      "c_cycle": 1,
-      "d_cycle": 2,
-      "cycle_days": 2,
-      "category": "Lót",
-      "cat_label": "Lót ngày 2",
-      "weight": 0.85,
-      "combo_type": "bóng đuôi",
-      "score": 131.25,
-      "h_pos": "G4.3 vị trí 2",
-      "t_pos": "G3.5 vị trí 2",
+      "num": "82",
+      "c_digit": "8",
+      "d_digit": "2",
+      "c_cycle": 4,
+      "d_cycle": 1,
+      "cycle_days": 4,
+      "category": "Chỉ đạo",
+      "cat_label": "✅ CHỈ ĐẠO (4 ngày)",
+      "weight": 1.0,
+      "combo_type": "chính diện",
+      "score": 235.0,
+      "h_pos": "G3.2 vị trí 2",
+      "t_pos": "G2.1 vị trí 2",
       "in_cap4": true,
       "in_cap4_str": "Có",
-      "consensus_score": 137.0,
+      "consensus_score": 135.0,
       "in_d9": true,
       "in_tam": false,
       "in_sum": false,
@@ -985,6 +931,32 @@
         "N1",
         "Tâm G1 (6)",
         "Tổng G7 (8)"
+      ],
+      "top_rank": "🛡️ Lót hợp lệ"
+    },
+    {
+      "num": "32",
+      "c_digit": "8",
+      "d_digit": "2",
+      "c_cycle": 4,
+      "d_cycle": 1,
+      "cycle_days": 4,
+      "category": "Chỉ đạo",
+      "cat_label": "✅ CHỈ ĐẠO (4 ngày)",
+      "weight": 0.85,
+      "combo_type": "bóng đầu",
+      "score": 231.25,
+      "h_pos": "G3.2 vị trí 2",
+      "t_pos": "G2.1 vị trí 2",
+      "in_cap4": true,
+      "in_cap4_str": "Có",
+      "consensus_score": 132.0,
+      "in_d9": true,
+      "in_tam": false,
+      "in_sum": false,
+      "convergence_badges": [
+        "N1",
+        "Dàn 9s AI"
       ],
       "top_rank": "🛡️ Lót hợp lệ"
     },
@@ -1279,6 +1251,32 @@
       "top_rank": "🛡️ Lót hợp lệ"
     },
     {
+      "num": "85",
+      "c_digit": "8",
+      "d_digit": "0",
+      "c_cycle": 4,
+      "d_cycle": 2,
+      "cycle_days": 4,
+      "category": "Chỉ đạo",
+      "cat_label": "✅ CHỈ ĐẠO (4 ngày)",
+      "weight": 0.85,
+      "combo_type": "bóng đuôi",
+      "score": 241.25,
+      "h_pos": "G3.2 vị trí 2",
+      "t_pos": "G3.5 vị trí 2",
+      "in_cap4": true,
+      "in_cap4_str": "Có",
+      "consensus_score": 107.0,
+      "in_d9": false,
+      "in_tam": false,
+      "in_sum": true,
+      "convergence_badges": [
+        "N1",
+        "Tổng G7 (3)"
+      ],
+      "top_rank": "🛡️ Lót hợp lệ"
+    },
+    {
       "num": "96",
       "c_digit": "9",
       "d_digit": "6",
@@ -1301,6 +1299,32 @@
       "convergence_badges": [
         "N1",
         "Tâm G1 (6)"
+      ],
+      "top_rank": "🛡️ Lót hợp lệ"
+    },
+    {
+      "num": "35",
+      "c_digit": "8",
+      "d_digit": "0",
+      "c_cycle": 4,
+      "d_cycle": 2,
+      "cycle_days": 4,
+      "category": "Chỉ đạo",
+      "cat_label": "✅ CHỈ ĐẠO (4 ngày)",
+      "weight": 0.7,
+      "combo_type": "bóng cả hai",
+      "score": 237.5,
+      "h_pos": "G3.2 vị trí 2",
+      "t_pos": "G3.5 vị trí 2",
+      "in_cap4": true,
+      "in_cap4_str": "Có",
+      "consensus_score": 104.0,
+      "in_d9": false,
+      "in_tam": false,
+      "in_sum": true,
+      "convergence_badges": [
+        "N1",
+        "Tổng G7 (8)"
       ],
       "top_rank": "🛡️ Lót hợp lệ"
     },
@@ -1643,22 +1667,22 @@
       "top_rank": "🛡️ Lót hợp lệ"
     },
     {
-      "num": "82",
-      "c_digit": "8",
-      "d_digit": "2",
-      "c_cycle": 4,
-      "d_cycle": 1,
-      "cycle_days": 4,
-      "category": "Chỉ đạo",
-      "cat_label": "✅ CHỈ ĐẠO (4 ngày)",
-      "weight": 1.0,
-      "combo_type": "chính diện",
-      "score": 235.0,
-      "h_pos": "G3.2 vị trí 2",
-      "t_pos": "G2.1 vị trí 2",
+      "num": "55",
+      "c_digit": "5",
+      "d_digit": "0",
+      "c_cycle": 1,
+      "d_cycle": 2,
+      "cycle_days": 2,
+      "category": "Lót",
+      "cat_label": "Lót ngày 2",
+      "weight": 0.85,
+      "combo_type": "bóng đuôi",
+      "score": 131.25,
+      "h_pos": "G4.3 vị trí 2",
+      "t_pos": "G3.5 vị trí 2",
       "in_cap4": true,
       "in_cap4_str": "Có",
-      "consensus_score": 80.0,
+      "consensus_score": 82.0,
       "in_d9": false,
       "in_tam": false,
       "in_sum": false,
@@ -1734,31 +1758,6 @@
       "in_cap4": true,
       "in_cap4_str": "Có",
       "consensus_score": 79.0,
-      "in_d9": false,
-      "in_tam": false,
-      "in_sum": false,
-      "convergence_badges": [
-        "N1"
-      ],
-      "top_rank": "🛡️ Lót hợp lệ"
-    },
-    {
-      "num": "32",
-      "c_digit": "8",
-      "d_digit": "2",
-      "c_cycle": 4,
-      "d_cycle": 1,
-      "cycle_days": 4,
-      "category": "Chỉ đạo",
-      "cat_label": "✅ CHỈ ĐẠO (4 ngày)",
-      "weight": 0.85,
-      "combo_type": "bóng đầu",
-      "score": 231.25,
-      "h_pos": "G3.2 vị trí 2",
-      "t_pos": "G2.1 vị trí 2",
-      "in_cap4": true,
-      "in_cap4_str": "Có",
-      "consensus_score": 77.0,
       "in_d9": false,
       "in_tam": false,
       "in_sum": false,
@@ -1998,7 +1997,7 @@
         "Tâm G1 (6)",
         "Tổng G7 (6)"
       ],
-      "top_rank": "❌ Loại bỏ (Ngoài N1)"
+      "top_rank": "🛡️ Lót Lộn (Song thủ)"
     },
     {
       "num": "76",
@@ -2023,6 +2022,31 @@
       "convergence_badges": [
         "Tâm G1 (6)",
         "Tổng G7 (3)"
+      ],
+      "top_rank": "❌ Loại bỏ (Ngoài N1)"
+    },
+    {
+      "num": "52",
+      "c_digit": "5",
+      "d_digit": "2",
+      "c_cycle": 1,
+      "d_cycle": 1,
+      "cycle_days": 1,
+      "category": "Theo dõi",
+      "cat_label": "Theo dõi ngày 1 (Mới chạm)",
+      "weight": 1.0,
+      "combo_type": "chính diện",
+      "score": 85.0,
+      "h_pos": "G4.3 vị trí 2",
+      "t_pos": "G2.1 vị trí 2",
+      "in_cap4": false,
+      "in_cap4_str": "Không",
+      "consensus_score": -110.0,
+      "in_d9": true,
+      "in_tam": false,
+      "in_sum": false,
+      "convergence_badges": [
+        "Dàn 9s AI"
       ],
       "top_rank": "❌ Loại bỏ (Ngoài N1)"
     },
@@ -2639,29 +2663,6 @@
       "top_rank": "❌ Loại bỏ (Ngoài N1)"
     },
     {
-      "num": "52",
-      "c_digit": "5",
-      "d_digit": "2",
-      "c_cycle": 1,
-      "d_cycle": 1,
-      "cycle_days": 1,
-      "category": "Theo dõi",
-      "cat_label": "Theo dõi ngày 1 (Mới chạm)",
-      "weight": 1.0,
-      "combo_type": "chính diện",
-      "score": 85.0,
-      "h_pos": "G4.3 vị trí 2",
-      "t_pos": "G2.1 vị trí 2",
-      "in_cap4": false,
-      "in_cap4_str": "Không",
-      "consensus_score": -165.0,
-      "in_d9": false,
-      "in_tam": false,
-      "in_sum": false,
-      "convergence_badges": [],
-      "top_rank": "❌ Loại bỏ (Ngoài N1)"
-    },
-    {
       "num": "57",
       "c_digit": "5",
       "d_digit": "7",
@@ -2708,21 +2709,21 @@
       "top_rank": "❌ Loại bỏ (Ngoài N1)"
     }
   ],
-  "actual_de": "",
+  "actual_de": "14",
   "dan_tinh_4cap": {
-    "target_date": "Thứ năm ngày 22-10-2026",
-    "status_text": "ĐANG CÓ HIỆU LỰC (VÀO TIỀN TRƯỚC 18H15)",
-    "bach_thu": "85",
-    "lot_lon": "58",
+    "target_date": "Thứ sáu ngày 23-10-2026",
+    "status_text": "ĐANG HIỆU LỰC CHO KỲ TỚI (VÀO TIỀN TRƯỚC 18H15 NGÀY 23/10)",
+    "bach_thu": "60",
+    "lot_lon": "06",
     "song_thu": [
-      "85",
-      "58"
+      "60",
+      "06"
     ],
     "tu_thu": [
-      "85",
-      "58",
-      "35",
-      "60"
+      "60",
+      "62",
+      "67",
+      "65"
     ],
     "cang_3d": [
       "1",
@@ -2730,13 +2731,13 @@
       "9"
     ],
     "dan_9_so": [
-      "35",
+      "32",
       "36",
       "38",
-      "55",
+      "52",
       "56",
       "58",
-      "85",
+      "82",
       "86",
       "88"
     ],
@@ -2845,8 +2846,8 @@
     ]
   },
   "frame_transition": {
-    "last_result": "Kỳ gần nhất (Thứ năm ngày 22-10-2026) Đề về đang quay: Đang chờ quay Giải Đặc Biệt",
-    "status_badge": "ĐANG QUAY THƯỞNG",
+    "last_result": "Kỳ gần nhất (Thứ năm ngày 22-10-2026) Đề về 14: ❌ TRƯỢT N1 → GIỮ NGUYÊN KHUNG, ĐÁNH N2 (36 SỐ)",
+    "status_badge": "ĐANG ĐÁNH N2 (36 SỐ)",
     "dan_n1": [
       "01",
       "02",
@@ -2990,6 +2991,97 @@
   "history_records": [
     {
       "stt": 1,
+      "date": "Thứ năm ngày 22-10-2026",
+      "de": "14",
+      "actual_3d": "814",
+      "top_1": "60",
+      "lot_lon": "06",
+      "song_thu": [
+        "60",
+        "06"
+      ],
+      "hit_top_1": false,
+      "hit_lot_lon": false,
+      "hit_song_thu": false,
+      "top_4": [
+        "60",
+        "62",
+        "67",
+        "65"
+      ],
+      "hit_top_4": false,
+      "dan_9_so": [
+        "60",
+        "62",
+        "67",
+        "65",
+        "12",
+        "17",
+        "15",
+        "81",
+        "26"
+      ],
+      "pred_heads": "",
+      "pred_tails": "",
+      "hit_dan_9": false,
+      "dan_lot": [
+        "01",
+        "02",
+        "04",
+        "05",
+        "09",
+        "11",
+        "12",
+        "15",
+        "17",
+        "19",
+        "21",
+        "22",
+        "23",
+        "24",
+        "26",
+        "29",
+        "31",
+        "32",
+        "34",
+        "35",
+        "37",
+        "39",
+        "42",
+        "44",
+        "45",
+        "51",
+        "55",
+        "59",
+        "61",
+        "68",
+        "69",
+        "72",
+        "80",
+        "81",
+        "82",
+        "84",
+        "85",
+        "87",
+        "91",
+        "92",
+        "95",
+        "96",
+        "97",
+        "99"
+      ],
+      "hit_dan_lot": false,
+      "hit_n1": false,
+      "top3_cang": [
+        "1",
+        "6",
+        "9"
+      ],
+      "hit_cang_tt": false,
+      "hit_cang_bt": false
+    },
+    {
+      "stt": 2,
       "date": "Thứ tư ngày 21-10-2026",
       "de": "63",
       "actual_3d": "163",
@@ -3093,7 +3185,7 @@
       "hit_cang_bt": false
     },
     {
-      "stt": 2,
+      "stt": 3,
       "date": "Thứ ba ngày 20-10-2026",
       "de": "09",
       "actual_3d": "809",
@@ -3197,7 +3289,7 @@
       "hit_cang_bt": false
     },
     {
-      "stt": 3,
+      "stt": 4,
       "date": "Thứ hai ngày 19-10-2026",
       "de": "90",
       "actual_3d": "390",
@@ -3301,7 +3393,7 @@
       "hit_cang_bt": false
     },
     {
-      "stt": 4,
+      "stt": 5,
       "date": "Chủ nhật ngày 18-10-2026",
       "de": "42",
       "actual_3d": "642",
@@ -3405,7 +3497,7 @@
       "hit_cang_bt": false
     },
     {
-      "stt": 5,
+      "stt": 6,
       "date": "Thứ bảy ngày 17-10-2026",
       "de": "38",
       "actual_3d": "538",
@@ -3509,7 +3601,7 @@
       "hit_cang_bt": false
     },
     {
-      "stt": 6,
+      "stt": 7,
       "date": "Thứ sáu ngày 16-10-2026",
       "de": "56",
       "actual_3d": "756",
@@ -3613,7 +3705,7 @@
       "hit_cang_bt": false
     },
     {
-      "stt": 7,
+      "stt": 8,
       "date": "Thứ năm ngày 15-10-2026",
       "de": "66",
       "actual_3d": "066",
@@ -3717,7 +3809,7 @@
       "hit_cang_bt": false
     },
     {
-      "stt": 8,
+      "stt": 9,
       "date": "Thứ tư ngày 14-10-2026",
       "de": "59",
       "actual_3d": "259",
@@ -3821,7 +3913,7 @@
       "hit_cang_bt": false
     },
     {
-      "stt": 9,
+      "stt": 10,
       "date": "Thứ ba ngày 13-10-2026",
       "de": "18",
       "actual_3d": "618",
@@ -3925,7 +4017,7 @@
       "hit_cang_bt": false
     },
     {
-      "stt": 10,
+      "stt": 11,
       "date": "Thứ hai ngày 12-10-2026",
       "de": "87",
       "actual_3d": "287",
@@ -4029,7 +4121,7 @@
       "hit_cang_bt": false
     },
     {
-      "stt": 11,
+      "stt": 12,
       "date": "Chủ nhật ngày 11-10-2026",
       "de": "63",
       "actual_3d": "363",
@@ -4133,7 +4225,7 @@
       "hit_cang_bt": false
     },
     {
-      "stt": 12,
+      "stt": 13,
       "date": "Thứ bảy ngày 10-10-2026",
       "de": "53",
       "actual_3d": "153",
@@ -4237,7 +4329,7 @@
       "hit_cang_bt": false
     },
     {
-      "stt": 13,
+      "stt": 14,
       "date": "Thứ sáu ngày 09-10-2026",
       "de": "35",
       "actual_3d": "635",
@@ -4341,7 +4433,7 @@
       "hit_cang_bt": false
     },
     {
-      "stt": 14,
+      "stt": 15,
       "date": "Thứ năm ngày 08-10-2026",
       "de": "39",
       "actual_3d": "339",
@@ -4445,7 +4537,7 @@
       "hit_cang_bt": false
     },
     {
-      "stt": 15,
+      "stt": 16,
       "date": "Thứ tư ngày 07-10-2026",
       "de": "88",
       "actual_3d": "488",
@@ -4549,7 +4641,7 @@
       "hit_cang_bt": false
     },
     {
-      "stt": 16,
+      "stt": 17,
       "date": "Thứ ba ngày 06-10-2026",
       "de": "54",
       "actual_3d": "554",
@@ -4645,7 +4737,7 @@
       "hit_cang_bt": false
     },
     {
-      "stt": 17,
+      "stt": 18,
       "date": "Thứ hai ngày 05-10-2026",
       "de": "54",
       "actual_3d": "654",
@@ -4749,7 +4841,7 @@
       "hit_cang_bt": false
     },
     {
-      "stt": 18,
+      "stt": 19,
       "date": "Chủ nhật ngày 04-10-2026",
       "de": "51",
       "actual_3d": "951",
@@ -4853,7 +4945,7 @@
       "hit_cang_bt": false
     },
     {
-      "stt": 19,
+      "stt": 20,
       "date": "Thứ bảy ngày 03-10-2026",
       "de": "61",
       "actual_3d": "961",
@@ -4939,7 +5031,7 @@
       "hit_cang_bt": false
     },
     {
-      "stt": 20,
+      "stt": 21,
       "date": "Thứ sáu ngày 02-10-2026",
       "de": "83",
       "actual_3d": "483",
@@ -5043,7 +5135,7 @@
       "hit_cang_bt": false
     },
     {
-      "stt": 21,
+      "stt": 22,
       "date": "Thứ năm ngày 01-10-2026",
       "de": "08",
       "actual_3d": "208",
@@ -5143,7 +5235,7 @@
       "hit_cang_bt": false
     },
     {
-      "stt": 22,
+      "stt": 23,
       "date": "Thứ tư ngày 30-09-2026",
       "de": "42",
       "actual_3d": "242",
@@ -5247,7 +5339,7 @@
       "hit_cang_bt": false
     },
     {
-      "stt": 23,
+      "stt": 24,
       "date": "Thứ ba ngày 29-09-2026",
       "de": "51",
       "actual_3d": "651",
@@ -5351,7 +5443,7 @@
       "hit_cang_bt": false
     },
     {
-      "stt": 24,
+      "stt": 25,
       "date": "Thứ hai ngày 28-09-2026",
       "de": "15",
       "actual_3d": "115",
@@ -5453,7 +5545,7 @@
       "hit_cang_bt": false
     },
     {
-      "stt": 25,
+      "stt": 26,
       "date": "Chủ nhật ngày 27-09-2026",
       "de": "73",
       "actual_3d": "473",
@@ -5557,7 +5649,7 @@
       "hit_cang_bt": false
     },
     {
-      "stt": 26,
+      "stt": 27,
       "date": "Thứ bảy ngày 26-09-2026",
       "de": "32",
       "actual_3d": "132",
@@ -5661,7 +5753,7 @@
       "hit_cang_bt": false
     },
     {
-      "stt": 27,
+      "stt": 28,
       "date": "Thứ sáu ngày 25-09-2026",
       "de": "65",
       "actual_3d": "465",
@@ -5766,23 +5858,23 @@
     }
   ],
   "history_summary": {
-    "total_evals": 27,
+    "total_evals": 28,
     "top1_hits": 0,
     "top1_rate": 0.0,
     "song_thu_hits": 1,
-    "song_thu_rate": 3.7,
+    "song_thu_rate": 3.57,
     "top4_hits": 3,
-    "top4_rate": 11.11,
+    "top4_rate": 10.71,
     "dan9_hits": 4,
-    "dan9_rate": 14.81,
+    "dan9_rate": 14.29,
     "lot_hits": 18,
-    "lot_rate": 66.67,
+    "lot_rate": 64.29,
     "n1_hits": 21,
-    "n1_rate": 77.78,
+    "n1_rate": 75.0,
     "cang_tt_hits": 1,
-    "cang_tt_rate": 3.7,
+    "cang_tt_rate": 3.57,
     "cang_bt_hits": 0,
     "cang_bt_rate": 0.0
   },
-  "last_updated": "18:31:20 22/10/2026"
+  "last_updated": "18:35:17 22/10/2026"
 }
