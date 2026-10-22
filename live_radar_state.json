@@ -33,9 +33,9 @@
     "g5": [
       "2064",
       "8820",
-      "",
-      "",
-      "",
+      "1891",
+      "7956",
+      "7998",
       ""
     ]
   },
@@ -416,14 +416,27 @@
       "label": "Theo dõi ngày 1 (Mới chạm)",
       "color_type": "cycle_watch",
       "tooltip": "G5.2 vị trí 2: Đầu 8 (1d) | Theo dõi ngày 1 (Mới chạm)"
+    },
+    "G5.5_2": {
+      "pos_raw": "G5.5 vị trí 2",
+      "role": "tail",
+      "role_name": "Đuôi",
+      "digit": "9",
+      "digit_bong": "4",
+      "cycle": 1,
+      "cycle_suffix": "1d",
+      "category": "Theo dõi",
+      "label": "Theo dõi ngày 1 (Mới chạm)",
+      "color_type": "cycle_watch",
+      "tooltip": "G5.5 vị trí 2: Đuôi 9 (1d) | Theo dõi ngày 1 (Mới chạm)"
     }
   },
-  "filled_count": 15,
+  "filled_count": 18,
   "total_count": 19,
   "is_g5_finished": false,
   "radar_status": "SCANNING_LIVE",
-  "status_text": "⚡ ĐANG QUAY TRỰC TIẾP (15/19 GIẢI) - CHỐT KHI XONG G5",
-  "lock_badge": "⚡ ĐANG QUAY (15/19)",
+  "status_text": "⚡ ĐANG QUAY TRỰC TIẾP (18/19 GIẢI) - CHỐT KHI XONG G5",
+  "lock_badge": "⚡ ĐANG QUAY (18/19)",
   "top_1": "85",
   "lot_lon": "58",
   "song_thu_tru": [
@@ -5693,5 +5706,5 @@
     "cang_bt_hits": 0,
     "cang_bt_rate": 0.0
   },
-  "last_updated": "18:22:18 22/10/2026"
+  "last_updated": "18:22:53 22/10/2026"
 }
