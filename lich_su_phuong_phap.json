@@ -3,15 +3,22 @@
     "tong_quan": {
       "tong_khung": 50,
       "trung_n1": 36,
-      "trung_n2": 4,
+      "trung_n2": 3,
       "trung_n3": 2,
-      "truot_khung": 8,
+      "truot_khung": 9,
       "ty_le_n1": 72.0,
-      "ty_le_n2": 8.0,
+      "ty_le_n2": 6.0,
       "ty_le_n3": 4.0,
-      "ty_le_truot": 16.0
+      "ty_le_truot": 18.0
     },
     "lich_su": [
+      {
+        "khung_stt": 51,
+        "ngay": "22/10/2026",
+        "de": "14",
+        "ket_qua": "truot_khung",
+        "ghi_chu": "Trượt khung 3 ngày ❌"
+      },
       {
         "khung_stt": 51,
         "ngay": "21/10/2026",
@@ -354,13 +361,6 @@
         "de": "44",
         "ket_qua": "trung_n3",
         "ghi_chu": "Trúng N3 ngày 3 ✅ (Dàn 40s Cơ hội cuối)"
-      },
-      {
-        "khung_stt": 238,
-        "ngay": "30/08/2026",
-        "de": "72",
-        "ket_qua": "trung_n2",
-        "ghi_chu": "Trúng N2 ngày 2 ✅ (Dàn 42s Mở rộng)"
       }
     ]
   },
@@ -368,13 +368,26 @@
     "tong_quan": {
       "tong_ngay": 50,
       "trung_bach_thu": 8,
-      "trung_tu_thu": 16,
-      "trung_lot": 42,
+      "trung_tu_thu": 15,
+      "trung_lot": 41,
       "ty_le_bach_thu": 16.0,
-      "ty_le_tu_thu": 32.0,
-      "ty_le_lot": 84.0
+      "ty_le_tu_thu": 30.0,
+      "ty_le_lot": 82.0
     },
     "lich_su": [
+      {
+        "ngay": "22/10/2026",
+        "de": "14",
+        "top1": "80",
+        "top4": [
+          "80",
+          "87",
+          "84",
+          "30"
+        ],
+        "ket_qua": "truot_truc_tiep",
+        "ghi_chu": "Trượt kỳ quay ❌"
+      },
       {
         "ngay": "21/10/2026",
         "de": "63",
@@ -1009,33 +1022,28 @@
         ],
         "ket_qua": "trung_lot",
         "ghi_chu": "🛡️ Trúng Dàn Số Lót [42]"
-      },
-      {
-        "ngay": "01/09/2026",
-        "de": "21",
-        "top1": "63",
-        "top4": [
-          "63",
-          "21",
-          "51",
-          "68"
-        ],
-        "ket_qua": "trung_tu_thu",
-        "ghi_chu": "⭐ Trúng Tứ Thủ Top 4 [21]"
       }
     ]
   },
   "dan_tinh_tuy_ngay_1": {
     "tong_quan": {
       "tong_ngay": 60,
-      "trung": 50,
-      "truot": 10,
-      "ty_le_trung": 83.3,
-      "ty_le_truot": 16.7,
-      "dan_tb": 41.9,
-      "chuoi_thong": 2
+      "trung": 49,
+      "truot": 11,
+      "ty_le_trung": 81.7,
+      "ty_le_truot": 18.3,
+      "dan_tb": 42.0,
+      "chuoi_thong": 0
     },
     "lich_su": [
+      {
+        "stt": 61,
+        "ngay": "22/10/2026",
+        "de": "14",
+        "so_luong": 46,
+        "ket_qua": "truot",
+        "ghi_chu": "Trượt Đề 14 ❌ (46 số)"
+      },
       {
         "stt": 60,
         "ngay": "21/10/2026",
@@ -1507,14 +1515,6 @@
         "so_luong": 34,
         "ket_qua": "trung",
         "ghi_chu": "Trúng Đề 17 ✅ (Dàn 34 số)"
-      },
-      {
-        "stt": 1,
-        "ngay": "23/08/2026",
-        "de": "38",
-        "so_luong": 36,
-        "ket_qua": "trung",
-        "ghi_chu": "Trúng Đề 38 ✅ (Dàn 36 số)"
       }
     ]
   }
