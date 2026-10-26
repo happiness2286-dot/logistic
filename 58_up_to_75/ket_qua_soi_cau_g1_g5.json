@@ -19,7 +19,7 @@
     "g3": [
       "56825",
       "14797",
-      "",
+      "58426",
       "",
       "",
       ""
@@ -111,9 +111,21 @@
       "label": "Lót ngày 2",
       "color_type": "cycle_lot",
       "tooltip": "G3.1 vị trí 4: Đuôi 2 (2d) | Lót ngày 2"
+    },
+    "G3.3_4": {
+      "pos_raw": "G3.3 vị trí 4",
+      "role": "tail",
+      "role_name": "Đuôi",
+      "digit": "2",
+      "cycle": 1,
+      "cycle_suffix": "1d",
+      "category": "Theo dõi",
+      "label": "Theo dõi ngày 1 (Mới chạm)",
+      "color_type": "cycle_watch",
+      "tooltip": "G3.3 vị trí 4: Đuôi 2 (1d) | Theo dõi ngày 1 (Mới chạm)"
     }
   },
-  "filled_count": 5,
+  "filled_count": 6,
   "total_count": 19,
   "is_g5_finished": false,
   "dan_ghep": [
