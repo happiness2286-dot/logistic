@@ -13,7 +13,7 @@
   "live_prizes": {
     "g1": "82697",
     "g2": [
-      "34264",
+      "",
       ""
     ],
     "g3": [
@@ -40,18 +40,6 @@
     ]
   },
   "highlight_positions": {
-    "G2.1_3": {
-      "pos_raw": "G2.1 vị trí 3",
-      "role": "head",
-      "role_name": "Đầu",
-      "digit": "2",
-      "cycle": 1,
-      "cycle_suffix": "1d",
-      "category": "Theo dõi",
-      "label": "Theo dõi ngày 1 (Mới chạm)",
-      "color_type": "cycle_watch",
-      "tooltip": "G2.1 vị trí 3: Đầu 2 (1d) | Theo dõi ngày 1 (Mới chạm)"
-    },
     "G1_5": {
       "pos_raw": "G1 vị trí 5",
       "role": "tail",
@@ -65,48 +53,19 @@
       "tooltip": "G1 vị trí 5: Đuôi 7 (1d) | Theo dõi ngày 1 (Mới chạm)"
     }
   },
-  "filled_count": 2,
+  "filled_count": 1,
   "total_count": 19,
   "is_g5_finished": false,
-  "dan_ghep": [
-    "22",
-    "27",
-    "72",
-    "77"
-  ],
-  "dan_ngay_1_tinhtuy": [
-    "22",
-    "72"
-  ],
-  "dan_giao_thoa": [
-    "22",
-    "72"
-  ],
-  "dan_tinh_tuy": [
-    "22",
-    "72"
-  ],
-  "top_1": "27",
-  "top1": "27",
-  "top_1_display": "27 (1d)",
-  "top_4": [
-    "27",
-    "22",
-    "77",
-    "72"
-  ],
-  "top4": [
-    "27",
-    "22",
-    "77",
-    "72"
-  ],
-  "top_4_display": [
-    "★ 27 (1d)",
-    "★ 22 (1d)",
-    "★ 77 (1d)",
-    "★ 72 (1d)"
-  ],
+  "dan_ghep": [],
+  "dan_ngay_1_tinhtuy": [],
+  "dan_giao_thoa": [],
+  "dan_tinh_tuy": [],
+  "top_1": null,
+  "top1": null,
+  "top_1_display": "",
+  "top_4": [],
+  "top4": [],
+  "top_4_display": [],
   "dan_lot": [
     "01",
     "02",
@@ -123,6 +82,7 @@
     "18",
     "19",
     "21",
+    "22",
     "23",
     "24",
     "26",
@@ -153,6 +113,7 @@
     "67",
     "68",
     "69",
+    "72",
     "80",
     "81",
     "82",
@@ -184,6 +145,7 @@
     "18 (lót)",
     "19 (lót)",
     "21 (lót)",
+    "22 (lót)",
     "23 (lót)",
     "24 (lót)",
     "26 (lót)",
@@ -214,6 +176,7 @@
     "67 (lót)",
     "68 (lót)",
     "69 (lót)",
+    "72 (lót)",
     "80 (lót)",
     "81 (lót)",
     "82 (lót)",
@@ -303,7 +266,7 @@
     "15",
     "17",
     "18",
-    "19",
+    "22",
     "29",
     "32",
     "35",
@@ -324,7 +287,7 @@
     "66",
     "67",
     "68",
-    "69",
+    "72",
     "81",
     "82",
     "83",
@@ -347,7 +310,7 @@
     "15",
     "17",
     "18",
-    "19",
+    "22",
     "29",
     "32",
     "35",
@@ -368,7 +331,7 @@
     "66",
     "67",
     "68",
-    "69",
+    "72",
     "81",
     "82",
     "83",
@@ -408,12 +371,12 @@
     "19": 2.0,
     "20": 1.5,
     "21": 1.5,
-    "22": 5.8,
+    "22": 5.0,
     "23": 1.5,
     "24": 1.5,
     "25": 1.5,
     "26": 1.5,
-    "27": 2.8,
+    "27": 2.0,
     "28": 1.5,
     "29": 4.5,
     "30": 1.5,
@@ -458,12 +421,12 @@
     "69": 2.0,
     "70": 1.5,
     "71": 1.5,
-    "72": 2.8,
+    "72": 2.0,
     "73": 6.5,
     "74": 1.5,
     "75": 1.5,
     "76": 1.5,
-    "77": 2.8,
+    "77": 2.0,
     "78": 1.5,
     "79": 1.5,
     "80": 1.5,
@@ -501,83 +464,10 @@
       "note": "Bảo toàn & Cứu khung"
     }
   },
-  "table_5cols": [
-    {
-      "num": "27",
-      "c_digit": "2",
-      "d_digit": "7",
-      "c_cycle": 1,
-      "d_cycle": 1,
-      "cycle_days": 1,
-      "category": "Theo dõi",
-      "cat_label": "Theo dõi ngày 1 (Mới chạm)",
-      "weight": 1.0,
-      "combo_type": "chính diện",
-      "score": 52.0,
-      "h_pos": "G2.1 vị trí 3",
-      "t_pos": "G1 vị trí 5",
-      "in_cap4": false,
-      "in_cap4_str": "Không",
-      "top_rank": "👑 Top 1 (Bạch thủ)"
-    },
-    {
-      "num": "22",
-      "c_digit": "2",
-      "d_digit": "7",
-      "c_cycle": 1,
-      "d_cycle": 1,
-      "cycle_days": 1,
-      "category": "Theo dõi",
-      "cat_label": "Theo dõi ngày 1 (Mới chạm)",
-      "weight": 0.85,
-      "combo_type": "bóng đuôi",
-      "score": 49.0,
-      "h_pos": "G2.1 vị trí 3",
-      "t_pos": "G1 vị trí 5",
-      "in_cap4": true,
-      "in_cap4_str": "Có",
-      "top_rank": "🔥 Top 4 (Tứ thủ)"
-    },
-    {
-      "num": "77",
-      "c_digit": "2",
-      "d_digit": "7",
-      "c_cycle": 1,
-      "d_cycle": 1,
-      "cycle_days": 1,
-      "category": "Theo dõi",
-      "cat_label": "Theo dõi ngày 1 (Mới chạm)",
-      "weight": 0.85,
-      "combo_type": "bóng đầu",
-      "score": 49.0,
-      "h_pos": "G2.1 vị trí 3",
-      "t_pos": "G1 vị trí 5",
-      "in_cap4": false,
-      "in_cap4_str": "Không",
-      "top_rank": "🔥 Top 4 (Tứ thủ)"
-    },
-    {
-      "num": "72",
-      "c_digit": "2",
-      "d_digit": "7",
-      "c_cycle": 1,
-      "d_cycle": 1,
-      "cycle_days": 1,
-      "category": "Theo dõi",
-      "cat_label": "Theo dõi ngày 1 (Mới chạm)",
-      "weight": 0.7,
-      "combo_type": "bóng cả hai",
-      "score": 46.0,
-      "h_pos": "G2.1 vị trí 3",
-      "t_pos": "G1 vị trí 5",
-      "in_cap4": true,
-      "in_cap4_str": "Có",
-      "top_rank": "🔥 Top 4 (Tứ thủ)"
-    }
-  ],
+  "table_5cols": [],
   "actual_de": "",
   "dan_dao": [
-    "72"
+    "98"
   ],
   "dan_tinh_4cap": {
     "target_date": "Thứ hai ngày 26-10-2026",
