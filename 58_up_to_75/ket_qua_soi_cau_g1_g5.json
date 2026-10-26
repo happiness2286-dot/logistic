@@ -36,7 +36,7 @@
       "9947",
       "2747",
       "9934",
-      ""
+      "9250"
     ]
   },
   "highlight_positions": {
@@ -449,9 +449,9 @@
       "tooltip": "G5.4 vị trí 2: Đuôi 7 (1d) | Theo dõi ngày 1 (Mới chạm)"
     }
   },
-  "filled_count": 18,
+  "filled_count": 19,
   "total_count": 19,
-  "is_g5_finished": false,
+  "is_g5_finished": true,
   "dan_ghep": [
     "00",
     "02",
