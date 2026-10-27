@@ -34,8 +34,8 @@
       "2932",
       "2166",
       "3893",
-      "",
-      "",
+      "5969",
+      "4596",
       ""
     ]
   },
@@ -429,14 +429,53 @@
       "label": "Theo dõi ngày 1 (Mới chạm)",
       "color_type": "cycle_watch",
       "tooltip": "G5.3 vị trí 4: Đầu 3 (1d) | Theo dõi ngày 1 (Mới chạm)"
+    },
+    "G5.4_1": {
+      "pos_raw": "G5.4 vị trí 1",
+      "role": "head",
+      "role_name": "Đầu",
+      "digit": "5",
+      "digit_bong": "0",
+      "cycle": 1,
+      "cycle_suffix": "1d",
+      "category": "Theo dõi",
+      "label": "Theo dõi ngày 1 (Mới chạm)",
+      "color_type": "cycle_watch",
+      "tooltip": "G5.4 vị trí 1: Đầu 5 (1d) | Theo dõi ngày 1 (Mới chạm)"
+    },
+    "G5.4_2": {
+      "pos_raw": "G5.4 vị trí 2",
+      "role": "head",
+      "role_name": "Đầu",
+      "digit": "9",
+      "digit_bong": "4",
+      "cycle": 1,
+      "cycle_suffix": "1d",
+      "category": "Theo dõi",
+      "label": "Theo dõi ngày 1 (Mới chạm)",
+      "color_type": "cycle_watch",
+      "tooltip": "G5.4 vị trí 2: Đầu 9 (1d) | Theo dõi ngày 1 (Mới chạm)"
+    },
+    "G5.4_4": {
+      "pos_raw": "G5.4 vị trí 4",
+      "role": "head",
+      "role_name": "Đầu",
+      "digit": "9",
+      "digit_bong": "4",
+      "cycle": 1,
+      "cycle_suffix": "1d",
+      "category": "Theo dõi",
+      "label": "Theo dõi ngày 1 (Mới chạm)",
+      "color_type": "cycle_watch",
+      "tooltip": "G5.4 vị trí 4: Đầu 9 (1d) | Theo dõi ngày 1 (Mới chạm)"
     }
   },
-  "filled_count": 16,
+  "filled_count": 18,
   "total_count": 19,
   "is_g5_finished": false,
   "radar_status": "SCANNING_LIVE",
-  "status_text": "⚡ ĐANG QUAY TRỰC TIẾP (16/19 GIẢI) - CHỐT KHI XONG G5",
-  "lock_badge": "⚡ ĐANG QUAY (16/19)",
+  "status_text": "⚡ ĐANG QUAY TRỰC TIẾP (18/19 GIẢI) - CHỐT KHI XONG G5",
+  "lock_badge": "⚡ ĐANG QUAY (18/19)",
   "top_1": "19",
   "lot_lon": "91",
   "song_thu_tru": [
@@ -6237,5 +6276,5 @@
     "cang_bt_hits": 0,
     "cang_bt_rate": 0.0
   },
-  "last_updated": "18:23:32 27/10/2026"
+  "last_updated": "18:23:59 27/10/2026"
 }
