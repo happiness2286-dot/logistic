@@ -14,6 +14,13 @@
     "lich_su": [
       {
         "khung_stt": 51,
+        "ngay": "27/10/2026",
+        "de": "91",
+        "ket_qua": "trung_n1",
+        "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
+      },
+      {
+        "khung_stt": 51,
         "ngay": "26/10/2026",
         "de": "21",
         "ket_qua": "trung_n1",
@@ -354,27 +361,33 @@
         "de": "00",
         "ket_qua": "trung_n1",
         "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
-      },
-      {
-        "khung_stt": 232,
-        "ngay": "24/08/2026",
-        "de": "00",
-        "ket_qua": "trung_n1",
-        "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
       }
     ]
   },
   "soi_truc_tiep": {
     "tong_quan": {
       "tong_ngay": 50,
-      "trung_bach_thu": 10,
+      "trung_bach_thu": 11,
       "trung_tu_thu": 20,
       "trung_lot": 43,
-      "ty_le_bach_thu": 20.0,
+      "ty_le_bach_thu": 22.0,
       "ty_le_tu_thu": 40.0,
       "ty_le_lot": 86.0
     },
     "lich_su": [
+      {
+        "ngay": "27/10/2026",
+        "de": "91",
+        "top1": "91",
+        "top4": [
+          "91",
+          "96",
+          "97",
+          "92"
+        ],
+        "ket_qua": "trung_bach_thu",
+        "ghi_chu": "👑 Trúng Bạch Thủ Top 1 [91]"
+      },
       {
         "ngay": "26/10/2026",
         "de": "21",
@@ -1009,19 +1022,6 @@
         ],
         "ket_qua": "truot_truc_tiep",
         "ghi_chu": "Trượt kỳ quay ❌"
-      },
-      {
-        "ngay": "26/08/2026",
-        "de": "61",
-        "top1": "23",
-        "top4": [
-          "23",
-          "61",
-          "96",
-          "69"
-        ],
-        "ket_qua": "trung_tu_thu",
-        "ghi_chu": "⭐ Trúng Tứ Thủ Top 4 [61]"
       }
     ]
   },
@@ -1032,10 +1032,18 @@
       "truot": 11,
       "ty_le_trung": 81.7,
       "ty_le_truot": 18.3,
-      "dan_tb": 43.7,
-      "chuoi_thong": 4
+      "dan_tb": 44.1,
+      "chuoi_thong": 5
     },
     "lich_su": [
+      {
+        "stt": 61,
+        "ngay": "27/10/2026",
+        "de": "91",
+        "so_luong": 61,
+        "ket_qua": "trung",
+        "ghi_chu": "Trúng Đề 91 ✅ (Dàn 61 số)"
+      },
       {
         "stt": 60,
         "ngay": "26/10/2026",
@@ -1507,14 +1515,6 @@
         "so_luong": 34,
         "ket_qua": "trung",
         "ghi_chu": "Trúng Đề 37 ✅ (Dàn 34 số)"
-      },
-      {
-        "stt": 1,
-        "ngay": "28/08/2026",
-        "de": "68",
-        "so_luong": 34,
-        "ket_qua": "trung",
-        "ghi_chu": "Trúng Đề 68 ✅ (Dàn 34 số)"
       }
     ]
   }
