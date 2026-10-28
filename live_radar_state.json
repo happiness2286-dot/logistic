@@ -507,6 +507,45 @@
       "label": "Theo dõi ngày 1 (Mới chạm)",
       "color_type": "cycle_watch",
       "tooltip": "G5.6 vị trí 4: Đầu 1 (1d) | Theo dõi ngày 1 (Mới chạm)"
+    },
+    "G6.1_1": {
+      "pos_raw": "G6.1 vị trí 1",
+      "role": "tail",
+      "role_name": "Đuôi",
+      "digit": "0",
+      "digit_bong": "5",
+      "cycle": 1,
+      "cycle_suffix": "1d",
+      "category": "Theo dõi",
+      "label": "Theo dõi ngày 1 (Mới chạm)",
+      "color_type": "cycle_watch",
+      "tooltip": "G6.1 vị trí 1: Đuôi 0 (1d) | Theo dõi ngày 1 (Mới chạm)"
+    },
+    "G6.1_2": {
+      "pos_raw": "G6.1 vị trí 2",
+      "role": "head",
+      "role_name": "Đầu",
+      "digit": "0",
+      "digit_bong": "5",
+      "cycle": 1,
+      "cycle_suffix": "1d",
+      "category": "Theo dõi",
+      "label": "Theo dõi ngày 1 (Mới chạm)",
+      "color_type": "cycle_watch",
+      "tooltip": "G6.1 vị trí 2: Đầu 0 (1d) | Theo dõi ngày 1 (Mới chạm)"
+    },
+    "G6.2_3": {
+      "pos_raw": "G6.2 vị trí 3",
+      "role": "tail",
+      "role_name": "Đuôi",
+      "digit": "7",
+      "digit_bong": "2",
+      "cycle": 1,
+      "cycle_suffix": "1d",
+      "category": "Theo dõi",
+      "label": "Theo dõi ngày 1 (Mới chạm)",
+      "color_type": "cycle_watch",
+      "tooltip": "G6.2 vị trí 3: Đuôi 7 (1d) | Theo dõi ngày 1 (Mới chạm)"
     }
   },
   "filled_count": 19,
@@ -6261,5 +6300,5 @@
     "cang_bt_hits": 1,
     "cang_bt_rate": 3.7
   },
-  "last_updated": "18:24:15 28/10/2026"
+  "last_updated": "18:32:39 28/10/2026"
 }
