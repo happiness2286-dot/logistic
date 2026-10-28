@@ -17,7 +17,7 @@
       "30468"
     ],
     "g3": [
-      "",
+      "95839",
       "",
       "",
       "",
@@ -99,9 +99,33 @@
       "label": "Theo dõi ngày 1 (Mới chạm)",
       "color_type": "cycle_watch",
       "tooltip": "G2.2 vị trí 5: Đuôi 8 (1d) | Theo dõi ngày 1 (Mới chạm)"
+    },
+    "G3.1_2": {
+      "pos_raw": "G3.1 vị trí 2",
+      "role": "tail",
+      "role_name": "Đuôi",
+      "digit": "5",
+      "cycle": 2,
+      "cycle_suffix": "2d",
+      "category": "Lót",
+      "label": "Lót ngày 2",
+      "color_type": "cycle_lot",
+      "tooltip": "G3.1 vị trí 2: Đuôi 5 (2d) | Lót ngày 2"
+    },
+    "G3.1_3": {
+      "pos_raw": "G3.1 vị trí 3",
+      "role": "tail",
+      "role_name": "Đuôi",
+      "digit": "8",
+      "cycle": 1,
+      "cycle_suffix": "1d",
+      "category": "Theo dõi",
+      "label": "Theo dõi ngày 1 (Mới chạm)",
+      "color_type": "cycle_watch",
+      "tooltip": "G3.1 vị trí 3: Đuôi 8 (1d) | Theo dõi ngày 1 (Mới chạm)"
     }
   },
-  "filled_count": 3,
+  "filled_count": 4,
   "total_count": 19,
   "is_g5_finished": false,
   "dan_ghep": [
@@ -779,6 +803,24 @@
       "top_rank": "🛡️ Lót hợp lệ"
     },
     {
+      "num": "85",
+      "c_digit": "8",
+      "d_digit": "5",
+      "c_cycle": 2,
+      "d_cycle": 2,
+      "cycle_days": 2,
+      "category": "Lót",
+      "cat_label": "Lót ngày 2",
+      "weight": 1.0,
+      "combo_type": "chính diện",
+      "score": 94.0,
+      "h_pos": "G1 vị trí 2",
+      "t_pos": "G3.1 vị trí 2",
+      "in_cap4": true,
+      "in_cap4_str": "Có",
+      "top_rank": "🛡️ Lót hợp lệ"
+    },
+    {
       "num": "80",
       "c_digit": "8",
       "d_digit": "0",
@@ -797,37 +839,19 @@
       "top_rank": "🛡️ Lót hợp lệ"
     },
     {
-      "num": "85",
+      "num": "35",
       "c_digit": "8",
-      "d_digit": "0",
+      "d_digit": "5",
       "c_cycle": 2,
-      "d_cycle": 1,
+      "d_cycle": 2,
       "cycle_days": 2,
       "category": "Lót",
       "cat_label": "Lót ngày 2",
       "weight": 0.85,
-      "combo_type": "bóng đuôi",
-      "score": 90.0,
+      "combo_type": "bóng đầu",
+      "score": 91.0,
       "h_pos": "G1 vị trí 2",
-      "t_pos": "G1 vị trí 5",
-      "in_cap4": true,
-      "in_cap4_str": "Có",
-      "top_rank": "🛡️ Lót hợp lệ"
-    },
-    {
-      "num": "35",
-      "c_digit": "8",
-      "d_digit": "0",
-      "c_cycle": 2,
-      "d_cycle": 1,
-      "cycle_days": 2,
-      "category": "Lót",
-      "cat_label": "Lót ngày 2",
-      "weight": 0.7,
-      "combo_type": "bóng cả hai",
-      "score": 87.0,
-      "h_pos": "G1 vị trí 2",
-      "t_pos": "G1 vị trí 5",
+      "t_pos": "G3.1 vị trí 2",
       "in_cap4": true,
       "in_cap4_str": "Có",
       "top_rank": "🛡️ Lót hợp lệ"
