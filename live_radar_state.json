@@ -13,8 +13,8 @@
   "live_prizes": {
     "g1": "18190",
     "g2": [
-      "",
-      ""
+      "62731",
+      "30468"
     ],
     "g3": [
       "",
@@ -91,14 +91,27 @@
       "label": "Theo dõi ngày 1 (Mới chạm)",
       "color_type": "cycle_watch",
       "tooltip": "G1 vị trí 5: Đuôi 0 (1d) | Theo dõi ngày 1 (Mới chạm)"
+    },
+    "G2.2_5": {
+      "pos_raw": "G2.2 vị trí 5",
+      "role": "tail",
+      "role_name": "Đuôi",
+      "digit": "8",
+      "digit_bong": "3",
+      "cycle": 1,
+      "cycle_suffix": "1d",
+      "category": "Theo dõi",
+      "label": "Theo dõi ngày 1 (Mới chạm)",
+      "color_type": "cycle_watch",
+      "tooltip": "G2.2 vị trí 5: Đuôi 8 (1d) | Theo dõi ngày 1 (Mới chạm)"
     }
   },
-  "filled_count": 1,
+  "filled_count": 3,
   "total_count": 19,
   "is_g5_finished": false,
   "radar_status": "SCANNING_LIVE",
-  "status_text": "⚡ ĐANG QUAY TRỰC TIẾP (1/19 GIẢI) - CHỐT KHI XONG G5",
-  "lock_badge": "⚡ ĐANG QUAY (1/19)",
+  "status_text": "⚡ ĐANG QUAY TRỰC TIẾP (3/19 GIẢI) - CHỐT KHI XONG G5",
+  "lock_badge": "⚡ ĐANG QUAY (3/19)",
   "top_1": "81",
   "lot_lon": "18",
   "song_thu_tru": [
@@ -109,7 +122,7 @@
     "81",
     "18",
     "31",
-    "80"
+    "88"
   ],
   "cang_3d_live": {
     "tam_g1": "1",
@@ -134,15 +147,15 @@
       "181",
       "118",
       "131",
-      "180",
+      "188",
       "081",
       "018",
       "031",
-      "080",
+      "088",
       "681",
       "618",
       "631",
-      "680"
+      "688"
     ],
     "cang_d9_27s": [
       "113",
@@ -212,9 +225,11 @@
     "22",
     "23",
     "32",
+    "33",
     "34",
     "35",
     "37",
+    "38",
     "39",
     "42",
     "45",
@@ -227,7 +242,9 @@
     "68",
     "69",
     "72",
+    "80",
     "82",
+    "83",
     "84",
     "85",
     "87"
@@ -286,6 +303,110 @@
       "top_rank": "🔥 Top 4 (Tứ thủ)"
     },
     {
+      "num": "88",
+      "c_digit": "8",
+      "d_digit": "8",
+      "c_cycle": 2,
+      "d_cycle": 1,
+      "cycle_days": 2,
+      "category": "Lót",
+      "cat_label": "Lót ngày 2",
+      "weight": 1.0,
+      "combo_type": "chính diện",
+      "score": 135.0,
+      "h_pos": "G1 vị trí 2",
+      "t_pos": "G2.2 vị trí 5",
+      "in_cap4": true,
+      "in_cap4_str": "Có",
+      "consensus_score": 115.0,
+      "in_d9": false,
+      "in_tam": false,
+      "in_sum": true,
+      "convergence_badges": [
+        "N1",
+        "Tổng G7 (6)"
+      ],
+      "top_rank": "🔥 Top 4 (Tứ thủ)"
+    },
+    {
+      "num": "83",
+      "c_digit": "8",
+      "d_digit": "8",
+      "c_cycle": 2,
+      "d_cycle": 1,
+      "cycle_days": 2,
+      "category": "Lót",
+      "cat_label": "Lót ngày 2",
+      "weight": 0.85,
+      "combo_type": "bóng đuôi",
+      "score": 131.25,
+      "h_pos": "G1 vị trí 2",
+      "t_pos": "G2.2 vị trí 5",
+      "in_cap4": true,
+      "in_cap4_str": "Có",
+      "consensus_score": 112.0,
+      "in_d9": false,
+      "in_tam": false,
+      "in_sum": true,
+      "convergence_badges": [
+        "N1",
+        "Tổng G7 (1)"
+      ],
+      "top_rank": "🛡️ Lót hợp lệ"
+    },
+    {
+      "num": "38",
+      "c_digit": "8",
+      "d_digit": "8",
+      "c_cycle": 2,
+      "d_cycle": 1,
+      "cycle_days": 2,
+      "category": "Lót",
+      "cat_label": "Lót ngày 2",
+      "weight": 0.85,
+      "combo_type": "bóng đầu",
+      "score": 131.25,
+      "h_pos": "G1 vị trí 2",
+      "t_pos": "G2.2 vị trí 5",
+      "in_cap4": true,
+      "in_cap4_str": "Có",
+      "consensus_score": 112.0,
+      "in_d9": false,
+      "in_tam": false,
+      "in_sum": true,
+      "convergence_badges": [
+        "N1",
+        "Tổng G7 (1)"
+      ],
+      "top_rank": "🛡️ Lót hợp lệ"
+    },
+    {
+      "num": "33",
+      "c_digit": "8",
+      "d_digit": "8",
+      "c_cycle": 2,
+      "d_cycle": 1,
+      "cycle_days": 2,
+      "category": "Lót",
+      "cat_label": "Lót ngày 2",
+      "weight": 0.7,
+      "combo_type": "bóng cả hai",
+      "score": 127.5,
+      "h_pos": "G1 vị trí 2",
+      "t_pos": "G2.2 vị trí 5",
+      "in_cap4": true,
+      "in_cap4_str": "Có",
+      "consensus_score": 109.0,
+      "in_d9": false,
+      "in_tam": false,
+      "in_sum": true,
+      "convergence_badges": [
+        "N1",
+        "Tổng G7 (6)"
+      ],
+      "top_rank": "🛡️ Lót hợp lệ"
+    },
+    {
       "num": "80",
       "c_digit": "8",
       "d_digit": "0",
@@ -308,7 +429,7 @@
       "convergence_badges": [
         "N1"
       ],
-      "top_rank": "🔥 Top 4 (Tứ thủ)"
+      "top_rank": "🛡️ Lót hợp lệ"
     },
     {
       "num": "84",
@@ -546,7 +667,7 @@
       "81",
       "18",
       "31",
-      "80"
+      "88"
     ],
     "cang_3d": [
       "1",
@@ -3588,5 +3709,5 @@
     "cang_bt_hits": 1,
     "cang_bt_rate": 3.7
   },
-  "last_updated": "18:16:31 28/10/2026"
+  "last_updated": "18:17:13 28/10/2026"
 }
