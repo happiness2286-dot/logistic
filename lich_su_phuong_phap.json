@@ -3,15 +3,22 @@
     "tong_quan": {
       "tong_khung": 50,
       "trung_n1": 38,
-      "trung_n2": 2,
+      "trung_n2": 1,
       "trung_n3": 0,
-      "truot_khung": 10,
+      "truot_khung": 11,
       "ty_le_n1": 76.0,
-      "ty_le_n2": 4.0,
+      "ty_le_n2": 2.0,
       "ty_le_n3": 0.0,
-      "ty_le_truot": 20.0
+      "ty_le_truot": 22.0
     },
     "lich_su": [
+      {
+        "khung_stt": 51,
+        "ngay": "31/10/2026",
+        "de": "57",
+        "ket_qua": "truot_khung",
+        "ghi_chu": "Trượt khung 3 ngày ❌"
+      },
       {
         "khung_stt": 51,
         "ngay": "30/10/2026",
@@ -354,13 +361,6 @@
         "de": "51",
         "ket_qua": "trung_n1",
         "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
-      },
-      {
-        "khung_stt": 247,
-        "ngay": "10/09/2026",
-        "de": "81",
-        "ket_qua": "trung_n2",
-        "ghi_chu": "Trúng N2 ngày 2 ✅ (Dàn 42s Mở rộng)"
       }
     ]
   },
@@ -369,12 +369,25 @@
       "tong_ngay": 50,
       "trung_bach_thu": 6,
       "trung_tu_thu": 11,
-      "trung_lot": 40,
+      "trung_lot": 39,
       "ty_le_bach_thu": 12.0,
       "ty_le_tu_thu": 22.0,
-      "ty_le_lot": 80.0
+      "ty_le_lot": 78.0
     },
     "lich_su": [
+      {
+        "ngay": "31/10/2026",
+        "de": "57",
+        "top1": "40",
+        "top4": [
+          "40",
+          "44",
+          "47",
+          "10"
+        ],
+        "ket_qua": "truot_truc_tiep",
+        "ghi_chu": "Trượt kỳ quay ❌"
+      },
       {
         "ngay": "30/10/2026",
         "de": "59",
@@ -1009,33 +1022,28 @@
         ],
         "ket_qua": "trung_tu_thu",
         "ghi_chu": "⭐ Trúng Tứ Thủ Top 4 [52]"
-      },
-      {
-        "ngay": "10/09/2026",
-        "de": "81",
-        "top1": "53",
-        "top4": [
-          "53",
-          "94",
-          "14",
-          "47"
-        ],
-        "ket_qua": "trung_lot",
-        "ghi_chu": "🛡️ Trúng Dàn Số Lót [81]"
       }
     ]
   },
   "dan_tinh_tuy_ngay_1": {
     "tong_quan": {
       "tong_ngay": 60,
-      "trung": 48,
-      "truot": 12,
-      "ty_le_trung": 80.0,
-      "ty_le_truot": 20.0,
-      "dan_tb": 45.5,
-      "chuoi_thong": 2
+      "trung": 47,
+      "truot": 13,
+      "ty_le_trung": 78.3,
+      "ty_le_truot": 21.7,
+      "dan_tb": 46.0,
+      "chuoi_thong": 0
     },
     "lich_su": [
+      {
+        "stt": 61,
+        "ngay": "31/10/2026",
+        "de": "57",
+        "so_luong": 61,
+        "ket_qua": "truot",
+        "ghi_chu": "Trượt Đề 57 ❌ (61 số)"
+      },
       {
         "stt": 60,
         "ngay": "30/10/2026",
@@ -1507,14 +1515,6 @@
         "so_luong": 36,
         "ket_qua": "trung",
         "ghi_chu": "Trúng Đề 42 ✅ (Dàn 36 số)"
-      },
-      {
-        "stt": 1,
-        "ngay": "01/09/2026",
-        "de": "21",
-        "so_luong": 33,
-        "ket_qua": "trung",
-        "ghi_chu": "Trúng Đề 21 ✅ (Dàn 33 số)"
       }
     ]
   }
