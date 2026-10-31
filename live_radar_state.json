@@ -31,9 +31,9 @@
       "7770"
     ],
     "g5": [
-      "",
-      "",
-      "",
+      "8634",
+      "2951",
+      "6836",
       "",
       "",
       ""
@@ -325,14 +325,53 @@
       "label": "Theo dõi ngày 1 (Mới chạm)",
       "color_type": "cycle_watch",
       "tooltip": "G4.4 vị trí 1: Đuôi 7 (1d) | Theo dõi ngày 1 (Mới chạm)"
+    },
+    "G5.1_2": {
+      "pos_raw": "G5.1 vị trí 2",
+      "role": "head",
+      "role_name": "Đầu",
+      "digit": "6",
+      "digit_bong": "1",
+      "cycle": 1,
+      "cycle_suffix": "1d",
+      "category": "Theo dõi",
+      "label": "Theo dõi ngày 1 (Mới chạm)",
+      "color_type": "cycle_watch",
+      "tooltip": "G5.1 vị trí 2: Đầu 6 (1d) | Theo dõi ngày 1 (Mới chạm)"
+    },
+    "G5.1_4": {
+      "pos_raw": "G5.1 vị trí 4",
+      "role": "head",
+      "role_name": "Đầu",
+      "digit": "4",
+      "digit_bong": "9",
+      "cycle": 2,
+      "cycle_suffix": "2d",
+      "category": "Lót",
+      "label": "Lót ngày 2",
+      "color_type": "cycle_lot",
+      "tooltip": "G5.1 vị trí 4: Đầu 4 (2d) | Lót ngày 2"
+    },
+    "G5.2_3": {
+      "pos_raw": "G5.2 vị trí 3",
+      "role": "tail",
+      "role_name": "Đuôi",
+      "digit": "5",
+      "digit_bong": "0",
+      "cycle": 1,
+      "cycle_suffix": "1d",
+      "category": "Theo dõi",
+      "label": "Theo dõi ngày 1 (Mới chạm)",
+      "color_type": "cycle_watch",
+      "tooltip": "G5.2 vị trí 3: Đuôi 5 (1d) | Theo dõi ngày 1 (Mới chạm)"
     }
   },
-  "filled_count": 13,
+  "filled_count": 16,
   "total_count": 19,
   "is_g5_finished": false,
   "radar_status": "SCANNING_LIVE",
-  "status_text": "⚡ ĐANG QUAY TRỰC TIẾP (13/19 GIẢI) - CHỐT KHI XONG G5",
-  "lock_badge": "⚡ ĐANG QUAY (13/19)",
+  "status_text": "⚡ ĐANG QUAY TRỰC TIẾP (16/19 GIẢI) - CHỐT KHI XONG G5",
+  "lock_badge": "⚡ ĐANG QUAY (16/19)",
   "top_1": "34",
   "lot_lon": "43",
   "song_thu_tru": [
@@ -6128,5 +6167,5 @@
     "cang_bt_hits": 1,
     "cang_bt_rate": 3.7
   },
-  "last_updated": "18:20:58 31/10/2026"
+  "last_updated": "18:21:24 31/10/2026"
 }
