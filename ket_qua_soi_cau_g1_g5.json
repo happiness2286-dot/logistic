@@ -22,7 +22,7 @@
       "79124",
       "58317",
       "43449",
-      ""
+      "13362"
     ],
     "g4": [
       "",
@@ -207,9 +207,21 @@
       "label": "Theo dõi ngày 1 (Mới chạm)",
       "color_type": "cycle_watch",
       "tooltip": "G3.4 vị trí 4: Đuôi 1 (1d) | Theo dõi ngày 1 (Mới chạm)"
+    },
+    "G3.6_4": {
+      "pos_raw": "G3.6 vị trí 4",
+      "role": "tail",
+      "role_name": "Đuôi",
+      "digit": "6",
+      "cycle": 1,
+      "cycle_suffix": "1d",
+      "category": "Theo dõi",
+      "label": "Theo dõi ngày 1 (Mới chạm)",
+      "color_type": "cycle_watch",
+      "tooltip": "G3.6 vị trí 4: Đuôi 6 (1d) | Theo dõi ngày 1 (Mới chạm)"
     }
   },
-  "filled_count": 8,
+  "filled_count": 9,
   "total_count": 19,
   "is_g5_finished": false,
   "dan_ghep": [
