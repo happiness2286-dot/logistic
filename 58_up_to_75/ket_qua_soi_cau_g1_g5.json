@@ -35,7 +35,7 @@
       "2459",
       "4467",
       "4517",
-      "",
+      "2624",
       ""
     ]
   },
@@ -292,6 +292,42 @@
       "color_type": "cycle_watch",
       "tooltip": "G5.4 vị trí 4: Đầu 7 (1d) | Theo dõi ngày 1 (Mới chạm)"
     },
+    "G5.5_1": {
+      "pos_raw": "G5.5 vị trí 1",
+      "role": "head",
+      "role_name": "Đầu",
+      "digit": "2",
+      "cycle": 1,
+      "cycle_suffix": "1d",
+      "category": "Theo dõi",
+      "label": "Theo dõi ngày 1 (Mới chạm)",
+      "color_type": "cycle_watch",
+      "tooltip": "G5.5 vị trí 1: Đầu 2 (1d) | Theo dõi ngày 1 (Mới chạm)"
+    },
+    "G5.5_3": {
+      "pos_raw": "G5.5 vị trí 3",
+      "role": "head",
+      "role_name": "Đầu",
+      "digit": "2",
+      "cycle": 2,
+      "cycle_suffix": "2d",
+      "category": "Lót",
+      "label": "Lót ngày 2",
+      "color_type": "cycle_lot",
+      "tooltip": "G5.5 vị trí 3: Đầu 2 (2d) | Lót ngày 2"
+    },
+    "G5.5_4": {
+      "pos_raw": "G5.5 vị trí 4",
+      "role": "head",
+      "role_name": "Đầu",
+      "digit": "4",
+      "cycle": 2,
+      "cycle_suffix": "2d",
+      "category": "Lót",
+      "label": "Lót ngày 2",
+      "color_type": "cycle_lot",
+      "tooltip": "G5.5 vị trí 4: Đầu 4 (2d) | Lót ngày 2"
+    },
     "G1_5": {
       "pos_raw": "G1 vị trí 5",
       "role": "tail",
@@ -497,7 +533,7 @@
       "tooltip": "G5.4 vị trí 3: Đuôi 1 (1d) | Theo dõi ngày 1 (Mới chạm)"
     }
   },
-  "filled_count": 17,
+  "filled_count": 18,
   "total_count": 19,
   "is_g5_finished": false,
   "dan_ghep": [
