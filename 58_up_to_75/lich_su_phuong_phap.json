@@ -2,16 +2,23 @@
   "khung_3_ngay": {
     "tong_quan": {
       "tong_khung": 50,
-      "trung_n1": 37,
+      "trung_n1": 36,
       "trung_n2": 3,
       "trung_n3": 1,
-      "truot_khung": 9,
-      "ty_le_n1": 74.0,
+      "truot_khung": 10,
+      "ty_le_n1": 72.0,
       "ty_le_n2": 6.0,
       "ty_le_n3": 2.0,
-      "ty_le_truot": 18.0
+      "ty_le_truot": 20.0
     },
     "lich_su": [
+      {
+        "khung_stt": 51,
+        "ngay": "04/11/2026",
+        "de": "46",
+        "ket_qua": "truot_khung",
+        "ghi_chu": "Trượt khung 3 ngày ❌"
+      },
       {
         "khung_stt": 51,
         "ngay": "03/11/2026",
@@ -354,27 +361,33 @@
         "de": "42",
         "ket_qua": "trung_n3",
         "ghi_chu": "Trúng N3 ngày 3 ✅ (Dàn 40s Cơ hội cuối)"
-      },
-      {
-        "khung_stt": 240,
-        "ngay": "01/09/2026",
-        "de": "21",
-        "ket_qua": "trung_n1",
-        "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
       }
     ]
   },
   "soi_truc_tiep": {
     "tong_quan": {
       "tong_ngay": 50,
-      "trung_bach_thu": 9,
-      "trung_tu_thu": 16,
-      "trung_lot": 41,
-      "ty_le_bach_thu": 18.0,
-      "ty_le_tu_thu": 32.0,
-      "ty_le_lot": 82.0
+      "trung_bach_thu": 8,
+      "trung_tu_thu": 15,
+      "trung_lot": 40,
+      "ty_le_bach_thu": 16.0,
+      "ty_le_tu_thu": 30.0,
+      "ty_le_lot": 80.0
     },
     "lich_su": [
+      {
+        "ngay": "04/11/2026",
+        "de": "46",
+        "top1": "22",
+        "top4": [
+          "22",
+          "02",
+          "52",
+          "42"
+        ],
+        "ket_qua": "truot_truc_tiep",
+        "ghi_chu": "Trượt kỳ quay ❌"
+      },
       {
         "ngay": "03/11/2026",
         "de": "46",
@@ -1009,33 +1022,28 @@
         ],
         "ket_qua": "trung_lot",
         "ghi_chu": "🛡️ Trúng Dàn Số Lót [66]"
-      },
-      {
-        "ngay": "03/09/2026",
-        "de": "11",
-        "top1": "11",
-        "top4": [
-          "11",
-          "44",
-          "73",
-          "71"
-        ],
-        "ket_qua": "trung_bach_thu",
-        "ghi_chu": "👑 Trúng Bạch Thủ Top 1 [11]"
       }
     ]
   },
   "dan_tinh_tuy_ngay_1": {
     "tong_quan": {
       "tong_ngay": 60,
-      "trung": 47,
-      "truot": 13,
-      "ty_le_trung": 78.3,
-      "ty_le_truot": 21.7,
-      "dan_tb": 47.1,
+      "trung": 46,
+      "truot": 14,
+      "ty_le_trung": 76.7,
+      "ty_le_truot": 23.3,
+      "dan_tb": 47.5,
       "chuoi_thong": 0
     },
     "lich_su": [
+      {
+        "stt": 61,
+        "ngay": "04/11/2026",
+        "de": "46",
+        "so_luong": 61,
+        "ket_qua": "truot",
+        "ghi_chu": "Trượt Đề 46 ❌ (61 số)"
+      },
       {
         "stt": 60,
         "ngay": "03/11/2026",
@@ -1507,14 +1515,6 @@
         "so_luong": 32,
         "ket_qua": "trung",
         "ghi_chu": "Trúng Đề 35 ✅ (Dàn 32 số)"
-      },
-      {
-        "stt": 1,
-        "ngay": "05/09/2026",
-        "de": "37",
-        "so_luong": 35,
-        "ket_qua": "trung",
-        "ghi_chu": "Trúng Đề 37 ✅ (Dàn 35 số)"
       }
     ]
   }
