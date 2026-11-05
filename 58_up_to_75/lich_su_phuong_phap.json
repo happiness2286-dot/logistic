@@ -2,16 +2,23 @@
   "khung_3_ngay": {
     "tong_quan": {
       "tong_khung": 50,
-      "trung_n1": 36,
+      "trung_n1": 37,
       "trung_n2": 3,
-      "trung_n3": 1,
+      "trung_n3": 0,
       "truot_khung": 10,
-      "ty_le_n1": 72.0,
+      "ty_le_n1": 74.0,
       "ty_le_n2": 6.0,
-      "ty_le_n3": 2.0,
+      "ty_le_n3": 0.0,
       "ty_le_truot": 20.0
     },
     "lich_su": [
+      {
+        "khung_stt": 51,
+        "ngay": "05/11/2026",
+        "de": "02",
+        "ket_qua": "trung_n1",
+        "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
+      },
       {
         "khung_stt": 51,
         "ngay": "04/11/2026",
@@ -354,13 +361,6 @@
         "de": "11",
         "ket_qua": "trung_n1",
         "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
-      },
-      {
-        "khung_stt": 241,
-        "ngay": "02/09/2026",
-        "de": "42",
-        "ket_qua": "trung_n3",
-        "ghi_chu": "Trúng N3 ngày 3 ✅ (Dàn 40s Cơ hội cuối)"
       }
     ]
   },
@@ -375,6 +375,19 @@
       "ty_le_lot": 80.0
     },
     "lich_su": [
+      {
+        "ngay": "05/11/2026",
+        "de": "02",
+        "top1": "39",
+        "top4": [
+          "39",
+          "42",
+          "79",
+          "34"
+        ],
+        "ket_qua": "trung_lot",
+        "ghi_chu": "🛡️ Trúng Dàn Số Lót [02]"
+      },
       {
         "ngay": "04/11/2026",
         "de": "46",
@@ -1009,19 +1022,6 @@
         ],
         "ket_qua": "trung_tu_thu",
         "ghi_chu": "⭐ Trúng Tứ Thủ Top 4 [37]"
-      },
-      {
-        "ngay": "04/09/2026",
-        "de": "66",
-        "top1": "06",
-        "top4": [
-          "06",
-          "14",
-          "74",
-          "88"
-        ],
-        "ket_qua": "trung_lot",
-        "ghi_chu": "🛡️ Trúng Dàn Số Lót [66]"
       }
     ]
   },
@@ -1032,10 +1032,18 @@
       "truot": 14,
       "ty_le_trung": 76.7,
       "ty_le_truot": 23.3,
-      "dan_tb": 47.5,
-      "chuoi_thong": 0
+      "dan_tb": 48.0,
+      "chuoi_thong": 1
     },
     "lich_su": [
+      {
+        "stt": 61,
+        "ngay": "05/11/2026",
+        "de": "02",
+        "so_luong": 61,
+        "ket_qua": "trung",
+        "ghi_chu": "Trúng Đề 02 ✅ (Dàn 61 số)"
+      },
       {
         "stt": 60,
         "ngay": "04/11/2026",
@@ -1507,14 +1515,6 @@
         "so_luong": 34,
         "ket_qua": "truot",
         "ghi_chu": "Trượt Đề 90 ❌ (34 số)"
-      },
-      {
-        "stt": 1,
-        "ngay": "06/09/2026",
-        "de": "35",
-        "so_luong": 32,
-        "ket_qua": "trung",
-        "ghi_chu": "Trúng Đề 35 ✅ (Dàn 32 số)"
       }
     ]
   }
