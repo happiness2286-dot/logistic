@@ -32,9 +32,9 @@
     ],
     "g5": [
       "3357",
-      "",
-      "",
-      "",
+      "7371",
+      "3434",
+      "4723",
       "",
       ""
     ]
@@ -249,12 +249,12 @@
       "tooltip": "G5.1 vị trí 3: Đầu 5 (2d) | Lót ngày 2"
     }
   },
-  "filled_count": 14,
+  "filled_count": 17,
   "total_count": 19,
   "is_g5_finished": false,
   "radar_status": "SCANNING_LIVE",
-  "status_text": "⚡ ĐANG QUAY TRỰC TIẾP (14/19 GIẢI) - CHỐT KHI XONG G5",
-  "lock_badge": "⚡ ĐANG QUAY (14/19)",
+  "status_text": "⚡ ĐANG QUAY TRỰC TIẾP (17/19 GIẢI) - CHỐT KHI XONG G5",
+  "lock_badge": "⚡ ĐANG QUAY (17/19)",
   "top_1": "39",
   "lot_lon": "93",
   "song_thu_tru": [
@@ -6045,5 +6045,5 @@
     "cang_bt_hits": 1,
     "cang_bt_rate": 3.7
   },
-  "last_updated": "18:21:45 07/11/2026"
+  "last_updated": "18:22:11 07/11/2026"
 }
