@@ -35,8 +35,8 @@
       "7371",
       "3434",
       "4723",
-      "",
-      ""
+      "7726",
+      "9273"
     ]
   },
   "highlight_positions": {
@@ -231,11 +231,23 @@
       "label": "Lót ngày 2",
       "color_type": "cycle_lot",
       "tooltip": "G5.1 vị trí 3: Đầu 5 (2d) | Lót ngày 2"
+    },
+    "G6.1_2": {
+      "pos_raw": "G6.1 vị trí 2",
+      "role": "tail",
+      "role_name": "Đuôi",
+      "digit": "6",
+      "cycle": 1,
+      "cycle_suffix": "1d",
+      "category": "Theo dõi",
+      "label": "Theo dõi ngày 1 (Mới chạm)",
+      "color_type": "cycle_watch",
+      "tooltip": "G6.1 vị trí 2: Đuôi 6 (1d) | Theo dõi ngày 1 (Mới chạm)"
     }
   },
-  "filled_count": 17,
+  "filled_count": 19,
   "total_count": 19,
-  "is_g5_finished": false,
+  "is_g5_finished": true,
   "dan_ghep": [
     "00",
     "01",
