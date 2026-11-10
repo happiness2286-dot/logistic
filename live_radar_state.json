@@ -25,8 +25,8 @@
       "33335"
     ],
     "g4": [
-      "",
-      "",
+      "8889",
+      "8400",
       "",
       ""
     ],
@@ -104,14 +104,40 @@
       "label": "Lót ngày 2",
       "color_type": "cycle_lot",
       "tooltip": "G3.5 vị trí 5: Đầu 3 (2d) | Lót ngày 2"
+    },
+    "G4.2_3": {
+      "pos_raw": "G4.2 vị trí 3",
+      "role": "head",
+      "role_name": "Đầu",
+      "digit": "0",
+      "digit_bong": "5",
+      "cycle": 1,
+      "cycle_suffix": "1d",
+      "category": "Theo dõi",
+      "label": "Theo dõi ngày 1 (Mới chạm)",
+      "color_type": "cycle_watch",
+      "tooltip": "G4.2 vị trí 3: Đầu 0 (1d) | Theo dõi ngày 1 (Mới chạm)"
+    },
+    "G4.2_4": {
+      "pos_raw": "G4.2 vị trí 4",
+      "role": "head",
+      "role_name": "Đầu",
+      "digit": "0",
+      "digit_bong": "5",
+      "cycle": 2,
+      "cycle_suffix": "2d",
+      "category": "Lót",
+      "label": "Lót ngày 2",
+      "color_type": "cycle_lot",
+      "tooltip": "G4.2 vị trí 4: Đầu 0 (2d) | Lót ngày 2"
     }
   },
-  "filled_count": 9,
+  "filled_count": 11,
   "total_count": 19,
   "is_g5_finished": false,
   "radar_status": "SCANNING_LIVE",
-  "status_text": "⚡ ĐANG QUAY TRỰC TIẾP (9/19 GIẢI) - CHỐT KHI XONG G5",
-  "lock_badge": "⚡ ĐANG QUAY (9/19)",
+  "status_text": "⚡ ĐANG QUAY TRỰC TIẾP (11/19 GIẢI) - CHỐT KHI XONG G5",
+  "lock_badge": "⚡ ĐANG QUAY (11/19)",
   "top_1": "09",
   "lot_lon": "90",
   "song_thu_tru": [
@@ -4987,5 +5013,5 @@
     "cang_bt_hits": 1,
     "cang_bt_rate": 3.7
   },
-  "last_updated": "18:19:51 10/11/2026"
+  "last_updated": "18:20:17 10/11/2026"
 }
