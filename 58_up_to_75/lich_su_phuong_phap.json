@@ -2,16 +2,23 @@
   "khung_3_ngay": {
     "tong_quan": {
       "tong_khung": 50,
-      "trung_n1": 36,
-      "trung_n2": 2,
+      "trung_n1": 37,
+      "trung_n2": 1,
       "trung_n3": 0,
       "truot_khung": 12,
-      "ty_le_n1": 72.0,
-      "ty_le_n2": 4.0,
+      "ty_le_n1": 74.0,
+      "ty_le_n2": 2.0,
       "ty_le_n3": 0.0,
       "ty_le_truot": 24.0
     },
     "lich_su": [
+      {
+        "khung_stt": 51,
+        "ngay": "11/11/2026",
+        "de": "29",
+        "ket_qua": "trung_n1",
+        "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
+      },
       {
         "khung_stt": 51,
         "ngay": "10/11/2026",
@@ -354,13 +361,6 @@
         "de": "51",
         "ket_qua": "trung_n1",
         "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
-      },
-      {
-        "khung_stt": 247,
-        "ngay": "10/09/2026",
-        "de": "81",
-        "ket_qua": "trung_n2",
-        "ghi_chu": "Trúng N2 ngày 2 ✅ (Dàn 42s Mở rộng)"
       }
     ]
   },
@@ -375,6 +375,19 @@
       "ty_le_lot": 76.0
     },
     "lich_su": [
+      {
+        "ngay": "11/11/2026",
+        "de": "29",
+        "top1": "97",
+        "top4": [
+          "97",
+          "92",
+          "47",
+          "42"
+        ],
+        "ket_qua": "trung_lot",
+        "ghi_chu": "🛡️ Trúng Dàn Số Lót [29]"
+      },
       {
         "ngay": "10/11/2026",
         "de": "83",
@@ -1009,19 +1022,6 @@
         ],
         "ket_qua": "trung_tu_thu",
         "ghi_chu": "⭐ Trúng Tứ Thủ Top 4 [52]"
-      },
-      {
-        "ngay": "10/09/2026",
-        "de": "81",
-        "top1": "53",
-        "top4": [
-          "53",
-          "94",
-          "14",
-          "47"
-        ],
-        "ket_qua": "trung_lot",
-        "ghi_chu": "🛡️ Trúng Dàn Số Lót [81]"
       }
     ]
   },
@@ -1032,10 +1032,18 @@
       "truot": 14,
       "ty_le_trung": 76.7,
       "ty_le_truot": 23.3,
-      "dan_tb": 50.2,
-      "chuoi_thong": 3
+      "dan_tb": 50.7,
+      "chuoi_thong": 4
     },
     "lich_su": [
+      {
+        "stt": 61,
+        "ngay": "11/11/2026",
+        "de": "29",
+        "so_luong": 61,
+        "ket_qua": "trung",
+        "ghi_chu": "Trúng Đề 29 ✅ (Dàn 61 số)"
+      },
       {
         "stt": 60,
         "ngay": "10/11/2026",
@@ -1507,14 +1515,6 @@
         "so_luong": 35,
         "ket_qua": "trung",
         "ghi_chu": "Trúng Đề 99 ✅ (Dàn 35 số)"
-      },
-      {
-        "stt": 1,
-        "ngay": "12/09/2026",
-        "de": "51",
-        "so_luong": 32,
-        "ket_qua": "trung",
-        "ghi_chu": "Trúng Đề 51 ✅ (Dàn 32 số)"
       }
     ]
   }
