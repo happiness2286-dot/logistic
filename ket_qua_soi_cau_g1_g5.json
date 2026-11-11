@@ -13,7 +13,7 @@
   "live_prizes": {
     "g1": "97579",
     "g2": [
-      "",
+      "20960",
       ""
     ],
     "g3": [
@@ -40,7 +40,7 @@
     ]
   },
   "highlight_positions": {},
-  "filled_count": 1,
+  "filled_count": 2,
   "total_count": 19,
   "is_g5_finished": false,
   "dan_ghep": [],
