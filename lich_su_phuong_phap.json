@@ -14,6 +14,13 @@
     "lich_su": [
       {
         "khung_stt": 51,
+        "ngay": "12/11/2026",
+        "de": "54",
+        "ket_qua": "truot_khung",
+        "ghi_chu": "Trượt khung 3 ngày ❌"
+      },
+      {
+        "khung_stt": 51,
         "ngay": "11/11/2026",
         "de": "29",
         "ket_qua": "trung_n1",
@@ -354,13 +361,6 @@
         "de": "96",
         "ket_qua": "trung_n1",
         "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
-      },
-      {
-        "khung_stt": 33,
-        "ngay": "23/09/2026",
-        "de": "06",
-        "ket_qua": "truot_khung",
-        "ghi_chu": "Trượt khung 3 ngày ❌"
       }
     ]
   },
@@ -375,6 +375,19 @@
       "ty_le_lot": 72.0
     },
     "lich_su": [
+      {
+        "ngay": "12/11/2026",
+        "de": "54",
+        "top1": "91",
+        "top4": [
+          "91",
+          "16",
+          "71",
+          "41"
+        ],
+        "ket_qua": "truot_truc_tiep",
+        "ghi_chu": "Trượt kỳ quay ❌"
+      },
       {
         "ngay": "11/11/2026",
         "de": "29",
@@ -1011,31 +1024,28 @@
         ],
         "ket_qua": "trung_bach_thu",
         "ghi_chu": "👑 Trúng Bạch Thủ Top 1 [96]"
-      },
-      {
-        "ngay": "23/09/2026",
-        "de": "06",
-        "top1": "22",
-        "top4": [
-          "22",
-          "72"
-        ],
-        "ket_qua": "truot_truc_tiep",
-        "ghi_chu": "Trượt kỳ quay ❌"
       }
     ]
   },
   "dan_tinh_tuy_ngay_1": {
     "tong_quan": {
       "tong_ngay": 60,
-      "trung": 46,
-      "truot": 14,
-      "ty_le_trung": 76.7,
-      "ty_le_truot": 23.3,
-      "dan_tb": 50.7,
-      "chuoi_thong": 4
+      "trung": 45,
+      "truot": 15,
+      "ty_le_trung": 75.0,
+      "ty_le_truot": 25.0,
+      "dan_tb": 51.1,
+      "chuoi_thong": 0
     },
     "lich_su": [
+      {
+        "stt": 61,
+        "ngay": "12/11/2026",
+        "de": "54",
+        "so_luong": 61,
+        "ket_qua": "truot",
+        "ghi_chu": "Trượt Đề 54 ❌ (61 số)"
+      },
       {
         "stt": 60,
         "ngay": "11/11/2026",
@@ -1507,14 +1517,6 @@
         "so_luong": 33,
         "ket_qua": "trung",
         "ghi_chu": "Trúng Đề 22 ✅ (Dàn 33 số)"
-      },
-      {
-        "stt": 1,
-        "ngay": "13/09/2026",
-        "de": "99",
-        "so_luong": 35,
-        "ket_qua": "trung",
-        "ghi_chu": "Trúng Đề 99 ✅ (Dàn 35 số)"
       }
     ]
   }
