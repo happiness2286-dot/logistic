@@ -20,7 +20,7 @@
       "29689",
       "87069",
       "43753",
-      "",
+      "32903",
       "",
       ""
     ],
@@ -223,12 +223,12 @@
       "tooltip": "G3.3 vị trí 4: Đuôi 5 (1d) | Theo dõi ngày 1 (Mới chạm)"
     }
   },
-  "filled_count": 6,
+  "filled_count": 7,
   "total_count": 19,
   "is_g5_finished": false,
   "radar_status": "SCANNING_LIVE",
-  "status_text": "⚡ ĐANG QUAY TRỰC TIẾP (6/19 GIẢI) - CHỐT KHI XONG G5",
-  "lock_badge": "⚡ ĐANG QUAY (6/19)",
+  "status_text": "⚡ ĐANG QUAY TRỰC TIẾP (7/19 GIẢI) - CHỐT KHI XONG G5",
+  "lock_badge": "⚡ ĐANG QUAY (7/19)",
   "top_1": "01",
   "lot_lon": "10",
   "song_thu_tru": [
@@ -4994,5 +4994,5 @@
     "cang_bt_hits": 1,
     "cang_bt_rate": 3.7
   },
-  "last_updated": "18:18:09 12/11/2026"
+  "last_updated": "18:18:51 12/11/2026"
 }
