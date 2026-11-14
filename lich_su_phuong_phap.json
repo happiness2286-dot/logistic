@@ -2,16 +2,23 @@
   "khung_3_ngay": {
     "tong_quan": {
       "tong_khung": 50,
-      "trung_n1": 36,
+      "trung_n1": 35,
       "trung_n2": 1,
       "trung_n3": 0,
-      "truot_khung": 13,
-      "ty_le_n1": 72.0,
+      "truot_khung": 14,
+      "ty_le_n1": 70.0,
       "ty_le_n2": 2.0,
       "ty_le_n3": 0.0,
-      "ty_le_truot": 26.0
+      "ty_le_truot": 28.0
     },
     "lich_su": [
+      {
+        "khung_stt": 51,
+        "ngay": "14/11/2026",
+        "de": "93",
+        "ket_qua": "truot_khung",
+        "ghi_chu": "Trượt khung 3 ngày ❌"
+      },
       {
         "khung_stt": 51,
         "ngay": "13/11/2026",
@@ -354,13 +361,6 @@
         "de": "32",
         "ket_qua": "trung_n1",
         "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
-      },
-      {
-        "khung_stt": 35,
-        "ngay": "25/09/2026",
-        "de": "65",
-        "ket_qua": "trung_n1",
-        "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
       }
     ]
   },
@@ -369,12 +369,25 @@
       "tong_ngay": 50,
       "trung_bach_thu": 1,
       "trung_tu_thu": 2,
-      "trung_lot": 36,
+      "trung_lot": 35,
       "ty_le_bach_thu": 2.0,
       "ty_le_tu_thu": 4.0,
-      "ty_le_lot": 72.0
+      "ty_le_lot": 70.0
     },
     "lich_su": [
+      {
+        "ngay": "14/11/2026",
+        "de": "93",
+        "top1": "71",
+        "top4": [
+          "71",
+          "21",
+          "76",
+          "26"
+        ],
+        "ket_qua": "truot_truc_tiep",
+        "ghi_chu": "Trượt kỳ quay ❌"
+      },
       {
         "ngay": "13/11/2026",
         "de": "51",
@@ -1011,33 +1024,28 @@
         ],
         "ket_qua": "trung_lot",
         "ghi_chu": "🛡️ Trúng Dàn Số Lót [32]"
-      },
-      {
-        "ngay": "25/09/2026",
-        "de": "65",
-        "top1": "34",
-        "top4": [
-          "34",
-          "84",
-          "39",
-          "89"
-        ],
-        "ket_qua": "trung_lot",
-        "ghi_chu": "🛡️ Trúng Dàn Số Lót [65]"
       }
     ]
   },
   "dan_tinh_tuy_ngay_1": {
     "tong_quan": {
       "tong_ngay": 60,
-      "trung": 45,
-      "truot": 15,
-      "ty_le_trung": 75.0,
-      "ty_le_truot": 25.0,
-      "dan_tb": 51.6,
-      "chuoi_thong": 1
+      "trung": 44,
+      "truot": 16,
+      "ty_le_trung": 73.3,
+      "ty_le_truot": 26.7,
+      "dan_tb": 52.0,
+      "chuoi_thong": 0
     },
     "lich_su": [
+      {
+        "stt": 61,
+        "ngay": "14/11/2026",
+        "de": "93",
+        "so_luong": 61,
+        "ket_qua": "truot",
+        "ghi_chu": "Trượt Đề 93 ❌ (61 số)"
+      },
       {
         "stt": 60,
         "ngay": "13/11/2026",
@@ -1509,14 +1517,6 @@
         "so_luong": 34,
         "ket_qua": "trung",
         "ghi_chu": "Trúng Đề 44 ✅ (Dàn 34 số)"
-      },
-      {
-        "stt": 1,
-        "ngay": "15/09/2026",
-        "de": "29",
-        "so_luong": 34,
-        "ket_qua": "trung",
-        "ghi_chu": "Trúng Đề 29 ✅ (Dàn 34 số)"
       }
     ]
   }
