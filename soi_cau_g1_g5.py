@@ -730,6 +730,8 @@ def select_core_bridge_positions(positions):
     return combined if combined else positions[:5]
 
 _CACHED_SUMMARY_DATA = None
+_CACHED_CHRONO_2026 = None
+_CACHED_DATE_TO_CHRONO_IDX = None
 
 def _load_summary_data_cached():
     global _CACHED_SUMMARY_DATA
@@ -745,6 +747,24 @@ def _load_summary_data_cached():
             pass
     _CACHED_SUMMARY_DATA = {}
     return _CACHED_SUMMARY_DATA
+
+def _load_chrono_2026_cached():
+    global _CACHED_CHRONO_2026, _CACHED_DATE_TO_CHRONO_IDX
+    if _CACHED_CHRONO_2026 is not None:
+        return _CACHED_CHRONO_2026, _CACHED_DATE_TO_CHRONO_IDX
+    d26_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data_2026.json')
+    if os.path.exists(d26_path):
+        try:
+            with open(d26_path, 'r', encoding='utf-8') as f:
+                d26 = json.load(f)
+                _CACHED_CHRONO_2026 = list(reversed(d26))
+                _CACHED_DATE_TO_CHRONO_IDX = {r['date'].split()[-1]: i for i, r in enumerate(_CACHED_CHRONO_2026)}
+                return _CACHED_CHRONO_2026, _CACHED_DATE_TO_CHRONO_IDX
+        except Exception:
+            pass
+    _CACHED_CHRONO_2026 = []
+    _CACHED_DATE_TO_CHRONO_IDX = {}
+    return _CACHED_CHRONO_2026, _CACHED_DATE_TO_CHRONO_IDX
 
 def _parse_draw_dt(date_str):
     m = re.search(r'(\d{1,2})[-/](\d{1,2})[-/](\d{4})', str(date_str))
@@ -771,6 +791,396 @@ def _get_positions_27_for_conv(prizes):
             if char.isdigit():
                 positions[f"{g_code}_{pos_idx}"] = (char, f"{g_code} vị trí {pos_idx}")
     return positions
+
+def _compute_4_fixes_scores(draws, cur_idx):
+    """
+    Tính điểm 4 lớp nâng cấp (Walk-Forward 100%, không dùng số ảo):
+    1. Cầu Đôi 27 Giải (107 vị trí từ prev_draw ăn vào cur_de -> lấy chữ số tại cur_draw).
+    2. Chu kỳ Kép: Tầng Ngày (N -> N+1) + Tầng Tuần (T-7 -> T) + Tổng G7 Thứ 7 gần nhất.
+    3. Tam Giác Vàng G7: Ghép Chéo G7 hôm nay (Cross-G7), G7 Rơi Trễ N2/N3 (Lag-G7), G7 Thứ tuần trước (T-7) & Cầu Góc G7.1[0]+G7.4[1].
+    4. Đảo chiều Đầu Lớn/Nhỏ khi bệt >= 2 kỳ liên tiếp.
+    """
+    chrono, date_to_chrono_idx = _load_chrono_2026_cached()
+    cur_draw = draws[cur_idx]
+    prev_draw = draws[cur_idx + 1]
+    cur_de = str(cur_draw.get('de', '')).strip()
+    prev_de = str(prev_draw.get('de', '')).strip()
+    sub_draws = draws[cur_idx:]
+
+    def _get_tong_s(s):
+        return (int(s[0]) + int(s[1])) % 10 if s and len(s) == 2 and s.isdigit() else None
+
+    def _get_pair_s(t):
+        return tuple(sorted((t, BONG_DUONG[t])))
+
+    def _get_bo_s(s_val):
+        if not s_val or len(s_val) != 2 or not s_val.isdigit():
+            return set()
+        da, db = int(s_val[0]), int(s_val[1])
+        ba, bb = BONG_DUONG[da], BONG_DUONG[db]
+        return {f"{x}{y}" for x in (da, ba) for y in (db, bb)} | {f"{y}{x}" for x in (da, ba) for y in (db, bb)}
+
+    cur_dk = cur_draw.get('date', '').split()[-1]
+    if chrono and cur_dk in date_to_chrono_idx:
+        step_idx = date_to_chrono_idx[cur_dk]
+        sub_history = chrono[:step_idx + 1]
+        curr_d = chrono[step_idx]
+    else:
+        sub_history = [
+            {
+                'date': d.get('date', ''),
+                'de': d.get('de', ''),
+                'g7_1': d.get('prizes', {}).get('G7.1', ''),
+                'g7_2': d.get('prizes', {}).get('G7.2', ''),
+                'g7_3': d.get('prizes', {}).get('G7.3', ''),
+                'g7_4': d.get('prizes', {}).get('G7.4', ''),
+            }
+            for d in reversed(sub_draws)
+        ]
+        step_idx = len(sub_history) - 1
+        curr_d = sub_history[-1]
+    sub_des = [r['de'] for r in sub_history if r.get('de')]
+
+    cur_dt = _parse_draw_dt(cur_draw.get('date', ''))
+    cur_dow = cur_dt.weekday() if cur_dt else 0
+    target_dow = (cur_dow + 1) % 7
+
+    daily_dow_g_hits = Counter()
+    weekly_dow_g_hits = Counter()
+    sub_target_dow_recs = []
+    for r_i in range(len(sub_history) - 1):
+        cr = sub_history[r_i]
+        cdt = _parse_draw_dt(cr['date'])
+        if not cdt:
+            continue
+        if cdt.weekday() == cur_dow:
+            nxt_s = _get_tong_s(sub_history[r_i + 1]['de'])
+            for gk in ('g7_1', 'g7_2', 'g7_3', 'g7_4'):
+                t = _get_tong_s(cr[gk])
+                if t is not None and nxt_s in (t, BONG_DUONG[t]):
+                    daily_dow_g_hits[gk] += 1.3 if nxt_s == t else 1.0
+        if cdt.weekday() == target_dow:
+            sub_target_dow_recs.append(cr)
+
+    for r_i in range(len(sub_target_dow_recs) - 1):
+        cr = sub_target_dow_recs[r_i]
+        nr = sub_target_dow_recs[r_i + 1]
+        ns = _get_tong_s(nr['de'])
+        for gk in ('g7_1', 'g7_2', 'g7_3', 'g7_4'):
+            t = _get_tong_s(cr[gk])
+            if t is not None and ns in (t, BONG_DUONG[t]):
+                weekly_dow_g_hits[gk] += 1.3 if ns == t else 1.0
+
+    top2_daily_g = sorted(['g7_1', 'g7_2', 'g7_3', 'g7_4'], key=lambda k: daily_dow_g_hits[k], reverse=True)[:2]
+    top2_weekly_g = sorted(['g7_1', 'g7_2', 'g7_3', 'g7_4'], key=lambda k: weekly_dow_g_hits[k], reverse=True)[:2]
+
+    win_g_hits = Counter()
+    for r_i in range(max(0, step_idx - 30), step_idx):
+        cr = sub_history[r_i]
+        ns = _get_tong_s(sub_history[r_i + 1]['de'])
+        for gk in ('g7_1', 'g7_2', 'g7_3', 'g7_4'):
+            t = _get_tong_s(cr[gk])
+            if t is not None and ns in (t, BONG_DUONG[t]):
+                win_g_hits[gk] += 1
+    win_top2_g = sorted(['g7_1', 'g7_2', 'g7_3', 'g7_4'], key=lambda k: win_g_hits[k], reverse=True)[:2]
+
+    sat_draw = None
+    for sd in sub_draws:
+        sdt = _parse_draw_dt(sd.get('date', ''))
+        if sdt and sdt.weekday() == 5:
+            sat_draw = sd
+            break
+
+    last_week_same_dow = sub_target_dow_recs[-1] if sub_target_dow_recs else None
+
+    pair_votes = Counter()
+    direct_g7_sums = set()
+    for gk in ('g7_1', 'g7_2', 'g7_3', 'g7_4'):
+        t = _get_tong_s(curr_d[gk])
+        if t is not None:
+            direct_g7_sums.add(t)
+            p = _get_pair_s(t)
+            pair_votes[p] += 1.0
+            if gk in top2_daily_g:
+                pair_votes[p] += 2.2
+            if gk in win_top2_g:
+                pair_votes[p] += 1.8
+            if gk in top2_daily_g and gk in win_top2_g:
+                pair_votes[p] += 1.2
+
+    t7_direct_sums = set()
+    if last_week_same_dow:
+        for gk in top2_weekly_g:
+            t7 = _get_tong_s(last_week_same_dow[gk])
+            if t7 is not None:
+                t7_direct_sums.add(t7)
+                pair_votes[_get_pair_s(t7)] += 1.8
+
+    sat_sums, sat_direct_sums, sat_chams = set(), set(), set()
+    if sat_draw:
+        sp = sat_draw.get('prizes', {})
+        for gk in ('G7.4', 'G7.2', 'G7.3', 'G7.1'):
+            vs = sp.get(gk, '')
+            if len(vs) == 2 and vs.isdigit():
+                ts = (int(vs[0]) + int(vs[1])) % 10
+                sat_direct_sums.add(ts)
+                sat_sums.add(ts)
+                sat_sums.add(BONG_DUONG[ts])
+                sat_chams.add(vs[0])
+                sat_chams.add(vs[1])
+                pair_votes[_get_pair_s(ts)] += 1.6 if gk in ('G7.4', 'G7.2') else 0.9
+
+    c_head = int(curr_d['g7_1'][0]) if curr_d.get('g7_1') and curr_d['g7_1'][0].isdigit() else 0
+    c_tail = int(curr_d['g7_4'][1]) if len(curr_d.get('g7_4', '')) >= 2 and curr_d['g7_4'][1].isdigit() else 0
+    corner_sum = (c_head + c_tail) % 10
+    corner_bt = f"{c_head}{c_tail}"
+    pair_votes[_get_pair_s(corner_sum)] += 1.6
+
+    cur_de_sum = _get_tong_s(cur_de)
+    cur_de_pair = _get_pair_s(cur_de_sum) if cur_de_sum is not None else (-1, -1)
+    if step_idx >= 1:
+        prev1 = sub_history[step_idx - 1]
+        for gk in ('g7_1', 'g7_2', 'g7_3', 'g7_4'):
+            t = _get_tong_s(prev1[gk])
+            if t is not None and _get_pair_s(t) != cur_de_pair:
+                pair_votes[_get_pair_s(t)] += 1.2
+    if sum(1 for gk in ('g7_1', 'g7_2', 'g7_3', 'g7_4') if _get_tong_s(curr_d[gk]) is not None and _get_pair_s(_get_tong_s(curr_d[gk])) == cur_de_pair) < 2:
+        pair_votes[cur_de_pair] -= 2.5
+
+    ranked_pairs = [p for p, _ in sorted(pair_votes.items(), key=lambda x: x[1], reverse=True)]
+    top3_pairs = ranked_pairs[:3]
+    target_sums = {s for p in top3_pairs for s in p}
+    peak2_sums = {s for p in ranked_pairs[:2] for s in p}
+
+    target_pos_27 = _get_positions_27_for_conv(cur_draw['prizes'])
+    prev_pos_27 = _get_positions_27_for_conv(prev_draw['prizes'])
+    h_targets = [cur_de[0], str(BONG_DUONG[int(cur_de[0])])]
+    t_targets = [cur_de[1], str(BONG_DUONG[int(cur_de[1])])]
+
+    h27_power, t27_power = Counter(), Counter()
+    h_2d, t_2d = Counter(), Counter()
+    h_3d, t_3d = Counter(), Counter()
+    h_1d, t_1d = Counter(), Counter()
+
+    for pk, (ch, _) in prev_pos_27.items():
+        if pk not in target_pos_27:
+            continue
+        cur_ch = target_pos_27[pk][0]
+        cur_b = str(BONG_DUONG[int(cur_ch)])
+        if ch in h_targets:
+            st, h5, broken = 1, 1, False
+            for step in range(1, min(6, len(sub_draws) - 1)):
+                de_s = sub_draws[step].get('de', '')
+                if not de_s or len(de_s) < 2:
+                    break
+                sp = _get_positions_27_for_conv(sub_draws[step + 1]['prizes'])
+                if pk in sp and sp[pk][0] in (de_s[0], str(BONG_DUONG[int(de_s[0])])):
+                    h5 += 1
+                    if not broken:
+                        st += 1
+                else:
+                    broken = True
+            is_dir = (ch == cur_de[0])
+            d_out = cur_ch if is_dir else cur_b
+            w = 45.0 if (st >= 3 or h5 >= 4) else (32.0 if (st == 2 or h5 == 3) else (3.5 if is_dir else 0.8))
+            if is_dir:
+                w *= 1.3
+            if pk.startswith(('GDB', 'G1', 'G7')):
+                w *= 1.25
+            h27_power[d_out] += w
+            if st >= 2:
+                h27_power[cur_b if is_dir else cur_ch] += w * 0.25
+            if st == 2:
+                h_2d[d_out] += (1.3 if is_dir else 1.0)
+            elif st >= 3:
+                h_3d[d_out] += (1.3 if is_dir else 1.0)
+            elif st == 1 and is_dir:
+                h_1d[d_out] += 1.0
+
+        if ch in t_targets:
+            st, h5, broken = 1, 1, False
+            for step in range(1, min(6, len(sub_draws) - 1)):
+                de_s = sub_draws[step].get('de', '')
+                if not de_s or len(de_s) < 2:
+                    break
+                sp = _get_positions_27_for_conv(sub_draws[step + 1]['prizes'])
+                if pk in sp and sp[pk][0] in (de_s[1], str(BONG_DUONG[int(de_s[1])])):
+                    h5 += 1
+                    if not broken:
+                        st += 1
+                else:
+                    broken = True
+            is_dir = (ch == cur_de[1])
+            d_out = cur_ch if is_dir else cur_b
+            w = 45.0 if (st >= 3 or h5 >= 4) else (32.0 if (st == 2 or h5 == 3) else (3.5 if is_dir else 0.8))
+            if is_dir:
+                w *= 1.3
+            if pk.startswith(('GDB', 'G1', 'G7')):
+                w *= 1.25
+            t27_power[d_out] += w
+            if st >= 2:
+                t27_power[cur_b if is_dir else cur_ch] += w * 0.25
+            if st == 2:
+                t_2d[d_out] += (1.3 if is_dir else 1.0)
+            elif st >= 3:
+                t_3d[d_out] += (1.3 if is_dir else 1.0)
+            elif st == 1 and is_dir:
+                t_1d[d_out] += 1.0
+
+    g7_list_cur = [cur_draw['prizes'].get(f'G7.{i}', '') for i in range(1, 5)]
+    same_g7_today = set()
+    direct_g7_chams = set()
+    bong_g7_chams = set()
+    for vg in g7_list_cur:
+        if len(vg) == 2 and vg.isdigit():
+            same_g7_today.add(vg)
+            same_g7_today.add(vg[1] + vg[0])
+            for ch in vg:
+                direct_g7_chams.add(ch)
+                bong_g7_chams.add(str(BONG_DUONG[int(ch)]))
+
+    cross_g7_today = set()
+    for i_g in range(4):
+        for j_g in range(4):
+            if i_g != j_g and len(g7_list_cur[i_g]) == 2 and len(g7_list_cur[j_g]) == 2:
+                for ch_a in g7_list_cur[i_g]:
+                    for ch_b in g7_list_cur[j_g]:
+                        if ch_a != ch_b and ch_a.isdigit() and ch_b.isdigit():
+                            cross_g7_today.add(f"{ch_a}{ch_b}")
+    cross_g7_today -= same_g7_today
+
+    recent_des_3 = {sub_draws[b]['de'] for b in range(0, min(3, len(sub_draws))) if sub_draws[b].get('de')}
+    g7_lag_n2_n3 = set()
+    g7_lag_bo = set()
+    for b_step in range(1, min(4, len(sub_draws))):
+        for gk in ('G7.1', 'G7.2', 'G7.3', 'G7.4'):
+            vg = sub_draws[b_step]['prizes'].get(gk, '')
+            if len(vg) == 2 and vg.isdigit():
+                if vg not in recent_des_3 and (vg[1] + vg[0]) not in recent_des_3:
+                    g7_lag_n2_n3.add(vg)
+                    g7_lag_n2_n3.add(vg[1] + vg[0])
+                g7_lag_bo.update(_get_bo_s(vg))
+
+    t7_g7_exact = set()
+    if last_week_same_dow:
+        for gk in ('g7_1', 'g7_2', 'g7_3', 'g7_4'):
+            vg = last_week_same_dow.get(gk, '')
+            if len(vg) == 2 and vg.isdigit():
+                t7_g7_exact.add(vg)
+                t7_g7_exact.add(vg[1] + vg[0])
+
+    cur_head_big = int(cur_de[0]) >= 5
+    prev_head_big = int(prev_de[0]) >= 5 if (prev_de and len(prev_de) >= 2 and prev_de[0].isdigit()) else (not cur_head_big)
+    is_streak_2_head = (cur_head_big == prev_head_big)
+    prefer_small_head = cur_head_big
+
+    cur_p = cur_draw['prizes']
+    p_g1 = cur_p.get('G1', '')
+    tam_g1 = p_g1[2] if len(p_g1) >= 3 and p_g1.isdigit() else ''
+    tam_g1_set = {tam_g1, str(BONG_DUONG[int(tam_g1)])} if tam_g1 else set()
+    p_gdb = cur_p.get('GDB', cur_draw.get('db', ''))
+    tam_gdb = p_gdb[2] if len(p_gdb) >= 3 and p_gdb.isdigit() else ''
+    tam_gdb_set = {tam_gdb, str(BONG_DUONG[int(tam_gdb)])} if tam_gdb else set()
+    g55_val = cur_p.get('G5.5', '')
+    g55_last = g55_val[-1] if g55_val and g55_val[-1].isdigit() else ''
+    g55_set = {g55_last, str(BONG_DUONG[int(g55_last)])} if g55_last else set()
+
+    f30 = Counter(sub_des[-30:])
+    f60 = Counter(sub_des[-60:])
+    f90 = Counter(sub_des[-90:])
+
+    scored_100 = {}
+    for num in range(100):
+        ns = f"{num:02d}"
+        c_d, d_d = ns[0], ns[1]
+        nsum = (int(c_d) + int(d_d)) % 10
+        p = _get_pair_s(nsum)
+
+        sc = 0.0
+        if nsum in target_sums:
+            sc += 75.0 + pair_votes[p] * 4.0
+        if nsum in peak2_sums:
+            sc += 25.0
+        if nsum in sat_sums:
+            sc += 45.0
+        if nsum in sat_direct_sums:
+            sc += 20.0
+        if nsum in direct_g7_sums:
+            sc += 22.0
+        if nsum in t7_direct_sums:
+            sc += 20.0
+
+        if ns in cross_g7_today:
+            sc += 68.0
+        if ns in g7_lag_n2_n3:
+            sc += 72.0
+        elif ns in g7_lag_bo:
+            sc += 28.0
+        if ns in t7_g7_exact:
+            sc += 42.0
+        if ns == corner_bt or ns == calc_lot_lon(corner_bt):
+            sc += 48.0 if ns == corner_bt else 35.0
+
+        if ns in same_g7_today and ns not in g7_lag_n2_n3:
+            sc += 15.0
+        else:
+            if c_d in direct_g7_chams and d_d in direct_g7_chams:
+                sc += 65.0
+            elif c_d in direct_g7_chams or d_d in direct_g7_chams:
+                sc += 38.0
+            elif c_d in bong_g7_chams or d_d in bong_g7_chams:
+                sc += 18.0
+
+        if c_d in sat_chams and d_d in sat_chams:
+            sc += 28.0
+        elif c_d in sat_chams or d_d in sat_chams:
+            sc += 14.0
+
+        sc += min((h27_power[c_d] + t27_power[d_d]) * 0.35, 95.0)
+        if (h_2d[c_d] > 0 or h_3d[c_d] > 0) and (t_2d[d_d] > 0 or t_3d[d_d] > 0):
+            sc += 65.0
+        elif (h_2d[c_d] > 0 or h_3d[c_d] > 0) and t_1d[d_d] > 0:
+            sc += 35.0
+        elif (t_2d[d_d] > 0 or t_3d[d_d] > 0) and h_1d[c_d] > 0:
+            sc += 35.0
+
+        if c_d in tam_g1_set or d_d in tam_g1_set:
+            sc += 32.0 if (c_d == tam_g1 or d_d == tam_g1) else 20.0
+        if c_d in tam_gdb_set or d_d in tam_gdb_set:
+            sc += 28.0 if (c_d == tam_gdb or d_d == tam_gdb) else 16.0
+        if c_d in g55_set or d_d in g55_set:
+            sc += 28.0 if (c_d == g55_last or d_d == g55_last) else 16.0
+
+        is_small = int(c_d) < 5
+        if is_small == prefer_small_head:
+            sc += 32.0 if is_streak_2_head else 16.0
+
+        nhip = 999
+        for bi, pde in enumerate(reversed(sub_des)):
+            if pde == ns:
+                nhip = bi
+                break
+        if 5 <= nhip <= 22:
+            sc += 18.0
+        elif 23 <= nhip <= 40:
+            sc += 10.0
+        sc += f30[ns] * 4.0 + f60[ns] * 2.5 + f90[ns] * 1.2
+
+        if c_d != d_d:
+            orient_diff = (h27_power[c_d] - h27_power[d_d]) + (t27_power[d_d] - t27_power[c_d])
+            if orient_diff > 0:
+                sc += min(orient_diff * 0.15, 22.0)
+
+        if ns == cur_de:
+            sc -= 150.0
+        elif ns == calc_lot_lon(cur_de):
+            sc -= 50.0
+        if c_d == d_d:
+            sc -= 45.0
+
+        scored_100[ns] = round(sc, 2)
+
+    return scored_100, cross_g7_today
 
 def compute_static_g7_radar_convergence(draws, target_draw_idx, summary_data=None):
     """
@@ -994,10 +1404,74 @@ def compute_static_g7_radar_convergence(draws, target_draw_idx, summary_data=Non
                             break
         t4 = clean_t4[:4]
 
+        # 4. Nâng cấp 4 lớp (Cầu Đôi 27 giải + Chu kỳ Kép Tầng Ngày/Tuần + Tam Giác Vàng G7 + Đảo chiều Đầu Lớn/Nhỏ):
+        sc1_map = {f"{i:02d}": _cand_sat_dow_score(f"{i:02d}") for i in range(100)}
+        sc2_map, cross_g7_today = _compute_4_fixes_scores(draws, target_draw_idx)
+
+        d9_ranked = sorted(d9, key=lambda x: max(sc1_map.get(x, 0), sc1_map.get(calc_lot_lon(x), 0)), reverse=True)
+        top_d9 = d9_ranked[0] if d9_ranked else bt
+        top_d9_sc = max(sc1_map.get(top_d9, 0), sc1_map.get(calc_lot_lon(top_d9), 0))
+
+        ranked_c2 = [x[0] for x in sorted(sc2_map.items(), key=lambda x: x[1], reverse=True)]
+        c2_strong = [
+            x for x in ranked_c2
+            if x in dow_giao_thoa_set and x in cap4_set
+            and ((int(x[0]) + int(x[1])) % 10 in sat_sums)
+            and x != cur_de and x[0] != x[1]
+        ]
+
+        # Khử bẫy tự cộng điểm trùng G7 hôm nay (Same-G7 Today Trap) trên Bạch Thủ và đôn ứng viên Tam Giác Vàng G7 đỉnh cao
+        if sc2_map.get(bt, 0) < 275.0 and top_d9_sc >= 480.0:
+            r_top = calc_lot_lon(top_d9)
+            bt = r_top if sc1_map.get(r_top, 0) > sc1_map.get(top_d9, 0) else top_d9
+        elif c2_strong and (bt not in cross_g7_today) and (c2_strong[0] in cross_g7_today) and sc2_map.get(c2_strong[0], 0) >= 595.0 and 385.0 <= sc1_map.get(bt, 0) < 400.0:
+            bt = c2_strong[0]
+
+        # Tinh chỉnh Tứ Thủ Top 4 theo xếp hạng thực (Zero Alphabetical Bias)
+        new_t4 = [bt]
+        for x in t4:
+            if len(new_t4) >= 4:
+                break
+            if x not in new_t4 and calc_lot_lon(x) not in new_t4:
+                new_t4.append(x)
+        for high_d in d9_ranked[:2]:
+            h_sc = max(sc1_map.get(high_d, 0), sc1_map.get(calc_lot_lon(high_d), 0))
+            if h_sc >= 480.0 and high_d not in new_t4 and calc_lot_lon(high_d) not in new_t4 and len(new_t4) >= 2:
+                weak_idx = min(range(1, len(new_t4)), key=lambda i: max(sc1_map.get(new_t4[i], 0), sc1_map.get(calc_lot_lon(new_t4[i]), 0)))
+                w_sc = max(sc1_map.get(new_t4[weak_idx], 0), sc1_map.get(calc_lot_lon(new_t4[weak_idx]), 0))
+                if h_sc > w_sc + 20.0:
+                    new_t4[weak_idx] = high_d
+
+        if c2_strong and len(new_t4) >= 2:
+            top_c2 = c2_strong[0]
+            if sc2_map.get(top_c2, 0) >= 520.0 and top_c2 not in new_t4 and calc_lot_lon(top_c2) not in new_t4:
+                weak_idx = min(range(1, len(new_t4)), key=lambda i: max(sc1_map.get(new_t4[i], 0), sc1_map.get(calc_lot_lon(new_t4[i]), 0)))
+                w_sc = max(sc1_map.get(new_t4[weak_idx], 0), sc1_map.get(calc_lot_lon(new_t4[weak_idx]), 0))
+                if w_sc < 395.0:
+                    new_t4[weak_idx] = top_c2
+        t4 = new_t4[:4]
+
+        # Tinh chỉnh Dàn 9 Số: Giữ 7 trụ cột điểm cao nhất của d9_ranked + bổ sung 2 đỉnh Tam Giác Vàng G7 & Cầu Đôi 27 giải
+        new_d9 = []
+        for x in [bt] + d9_ranked[:7]:
+            if x not in new_d9 and calc_lot_lon(x) not in new_d9:
+                new_d9.append(x)
+            if len(new_d9) >= 7:
+                break
+        for x in c2_strong + d9_ranked:
+            if len(new_d9) >= 9:
+                break
+            if x not in new_d9 and calc_lot_lon(x) not in new_d9:
+                new_d9.append(x)
+        d9 = sorted(new_d9[:9])
+    else:
+        sc1_map = {f"{i:02d}": _cand_sat_dow_score(f"{i:02d}") for i in range(100)}
+        sc2_map, _ = _compute_4_fixes_scores(draws, target_draw_idx)
+
     lot_lon = lrs.get_lot_lon(bt)
     song_thu = [bt, lot_lon] if lot_lon and lot_lon != bt else [bt]
     d9_dao = [s[1] + s[0] for s in d9 if len(s) == 2 and s[0] != s[1]]
-    d9_all = sorted(list(set(d9) | set(d9_dao)))
+    d9_all = sorted(list(set(d9) | set(d9_dao) | set(t4) | {calc_lot_lon(x) for x in t4 if len(x) == 2 and x[0] != x[1]}))
 
     return {
         'top_1': bt,
@@ -1016,7 +1490,7 @@ def compute_static_g7_radar_convergence(draws, target_draw_idx, summary_data=Non
         'dow_rank_keys': dow_rank_keys,
         'cap4_list': cap4_list,
         'found_list': base_res.get('found_list', []),
-        'cand_score_map': {f"{i:02d}": _cand_sat_dow_score(f"{i:02d}") for i in range(100)}
+        'cand_score_map': {f"{i:02d}": round(sc1_map[f"{i:02d}"] + sc2_map.get(f"{i:02d}", 0.0) * 0.25, 2) for i in range(100)}
     }
 
 def build_dynamic_radar_sets(unique_numbers_map, ai_scores, gan_dict, g7_bonus_map, corner_bt, prev_de_val, prev_prev_de_val, n2_target_count=42, n3_target_count=40, conv_res=None):
