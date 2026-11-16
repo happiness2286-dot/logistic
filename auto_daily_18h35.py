@@ -115,9 +115,9 @@ def main():
     step1_cmd = f'"{PYTHON_EXE}" crawl_and_analyze.py'
     ok1, out1 = run_step("Cào dữ liệu & Phân tích G7 Master", step1_cmd, BASE_LOGIC_DIR, timeout=180)
 
-    # BƯỚC 2: Chạy soi_cau_g1_g5.py (cập nhật radar & Dàn Tĩnh 4 Cấp ngày mới)
-    step2_cmd = f'"{PYTHON_EXE}" soi_cau_g1_g5.py'
-    ok2, out2 = run_step("Soi cầu G1-G5 & Chốt Dàn Tĩnh mới", step2_cmd, BASE_LOGIC_DIR, timeout=120)
+    # BƯỚC 2: Chạy soi_cau_g1_g5.py (cập nhật radar G.ĐB->G7, chốt số ngày hôm sau & bắn Telegram)
+    step2_cmd = f'"{PYTHON_EXE}" soi_cau_g1_g5.py --telegram'
+    ok2, out2 = run_step("Radar G.ĐB->G7 & Chốt Dự Đoán Ngày Hôm Sau", step2_cmd, BASE_LOGIC_DIR, timeout=120)
 
     # BƯỚC 2.5: Chạy live_radar_scanner.py (làm mới live_radar_state.json)
     step25_cmd = f'"{PYTHON_EXE}" live_radar_scanner.py'
