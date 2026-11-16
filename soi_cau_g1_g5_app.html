@@ -1620,24 +1620,26 @@
                 </div>
             </div>
 
-            <!-- TẦNG 3: DÀN 9 SỐ CỘI NGUỒN -->
+            <!-- TẦNG 3: DÀN 9 SỐ CHỦ LỰC & DÀN SỐ ĐẢO -->
             <div class="tier-row" style="background: rgba(56, 189, 248, 0.04); padding: 12px; border-radius: 12px; margin-bottom: 10px; border: 1px solid rgba(56, 189, 248, 0.15);">
                 <div class="tier-label label-blue" style="min-width: 175px;">
-                    <div><i class="fa-solid fa-dice"></i> CẤP 3 (DÀN 9 SỐ)</div>
-                    <div style="font-size: 10.5px; color: #94a3b8; font-weight: 600; margin-top: 2px;" id="txt-tinh-dan9-meta">Top 3 Đầu × Top 3 Đuôi</div>
+                    <div><i class="fa-solid fa-dice"></i> CẤP 3 (DÀN 9 &amp; SỐ ĐẢO)</div>
+                    <div style="font-size: 10.5px; color: #94a3b8; font-weight: 600; margin-top: 2px;" id="txt-tinh-dan9-meta">Tổng G7 Thứ 7 &amp; Thứ Mạnh Nhất</div>
                 </div>
-                <div class="tier-content" id="tinh-grid-dan9" style="gap: 8px;">
-                    <span class="num-badge-blue" onclick="copyText('67', 'Đã copy 67')">67</span>
-                    <span class="num-badge-blue" onclick="copyText('61', 'Đã copy 61')">61</span>
-                    <span class="num-badge-blue" onclick="copyText('62', 'Đã copy 62')">62</span>
-                    <span class="num-badge-blue" onclick="copyText('37', 'Đã copy 37')">37</span>
-                    <span class="num-badge-blue" onclick="copyText('31', 'Đã copy 31')">31</span>
-                    <span class="num-badge-blue" onclick="copyText('32', 'Đã copy 32')">32</span>
-                    <span class="num-badge-blue" onclick="copyText('47', 'Đã copy 47')">47</span>
-                    <span class="num-badge-gold" style="font-size: 15px; padding: 4px 10px;" onclick="copyText('41', 'Đã copy 41')">41 ⭐</span>
-                    <span class="num-badge-blue" onclick="copyText('42', 'Đã copy 42')">42</span>
+                <div style="display: flex; flex-direction: column; gap: 6px; flex: 1;">
+                    <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+                        <span style="font-size: 11px; color: #38bdf8; font-weight: 700;">⭐ Dàn 9 số:</span>
+                        <div class="tier-content" id="tinh-grid-dan9" style="gap: 6px;"></div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+                        <span style="font-size: 11px; color: #34d399; font-weight: 700;">🔄 Số đảo (9s):</span>
+                        <div class="tier-content" id="tinh-grid-dan9-dao" style="gap: 6px;"></div>
+                    </div>
                 </div>
-                <button class="btn-copy-dan" style="padding: 6px 14px; font-size: 11px;" id="btn-copy-tinh-dan9"><i class="fa-regular fa-copy"></i> Copy Dàn 9 Số</button>
+                <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                    <button class="btn-copy-dan" style="padding: 6px 12px; font-size: 11px;" id="btn-copy-tinh-dan9"><i class="fa-regular fa-copy"></i> Copy Dàn 9</button>
+                    <button class="btn-copy-dan" style="padding: 6px 12px; font-size: 11px; border-color: rgba(52, 211, 153, 0.4); color: #34d399;" id="btn-copy-tinh-dan9-dao"><i class="fa-regular fa-copy"></i> Copy Số Đảo</button>
+                </div>
             </div>
 
             <!-- TẦNG 2: DÀN GIAO THOA 38 SỐ CẤP 2 -->
@@ -2005,12 +2007,12 @@
             </div>
         </section>
 
-        <!-- PHẦN 4B: ĐÁNH GIÁ RADAR G.ĐB → G7 (BẠCH THỦ & TỨ THỦ) -->
+        <!-- PHẦN 4B: ĐÁNH GIÁ RADAR G.ĐB → G7 (BẠCH THỦ, TỨ THỦ, DÀN 9 SỐ & SỐ ĐẢO) -->
         <section class="history-box" id="sec-soi-truc-tiep">
             <div class="section-header">
-                <h2 style="color: #fbbf24;"><i class="fa-solid fa-bullseye" style="color: #fbbf24;"></i> PHẦN 4B: ĐÁNH GIÁ RADAR TĨNH G.ĐB → G7 (60 NGÀY)</h2>
+                <h2 style="color: #fbbf24;"><i class="fa-solid fa-bullseye" style="color: #fbbf24;"></i> PHẦN 4B: THỐNG KÊ TỶ LỆ TRÚNG BẠCH THỦ &amp; TỨ THỦ (60 NGÀY)</h2>
                 <span class="tag-info" id="badge-direct-summary" style="color: #fbbf24; border-color: rgba(251, 191, 36, 0.4); background: rgba(251, 191, 36, 0.1);">
-                    RADAR G.ĐB → G7 (27 GIẢI)
+                    TỔNG G7 THỨ 7 &amp; THỨ MẠNH + RADAR 27 GIẢI
                 </span>
             </div>
 
@@ -2021,20 +2023,20 @@
                     <div class="stat-value" id="d-stat-tong">60</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-label">Trúng BT / Song Thủ</div>
-                    <div class="stat-value gold" id="d-stat-bt">2 (3.3%)</div>
+                    <div class="stat-label">👑 Tỷ Lệ Trúng Bạch Thủ</div>
+                    <div class="stat-value gold" id="d-stat-bt">10 (16.7%)</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-label">Trúng Tứ Thủ</div>
-                    <div class="stat-value blue" id="d-stat-tt">4 (6.7%)</div>
+                    <div class="stat-label">🔥 Tỷ Lệ Trúng Tứ Thủ</div>
+                    <div class="stat-value orange" id="d-stat-tt">16 (26.7%)</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-label">Trúng Dàn Lót N1</div>
-                    <div class="stat-value green" id="d-stat-lot">44 (73.3%)</div>
+                    <div class="stat-label">⭐ Trúng Dàn 9 &amp; Đảo</div>
+                    <div class="stat-value blue" id="d-stat-d9">19 (31.7%)</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-label">Hiệu Quả Khung N1</div>
-                    <div class="stat-value orange" id="d-stat-rate">Ăn N1: 73.3%</div>
+                    <div class="stat-label">🛡️ Tổng Ăn Trong N1</div>
+                    <div class="stat-value green" id="d-stat-lot">49 (81.7%)</div>
                 </div>
             </div>
 
@@ -2258,13 +2260,13 @@
         }
         window.loadKhung3Ngay = loadKhung3Ngay;
 
-        // BƯỚC 4B: HÀM LOAD LỊCH SỬ SOI TRỰC TIẾP (BẠCH THỦ & TỨ THỦ G1-G5)
+        // BƯỚC 4B: HÀM LOAD LỊCH SỬ RADAR (TỶ LỆ TRÚNG BẠCH THỦ, TỨ THỦ, DÀN 9 SỐ & SỐ ĐẢO)
         function loadSoiTrucTiep(directData) {
             if (!directData || !directData.tong_quan) return;
             const tq = directData.tong_quan;
 
             const elTong = document.getElementById('d-stat-tong');
-            if (elTong) elTong.textContent = tq.tong_ngay || 0;
+            if (elTong) elTong.textContent = `${tq.tong_ngay || 0} ngày`;
 
             const elBT = document.getElementById('d-stat-bt');
             if (elBT) elBT.textContent = `${tq.trung_bach_thu || 0} (${tq.ty_le_bach_thu || 0}%)`;
@@ -2272,25 +2274,27 @@
             const elTT = document.getElementById('d-stat-tt');
             if (elTT) elTT.textContent = `${tq.trung_tu_thu || 0} (${tq.ty_le_tu_thu || 0}%)`;
 
+            const elD9 = document.getElementById('d-stat-d9');
+            if (elD9) elD9.textContent = `${tq.trung_dan_9 || tq.trung_tu_thu || 0} (${tq.ty_le_dan_9 || tq.ty_le_tu_thu || 0}%)`;
+
             const elLot = document.getElementById('d-stat-lot');
             if (elLot) elLot.textContent = `${tq.trung_lot || 0} (${tq.ty_le_lot || 0}%)`;
 
-            const elRate = document.getElementById('d-stat-rate');
-            if (elRate) elRate.textContent = `Top 4: ${tq.ty_le_tu_thu || 0}%`;
-
             const elBadge = document.getElementById('badge-direct-summary');
-            if (elBadge) elBadge.textContent = `${tq.tong_ngay || 0} NGÀY (TỨ THỦ: ${tq.ty_le_tu_thu || 0}%)`;
+            if (elBadge) elBadge.textContent = `BT: ${tq.ty_le_bach_thu || 0}% • TỨ THỦ: ${tq.ty_le_tu_thu || 0}% • DÀN 9+ĐẢO: ${tq.ty_le_dan_9 || 0}%`;
 
             const container = document.getElementById('list-history-direct');
             if (container && Array.isArray(directData.lich_su)) {
                 container.innerHTML = directData.lich_su.map(item => {
                     let icon = (item.ket_qua || '').includes('trung') ? '✨' : '❌';
-                    let top1Display = item.top1 ? `<small style="color:#94a3b8; font-weight:normal; margin-left:6px;">[Top 1: ${item.top1}]</small>` : '';
+                    let kqCls = item.ket_qua === 'trung_dan_9' ? 'trung_tu_thu' : item.ket_qua;
+                    let t4Arr = Array.isArray(item.top4) ? item.top4.join(', ') : '';
+                    let metaDisplay = item.top1 ? `<small style="color:#94a3b8; font-weight:normal; margin-left:6px;">[BT: <strong style="color:#fbbf24;">${item.top1}</strong>${t4Arr ? ` | Tứ thủ: <strong style="color:#fb923c;">${t4Arr}</strong>` : ''}]</small>` : '';
                     return `
                         <div class="lich-su-item">
                             <div class="ngay">${item.ngay}</div>
                             <div class="de">Đề: <strong>${item.de}</strong></div>
-                            <div class="ket-qua ${item.ket_qua}">${item.ghi_chu || item.ket_qua} ${icon}${top1Display}</div>
+                            <div class="ket-qua ${kqCls}">${item.ghi_chu || item.ket_qua} ${icon}${metaDisplay}</div>
                         </div>
                     `;
                 }).join('');
@@ -2525,7 +2529,7 @@
                 metaDan9.textContent = `${dt.top_dau.join(', ')} × ${dt.top_duoi.join(', ')}`;
             }
 
-            // Dàn 9 số Cội Nguồn
+            // Dàn 9 số Cội Nguồn & Số Đảo
             const grid9 = document.getElementById('tinh-grid-dan9');
             if (grid9 && dt.dan_9_so) {
                 grid9.innerHTML = dt.dan_9_so.map(n => {
@@ -2533,6 +2537,17 @@
                     const cls = isBt ? 'num-badge-gold' : 'num-badge-blue';
                     const style = isBt ? 'font-size:15px; padding:3px 9px;' : 'font-size:13px; padding:3px 8px;';
                     return `<span class="${cls}" style="${style}" onclick="copyText('${n}', 'Đã sao chép số ${n}')">${n}</span>`;
+                }).join(' ');
+            }
+
+            const daoList = dt.dan_9_dao || (dt.dan_9_so || []).filter(n => n.length === 2 && n[0] !== n[1]).map(n => n[1] + n[0]);
+            const grid9Dao = document.getElementById('tinh-grid-dan9-dao');
+            if (grid9Dao && daoList) {
+                grid9Dao.innerHTML = daoList.map(n => {
+                    const isLot = (n === dt.lot_lon);
+                    const cls = isLot ? 'num-badge-orange' : 'num-badge-green';
+                    const style = isLot ? 'font-size:14px; padding:3px 9px;' : 'font-size:12.5px; padding:3px 8px;';
+                    return `<span class="${cls}" style="${style}" onclick="copyText('${n}', 'Đã sao chép số đảo ${n}')">${n}</span>`;
                 }).join(' ');
             }
 
@@ -2563,7 +2578,14 @@
             if (btnCopy9) {
                 btnCopy9.onclick = () => {
                     const s = (dt.dan_9_so || []).join(', ');
-                    copyText(s, 'Đã sao chép Dàn 9 Số Cội Nguồn: ' + s);
+                    copyText(s, 'Đã sao chép Dàn 9 Số Chủ Lực: ' + s);
+                };
+            }
+            const btnCopy9Dao = document.getElementById('btn-copy-tinh-dan9-dao');
+            if (btnCopy9Dao) {
+                btnCopy9Dao.onclick = () => {
+                    const s = (daoList || []).join(', ');
+                    copyText(s, 'Đã sao chép Dàn Số Đảo (9s): ' + s);
                 };
             }
             const btnCopy38 = document.getElementById('btn-copy-tinh-dan38');

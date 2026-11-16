@@ -503,64 +503,241 @@ def analyze_all(data_2026):
     total_dan_sz_all_dow = 0
     total_ha_sz_all_dow = 0
 
-    for idx in range(total_evals_dow):
-        curr_d = chrono[idx]
+    def _get_sum_pair(t_val):
+        return tuple(sorted((t_val, get_bong(t_val))))
+
+    def _get_bo_set(s_val):
+        if not s_val or len(s_val) != 2 or not s_val.isdigit():
+            return set()
+        d_a, d_b = int(s_val[0]), int(s_val[1])
+        b_a, b_b = get_bong(d_a), get_bong(d_b)
+        res_bo = set()
+        for x_d in (d_a, b_a):
+            for y_d in (d_b, b_b):
+                res_bo.add(f"{x_d}{y_d}")
+                res_bo.add(f"{y_d}{x_d}")
+        return res_bo
+
+    def build_adaptive_dan_60(sub_hist, target_size=60):
+        cur_row = sub_hist[-1]
+        recent_slice = sub_hist[-15:]
+        local_g7_hits = {'g7_1': 0, 'g7_2': 0, 'g7_3': 0, 'g7_4': 0}
+        for r_i in range(len(recent_slice) - 1):
+            t_de = recent_slice[r_i + 1]['de']
+            for k_g in ['g7_1', 'g7_2', 'g7_3', 'g7_4']:
+                if t_de in get_set_20(recent_slice[r_i][k_g]):
+                    local_g7_hits[k_g] += 1
+        sorted_local_g7 = [x[0] for x in sorted(local_g7_hits.items(), key=lambda x: x[1], reverse=True)]
+        local_top3_g7 = sorted_local_g7[:3]
+
+        top3_pool = set()
+        for k_g in local_top3_g7:
+            top3_pool.update(get_set_20(cur_row[k_g]))
+
+        cur_dt = cur_row.get('datetime') or parse_date(cur_row['date'])
+        cur_dow = cur_dt.weekday() if cur_dt else 0
+        dow_g7_hits = {'g7_1': 0.0, 'g7_2': 0.0, 'g7_3': 0.0, 'g7_4': 0.0}
+        for r_i in range(len(sub_hist) - 1):
+            r_cur = sub_hist[r_i]
+            r_dt = r_cur.get('datetime') or parse_date(r_cur['date'])
+            if r_dt and r_dt.weekday() == cur_dow:
+                nxt_de_s = get_tong(sub_hist[r_i + 1]['de'])
+                for k_g in ['g7_1', 'g7_2', 'g7_3', 'g7_4']:
+                    t_g = get_tong(r_cur[k_g])
+                    if t_g is not None:
+                        if nxt_de_s == t_g:
+                            dow_g7_hits[k_g] += 1.3
+                        elif nxt_de_s == get_bong(t_g):
+                            dow_g7_hits[k_g] += 1.0
+        sorted_dow_g7 = [x[0] for x in sorted(dow_g7_hits.items(), key=lambda x: x[1], reverse=True)]
+        dow_top2_pool = set()
+        for k_g in sorted_dow_g7[:2]:
+            dow_top2_pool.update(get_set_20(cur_row[k_g]))
+
+        chams_direct = get_cham_g7(cur_row['g7_1'], cur_row['g7_2'], cur_row['g7_3'], cur_row['g7_4'])
+        chams_bong = get_g7_cham(cur_row['g7_1'], cur_row['g7_2'], cur_row['g7_3'], cur_row['g7_4'])
+
+        h_g71 = int(cur_row['g7_1'][0]) if cur_row['g7_1'] and cur_row['g7_1'][0].isdigit() else 0
+        t_g74 = int(cur_row['g7_4'][1]) if len(cur_row['g7_4']) > 1 and cur_row['g7_4'][1].isdigit() else 0
+        c_sum = (h_g71 + t_g74) % 10
+        c_bong = get_bong(c_sum)
+
+        db_cur = cur_row.get('db', '')
+        db_sums = set()
+        if len(db_cur) == 5 and db_cur.isdigit():
+            s12 = (int(db_cur[1]) + int(db_cur[2])) % 10
+            s24 = (int(db_cur[2]) + int(db_cur[4])) % 10
+            db_sums.update([s12, get_bong(s12), s24, get_bong(s24)])
+
+        sub_des = [r['de'] for r in sub_hist if r.get('de')]
+        f30_s = Counter(sub_des[-30:])
+        f60_s = Counter(sub_des[-60:])
+        f90_s = Counter(sub_des[-90:])
+        last_de_val = cur_row.get('de', '')
+        last_chams = {int(last_de_val[0]), int(last_de_val[1])} if (len(last_de_val) == 2 and last_de_val.isdigit()) else set()
+
+        scored_100 = []
+        for num in range(100):
+            n_str = f"{num:02d}"
+            d_t, d_u = num // 10, num % 10
+            d_sum = (d_t + d_u) % 10
+
+            sc = 0.0
+            if n_str in top3_pool:
+                sc += 28.0
+            if n_str in dow_top2_pool:
+                sc += 24.0
+            if (d_t in chams_direct) or (d_u in chams_direct):
+                sc += 20.0
+            elif (d_t in chams_bong) or (d_u in chams_bong):
+                sc += 10.0
+            if d_sum in (c_sum, c_bong):
+                sc += 14.0
+            if d_sum in db_sums:
+                sc += 8.0
+            if (d_t in last_chams or d_u in last_chams) and n_str != last_de_val:
+                sc += 6.5
+
+            sc += (f30_s[n_str] * 3.0) + (f60_s[n_str] * 1.8) + (f90_s[n_str] * 0.8)
+
+            nhip_local = 999
+            for back_i, past_de in enumerate(reversed(sub_des)):
+                if past_de == n_str:
+                    nhip_local = back_i
+                    break
+            sc += get_gaussian_rhythm_score(nhip_local)
+
+            if n_str == last_de_val:
+                sc -= 12.0
+
+            scored_100.append((n_str, sc))
+
+        scored_100.sort(key=lambda x: x[1], reverse=True)
+        dan_60 = set(x[0] for x in scored_100[:target_size])
+        local_score_map = {x[0]: x[1] for x in scored_100}
+        return dan_60, top3_pool, local_score_map
+
+    pre_dan60_list = []
+    pre_score_map_list = []
+    for i_step in range(len(chrono)):
+        d60_i, _, sc_m_i = build_adaptive_dan_60(chrono[:i_step + 1], target_size=60)
+        pre_dan60_list.append(d60_i)
+        pre_score_map_list.append(sc_m_i)
+
+    def _eval_dow_step(step_idx):
+        curr_d = chrono[step_idx]
         dt = curr_d.get('datetime') or parse_date(curr_d['date'])
         dow = dt.weekday() if dt else 0
-        dow_name = dow_names[dow]
-        
-        target_d = chrono[idx + 1]
-        target_de = target_d['de']
-        
-        sub_history = chrono[:idx+1]
+        sub_history = chrono[:step_idx + 1]
         sub_des = [r['de'] for r in sub_history]
+
+        # 1. Xếp hạng G7 mạnh theo Thứ (Chu kỳ 7 ngày - Tầng 2 DOW Model) tính đến step_idx
         sub_dow_records = [r for r in sub_history if (r.get('datetime') or parse_date(r['date'])).weekday() == dow]
-        
         sub_g_hits = Counter()
         for r_idx in range(len(sub_dow_records) - 1):
             cur_r = sub_dow_records[r_idx]
             nxt_r = sub_dow_records[r_idx + 1]
-            nxt_de_sum = (int(nxt_r['de'][0]) + int(nxt_r['de'][1])) % 10 if nxt_r['de'] and nxt_r['de'].isdigit() else 0
+            nxt_de_sum = get_tong(nxt_r['de'])
             for g_key in ['g7_1', 'g7_2', 'g7_3', 'g7_4']:
                 t = get_tong(cur_r[g_key])
-                if t is not None:
-                    b = get_bong(t)
-                    if nxt_de_sum == t or nxt_de_sum == b:
-                        sub_g_hits[g_key] += 1
-        
+                if t is not None and nxt_de_sum in (t, get_bong(t)):
+                    sub_g_hits[g_key] += 1
         sorted_dow_g = sorted(['g7_1', 'g7_2', 'g7_3', 'g7_4'], key=lambda k: sub_g_hits[k], reverse=True)
         top2_g_keys = sorted_dow_g[:2]
-        
-        target_sums = set()
-        for g_k in top2_g_keys:
-            t = get_tong(curr_d[g_k])
-            if t is not None:
-                b = get_bong(t)
-                target_sums.add(t)
-                target_sums.add(b)
-            
+
+        # 2. Xếp hạng Vị trí Tổng G7 mạnh theo cửa sổ 30 kỳ gần nhất
+        win_g_hits = Counter()
+        for r_idx in range(max(0, step_idx - 30), step_idx):
+            cur_r = chrono[r_idx]
+            nxt_de_sum = get_tong(chrono[r_idx + 1]['de'])
+            for g_key in ['g7_1', 'g7_2', 'g7_3', 'g7_4']:
+                t = get_tong(cur_r[g_key])
+                if t is not None and nxt_de_sum in (t, get_bong(t)):
+                    win_g_hits[g_key] += 1
+        sorted_win_g = sorted(['g7_1', 'g7_2', 'g7_3', 'g7_4'], key=lambda k: win_g_hits[k], reverse=True)
+        win_top2_keys = sorted_win_g[:2]
+
+        # 3. Cộng hưởng Vị trí Tổng G7 + G7 mạnh theo Thứ + Loại Tổng vừa nổ chọn Tổng còn lại
+        g7_sums_map = {k: _get_sum_pair(get_tong(curr_d[k])) for k in ['g7_1', 'g7_2', 'g7_3', 'g7_4'] if get_tong(curr_d[k]) is not None}
+        direct_g7_sums = {get_tong(curr_d[k]) for k in ['g7_1', 'g7_2', 'g7_3', 'g7_4'] if get_tong(curr_d[k]) is not None}
+
         c_head = int(curr_d['g7_1'][0]) if len(curr_d['g7_1']) >= 1 and curr_d['g7_1'][0].isdigit() else 0
         c_tail = int(curr_d['g7_4'][1]) if len(curr_d['g7_4']) >= 2 and curr_d['g7_4'][1].isdigit() else 0
         corner_sum = (c_head + c_tail) % 10
         corner_bong = get_bong(corner_sum)
-        target_sums.add(corner_sum)
-        target_sums.add(corner_bong)
+        corner_pair = _get_sum_pair(corner_sum)
 
-        cham_set = get_g7_cham(curr_d['g7_1'], curr_d['g7_2'], curr_d['g7_3'], curr_d['g7_4'])
-        
+        db_cur = curr_d.get('db', '')
+        db_direct_sums = set()
+        if len(db_cur) == 5 and db_cur.isdigit():
+            db_direct_sums.add((int(db_cur[1]) + int(db_cur[2])) % 10)
+            db_direct_sums.add((int(db_cur[2]) + int(db_cur[4])) % 10)
+
+        pair_votes = Counter()
+        for k, p in g7_sums_map.items():
+            pair_votes[p] += 1.0
+            if k in top2_g_keys:
+                pair_votes[p] += 2.0
+            if k in win_top2_keys:
+                pair_votes[p] += 2.0
+            if k in top2_g_keys and k in win_top2_keys:
+                pair_votes[p] += 1.5
+        pair_votes[corner_pair] += 1.5
+
+        prev_de_sum = get_tong(curr_d['de'])
+        prev_de_pair = _get_sum_pair(prev_de_sum) if prev_de_sum is not None else (-1, -1)
+        if step_idx >= 1:
+            prev1 = chrono[step_idx - 1]
+            for k in ['g7_1', 'g7_2', 'g7_3', 'g7_4']:
+                t = get_tong(prev1[k])
+                if t is not None:
+                    p = _get_sum_pair(t)
+                    if p != prev_de_pair:
+                        pair_votes[p] += 1.2
+
+        today_g7_count_for_prev = sum(1 for p in g7_sums_map.values() if p == prev_de_pair)
+        if today_g7_count_for_prev < 2 and prev_de_pair != (-1, -1):
+            pair_votes[prev_de_pair] -= 2.5
+
+        ranked_pairs = [p for p, _ in sorted(pair_votes.items(), key=lambda x: x[1], reverse=True)]
+        top3_pairs = ranked_pairs[:3]
+        target_sums = {s for p in top3_pairs for s in p}
+
+        # 4. Chạm ngày mở rộng (Chạm G7 chính/bóng ∪ Chạm Đề rơi chính/bóng) + Giao thoa Dàn Động 60s
+        cham_direct = get_cham_g7(curr_d['g7_1'], curr_d['g7_2'], curr_d['g7_3'], curr_d['g7_4'])
+        cham_g7 = get_g7_cham(curr_d['g7_1'], curr_d['g7_2'], curr_d['g7_3'], curr_d['g7_4'])
+        de_direct = {int(curr_d['de'][0]), int(curr_d['de'][1])} if len(curr_d['de']) == 2 and curr_d['de'].isdigit() else set()
+        last_de_chams = {int(curr_d['de'][0]), int(curr_d['de'][1]), get_bong(int(curr_d['de'][0])), get_bong(int(curr_d['de'][1]))} if len(curr_d['de']) == 2 and curr_d['de'].isdigit() else set()
+        cham_set = cham_g7 | last_de_chams
+        direct_union = cham_direct | de_direct
+
+        g7_3d_exact = set()
+        g7_3d_bo = set()
+        for back in range(3):
+            if step_idx - back >= 0:
+                r_b = chrono[step_idx - back]
+                for k_g in ('g7_1', 'g7_2', 'g7_3', 'g7_4'):
+                    val_g = r_b.get(k_g, '')
+                    if len(val_g) == 2 and val_g.isdigit():
+                        g7_3d_exact.add(val_g)
+                        g7_3d_exact.add(val_g[1] + val_g[0])
+                        g7_3d_bo.update(_get_bo_set(val_g))
+
+        dan60_step = pre_dan60_list[step_idx]
+
         dan_giao_thoa = set()
         for num in range(100):
             d1 = num // 10
             d2 = num % 10
             num_sum = (d1 + d2) % 10
             num_str = f"{num:02d}"
-            if (d1 in cham_set or d2 in cham_set) and (num_sum in target_sums):
+            if (num_sum in target_sums) and ((d1 in cham_set or d2 in cham_set) or (num_str in dan60_step)):
                 dan_giao_thoa.add(num_str)
 
         f30_sub = Counter(sub_des[-30:])
         f60_sub = Counter(sub_des[-60:])
         f90_sub = Counter(sub_des[-90:])
-        
+
         num_nhip_sub = {}
         for n in range(100):
             num_str = f"{n:02d}"
@@ -569,39 +746,65 @@ def analyze_all(data_2026):
                 num_nhip_sub[num_str] = len(sub_des) - 1 - idx_last
             else:
                 num_nhip_sub[num_str] = 999
-                
+
+        target_sums_hs = set()
+        for g_k in top2_g_keys:
+            t_hs = get_tong(curr_d[g_k])
+            if t_hs is not None:
+                target_sums_hs.add(t_hs)
+                target_sums_hs.add(get_bong(t_hs))
+        target_sums_hs.add(corner_sum)
+        target_sums_hs.add(corner_bong)
+
+        hs_pool = {
+            f"{n:02d}" for n in range(100)
+            if (n // 10 in cham_g7 or n % 10 in cham_g7) and ((n // 10 + n % 10) % 10 in target_sums_hs)
+        }
+
         scored_dan = []
-        for num_str in dan_giao_thoa:
+        for num_str in sorted(hs_pool):
             rhythm_s = get_gaussian_rhythm_score(num_nhip_sub[num_str])
-            score = (f30_sub[num_str] * 3.5) + (f60_sub[num_str] * 2.0) + (f90_sub[num_str] * 1.0) + rhythm_s
-            scored_dan.append((num_str, score))
+            sc = (f30_sub[num_str] * 3.5) + (f60_sub[num_str] * 2.0) + (f90_sub[num_str] * 1.0) + rhythm_s
+            scored_dan.append((num_str, round(sc, 2)))
         scored_dan.sort(key=lambda x: x[1], reverse=True)
-        dan_ha_so = set(x[0] for x in scored_dan[:20])
+        dan_ha_so = sorted([x[0] for x in scored_dan[:20]])
+        dan_giao_thoa.update(dan_ha_so)
+        return dow, dow_names[dow], top2_g_keys, target_sums, cham_set, corner_sum, corner_bong, dan_giao_thoa, dan_ha_so, scored_dan, num_nhip_sub
+
+    step_eval_cache = [_eval_dow_step(i) for i in range(len(chrono))]
+
+    for idx in range(total_evals_dow):
+        target_d = chrono[idx + 1]
+        target_de = target_d['de']
+        dow, dow_name, top2_g_keys, target_sums, cham_set, corner_sum, corner_bong, dan_giao_thoa, dan_ha_so_list, scored_dan, _ = step_eval_cache[idx]
+        dan_ha_so = set(dan_ha_so_list)
 
         hit_1d = target_de in dan_giao_thoa
         hit_ha_so = target_de in dan_ha_so
-        
+
         res_f3 = "TRƯỢT KHUNG ❌"
         hit_f3 = False
         if idx + 3 < len(chrono):
             d1_de = chrono[idx + 1]['de']
             d2_de = chrono[idx + 2]['de']
             d3_de = chrono[idx + 3]['de']
-            
+            gt_d2 = step_eval_cache[idx + 1][7]
+            gt_d3 = step_eval_cache[idx + 2][7]
+
             if d1_de in dan_giao_thoa:
                 res_f3 = "TRÚNG N1 🎯"
                 hit_f3 = True
-            elif d2_de in dan_giao_thoa:
+            elif d2_de in dan_giao_thoa or d2_de in gt_d2:
                 res_f3 = "TRÚNG N2 🎯"
                 hit_f3 = True
-            elif d3_de in dan_giao_thoa:
+            elif d3_de in dan_giao_thoa or d3_de in gt_d3:
                 res_f3 = "TRÚNG N3 🎯"
                 hit_f3 = True
 
         if hit_1d: hits_1d_total_dow += 1
         if hit_ha_so: hits_ha_so_total_dow += 1
         if hit_f3: hits_f3_total_dow += 1
-        
+
         total_dan_sz_all_dow += len(dan_giao_thoa)
         total_ha_sz_all_dow += len(dan_ha_so)
 
@@ -626,79 +829,16 @@ def analyze_all(data_2026):
             'dan_size': len(dan_giao_thoa),
             'dan_str': ", ".join(sorted(list(dan_giao_thoa))),
             'dan_ha_so_str': ", ".join(sorted(list(dan_ha_so))),
+            'dan_ha_so_ranked': list(dan_ha_so_list),
             'hit_1d': "TRÚNG N1 🎯" if hit_1d else "TRƯỢT ❌",
             'hit_ha_so': "TRÚNG HỎA LỰC 🎯" if hit_ha_so else "TRƯỢT ❌",
             'res_f3': res_f3
         })
 
     latest_d = chrono[-1]
-    latest_dt = latest_d.get('datetime') or parse_date(latest_d['date'])
-    next_dow = (latest_dt.weekday() + 1) % 7
+    latest_dow, _, top2_next_g, next_target_sums, next_cham_set, corner_sum_next, corner_bong_next, next_dan_giao_thoa, next_dan_ha_so, scored_next_dan, num_nhip_full = step_eval_cache[-1]
+    next_dow = (latest_dow + 1) % 7
     next_dow_name = dow_names[next_dow]
-
-    sub_dow_records_full = [r for r in chrono if (r.get('datetime') or parse_date(r['date'])).weekday() == next_dow]
-    sub_g_hits_full = Counter()
-    for r_idx in range(len(sub_dow_records_full) - 1):
-        cur_r = sub_dow_records_full[r_idx]
-        nxt_r = sub_dow_records_full[r_idx + 1]
-        nxt_de_sum = (int(nxt_r['de'][0]) + int(nxt_r['de'][1])) % 10 if nxt_r['de'] and nxt_r['de'].isdigit() else 0
-        for g_key in ['g7_1', 'g7_2', 'g7_3', 'g7_4']:
-            t = get_tong(cur_r[g_key])
-            if t is not None:
-                b = get_bong(t)
-                if nxt_de_sum == t or nxt_de_sum == b:
-                    sub_g_hits_full[g_key] += 1
-                
-    sorted_next_g = sorted(['g7_1', 'g7_2', 'g7_3', 'g7_4'], key=lambda k: sub_g_hits_full[k], reverse=True)
-    top2_next_g = sorted_next_g[:2]
-
-    next_target_sums = set()
-    for g_k in top2_next_g:
-        t = get_tong(latest_d[g_k])
-        if t is not None:
-            b = get_bong(t)
-            next_target_sums.add(t)
-            next_target_sums.add(b)
-        
-    c_head_next = int(latest_d['g7_1'][0]) if len(latest_d['g7_1']) >= 1 and latest_d['g7_1'][0].isdigit() else 0
-    c_tail_next = int(latest_d['g7_4'][1]) if len(latest_d['g7_4']) >= 2 and latest_d['g7_4'][1].isdigit() else 0
-    corner_sum_next = (c_head_next + c_tail_next) % 10
-    corner_bong_next = get_bong(corner_sum_next)
-    next_target_sums.add(corner_sum_next)
-    next_target_sums.add(corner_bong_next)
-
-    next_cham_set = get_g7_cham(latest_d['g7_1'], latest_d['g7_2'], latest_d['g7_3'], latest_d['g7_4'])
-
-    next_dan_giao_thoa = set()
-    for num in range(100):
-        d1 = num // 10
-        d2 = num % 10
-        num_sum = (d1 + d2) % 10
-        num_str = f"{num:02d}"
-        if (d1 in next_cham_set or d2 in next_cham_set) and (num_sum in next_target_sums):
-            next_dan_giao_thoa.add(num_str)
-
-    all_des_full = [r['de'] for r in chrono]
-    f30_full = Counter(all_des_full[-30:])
-    f60_full = Counter(all_des_full[-60:])
-    f90_full = Counter(all_des_full[-90:])
-
-    num_nhip_full = {}
-    for n in range(100):
-        num_str = f"{n:02d}"
-        if num_str in all_des_full:
-            idx_last = max(i for i, de in enumerate(all_des_full) if de == num_str)
-            num_nhip_full[num_str] = len(all_des_full) - 1 - idx_last
-        else:
-            num_nhip_full[num_str] = 999
-
-    scored_next_dan = []
-    for num_str in next_dan_giao_thoa:
-        rhythm_s = get_gaussian_rhythm_score(num_nhip_full[num_str])
-        score = (f30_full[num_str] * 3.5) + (f60_full[num_str] * 2.0) + (f90_full[num_str] * 1.0) + rhythm_s
-        scored_next_dan.append((num_str, score))
-    scored_next_dan.sort(key=lambda x: x[1], reverse=True)
-    next_dan_ha_so = [x[0] for x in scored_next_dan[:20]]
 
     dow_model_summary = {
         'dow_g7_profile': dow_g7_profile,
@@ -712,11 +852,11 @@ def analyze_all(data_2026):
         'total_evals': total_evals_dow,
         'next_dow_name': next_dow_name,
         'top2_next_g': top2_next_g,
-        'next_target_sums': list(next_target_sums),
-        'next_cham_set': list(next_cham_set),
+        'next_target_sums': sorted(list(next_target_sums)),
+        'next_cham_set': sorted(list(next_cham_set)),
         'corner_sum_next': corner_sum_next,
         'corner_bong_next': corner_bong_next,
-        'next_dan_giao_thoa': list(next_dan_giao_thoa),
+        'next_dan_giao_thoa': sorted(list(next_dan_giao_thoa)),
         'next_dan_ha_so': next_dan_ha_so,
         'scored_next_dan': scored_next_dan,
         'num_nhip_full': num_nhip_full
@@ -863,55 +1003,123 @@ def analyze_all(data_2026):
     head_scoring_breakdown = get_dynamic_top_digits(chrono, 0, None)
     tail_scoring_breakdown = get_dynamic_top_digits(chrono, 1, None)
 
-    # 6. Backtest 1-Day & 3-Day Frames for Top 20
+    # 6. Walk-Forward Adaptive 60s N1 & 3-Day Frame Engine (Zero Look-Ahead Bias)
     history_records = []
     total_hits_1day = 0
-    frame_hits = {1: 0, 2: 0, 3: 0}
-    
-    for idx in range(len(chrono) - 1):
-        cur_row = chrono[idx]
-        next_row = chrono[idx + 1]
-        target_de = next_row['de']
-        
-        # Determine G7 Top 1-3 for day idx
+    date_to_dan60_map = {}
+
+    step_dan60_list = pre_dan60_list
+    step_score_map_list = pre_score_map_list
+    step_comb9_list = []
+    step_dow_hs_list = []
+    step_dow_gt_list = []
+
+    for idx in range(len(chrono)):
         sub_hist = chrono[:idx+1]
-        top3_pool = set()
-        for k in top_weekly_keys:
-            top3_pool.update(get_set_20(cur_row[k]))
-            
-        hit = target_de in top3_pool
-        if hit: total_hits_1day += 1
-        
-        history_records.append({
-            'stt': idx + 1,
-            'date': cur_row['date'],
-            'db': next_row['db'],
-            'de': target_de,
-            'head': f"Đầu {target_de[0]}" if len(target_de)>=2 else "",
-            'tail': f"Đuôi {target_de[1]}" if len(target_de)>=2 else "",
-            'pred_nums': ", ".join(sorted(list(top3_pool))),
-            'result': "TRÚNG 🎯" if hit else "TRƯỢT ❌"
-        })
+        dan_60_idx = step_dan60_list[idx]
 
-    # Consensus score map for weighting
-    consensus_score_map = {item['number']: item['score'] for item in candidate_2d}
+        ph3 = get_dynamic_top_digits(sub_hist, 0, 3)
+        pt3 = get_dynamic_top_digits(sub_hist, 1, 3)
+        c9_idx = [f"{h}{t}" for h in ph3 for t in pt3]
+        step_comb9_list.append(c9_idx)
 
-    # Pre-calculate N1 Hit pattern frequencies from N1-winning records
-    n1_head_freq = Counter()
-    n1_tail_freq = Counter()
-    n1_sum_freq = Counter()
-    for rec in history_records:
-        if rec['result'] == "TRÚNG 🎯":
-            de_val = rec['de']
-            if len(de_val) >= 2 and de_val.isdigit():
-                h_d = de_val[0]
-                t_d = de_val[1]
-                s_v = (int(h_d) + int(t_d)) % 10
-                n1_head_freq[h_d] += 1
-                n1_tail_freq[t_d] += 1
-                n1_sum_freq[s_v] += 1
+        if idx < len(history_log_dow):
+            hs_str = history_log_dow[idx].get('dan_ha_so_str', '')
+            gt_str = history_log_dow[idx].get('dan_str', '')
+            step_dow_hs_list.append(set(hs_str.split(', ')) if hs_str else set())
+            step_dow_gt_list.append(set(gt_str.split(', ')) if gt_str else set())
+        else:
+            step_dow_hs_list.append(set(next_dan_ha_so))
+            step_dow_gt_list.append(set(next_dan_giao_thoa))
 
-    # Dedicated Frame 3-day history with Dynamic Head Filter & Super-Filtered N2/N3 Matrix
+        if idx < len(chrono) - 1:
+            cur_row = chrono[idx]
+            next_row = chrono[idx + 1]
+            target_de = next_row['de']
+            date_to_dan60_map[next_row['date']] = sorted(list(dan_60_idx))
+
+            hit = target_de in dan_60_idx
+            if hit:
+                total_hits_1day += 1
+
+            history_records.append({
+                'stt': idx + 1,
+                'date': cur_row['date'],
+                'db': next_row['db'],
+                'de': target_de,
+                'head': f"Đầu {target_de[0]}" if len(target_de) >= 2 else "",
+                'tail': f"Đuôi {target_de[1]}" if len(target_de) >= 2 else "",
+                'pred_nums': ", ".join(sorted(list(dan_60_idx))),
+                'result': "TRÚNG 🎯" if hit else "TRƯỢT ❌"
+            })
+
+    def build_dynamic_rescue_36_and_top(step_idx, orig_n1_set, prev_de_val, recent_des_set):
+        d60_cur = step_dan60_list[step_idx]
+        sc_map_cur = step_score_map_list[step_idx]
+        hs_cur = step_dow_hs_list[step_idx]
+        gt_cur = step_dow_gt_list[step_idx]
+        d9_cur = step_comb9_list[step_idx]
+        d9_set = set(d9_cur)
+        d9_dao = {x[1] + x[0] for x in d9_cur if len(x) == 2 and x[0] != x[1]}
+        rev_set = filter_dan_by_head_trend(d60_cur | orig_n1_set, prev_de_val)
+
+        scored_36 = []
+        for n in range(100):
+            ns = f"{n:02d}"
+            pts = (
+                (42.0 if ns in d60_cur else 0.0)
+                + (22.0 if ns in orig_n1_set else 0.0)
+                + (42.0 if ns in hs_cur else (28.0 if ns in gt_cur else 0.0))
+                + (32.0 if ns in d9_set else (22.0 if ns in d9_dao else 0.0))
+                + (12.0 if ns in rev_set else 0.0)
+                + sc_map_cur.get(ns, 0.0) * 0.15
+                - (40.0 if ns == prev_de_val else 0.0)
+                - (20.0 if ns in recent_des_set else 0.0)
+                - (10.0 if ns[0] == ns[1] else 0.0)
+            )
+            scored_36.append((ns, pts))
+        scored_36.sort(key=lambda x: x[1], reverse=True)
+        dan_36_list = [x[0] for x in scored_36[:36]]
+        dan_36_set = set(dan_36_list)
+
+        bt_val = dan_36_list[0] if dan_36_list else "14"
+        tt_list = [bt_val]
+        uh = Counter([bt_val[0]])
+        ut = Counter([bt_val[1]])
+        for cand, _ in scored_36[:36]:
+            if cand in tt_list or (cand[1] + cand[0]) in tt_list or cand[0] == cand[1]:
+                continue
+            if uh[cand[0]] == 0 and ut[cand[1]] == 0:
+                tt_list.append(cand)
+                uh[cand[0]] += 1
+                ut[cand[1]] += 1
+                if len(tt_list) >= 3:
+                    break
+        for cand, _ in scored_36[:36]:
+            if len(tt_list) >= 4:
+                break
+            if cand in tt_list or (cand[1] + cand[0]) in tt_list or cand[0] == cand[1]:
+                continue
+            if uh[cand[0]] >= 2 or ut[cand[1]] >= 2:
+                continue
+            tt_list.append(cand)
+            uh[cand[0]] += 1
+            ut[cand[1]] += 1
+        for cand in dan_36_list:
+            if len(tt_list) >= 4:
+                break
+            if cand not in tt_list:
+                tt_list.append(cand)
+
+        d9_in_36 = [x for x in d9_cur if x in dan_36_set]
+        for cand in dan_36_list:
+            if len(d9_in_36) >= 9:
+                break
+            if cand not in d9_in_36:
+                d9_in_36.append(cand)
+
+        return dan_36_set, bt_val, tt_list[:4], d9_in_36[:9]
+
     frame3_records = []
     total_frames = 0
     frame_success_count = 0
@@ -922,65 +1130,81 @@ def analyze_all(data_2026):
     n3_super_hits = 0
     miss_n1_count = 0
     stl_hits = 0
-    
+
+    running_n1_head_freq = Counter()
+    running_n1_tail_freq = Counter()
+    running_n1_sum_freq = Counter()
+    date_to_dan_n2_map = {}
+
     for idx in range(len(chrono) - 3):
         total_frames += 1
         c_row = chrono[idx]
         d1_row = chrono[idx + 1]
         d2_row = chrono[idx + 2]
         d3_row = chrono[idx + 3]
-        
-        pred_set_n1 = set()
-        for k in top_weekly_keys:
-            pred_set_n1.update(get_set_20(c_row[k]))
-            
+
+        pred_set_n1 = step_dan60_list[idx]
         stl_pair = extract_song_thu_lo_roi(pred_set_n1, c_row)
-        
+
         de_n1 = d1_row['de']
         de_n2 = d2_row['de']
         de_n3 = d3_row['de']
-        
+
         h1 = de_n1 in pred_set_n1
         stl_h1 = de_n1 in stl_pair
-        
-        # N2: Lọc đảo chiều Đầu Lớn/Nhỏ theo Đề N1 (~40 số) -> Ép Dàn Siêu Lọc N2 (25-28 số)
-        pred_set_n2_std = filter_dan_by_head_trend(pred_set_n1, de_n1)
-        pred_set_n2_super = get_super_filtered_dan(pred_set_n2_std, n1_head_freq, n1_tail_freq, n1_sum_freq, consensus_score_map, target_size=28)
+
+        recent_n1 = {chrono[j]['de'] for j in range(max(0, idx - 3), idx + 1)}
+        _, bt_n1, tt_n1, d9_n1 = build_dynamic_rescue_36_and_top(idx, pred_set_n1, c_row['de'], recent_n1)
+
+        recent_n2 = {chrono[j]['de'] for j in range(max(0, idx - 2), idx + 2)}
+        pred_set_n2_super, bt_n2, tt_n2, d9_n2 = build_dynamic_rescue_36_and_top(idx + 1, pred_set_n1, de_n1, recent_n2)
+        date_to_dan_n2_map[d2_row['date']] = sorted(list(pred_set_n2_super))
         h2 = de_n2 in pred_set_n2_super
         stl_h2 = de_n2 in stl_pair
-        
-        # N3: Lọc đảo chiều Đầu Lớn/Nhỏ theo Đề N2 (~35 số) -> Ép Dàn Siêu Lọc N3 (25-28 số)
-        pred_set_n3_std = filter_dan_by_head_trend(pred_set_n2_std, de_n2)
-        pred_set_n3_super = get_super_filtered_dan(pred_set_n3_std, n1_head_freq, n1_tail_freq, n1_sum_freq, consensus_score_map, target_size=28)
+
+        recent_n3 = {chrono[j]['de'] for j in range(max(0, idx - 1), idx + 3)}
+        pred_set_n3_super, bt_n3, tt_n3, d9_n3 = build_dynamic_rescue_36_and_top(idx + 2, pred_set_n1, de_n2, recent_n3)
         h3 = de_n3 in pred_set_n3_super
         stl_h3 = de_n3 in stl_pair
-        
+
+        if h1 and len(de_n1) >= 2 and de_n1.isdigit():
+            running_n1_head_freq[de_n1[0]] += 1
+            running_n1_tail_freq[de_n1[1]] += 1
+            running_n1_sum_freq[(int(de_n1[0]) + int(de_n1[1])) % 10] += 1
+
         if h1:
             n1_hits += 1
             frame_success_count += 1
             f_res = "TRÚNG N1 🎯"
+            active_bt, active_tt, active_d9 = bt_n1, tt_n1, d9_n1
         elif h2:
             n2_hits += 1
             n2_super_hits += 1
             frame_success_count += 1
             f_res = "TRÚNG N2 (Siêu Lọc 🎯)"
+            active_bt, active_tt, active_d9 = bt_n2, tt_n2, d9_n2
         elif h3:
             n3_hits += 1
             n3_super_hits += 1
             frame_success_count += 1
             f_res = "TRÚNG N3 (Siêu Lọc 🎯)"
+            active_bt, active_tt, active_d9 = bt_n3, tt_n3, d9_n3
         else:
             f_res = "TRƯỢT KHUNG ❌"
-            
+            active_bt, active_tt, active_d9 = bt_n2, tt_n2, d9_n2
+
         if not h1:
             miss_n1_count += 1
-            
+
         if stl_h1 or stl_h2 or stl_h3:
             stl_hits += 1
-            
+
         frame3_records.append({
             'stt': total_frames,
             'start_date': c_row['date'],
+            'date_n1': d1_row['date'],
+            'date_n2': d2_row['date'],
+            'date_n3': d3_row['date'],
             'de_n1': de_n1,
             'hit_n1': "Trúng" if h1 else "Không",
             'de_n2': de_n2,
@@ -996,7 +1220,64 @@ def analyze_all(data_2026):
             'sz_n1': len(pred_set_n1),
             'sz_n2': len(pred_set_n2_super),
             'sz_n3': len(pred_set_n3_super),
+            'bt_n1': bt_n1,
+            'tt_n1': tt_n1,
+            'd9_n1': d9_n1,
+            'bt_n2': bt_n2,
+            'tt_n2': tt_n2,
+            'd9_n2': d9_n2,
+            'bt_n3': bt_n3,
+            'tt_n3': tt_n3,
+            'd9_n3': d9_n3,
+            'active_bt': active_bt,
+            'active_tt': active_tt,
+            'active_d9': active_d9
         })
+
+    next_dan_60_n1 = sorted(list(step_dan60_list[-1]))
+    latest_de_val = chrono[-1]['de']
+    prev_dan_60_n1 = step_dan60_list[-2] if len(step_dan60_list) >= 2 else step_dan60_list[-1]
+    hit_n1_latest = (latest_de_val in prev_dan_60_n1)
+
+    recent_latest = {chrono[j]['de'] for j in range(max(0, len(chrono) - 4), len(chrono))}
+    _, next_bt_n1, next_tt_n1, next_d9_n1 = build_dynamic_rescue_36_and_top(
+        len(chrono) - 1, step_dan60_list[-1], latest_de_val, recent_latest
+    )
+    next_set_36_n2, next_bt_n2, next_tt_n2, next_d9_n2 = build_dynamic_rescue_36_and_top(
+        len(chrono) - 1, prev_dan_60_n1 if not hit_n1_latest else step_dan60_list[-1], latest_de_val, recent_latest
+    )
+    next_dan_36_n2 = sorted(list(next_set_36_n2))
+
+    n3_orig_pool = set(step_dan60_list[-1]) - set(next_dan_36_n2[:18])
+    next_set_36_n3, next_bt_n3, next_tt_n3, next_d9_n3 = build_dynamic_rescue_36_and_top(
+        len(chrono) - 1, n3_orig_pool, next_bt_n2, recent_latest | {next_bt_n2}
+    )
+    next_dan_36_n3 = sorted(list(next_set_36_n3))
+    next_stl_pair = extract_song_thu_lo_roi(step_dan60_list[-1], chrono[-1])
+
+    adaptive_frame_info = {
+        'last_completed_date': chrono[-1]['date'],
+        'last_completed_de': latest_de_val,
+        'hit_n1_latest': hit_n1_latest,
+        'current_active_day': 1 if hit_n1_latest else 2,
+        'last_result': f"Kỳ gần nhất ({chrono[-1]['date']}) Đề về {latest_de_val}: {'🎯 ĐÃ TRÚNG N1 → RESET CHUYỂN CHU KỲ MỚI' if hit_n1_latest else '❌ TRƯỢT N1 → GIỮ NGUYÊN KHUNG, ĐÁNH N2 (36 SỐ)'}",
+        'status_badge': 'ĐÃ TRÚNG N1 → RESET CẦU MỚI' if hit_n1_latest else 'ĐANG ĐÁNH N2 (36 SỐ)',
+        'dan_n1': next_dan_60_n1,
+        'dan_n2': next_dan_36_n2,
+        'dan_n3': next_dan_36_n3,
+        'bt_n1': next_bt_n1,
+        'tt_n1': next_tt_n1,
+        'd9_n1': next_d9_n1,
+        'bt_n2': next_bt_n2,
+        'tt_n2': next_tt_n2,
+        'd9_n2': next_d9_n2,
+        'bt_n3': next_bt_n3,
+        'tt_n3': next_tt_n3,
+        'd9_n3': next_d9_n3,
+        'stl_pair': ", ".join(next_stl_pair),
+        'date_to_dan60_map': {k: v for k, v in list(date_to_dan60_map.items())[-90:]},
+        'date_to_dan_n2_map': {k: v for k, v in list(date_to_dan_n2_map.items())[-90:]}
+    }
 
     # 7. Top 3/4/5 Head & Tail Backtest
     history_top3_dau_duoi_records = []
@@ -1343,9 +1624,10 @@ def analyze_all(data_2026):
         'hit_rate_2026': round(total_hits_1day / max(len(chrono)-1,1) * 100, 2),
         'frame_stats': {
             1: {'hits': total_hits_1day, 'evals': len(chrono)-1, 'rate': round(total_hits_1day / max(len(chrono)-1,1) * 100, 2)},
-            2: {'hits': int(total_hits_1day * 1.6), 'evals': len(chrono)-1, 'rate': round(min(total_hits_1day * 1.6 / max(len(chrono)-1,1) * 100, 72.5), 2)},
-            3: {'hits': int(total_hits_1day * 1.98), 'evals': len(chrono)-1, 'rate': round(min(total_hits_1day * 1.98 / max(len(chrono)-1,1) * 100, 87.5), 2)}
+            2: {'hits': n1_hits + n2_hits, 'evals': max(total_frames, 1), 'rate': round((n1_hits + n2_hits) / max(total_frames, 1) * 100, 2)},
+            3: {'hits': frame_success_count, 'evals': max(total_frames, 1), 'rate': round(frame_success_count / max(total_frames, 1) * 100, 2)}
         },
+        'adaptive_frame': adaptive_frame_info,
         'frame3_records': frame3_records,
         'frame3_summary': {
             'total_frames': total_frames,
