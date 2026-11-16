@@ -45,6 +45,7 @@ except ImportError:
 
 API_383_LIVE_URL = "https://api.383.im/lottery/live.json"
 DAIPHAT_LIVE_URL = "https://xosodaiphat.com/xsmb-xo-so-mien-bac.html"
+DAIPHAT_90N_URL = "https://xosodaiphat.com/xsmb-90-ngay.html"
 DAIPHAT_30N_URL = "https://xosodaiphat.com/xsmb-30-ngay.html"
 DEFAULT_CAP4_CSV = "dan_60_cap_4.csv"
 
@@ -112,29 +113,28 @@ def get_weekly_cycle_mode(draw_date_str=None):
     else:
         return {'week': 'Tuần 4', 'model': 'Hard Filter Mở Rộng', 'n2_count': 42, 'n3_count': 40, 'note': 'Bảo toàn & Cứu khung'}
 
-def compute_ai_scores(all_draws, target_idx, unique_numbers_map=None):
+def compute_ai_scores(all_draws, base_idx, unique_numbers_map=None):
     """
-    Chấm điểm AI Score (0.0 - 10.0) cho các con số 2D:
-    - Tần suất 30 kỳ (Golden Frequency)
-    - Nhịp gan lý tưởng (5 - 25 ngày)
-    - Phạt số bệt 2 ngày liên tiếp
-    - Phạt gan cực đại (> 45 ngày)
-    - Thưởng điểm cầu vị trí G1->G5 đang chạy (Chỉ đạo: +2.5, Lót: +1.5, Theo dõi: +0.8)
-    - Loại bỏ cầu gãy hoàn toàn
+    Chấm điểm AI Score (0.0 - 10.0) cho các con số 2D dự đoán cho kỳ tiếp theo (N+1),
+    tính từ kỳ vừa quay xong base_idx (Kỳ N):
+    - prev_de = Đề vừa nổ của kỳ N (all_draws[base_idx]['de'])
+    - prev_prev_de = Đề của kỳ N-1 (all_draws[base_idx + 1]['de'])
+    - Tần suất 30 kỳ gần nhất tính từ base_idx (all_draws[base_idx : base_idx + 30])
+    - Độ gan tính từ base_idx (số vừa nổ kỳ N có gan = 0)
     """
-    prev_de = all_draws[target_idx + 1]['de'] if target_idx + 1 < len(all_draws) else None
-    prev_prev_de = all_draws[target_idx + 2]['de'] if target_idx + 2 < len(all_draws) else None
+    prev_de = all_draws[base_idx].get('de') if base_idx < len(all_draws) else None
+    prev_prev_de = all_draws[base_idx + 1].get('de') if base_idx + 1 < len(all_draws) else None
     
-    # 30 kỳ gần nhất tính từ target_idx + 1
-    hist_30 = [d['de'] for d in all_draws[target_idx + 1: target_idx + 31] if d.get('de')]
+    # 30 kỳ gần nhất tính từ kỳ vừa quay xong base_idx
+    hist_30 = [d['de'] for d in all_draws[base_idx : base_idx + 30] if d.get('de')]
     counter_30 = Counter(hist_30)
     
-    # Tính độ gan
+    # Tính độ gan chuẩn xác tính từ base_idx
     gan_dict = {}
     for i in range(100):
         n_str = f"{i:02d}"
         gan = 999
-        for step, d in enumerate(all_draws[target_idx + 1:]):
+        for step, d in enumerate(all_draws[base_idx:]):
             if d.get('de') == n_str:
                 gan = step
                 break
@@ -143,7 +143,7 @@ def compute_ai_scores(all_draws, target_idx, unique_numbers_map=None):
     bong_map = {0:5, 1:6, 2:7, 3:8, 4:9, 5:0, 6:1, 7:2, 8:3, 9:4}
     dau_set = set()
     duoi_set = set()
-    if prev_de and len(prev_de) == 2:
+    if prev_de and len(prev_de) == 2 and prev_de.isdigit():
         c = int(prev_de[0])
         dv = int(prev_de[1])
         dau_set = {str(c), str(bong_map[c])}
@@ -178,7 +178,7 @@ def compute_ai_scores(all_draws, target_idx, unique_numbers_map=None):
         elif n_str[0] in dau_set or n_str[1] in duoi_set:
             sc += 0.5
             
-        # 4. Cầu vị trí G1->G5
+        # 4. Cầu vị trí G.ĐB -> G7
         if unique_numbers_map and n_str in unique_numbers_map:
             info = unique_numbers_map[n_str]
             cat = info.get('category', '')
@@ -274,24 +274,48 @@ def fetch_383_live():
         return None
 
 def fetch_daiphat_draws(use_30days=True):
-    """Nguồn dự phòng và lịch sử các kỳ quay từ xosodaiphat.com."""
+    """Nguồn dự phòng và lịch sử 90 kỳ quay đầy đủ 27 giải từ xosodaiphat.com."""
     dow_map = {0: 'Thứ hai', 1: 'Thứ ba', 2: 'Thứ tư', 3: 'Thứ năm', 4: 'Thứ sáu', 5: 'Thứ bảy', 6: 'Chủ nhật'}
-    url = DAIPHAT_30N_URL if use_30days else DAIPHAT_LIVE_URL
+    cache_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'draws_90d_cache.json')
+    if use_30days and os.path.exists(cache_file):
+        try:
+            with open(cache_file, 'r', encoding='utf-8') as cf:
+                cached_draws = json.load(cf)
+                if isinstance(cached_draws, list) and len(cached_draws) >= 60:
+                    # Nếu cache đã cập nhật trong vòng 10 phút thì dùng ngay cho siêu tốc
+                    if time.time() - os.path.getmtime(cache_file) < 600:
+                        return cached_draws
+        except Exception:
+            pass
+
+    urls_to_try = [DAIPHAT_90N_URL, "https://xosodaiphat.com/xsmb-60-ngay.html", DAIPHAT_30N_URL] if use_30days else [DAIPHAT_LIVE_URL]
     html = ""
-    try:
-        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0.0.0 Safari/537.36'}
-        if HAS_BS4:
-            r = requests.get(url, headers=headers, timeout=6)
-            html = r.text if r.status_code == 200 else ""
-        else:
-            req = urllib.request.Request(url, headers=headers)
-            with urllib.request.urlopen(req, timeout=6) as resp:
-                html = resp.read().decode('utf-8', errors='ignore')
-    except Exception as e:
-        print(f"[!] Không thể kết nối xosodaiphat.com: {e}")
-        return []
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0.0.0 Safari/537.36'}
+    for u in urls_to_try:
+        try:
+            if HAS_BS4:
+                r = requests.get(u, headers=headers, timeout=20)
+                if r.status_code == 200 and 'table-xsmb' in r.text:
+                    html = r.text
+                    break
+            else:
+                req = urllib.request.Request(u, headers=headers)
+                with urllib.request.urlopen(req, timeout=20) as resp:
+                    txt = resp.read().decode('utf-8', errors='ignore')
+                    if 'table-xsmb' in txt:
+                        html = txt
+                        break
+        except Exception as e:
+            print(f"[!] Thử kết nối {u}: {e}")
+            continue
 
     if not html:
+        if use_30days and os.path.exists(cache_file):
+            try:
+                with open(cache_file, 'r', encoding='utf-8') as cf:
+                    return json.load(cf)
+            except Exception:
+                pass
         return []
 
     blocks = re.split(r'<table[^>]*table-xsmb[^>]*>', html)
@@ -351,6 +375,12 @@ def fetch_daiphat_draws(use_30days=True):
             'de': de_val,
             'prizes': prizes
         })
+    if use_30days and len(draws) >= 30:
+        try:
+            with open(cache_file, 'w', encoding='utf-8') as cf:
+                json.dump(draws, cf, ensure_ascii=False, indent=2)
+        except Exception:
+            pass
     return draws
 
 def get_combined_draws(is_live=False):
@@ -504,7 +534,7 @@ def analyze_bridge_cycles(draws, target_draw_idx=0):
             if src_idx >= len(draws):
                 break
             de = draws[res_idx].get('de', '')
-            if not de or len(de) < 2:
+            if not de or len(de) < 2 or not de.isdigit():
                 break
             target_digit = int(de[0] if is_head else de[1])
             allowed = [str(target_digit), str(BONG_DUONG[target_digit])]
@@ -677,11 +707,178 @@ def compute_next_date_str(draw_date_str):
         return f"{dow_vn[next_dt.weekday()]} ngày {next_dt.strftime('%d-%m-%Y')}", next_dt.strftime('%d/%m/%Y')
     return draw_date_str, draw_date_str
 
+def select_core_bridge_positions(positions):
+    """
+    Lọc lấy các vị trí cầu chất lượng cao (loại bỏ nhiễu từ hàng chục vị trí mới chạm 1 ngày ngẫu nhiên):
+    - Giữ toàn bộ các vị trí cầu ăn thông >= 2 ngày (2d, 3d, 4d+).
+    - Nếu số vị trí >= 2 ngày ít hơn 4, bổ sung thêm các vị trí 1 ngày ăn CHÍNH DIỆN (trực tiếp, không qua bóng)
+      ưu tiên giải trọng tâm (GDB, G1, G7, G2, G3) cho đủ tối đa 5 vị trí tinh nhuệ nhất.
+    """
+    multi_day = [p for p in positions if p['cycle_days'] >= 2]
+    multi_day.sort(key=lambda x: (x['cycle_days'], 1 if x.get('is_direct') else 0), reverse=True)
+    if len(multi_day) >= 4:
+        return multi_day[:8]
+    direct_1d = [p for p in positions if p['cycle_days'] == 1 and p.get('is_direct')]
+    def prize_priority(p_str):
+        if p_str.startswith('GDB'): return 5
+        if p_str.startswith('G1'): return 4
+        if p_str.startswith('G7'): return 3
+        if p_str.startswith('G2'): return 2
+        return 1
+    direct_1d.sort(key=lambda x: prize_priority(x['position']), reverse=True)
+    combined = multi_day + direct_1d[:max(0, 5 - len(multi_day))]
+    return combined if combined else positions[:5]
+
+def build_dynamic_radar_sets(unique_numbers_map, ai_scores, gan_dict, g7_bonus_map, corner_bt, prev_de_val, prev_prev_de_val, n2_target_count=42, n3_target_count=40):
+    """
+    Hệ thống chấm điểm Hội Tụ Toàn Diện (Consensus Scoring) từ dữ liệu thực tế của kỳ vừa quay xong:
+    1. Chọn Top 1 Bạch Thủ, Song Thủ (Lót lộn) & Top 4 Tứ Thủ từ các vị trí cầu 27 giải (ưu tiên chu kỳ 3-4 ngày).
+    2. Dàn N1 (60 số): Khung 60 số Cấp 4 chuẩn (DEFAULT_60_CAP4) bảo vệ vốn (ăn 92.5% khung 3 ngày).
+    3. Dàn Tinh Túy Ngày 1 (~45 số): Lọc giao thoa các số điểm cao nhất trong Khung 60 số Cấp 4
+       (kết hợp Cầu 27 giải + Chạm/Tổng G7 + AI Score) và luôn bao gồm Top 4 Tứ Thủ.
+    4. Dàn N2 (42 số) & Dàn N3 (40 số): Lọc hạ dàn cứu khung ngày 2, ngày 3.
+    """
+    dan_n1_list = [f"{x:02d}" for x in sorted(DEFAULT_60_CAP4)]
+    cap4_base_set = set(dan_n1_list)
+    bet_2_days = {prev_de_val} if (prev_de_val and prev_de_val == prev_prev_de_val) else set()
+
+    all_100_scored = {}
+    for i in range(100):
+        n_str = f"{i:02d}"
+        info = unique_numbers_map.get(n_str)
+        radar_sc = info['score'] if info else 0.0
+        cycle = info['cycle_days'] if info else 0
+        ai_sc = ai_scores.get(n_str, 5.0)
+        g7_sc = g7_bonus_map.get(n_str, 0.0)
+        base_bonus = 22.0 if n_str in cap4_base_set else 0.0
+
+        total_sc = round(radar_sc + ai_sc * 9.0 + g7_sc + base_bonus, 1)
+        all_100_scored[n_str] = {
+            'num': n_str,
+            'cycle_days': cycle,
+            'radar_score': radar_sc,
+            'ai_score': ai_sc,
+            'g7_bonus': g7_sc,
+            'final_score': total_sc,
+            'in_cap4_base': (n_str in cap4_base_set)
+        }
+
+    # 1. Chọn Top 1 Bạch Thủ, Song Thủ & Top 4 Tứ Thủ từ các số có cầu chạy mạnh nhất
+    found_list = [all_100_scored[n] for n in unique_numbers_map.keys()]
+    chidao_pool = [x for x in found_list if x['cycle_days'] >= 3]
+    if len(chidao_pool) < 4:
+        chidao_pool = [x for x in found_list if x['cycle_days'] >= 2]
+    selection_pool = chidao_pool if len(chidao_pool) >= 4 else found_list
+    selection_pool.sort(key=lambda x: (x['cycle_days'], x['final_score']), reverse=True)
+
+    top_1 = selection_pool[0]['num'] if selection_pool else (corner_bt or '65')
+    lot_lon = calc_lot_lon(top_1)
+    song_thu = [top_1, lot_lon] if lot_lon != top_1 else [top_1]
+
+    top_4_nums = [top_1]
+    if lot_lon not in top_4_nums:
+        top_4_nums.append(lot_lon)
+    for x in selection_pool:
+        if x['num'] not in top_4_nums:
+            top_4_nums.append(x['num'])
+        if len(top_4_nums) >= 4:
+            break
+
+    # 2. Dàn Tinh Túy Ngày 1: Lấy Top 44 số điểm hội tụ cao nhất trong Khung 60 số Cấp 4 + đặc cách Top 4 Tứ Thủ
+    cap4_scored = []
+    for n_str in dan_n1_list:
+        c_sc = all_100_scored[n_str]['final_score']
+        if n_str in top_4_nums:
+            c_sc += 500.0
+        cap4_scored.append((n_str, c_sc))
+    cap4_scored.sort(key=lambda x: x[1], reverse=True)
+    tinhtuy_set = {x[0] for x in cap4_scored[:44]}
+    for n_t4 in top_4_nums:
+        tinhtuy_set.add(n_t4)
+    dan_ngay1_tinhtuy = sorted(list(tinhtuy_set))
+
+    # 3. Dàn N2 (42 số) & Dàn N3 (40 số) chuẩn cứu khung
+    base_n2_pool = [
+        11, 12, 13, 15, 17, 18, 19, 21, 22, 23, 28, 29, 31, 32, 33, 35, 37, 38,
+        42, 44, 45, 51, 52, 53, 55, 58, 59, 61, 62, 63, 65, 66, 67, 68, 81, 82,
+        83, 85, 87, 90, 95, 98
+    ]
+    n2_candidates_set = (set(f"{x:02d}" for x in base_n2_pool) | set(dan_n1_list)) - bet_2_days
+    n2_candidates_filtered = sorted(
+        list(n2_candidates_set),
+        key=lambda x: (all_100_scored[x]['final_score'], 1 if x in cap4_base_set else 0),
+        reverse=True
+    )
+    dan_n2_list = sorted(n2_candidates_filtered[:n2_target_count])
+
+    n3_candidates = [n for n in dan_n2_list if gan_dict.get(n, 0) <= 45]
+    for n in dan_n2_list:
+        if len(n3_candidates) >= n3_target_count:
+            break
+        if n not in n3_candidates:
+            n3_candidates.append(n)
+    n3_candidates.sort(key=lambda x: all_100_scored[x]['final_score'], reverse=True)
+    dan_n3_list = sorted(n3_candidates[:n3_target_count])
+
+    dan_lot_list = [x for x in dan_n1_list if x != top_1 and x not in top_4_nums]
+    return {
+        'top_1': top_1,
+        'lot_lon': lot_lon,
+        'song_thu': song_thu,
+        'top_4': top_4_nums,
+        'dan_tinhtuy': dan_ngay1_tinhtuy,
+        'dan_n1': dan_n1_list,
+        'dan_n2': dan_n2_list,
+        'dan_n3': dan_n3_list,
+        'dan_lot': dan_lot_list,
+        'all_100_scored': all_100_scored
+    }
+
+def extract_g7_consensus_bonus(cur_draw):
+    """
+    Trích xuất điểm thưởng đồng thuận từ Giải 7 (G7.1..G7.4) và Cầu Ghép Góc G7.1[0]+G7.4[1]
+    của kỳ vừa quay xong để gia cố độ chuẩn xác cho Radar Tĩnh.
+    """
+    bonus_map = Counter()
+    prizes = cur_draw.get('prizes', {})
+    g7_vals = [str(prizes.get(f'G7.{i}', '')).strip() for i in range(1, 5)]
+    g7_digits = set()
+    g7_sums = set()
+    for val in g7_vals:
+        if len(val) == 2 and val.isdigit():
+            d1, d2 = int(val[0]), int(val[1])
+            g7_digits.update([str(d1), str(d2), str(BONG_DUONG[d1]), str(BONG_DUONG[d2])])
+            s = (d1 + d2) % 10
+            g7_sums.update([s, BONG_DUONG[s]])
+
+    # Cầu Ghép Góc kinh điển: G7.1[0] + G7.4[1]
+    g7_1 = g7_vals[0] if len(g7_vals) >= 1 else ''
+    g7_4 = g7_vals[3] if len(g7_vals) >= 4 else ''
+    corner_bt = None
+    if len(g7_1) == 2 and len(g7_4) == 2 and g7_1.isdigit() and g7_4.isdigit():
+        corner_bt = f"{g7_1[0]}{g7_4[1]}"
+        corner_rev = calc_lot_lon(corner_bt)
+        bonus_map[corner_bt] += 35.0
+        bonus_map[corner_rev] += 25.0
+
+    for i in range(100):
+        n_str = f"{i:02d}"
+        s = (int(n_str[0]) + int(n_str[1])) % 10
+        if n_str[0] in g7_digits and n_str[1] in g7_digits:
+            bonus_map[n_str] += 18.0
+        elif n_str[0] in g7_digits or n_str[1] in g7_digits:
+            bonus_map[n_str] += 8.0
+        if s in g7_sums:
+            bonus_map[n_str] += 12.0
+
+    return bonus_map, corner_bt
+
 def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None, n2_size=None, n3_size=None, is_live=False, send_tele=False):
     """
     Thực thi toàn bộ pipeline Radar Tĩnh Toàn Diện (Quét đủ 27 giải từ G.ĐB -> G7 = 107 vị trí):
     - Dùng kỳ vừa quay xong (draws[target_draw_idx]) và lịch sử trước đó để dò các vị trí cầu Đầu & Đuôi
       đã ăn thông vào Đề kỳ vừa quay xong.
+    - Lọc giữ các vị trí Cầu Đầu & Cầu Đuôi tinh nhuệ (ăn thông >= 2 ngày hoặc chính diện giải trọng tâm).
     - Lấy luôn các chữ số tại đúng vị trí đó trên bảng 27 giải của kỳ vừa quay xong để ghép số
       chốt dự đoán cho NGÀY HÔM SAU (N+1) tương tự như dàn động.
     - Trên bảng Radar: Chỉ tô màu của Cầu Đầu (Vàng) và Cầu Đuôi (Xanh).
@@ -691,7 +888,6 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
     print("=" * 82)
     
     raw_draws = get_combined_draws(is_live=False)
-    # Chỉ lấy các kỳ đã quay xong (có đầy đủ giải ĐB / Đề)
     draws = [d for d in raw_draws if d.get('de') and len(str(d.get('de', '')).strip()) >= 2]
     if len(draws) < target_draw_idx + 2:
         print("[!] Dữ liệu cào về không đủ số kỳ để phân tích (từ cả API 383.im và xosodaiphat.com).")
@@ -710,6 +906,11 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
         print("[!] Không thể phân tích chu kỳ từ kỳ vừa quay xong.")
         return None
 
+    all_head_positions = analysis['head_positions']
+    all_tail_positions = analysis['tail_positions']
+    head_positions = select_core_bridge_positions(all_head_positions)
+    tail_positions = select_core_bridge_positions(all_tail_positions)
+
     print("\n" + "-" * 82)
     print(f" BƯỚC 1: ĐỀ VỪA NỔ [{analysis['cur_date']}] & TẬP CHẠM ĐẦU / ĐUÔI DÒ CẦU")
     print("-" * 82)
@@ -717,22 +918,17 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
     print(f"  • Chạm Đầu = {analysis['head']}  --> Bóng dương = {analysis['head_bong']}  ==> Tập Đầu: [{analysis['head']}, {analysis['head_bong']}]")
     print(f"  • Chạm Đuôi = {analysis['tail']}  --> Bóng dương = {analysis['tail_bong']}  ==> Tập Đuôi: [{analysis['tail']}, {analysis['tail_bong']}]")
 
-    head_positions = analysis['head_positions']
-    tail_positions = analysis['tail_positions']
-
     print("\n" + "-" * 82)
-    print(f" BƯỚC 2 & 3: QUÉT 107 VỊ TRÍ (G.ĐB -> G7.4) & LẤY SỐ CHỐT CHO [{next_date_full}]")
+    print(f" BƯỚC 2 & 3: QUÉT 107 VỊ TRÍ (G.ĐB -> G7.4) & LỌC CẦU TINH NHUỆ CHO [{next_date_full}]")
     print("-" * 82)
-    print(f"  • Tổng vị trí Cầu Đầu (🟡): {len(head_positions)} vị trí")
+    print(f"  • Vị trí Cầu Đầu tinh nhuệ (🟡): {len(head_positions)} vị trí (từ {len(all_head_positions)} vị trí chạm)")
     print(f"      - Chạy 3-4+ ngày (Chỉ đạo): {sum(1 for x in head_positions if x['cycle_days'] >= 3)} vị trí")
     print(f"      - Chạy 2 ngày (Đôn N3):     {sum(1 for x in head_positions if x['cycle_days'] == 2)} vị trí")
-    print(f"      - Mới chạm 1 ngày:          {sum(1 for x in head_positions if x['cycle_days'] == 1)} vị trí")
-    print(f"  • Tổng vị trí Cầu Đuôi (🔵): {len(tail_positions)} vị trí")
+    print(f"  • Vị trí Cầu Đuôi tinh nhuệ (🔵): {len(tail_positions)} vị trí (từ {len(all_tail_positions)} vị trí chạm)")
     print(f"      - Chạy 3-4+ ngày (Chỉ đạo): {sum(1 for x in tail_positions if x['cycle_days'] >= 3)} vị trí")
     print(f"      - Chạy 2 ngày (Đôn N3):     {sum(1 for x in tail_positions if x['cycle_days'] == 2)} vị trí")
-    print(f"      - Mới chạm 1 ngày:          {sum(1 for x in tail_positions if x['cycle_days'] == 1)} vị trí")
 
-    # BƯỚC 4: Vào dàn (Ghép các con số từ các vị trí: Chục từ Đầu, Đơn vị từ Đuôi)
+    # BƯỚC 4: Vào dàn (Ghép các con số từ các vị trí Cầu Đầu tinh nhuệ x Cầu Đuôi tinh nhuệ)
     all_pairs = []
     for h in head_positions:
         for t in tail_positions:
@@ -742,6 +938,8 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
             d_bong = t['digit_bong']
 
             if h.get('is_direct') and t.get('is_direct') and (h['cycle_days'] >= 2 or t['cycle_days'] >= 2):
+                pair_cycle = max(3, h['cycle_days'], t['cycle_days'])
+            elif h['cycle_days'] >= 2 and t['cycle_days'] >= 2:
                 pair_cycle = max(3, h['cycle_days'], t['cycle_days'])
             elif h['cycle_days'] >= 2 or t['cycle_days'] >= 2:
                 pair_cycle = max(h['cycle_days'], t['cycle_days'])
@@ -773,10 +971,10 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
                     cat_label = "Lót ngày 2 (Đôn chủ lực N3)"
                 else:
                     cat = "Theo dõi"
-                    cat_label = "Theo dõi ngày 1 (Mới chạm)"
+                    cat_label = "Theo dõi ngày 1 (Chính diện)"
 
                 direct_bonus = 40.0 if (h.get('is_direct') and t.get('is_direct')) else (15.0 if (h.get('is_direct') or t.get('is_direct')) else 0)
-                score = pair_cycle * 30 + weight * 20 + direct_bonus + pos_bonus + (h['cycle_days'] + t['cycle_days']) * 5
+                score = pair_cycle * 30 + weight * 20 + direct_bonus + pos_bonus + (h['cycle_days'] + t['cycle_days']) * 6
 
                 all_pairs.append({
                     'num': num_str,
@@ -794,12 +992,12 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
                     't_pos': t['position']
                 })
 
-    # Nhóm theo con số (loại trùng, giữ chu kỳ và điểm cao nhất + cộng thưởng độ hội tụ nhiều cầu báo)
+    # Nhóm theo con số (loại trùng, giữ chu kỳ và điểm cao nhất + cộng thưởng độ hội tụ)
     freq_pairs = Counter(p['num'] for p in all_pairs)
     unique_numbers_map = {}
     for p in all_pairs:
         n = p['num']
-        total_sc = p['score'] + min(freq_pairs[n] * 2.5, 35.0)
+        total_sc = p['score'] + min(freq_pairs[n] * 4.0, 32.0)
         p_copy = dict(p)
         p_copy['score'] = round(total_sc, 1)
         if n not in unique_numbers_map or total_sc > unique_numbers_map[n].get('score', 0):
@@ -817,58 +1015,60 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
         item['in_cap4'] = (item['num'] in cap4_numbers)
         item['in_cap4_str'] = "Có" if item['in_cap4'] else "Không"
 
-    # Chấm điểm AI Score hỗ trợ lọc hội tụ
-    all_draws_for_ai = draws
+    # Chấm điểm AI Score hỗ trợ lọc hội tụ (dùng đủ 90 kỳ + lịch sử data_2026.json nếu có)
+    all_draws_for_ai = list(draws)
     if os.path.exists('data_2026.json'):
         try:
             with open('data_2026.json', encoding='utf-8') as f:
                 d_2026 = json.load(f)
-                if len(d_2026) > len(all_draws_for_ai):
-                    all_draws_for_ai = d_2026
+                existing_dates = {d.get('date', '').split()[-1] for d in all_draws_for_ai}
+                for d_old in d_2026:
+                    d_key = d_old.get('date', '').split()[-1]
+                    if d_key and d_key not in existing_dates:
+                        all_draws_for_ai.append(d_old)
+                        existing_dates.add(d_key)
         except Exception:
             pass
 
     ai_scores, gan_dict, prev_de_val, prev_prev_de_val = compute_ai_scores(all_draws_for_ai, target_draw_idx, unique_numbers_map)
+    g7_bonus_map, corner_bt = extract_g7_consensus_bonus(cur_draw)
 
-    # Cộng điểm AI hội tụ vào score để chọn Top 1, Top 4 chuẩn xác nhất
+    weekly_cycle = get_weekly_cycle_mode(next_date_full)
+    n2_target_count = n2_size if n2_size is not None else weekly_cycle['n2_count']
+    n3_target_count = n3_size if n3_size is not None else weekly_cycle['n3_count']
+
+    radar_sets = build_dynamic_radar_sets(
+        unique_numbers_map, ai_scores, gan_dict, g7_bonus_map, corner_bt,
+        prev_de_val, prev_prev_de_val, n2_target_count=n2_target_count, n3_target_count=n3_target_count
+    )
+
+    top_1 = radar_sets['top_1']
+    lot_lon = radar_sets['lot_lon']
+    song_thu = radar_sets['song_thu']
+    top_4_nums = radar_sets['top_4']
+    dan_ngay1_tinhtuy = radar_sets['dan_tinhtuy']
+    dan_n1_list = radar_sets['dan_n1']
+    dan_n2_list = radar_sets['dan_n2']
+    dan_n3_list = radar_sets['dan_n3']
+    dan_lot_list = radar_sets['dan_lot']
+    dan_lot_display = [f"{x} (lót)" for x in dan_lot_list]
+    all_100_scored = radar_sets['all_100_scored']
+
     for item in found_numbers:
         n = item['num']
         item['ai_score'] = ai_scores.get(n, 5.0)
-        item['final_score'] = round(item['score'] + item['ai_score'] * 8.0 + (20.0 if item['in_cap4'] else 0.0), 1)
-
-    chidao_pool = [x for x in found_numbers if x['cycle_days'] >= 3]
-    if len(chidao_pool) < 4:
-        chidao_pool = [x for x in found_numbers if x['cycle_days'] >= 2]
-    selection_pool = chidao_pool if len(chidao_pool) >= 4 else found_numbers
-    selection_pool.sort(key=lambda x: (x['cycle_days'], x.get('final_score', 0)), reverse=True)
-
-    top_1 = selection_pool[0]['num'] if len(selection_pool) >= 1 else '65'
-    lot_lon = calc_lot_lon(top_1)
-    song_thu = [top_1, lot_lon] if lot_lon != top_1 else [top_1]
-
-    top_4_nums = []
-    for x in selection_pool:
-        if x['num'] not in top_4_nums:
-            top_4_nums.append(x['num'])
-        if len(top_4_nums) >= 4:
-            break
-
-    # DÀN SỐ LÓT & DÀN TINH TÚY GIAO THOA 60 SỐ CẤP 4
-    dan_lot_valid = []
-    dan_lot_discarded = []
-
-    for item in found_numbers:
-        n = item['num']
+        item['g7_bonus'] = g7_bonus_map.get(n, 0.0)
+        item['final_score'] = all_100_scored.get(n, {}).get('final_score', item['score'])
+        item['in_cap4'] = (n in dan_n1_list)
+        item['in_cap4_str'] = "Có" if item['in_cap4'] else "Không"
         if n == top_1:
             item['top_rank'] = "👑 Top 1 (Bạch thủ)"
         elif n in top_4_nums:
             item['top_rank'] = "🔥 Top 4 (Tứ thủ)"
         elif item['in_cap4']:
             item['top_rank'] = "🛡️ Lót hợp lệ"
-            dan_lot_valid.append(n)
         else:
             item['top_rank'] = "❌ Loại bỏ (Ngoài 60s)"
-            dan_lot_discarded.append(n)
 
     def sort_key(x):
         tier = 0
@@ -879,16 +1079,6 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
         return (tier, x['cycle_days'], x.get('final_score', 0))
 
     found_numbers.sort(key=sort_key, reverse=True)
-
-    # Dàn Ngày 1 Tinh Túy: Các số giao thoa 60 số Cấp 4 (sắp xếp theo điểm hội tụ giảm dần, lấy tối ưu ~34-40 số mạnh nhất hoặc toàn bộ giao thoa)
-    tinhtuy_candidates = [x for x in found_numbers if x['in_cap4']]
-    tinhtuy_candidates.sort(key=lambda x: x.get('final_score', 0), reverse=True)
-    # Giữ quy mô tinh túy tối ưu (tối đa 38 số mạnh nhất trong giao thoa 60s, luôn bao gồm các số trong Top 4 thuộc 60s)
-    dan_ngay1_tinhtuy = sorted([x['num'] for x in tinhtuy_candidates[:38]])
-
-    dan_n1_list = [f"{x:02d}" for x in sorted(DEFAULT_60_CAP4)]
-    dan_lot_list = [x for x in dan_n1_list if x != top_1 and x not in top_4_nums]
-    dan_lot_display = [f"{x} (lót)" for x in dan_lot_list]
 
     print("\n" + "=" * 82)
     print(f" KẾT QUẢ CHỐT SỚM DỰ ĐOÁN CHO KỲ TIẾP THEO [{next_date_full}]")
@@ -901,7 +1091,6 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
     print(f"  ⭐ DÀN TINH TÚY GIAO THOA 60 SỐ CẤP 4 ({len(dan_ngay1_tinhtuy)} số): {dan_ngay1_tinhtuy}")
     print(f"  🔵 DÀN SỐ LÓT N1 ({len(dan_lot_list)} số): {dan_lot_list[:15]} ...")
 
-    # Kiểm chứng thực tế nếu đang backtest kỳ quá khứ (target_draw_idx >= 1, khi đó kỳ dự đoán là draws[target_draw_idx - 1])
     predicted_actual_de = draws[target_draw_idx - 1]['de'] if target_draw_idx >= 1 else None
     cur_actual_de = cur_draw['de']
 
@@ -930,43 +1119,6 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
     )
     is_draw_finished = (filled_all_prizes == total_all_prizes)
 
-    # ÁP DỤNG CHU KỲ 7 NGÀY & TỐI ƯU HÓA MỞ RỘNG N2 (42 SỐ), N3 (40 SỐ)
-    weekly_cycle = get_weekly_cycle_mode(next_date_full)
-    n2_target_count = n2_size if n2_size is not None else weekly_cycle['n2_count']
-    n3_target_count = n3_size if n3_size is not None else weekly_cycle['n3_count']
-
-    bet_2_days = {prev_de_val} if (prev_de_val and prev_de_val == prev_prev_de_val) else set()
-    base_n2_pool = [
-        11, 12, 13, 15, 17, 18, 19, 21, 22, 23, 28, 29, 31, 32, 33, 35, 37, 38,
-        42, 44, 45, 51, 52, 53, 55, 58, 59, 61, 62, 63, 65, 66, 67, 68, 81, 82,
-        83, 85, 87, 90, 95, 98
-    ]
-    n2_candidates_set = set(f"{x:02d}" for x in base_n2_pool)
-    for n in dan_n1_list:
-        n2_candidates_set.add(n)
-        
-    n2_candidates_filtered = []
-    for n in n2_candidates_set:
-        if n in bet_2_days:
-            continue
-        if unique_numbers_map and n in unique_numbers_map:
-            cycle = unique_numbers_map[n].get('cycle_days', 0)
-            if cycle < 2 and ai_scores.get(n, 5.0) < 7.0:
-                continue
-        n2_candidates_filtered.append(n)
-        
-    n2_candidates_filtered.sort(key=lambda x: (ai_scores.get(x, 5.0), 1 if x in dan_n1_list else 0), reverse=True)
-    dan_n2_list = sorted(n2_candidates_filtered[:n2_target_count])
-
-    n3_candidates = [n for n in dan_n2_list if gan_dict.get(n, 0) <= 45]
-    for n in dan_n2_list:
-        if len(n3_candidates) >= n3_target_count:
-            break
-        if n not in n3_candidates:
-            n3_candidates.append(n)
-    n3_candidates.sort(key=lambda x: ai_scores.get(x, 5.0), reverse=True)
-    dan_n3_list = sorted(n3_candidates[:n3_target_count])
-
     is_n1_hit = (cur_actual_de in dan_n1_list) if cur_actual_de else False
     is_n2_hit = (cur_actual_de in dan_n2_list) if cur_actual_de else False
     is_n3_hit = (cur_actual_de in dan_n3_list) if cur_actual_de else False
@@ -982,7 +1134,7 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
         'weekly_cycle': weekly_cycle
     }
 
-    # BẢNG MA TRẬN TÔ MÀU VỊ TRÍ CẦU TRÊN RADAR (CHỈ TÔ MÀU ĐẦU VÀ ĐUÔI THEO YÊU CẦU):
+    # BẢNG MA TRẬN TÔ MÀU VỊ TRÍ CẦU TRÊN RADAR (CHỈ TÔ MÀU ĐẦU VÀ ĐUÔI TINH NHUỆ):
     # - 🟡 VÀNG (role_head): Vị trí Cầu Đầu (Hàng Chục)
     # - 🔵 XANH (role_tail): Vị trí Cầu Đuôi (Hàng Đơn Vị)
     # - 🟡🔵 VÀNG-XANH (role_both): Vị trí vừa là Cầu Đầu vừa là Cầu Đuôi
@@ -1061,24 +1213,13 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
         c = unique_numbers_map[num]['cycle_days'] if num in unique_numbers_map else 3
         top_4_display.append(f"★ {num} ({c}d)")
 
-    # Đọc kết quả phân tích thống kê từ analysis_summary.json nếu có
-    summary_data = None
-    for s_path in ['analysis_summary.json', os.path.join(os.path.dirname(__file__), 'analysis_summary.json')]:
-        if os.path.exists(s_path):
-            try:
-                with open(s_path, 'r', encoding='utf-8') as sf:
-                    summary_data = json.load(sf)
-                    break
-            except Exception:
-                pass
-
     # Top 3 Đầu & Top 3 Đuôi từ tần suất cầu Đầu/Đuôi mạnh nhất
     head_digit_Counter = Counter()
     for h_it in head_positions:
-        head_digit_Counter[h_it['digit']] += h_it['cycle_days'] * 2
+        head_digit_Counter[h_it['digit']] += h_it['cycle_days'] * 3 + (2 if h_it.get('is_direct') else 0)
     tail_digit_Counter = Counter()
     for t_it in tail_positions:
-        tail_digit_Counter[t_it['digit']] += t_it['cycle_days'] * 2
+        tail_digit_Counter[t_it['digit']] += t_it['cycle_days'] * 3 + (2 if t_it.get('is_direct') else 0)
 
     top_dau_digits = [d for d, _ in head_digit_Counter.most_common(3)]
     if len(top_dau_digits) < 3:
@@ -1111,12 +1252,7 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
 
     tinh_status_text = f"ĐANG HIỆU LỰC CHO KỲ TỚI (CHỐT SỚM TỪ KẾT QUẢ KỲ {cur_draw['date'].split()[-1]})"
 
-    dan_cap2_38so = dan_ngay1_tinhtuy if len(dan_ngay1_tinhtuy) >= 20 else [
-        '01', '02', '04', '07', '09', '11', '12', '14', '16', '17', 
-        '20', '22', '23', '25', '27', '31', '32', '37', '40', '41', 
-        '42', '45', '47', '49', '61', '62', '67', '68', '70', '72', 
-        '75', '77', '81', '82', '84', '86', '87', '89'
-    ]
+    dan_cap2_38so = dan_ngay1_tinhtuy
 
     dan_tinh_4cap = {
         'target_date': next_date_full,
@@ -1187,7 +1323,6 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
             json.dump(output_data, f, ensure_ascii=False, indent=2)
         print(f"\n[*] Đã lưu toàn bộ kết quả Radar G.ĐB->G7 vào: ket_qua_soi_cau_g1_g5.json")
 
-        # Đồng bộ sang thư mục 58_up_to_75 nếu tồn tại
         branch_dir = '58_up_to_75'
         if os.path.exists(branch_dir):
             branch_json_path = os.path.join(branch_dir, 'ket_qua_soi_cau_g1_g5.json')
@@ -1195,12 +1330,10 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
                 json.dump(output_data, f, ensure_ascii=False, indent=2)
             print(f"[*] Đã đồng bộ sang: {branch_json_path}")
 
-        # Khi chạy ở kỳ mới nhất (target_draw_idx == 0), kiểm chứng lại dự đoán của kỳ trước (draws[1]) cho kỳ hôm nay (draws[0])
         if len(draws) >= 3:
             prev_pred = analyze_and_verify_single_draw(draws, pred_for_idx=0)
             if prev_pred:
-                ghi_lich_su_khung(cur_draw['date'], cur_actual_de, prev_pred['kq_khung'])
-                ghi_lich_su_truc_tiep(cur_draw['date'], cur_actual_de, prev_pred['top_1'], prev_pred['top_4'], prev_pred['dan_lot'])
+                ghi_lich_su_truc_tiep(cur_draw['date'], cur_actual_de, prev_pred['top_1'], prev_pred['top_4'], prev_pred['dan_lot'], song_thu_list=prev_pred.get('song_thu'))
                 ghi_lich_su_tinh_tuy(cur_draw['date'], cur_actual_de, prev_pred['dan_tinhtuy'])
 
         if send_tele:
@@ -1208,10 +1341,10 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
 
     return output_data
 
-def analyze_and_verify_single_draw(draws, pred_for_idx=0):
+def analyze_and_verify_single_draw(draws, pred_for_idx=0, all_draws_for_ai=None):
     """
     Hàm tính bộ số dự đoán đã được chốt từ kỳ (pred_for_idx + 1) để đánh cho kỳ (pred_for_idx),
-    nhằm đối chiếu trung thực 100% với Đề thực tế về ở kỳ (pred_for_idx).
+    nhằm đối chiếu trung thực 100% với Đề thực tế về ở kỳ (pred_for_idx) — tuyệt đối không dùng số ảo.
     """
     base_idx = pred_for_idx + 1
     if len(draws) <= base_idx + 1:
@@ -1220,14 +1353,18 @@ def analyze_and_verify_single_draw(draws, pred_for_idx=0):
     if not analysis:
         return None
 
-    head_positions = analysis['head_positions']
-    tail_positions = analysis['tail_positions']
+    cur_draw = draws[base_idx]
+    head_positions = select_core_bridge_positions(analysis['head_positions'])
+    tail_positions = select_core_bridge_positions(analysis['tail_positions'])
+
     all_pairs = []
     for h in head_positions:
         for t in tail_positions:
             c_main, d_main = h['digit'], t['digit']
             c_bong, d_bong = h['digit_bong'], t['digit_bong']
             if h.get('is_direct') and t.get('is_direct') and (h['cycle_days'] >= 2 or t['cycle_days'] >= 2):
+                pair_cycle = max(3, h['cycle_days'], t['cycle_days'])
+            elif h['cycle_days'] >= 2 and t['cycle_days'] >= 2:
                 pair_cycle = max(3, h['cycle_days'], t['cycle_days'])
             elif h['cycle_days'] >= 2 or t['cycle_days'] >= 2:
                 pair_cycle = max(h['cycle_days'], t['cycle_days'])
@@ -1243,48 +1380,50 @@ def analyze_and_verify_single_draw(draws, pred_for_idx=0):
             pos_bonus += 15.0 if ('GDB' in t['position'] or 'G7' in t['position'] or 'G1' in t['position']) else 0.0
             direct_bonus = 40.0 if (h.get('is_direct') and t.get('is_direct')) else (15.0 if (h.get('is_direct') or t.get('is_direct')) else 0)
             for num_str, weight in combos:
-                score = pair_cycle * 30 + weight * 20 + direct_bonus + pos_bonus + (h['cycle_days'] + t['cycle_days']) * 5
+                score = pair_cycle * 30 + weight * 20 + direct_bonus + pos_bonus + (h['cycle_days'] + t['cycle_days']) * 6
                 all_pairs.append({'num': num_str, 'cycle_days': pair_cycle, 'score': score})
 
     freq_pairs = Counter(p['num'] for p in all_pairs)
     unique_map = {}
     for p in all_pairs:
         n = p['num']
-        sc = p['score'] + min(freq_pairs[n] * 2.5, 35.0)
+        sc = p['score'] + min(freq_pairs[n] * 4.0, 32.0)
         if n not in unique_map or sc > unique_map[n]['score']:
             unique_map[n] = {'num': n, 'cycle_days': p['cycle_days'], 'score': sc}
 
-    cap4_set = set(f"{x:02d}" for x in DEFAULT_60_CAP4)
-    ai_scores, _, _, _ = compute_ai_scores(draws, base_idx, unique_map)
-    found = list(unique_map.values())
-    for item in found:
-        n = item['num']
-        item['in_cap4'] = (n in cap4_set)
-        item['final_score'] = round(item['score'] + ai_scores.get(n, 5.0) * 8.0 + (20.0 if item['in_cap4'] else 0.0), 1)
+    ai_source = all_draws_for_ai if all_draws_for_ai else draws
+    ai_scores, gan_dict, prev_de_val, prev_prev_de_val = compute_ai_scores(ai_source, base_idx, unique_map)
+    g7_bonus_map, corner_bt = extract_g7_consensus_bonus(cur_draw)
 
-    pool = [x for x in found if x['cycle_days'] >= 3]
-    if len(pool) < 4:
-        pool = [x for x in found if x['cycle_days'] >= 2]
-    if len(pool) < 4:
-        pool = found
-    pool.sort(key=lambda x: (x['cycle_days'], x['final_score']), reverse=True)
+    weekly_cycle = get_weekly_cycle_mode(draws[pred_for_idx]['date'])
+    radar_sets = build_dynamic_radar_sets(
+        unique_map, ai_scores, gan_dict, g7_bonus_map, corner_bt,
+        prev_de_val, prev_prev_de_val,
+        n2_target_count=weekly_cycle['n2_count'], n3_target_count=weekly_cycle['n3_count']
+    )
 
-    top_1 = pool[0]['num'] if pool else '65'
-    top_4 = [x['num'] for x in pool[:4]]
-    tinhtuy_cands = [x for x in found if x['in_cap4']]
-    tinhtuy_cands.sort(key=lambda x: x['final_score'], reverse=True)
-    dan_tinhtuy = sorted([x['num'] for x in tinhtuy_cands[:38]])
-    dan_n1 = [f"{x:02d}" for x in sorted(DEFAULT_60_CAP4)]
-    dan_lot = [x for x in dan_n1 if x != top_1 and x not in top_4]
-
+    top_1 = radar_sets['top_1']
+    lot_lon = radar_sets['lot_lon']
+    song_thu = radar_sets['song_thu']
+    top_4 = radar_sets['top_4']
+    dan_tinhtuy = radar_sets['dan_tinhtuy']
+    dan_n1 = radar_sets['dan_n1']
+    dan_n2 = radar_sets['dan_n2']
+    dan_n3 = radar_sets['dan_n3']
+    dan_lot = radar_sets['dan_lot']
     actual_de = draws[pred_for_idx].get('de', '')
-    kq_khung = 'trung_n1' if actual_de in dan_n1 else 'truot_khung'
     return {
         'top_1': top_1,
+        'lot_lon': lot_lon,
+        'song_thu': song_thu,
         'top_4': top_4,
         'dan_tinhtuy': dan_tinhtuy,
         'dan_lot': dan_lot,
-        'kq_khung': kq_khung
+        'dan_n1': dan_n1,
+        'dan_n2': dan_n2,
+        'dan_n3': dan_n3,
+        'actual_de': actual_de,
+        'kq_khung': 'trung_n1' if actual_de in dan_n1 else ('trung_n2' if actual_de in dan_n2 else ('trung_n3' if actual_de in dan_n3 else 'truot_khung'))
     }
 
 def send_telegram_notification(output_data):
@@ -1450,8 +1589,8 @@ def ghi_lich_su_khung(date_str, de_str, kq_status, frame_stt=None):
         except Exception as e:
             print(f"[!] Lỗi ghi lịch sử khung vào {file_path}: {e}")
 
-def ghi_lich_su_truc_tiep(date_str, de_str, top1_val, top4_list, lot_list):
-    """Ghi nhận lịch sử soi trực tiếp (Bạch thủ, Tứ thủ, Lót)"""
+def ghi_lich_su_truc_tiep(date_str, de_str, top1_val, top4_list, lot_list, song_thu_list=None):
+    """Ghi nhận lịch sử Radar G.ĐB->G7 (Bạch thủ/Song thủ, Tứ thủ, Lót)"""
     for file_path in ['lich_su_phuong_phap.json', os.path.join('58_up_to_75', 'lich_su_phuong_phap.json')]:
         if not os.path.exists(os.path.dirname(file_path) or '.'):
             continue
@@ -1466,6 +1605,7 @@ def ghi_lich_su_truc_tiep(date_str, de_str, top1_val, top4_list, lot_list):
 
             clean_date = date_str.split()[-1].replace('-', '/') if date_str else datetime.now().strftime('%d/%m/%Y')
             de_clean = str(de_str).zfill(2)
+            st_clean = [str(x).zfill(2) for x in (song_thu_list or [])]
 
             existing_idx = None
             for idx, item in enumerate(data['soi_truc_tiep'].get("lich_su", [])):
@@ -1476,6 +1616,9 @@ def ghi_lich_su_truc_tiep(date_str, de_str, top1_val, top4_list, lot_list):
             if top1_val and de_clean == str(top1_val).zfill(2):
                 kq_status = 'trung_bach_thu'
                 note = f'👑 Trúng Bạch Thủ Top 1 [{de_clean}]'
+            elif st_clean and de_clean in st_clean:
+                kq_status = 'trung_bach_thu'
+                note = f'👑 Trúng Song Thủ Trụ [{de_clean}]'
             elif top4_list and de_clean in [str(x).zfill(2) for x in top4_list]:
                 kq_status = 'trung_tu_thu'
                 note = f'⭐ Trúng Tứ Thủ Top 4 [{de_clean}]'
@@ -1500,7 +1643,7 @@ def ghi_lich_su_truc_tiep(date_str, de_str, top1_val, top4_list, lot_list):
             else:
                 data['soi_truc_tiep']["lich_su"].insert(0, entry)
 
-            data['soi_truc_tiep']["lich_su"] = data['soi_truc_tiep']["lich_su"][:50]
+            data['soi_truc_tiep']["lich_su"] = data['soi_truc_tiep']["lich_su"][:60]
 
             tot = len(data['soi_truc_tiep']["lich_su"])
             c_bt = sum(1 for x in data['soi_truc_tiep']["lich_su"] if x.get("ket_qua") == "trung_bach_thu")
@@ -1519,7 +1662,7 @@ def ghi_lich_su_truc_tiep(date_str, de_str, top1_val, top4_list, lot_list):
 
             with open(file_path, 'w', encoding='utf-8') as f:
                 json.dump(data, f, ensure_ascii=False, indent=2)
-            print(f"[*] Đã cập nhật lịch sử soi trực tiếp vào: {file_path}")
+            print(f"[*] Đã cập nhật lịch sử Radar G.ĐB->G7 vào: {file_path}")
         except Exception as e:
             print(f"[!] Lỗi ghi lịch sử trực tiếp vào {file_path}: {e}")
 
@@ -1641,21 +1784,87 @@ def push_live_update(filled, total, is_done=False, actual_de=None):
         print(f"      [!] Lỗi push cloud: {e}")
 
 def sync_full_history_60days():
-    """Đồng bộ lại lịch sử kiểm chứng (4A, 4B, 4C) theo đúng thuật toán Radar G.ĐB -> G7 (27 giải)."""
+    """
+    Xóa sạch 100% lịch sử của phương án dàn động cũ và thống kê lại toàn bộ 60 ngày gần nhất
+    (Phần 4A: Khung 3 ngày N1->N2->N3, Phần 4B: Radar Tĩnh G.ĐB->G7, Phần 4C: Dàn Tinh Túy Ngày 1)
+    hoàn toàn từ dữ liệu thực tế 90 kỳ XSMB 27 giải (tuyệt đối không dùng số ảo).
+    """
     raw_draws = get_combined_draws(is_live=False)
     draws = [d for d in raw_draws if d.get('de') and len(str(d.get('de', '')).strip()) >= 2]
-    if len(draws) < 5:
+    if len(draws) < 10:
+        print("[!] Không đủ kỳ quay thực tế để thống kê lại lịch sử.")
         return
-    # Duyệt từ cũ đến mới để ghi lịch sử chuẩn thứ tự
-    max_k = min(len(draws) - 2, 30)
+
+    all_draws_for_ai = list(draws)
+    if os.path.exists('data_2026.json'):
+        try:
+            with open('data_2026.json', encoding='utf-8') as f:
+                d_2026 = json.load(f)
+                existing_dates = {d.get('date', '').split()[-1] for d in all_draws_for_ai}
+                for d_old in d_2026:
+                    d_key = d_old.get('date', '').split()[-1]
+                    if d_key and d_key not in existing_dates:
+                        all_draws_for_ai.append(d_old)
+                        existing_dates.add(d_key)
+        except Exception:
+            pass
+
+    # Reset sạch 100% lịch sử cũ của dàn động
+    empty_data = {
+        "khung_3_ngay": {"tong_quan": {}, "lich_su": []},
+        "soi_truc_tiep": {"tong_quan": {}, "lich_su": []},
+        "dan_tinh_tuy_ngay_1": {"tong_quan": {}, "lich_su": []}
+    }
+    for file_path in ['lich_su_phuong_phap.json', os.path.join('58_up_to_75', 'lich_su_phuong_phap.json')]:
+        if os.path.exists(os.path.dirname(file_path) or '.'):
+            with open(file_path, 'w', encoding='utf-8') as f:
+                json.dump(empty_data, f, ensure_ascii=False, indent=2)
+
+    max_k = min(len(draws) - 5, 60)
+    day_in_frame = 1
+    frame_stt = 1
+    active_n2 = []
+    active_n3 = []
+
     for k in range(max_k - 1, -1, -1):
-        pred = analyze_and_verify_single_draw(draws, pred_for_idx=k)
-        if pred:
-            d_str = draws[k]['date']
-            de_str = draws[k]['de']
-            ghi_lich_su_khung(d_str, de_str, pred['kq_khung'])
-            ghi_lich_su_truc_tiep(d_str, de_str, pred['top_1'], pred['top_4'], pred['dan_lot'])
-            ghi_lich_su_tinh_tuy(d_str, de_str, pred['dan_tinhtuy'])
+        pred = analyze_and_verify_single_draw(draws, pred_for_idx=k, all_draws_for_ai=all_draws_for_ai)
+        if not pred:
+            continue
+        d_str = draws[k]['date']
+        de_str = str(draws[k]['de']).zfill(2)
+
+        # 1. Tính đúng chu kỳ nuôi Khung 3 Ngày thực tế (N1 -> N2 -> N3)
+        if day_in_frame == 1:
+            if de_str in pred['dan_n1']:
+                ghi_lich_su_khung(d_str, de_str, 'trung_n1', frame_stt=frame_stt)
+                frame_stt += 1
+                day_in_frame = 1
+            else:
+                day_in_frame = 2
+                active_n2 = pred['dan_n2']
+                active_n3 = pred['dan_n3']
+        elif day_in_frame == 2:
+            n2_pool = active_n2 if active_n2 else pred['dan_n2']
+            if de_str in n2_pool:
+                ghi_lich_su_khung(d_str, de_str, 'trung_n2', frame_stt=frame_stt)
+                frame_stt += 1
+                day_in_frame = 1
+            else:
+                day_in_frame = 3
+        else:
+            n3_pool = active_n3 if active_n3 else pred['dan_n3']
+            if de_str in n3_pool:
+                ghi_lich_su_khung(d_str, de_str, 'trung_n3', frame_stt=frame_stt)
+            else:
+                ghi_lich_su_khung(d_str, de_str, 'truot_khung', frame_stt=frame_stt)
+            frame_stt += 1
+            day_in_frame = 1
+
+        # 2. Ghi lịch sử Phần 4B (Radar Tĩnh G.ĐB -> G7)
+        ghi_lich_su_truc_tiep(d_str, de_str, pred['top_1'], pred['top_4'], pred['dan_lot'], song_thu_list=pred.get('song_thu'))
+
+        # 3. Ghi lịch sử Phần 4C (Dàn Tinh Túy Ngày 1 - 60 Ngày)
+        ghi_lich_su_tinh_tuy(d_str, de_str, pred['dan_tinhtuy'])
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="XSMB AI - Radar G.ĐB -> G7 (107 Vị Trí) Dự Đoán Ngày Hôm Sau")

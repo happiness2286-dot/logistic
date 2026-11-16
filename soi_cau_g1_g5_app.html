@@ -1560,11 +1560,11 @@
         <header class="app-header">
             <div class="header-brand">
                 <div class="brand-icon">
-                    <i class="fa-solid fa-bolt"></i>
+                    <i class="fa-solid fa-satellite-dish"></i>
                 </div>
                 <div>
-                    <h1 class="brand-title">XSMB AI - REAL-TIME RADAR</h1>
-                    <p class="brand-sub">Quay đến hết Giải 5.6 là kết thúc &amp; tự động xuất dàn</p>
+                    <h1 class="brand-title">XSMB AI - RADAR G.ĐB → G7 (27 GIẢI)</h1>
+                    <p class="brand-sub">Quét 107 vị trí từ Giải ĐB đến Giải 7 • Tô màu Đầu/Đuôi &amp; Chốt sớm cho Ngày Hôm Sau</p>
                 </div>
             </div>
             <div style="display: flex; align-items: center; gap: 10px;">
@@ -1573,41 +1573,10 @@
                 </button>
                 <div class="radar-status-badge">
                     <span class="pulse-dot"></span>
-                    <span id="txt-radar-status">QUAY ĐẾN HẾT GIẢI 5.6</span>
+                    <span id="txt-radar-status">ĐÃ CHỐT CHO KỲ TIẾP THEO</span>
                 </div>
             </div>
         </header>
-
-        <!-- THANH TRỰC TIẾP ĐÀI QUAY XSMB (TRƯỜNG QUAY SỐ 1 TĂNG BẠT HỔ) -->
-        <div class="live-broadcast-card">
-            <div class="live-broadcast-header">
-                <div class="live-badge-glow">
-                    <span class="live-dot-red"></span>
-                    <span>TRỰC TIẾP ĐÀI QUAY XSMB</span>
-                </div>
-                <div class="live-station-info">
-                    <i class="fa-solid fa-tower-broadcast" style="color: #ef4444;"></i>
-                    <span>Trường quay số 1 Tăng Bạt Hổ, Hà Nội • Đài PT-TH Hà Nội / VTC9 (18h15 - 18h35)</span>
-                </div>
-            </div>
-            <div class="live-broadcast-controls">
-                <button class="btn-live-media btn-live-video" id="btn-toggle-video" onclick="toggleLiveMedia('video')">
-                    <i class="fa-brands fa-youtube" style="color: #ef4444;"></i> Kênh Đài Quay (Video)
-                </button>
-                <button class="btn-live-media btn-live-audio" id="btn-toggle-audio" onclick="toggleLiveMedia('audio')">
-                    <i class="fa-solid fa-volume-high" style="color: #38bdf8;"></i> Nghe Tường Thuật
-                </button>
-                <button class="btn-live-media btn-live-reload" onclick="forceCheckLiveNow()">
-                    <i class="fa-solid fa-rotate" style="color: #fbbf24;"></i> Bắt Số Real-time
-                </button>
-            </div>
-            <!-- Khung nhúng Live Stream Modal / Container -->
-            <div id="mediaLiveBox" class="media-live-box" style="display: none;">
-                <div class="media-box-inner" id="mediaBoxContent">
-                    <!-- Dynamic Media Content -->
-                </div>
-            </div>
-        </div>
 
         
         <!-- PHẦN 0: BẢNG CHỐT DÀN TĨNH 4 CẤP (ĐÁNH TRƯỚC 18H15) -->
@@ -2010,23 +1979,23 @@
             <div class="tong-quan">
                 <div class="stat-card">
                     <div class="stat-label">Tổng số khung</div>
-                    <div class="stat-value" id="k-stat-tong">31</div>
+                    <div class="stat-value" id="k-stat-tong">41</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-label">Trúng N1</div>
-                    <div class="stat-value gold" id="k-stat-n1">24 (77.4%)</div>
+                    <div class="stat-value gold" id="k-stat-n1">30 (73.2%)</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-label">Trúng N2</div>
-                    <div class="stat-value blue" id="k-stat-n2">1 (3.2%)</div>
+                    <div class="stat-value blue" id="k-stat-n2">4 (9.8%)</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-label">Trúng N3</div>
-                    <div class="stat-value orange" id="k-stat-n3">0 (0.0%)</div>
+                    <div class="stat-value orange" id="k-stat-n3">4 (9.8%)</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-label">Trượt khung</div>
-                    <div class="stat-value red" id="k-stat-truot">6 (19.4%)</div>
+                    <div class="stat-value red" id="k-stat-truot">3 (7.3%)</div>
                 </div>
             </div>
 
@@ -2039,7 +2008,7 @@
         <!-- PHẦN 4B: ĐÁNH GIÁ RADAR G.ĐB → G7 (BẠCH THỦ & TỨ THỦ) -->
         <section class="history-box" id="sec-soi-truc-tiep">
             <div class="section-header">
-                <h2 style="color: #fbbf24;"><i class="fa-solid fa-bullseye" style="color: #fbbf24;"></i> PHẦN 4B: ĐÁNH GIÁ RADAR G.ĐB → G7 (BẠCH THỦ &amp; TỨ THỦ)</h2>
+                <h2 style="color: #fbbf24;"><i class="fa-solid fa-bullseye" style="color: #fbbf24;"></i> PHẦN 4B: ĐÁNH GIÁ RADAR TĨNH G.ĐB → G7 (60 NGÀY)</h2>
                 <span class="tag-info" id="badge-direct-summary" style="color: #fbbf24; border-color: rgba(251, 191, 36, 0.4); background: rgba(251, 191, 36, 0.1);">
                     RADAR G.ĐB → G7 (27 GIẢI)
                 </span>
@@ -2049,23 +2018,23 @@
             <div class="tong-quan">
                 <div class="stat-card">
                     <div class="stat-label">Tổng số ngày</div>
-                    <div class="stat-value" id="d-stat-tong">31</div>
+                    <div class="stat-value" id="d-stat-tong">60</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-label">Trúng Bạch Thủ</div>
-                    <div class="stat-value gold" id="d-stat-bt">11 (35.5%)</div>
+                    <div class="stat-label">Trúng BT / Song Thủ</div>
+                    <div class="stat-value gold" id="d-stat-bt">2 (3.3%)</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-label">Trúng Tứ Thủ</div>
-                    <div class="stat-value blue" id="d-stat-tt">21 (67.7%)</div>
+                    <div class="stat-value blue" id="d-stat-tt">4 (6.7%)</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-label">Trúng Dàn Lót</div>
-                    <div class="stat-value green" id="d-stat-lot">25 (80.6%)</div>
+                    <div class="stat-label">Trúng Dàn Lót N1</div>
+                    <div class="stat-value green" id="d-stat-lot">44 (73.3%)</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-label">Hiệu Quả Tinh Túy</div>
-                    <div class="stat-value orange" id="d-stat-rate">Top 4: 67.7%</div>
+                    <div class="stat-label">Hiệu Quả Khung N1</div>
+                    <div class="stat-value orange" id="d-stat-rate">Ăn N1: 73.3%</div>
                 </div>
             </div>
 
@@ -2092,19 +2061,19 @@
                 </div>
                 <div class="stat-card">
                     <div class="stat-label">Số ngày Trúng</div>
-                    <div class="stat-value green" id="tt-stat-trung">52 (86.7%)</div>
+                    <div class="stat-value green" id="tt-stat-trung">34 (56.7%)</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-label">Số ngày Trượt</div>
-                    <div class="stat-value red" id="tt-stat-truot">8 (13.3%)</div>
+                    <div class="stat-value red" id="tt-stat-truot">26 (43.3%)</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-label">Dàn trung bình</div>
-                    <div class="stat-value gold" id="tt-stat-avg">~34 số</div>
+                    <div class="stat-value gold" id="tt-stat-avg">~44.5 số</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-label">Chuỗi Thông Gần Nhất</div>
-                    <div class="stat-value orange" id="tt-stat-streak">Ăn 6 ngày thông</div>
+                    <div class="stat-value orange" id="tt-stat-streak">Ăn 0 ngày thông</div>
                 </div>
             </div>
 
