@@ -313,6 +313,19 @@
     },
     "lich_su": [
       {
+        "ngay": "16/11/2026",
+        "de": "03",
+        "top1": "32",
+        "top4": [
+          "32",
+          "23",
+          "35",
+          "87"
+        ],
+        "ket_qua": "trung_lot",
+        "ghi_chu": "🛡️ Trúng Dàn Số Lót [03]"
+      },
+      {
         "ngay": "15/11/2026",
         "de": "25",
         "top1": "21",
@@ -1078,19 +1091,6 @@
         ],
         "ket_qua": "trung_lot",
         "ghi_chu": "🛡️ Trúng Dàn Số Lót [67]"
-      },
-      {
-        "ngay": "17/09/2026",
-        "de": "60",
-        "top1": "42",
-        "top4": [
-          "42",
-          "24",
-          "21",
-          "45"
-        ],
-        "ket_qua": "trung_lot",
-        "ghi_chu": "🛡️ Trúng Dàn Số Lót [60]"
       }
     ]
   },
@@ -1105,6 +1105,14 @@
       "chuoi_thong": 0
     },
     "lich_su": [
+      {
+        "stt": 61,
+        "ngay": "16/11/2026",
+        "de": "03",
+        "so_luong": 44,
+        "ket_qua": "truot",
+        "ghi_chu": "Trượt Đề 03 ❌ (44 số)"
+      },
       {
         "stt": 60,
         "ngay": "15/11/2026",
@@ -1576,14 +1584,6 @@
         "so_luong": 45,
         "ket_qua": "trung",
         "ghi_chu": "Trúng Đề 67 ✅ (Dàn 45 số)"
-      },
-      {
-        "stt": 1,
-        "ngay": "17/09/2026",
-        "de": "60",
-        "so_luong": 44,
-        "ket_qua": "truot",
-        "ghi_chu": "Trượt Đề 60 ❌ (44 số)"
       }
     ]
   }
