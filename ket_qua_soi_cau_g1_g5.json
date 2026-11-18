@@ -59,71 +59,6 @@
     ]
   },
   "highlight_positions": {
-    "G5.5_2": {
-      "pos_raw": "G5.5 vị trí 2",
-      "role": "tail",
-      "role_name": "Đuôi",
-      "tag_label": "Đuôi",
-      "digit": "1",
-      "cycle": 2,
-      "cycle_suffix": "Đuôi",
-      "category": "Lót",
-      "label": "Cầu Đuôi (2d)",
-      "color_type": "role_tail",
-      "tooltip": "G5.5 vị trí 2: Cầu Đuôi 1 (Bóng 6) | Chu kỳ ăn 2 ngày"
-    },
-    "G6.2_1": {
-      "pos_raw": "G6.2 vị trí 1",
-      "role": "head",
-      "role_name": "Đầu",
-      "tag_label": "Đầu",
-      "digit": "9",
-      "cycle": 2,
-      "cycle_suffix": "Đầu",
-      "category": "Lót",
-      "label": "Cầu Đầu (2d)",
-      "color_type": "role_head",
-      "tooltip": "G6.2 vị trí 1: Cầu Đầu 9 (Bóng 4) | Chu kỳ ăn 2 ngày"
-    },
-    "G5.5_1": {
-      "pos_raw": "G5.5 vị trí 1",
-      "role": "head",
-      "role_name": "Đầu",
-      "tag_label": "Đầu",
-      "digit": "3",
-      "cycle": 2,
-      "cycle_suffix": "Đầu",
-      "category": "Lót",
-      "label": "Cầu Đầu (2d)",
-      "color_type": "role_head",
-      "tooltip": "G5.5 vị trí 1: Cầu Đầu 3 (Bóng 8) | Chu kỳ ăn 2 ngày"
-    },
-    "G5.4_2": {
-      "pos_raw": "G5.4 vị trí 2",
-      "role": "head",
-      "role_name": "Đầu",
-      "tag_label": "Đầu",
-      "digit": "6",
-      "cycle": 2,
-      "cycle_suffix": "Đầu",
-      "category": "Lót",
-      "label": "Cầu Đầu (2d)",
-      "color_type": "role_head",
-      "tooltip": "G5.4 vị trí 2: Cầu Đầu 6 (Bóng 1) | Chu kỳ ăn 2 ngày"
-    },
-    "G5.6_4": {
-      "pos_raw": "G5.6 vị trí 4",
-      "role": "head",
-      "role_name": "Đầu",
-      "tag_label": "Đầu",
-      "digit": "6",
-      "cycle": 2,
-      "cycle_suffix": "Đầu",
-      "category": "Lót",
-      "label": "Cầu Đầu (2d)",
-      "color_type": "role_head",
-      "tooltip": "G5.6 vị trí 4: Cầu Đầu 6 (Bóng 1) | Chu kỳ ăn 2 ngày"
-    },
     "G5.4_3": {
       "pos_raw": "G5.4 vị trí 3",
       "role": "tail",
@@ -136,32 +71,6 @@
       "label": "Cầu Đuôi (2d)",
       "color_type": "role_tail",
       "tooltip": "G5.4 vị trí 3: Cầu Đuôi 3 (Bóng 8) | Chu kỳ ăn 2 ngày"
-    },
-    "G5.5_3": {
-      "pos_raw": "G5.5 vị trí 3",
-      "role": "head",
-      "role_name": "Đầu",
-      "tag_label": "Đầu",
-      "digit": "4",
-      "cycle": 3,
-      "cycle_suffix": "Đầu",
-      "category": "Chỉ đạo",
-      "label": "Cầu Đầu (3d)",
-      "color_type": "role_head",
-      "tooltip": "G5.5 vị trí 3: Cầu Đầu 4 (Bóng 9) | Chu kỳ ăn 3 ngày"
-    },
-    "G7.4_1": {
-      "pos_raw": "G7.4 vị trí 1",
-      "role": "head",
-      "role_name": "Đầu",
-      "tag_label": "Đầu",
-      "digit": "7",
-      "cycle": 1,
-      "cycle_suffix": "Đầu",
-      "category": "Theo dõi",
-      "label": "Cầu Đầu (1d)",
-      "color_type": "role_head",
-      "tooltip": "G7.4 vị trí 1: Cầu Đầu 7 (Bóng 2) | Chu kỳ ăn 1 ngày"
     },
     "G6.1_2": {
       "pos_raw": "G6.1 vị trí 2",
@@ -176,18 +85,18 @@
       "color_type": "role_tail",
       "tooltip": "G6.1 vị trí 2: Cầu Đuôi 4 (Bóng 9) | Chu kỳ ăn 1 ngày"
     },
-    "G3.4_5": {
-      "pos_raw": "G3.4 vị trí 5",
-      "role": "head",
-      "role_name": "Đầu",
-      "tag_label": "Đầu",
-      "digit": "9",
-      "cycle": 4,
-      "cycle_suffix": "Đầu",
-      "category": "Chỉ đạo",
-      "label": "Cầu Đầu (4d)",
-      "color_type": "role_head",
-      "tooltip": "G3.4 vị trí 5: Cầu Đầu 9 (Bóng 4) | Chu kỳ ăn 4 ngày"
+    "G5.5_2": {
+      "pos_raw": "G5.5 vị trí 2",
+      "role": "tail",
+      "role_name": "Đuôi",
+      "tag_label": "Đuôi",
+      "digit": "1",
+      "cycle": 2,
+      "cycle_suffix": "Đuôi",
+      "category": "Lót",
+      "label": "Cầu Đuôi (2d)",
+      "color_type": "role_tail",
+      "tooltip": "G5.5 vị trí 2: Cầu Đuôi 1 (Bóng 6) | Chu kỳ ăn 2 ngày"
     },
     "G2.2_1": {
       "pos_raw": "G2.2 vị trí 1",
@@ -202,18 +111,83 @@
       "color_type": "role_tail",
       "tooltip": "G2.2 vị trí 1: Cầu Đuôi 2 (Bóng 7) | Chu kỳ ăn 1 ngày"
     },
-    "G5.5_4": {
-      "pos_raw": "G5.5 vị trí 4",
-      "role": "tail",
-      "role_name": "Đuôi",
-      "tag_label": "Đuôi",
+    "G6.2_1": {
+      "pos_raw": "G6.2 vị trí 1",
+      "role": "head",
+      "role_name": "Đầu",
+      "tag_label": "Đầu",
+      "digit": "9",
+      "cycle": 2,
+      "cycle_suffix": "Đầu",
+      "category": "Lót",
+      "label": "Cầu Đầu (2d)",
+      "color_type": "role_head",
+      "tooltip": "G6.2 vị trí 1: Cầu Đầu 9 (Bóng 4) | Chu kỳ ăn 2 ngày"
+    },
+    "G3.4_5": {
+      "pos_raw": "G3.4 vị trí 5",
+      "role": "head",
+      "role_name": "Đầu",
+      "tag_label": "Đầu",
+      "digit": "9",
+      "cycle": 4,
+      "cycle_suffix": "Đầu",
+      "category": "Chỉ đạo",
+      "label": "Cầu Đầu (4d)",
+      "color_type": "role_head",
+      "tooltip": "G3.4 vị trí 5: Cầu Đầu 9 (Bóng 4) | Chu kỳ ăn 4 ngày"
+    },
+    "G5.4_2": {
+      "pos_raw": "G5.4 vị trí 2",
+      "role": "head",
+      "role_name": "Đầu",
+      "tag_label": "Đầu",
       "digit": "6",
+      "cycle": 2,
+      "cycle_suffix": "Đầu",
+      "category": "Lót",
+      "label": "Cầu Đầu (2d)",
+      "color_type": "role_head",
+      "tooltip": "G5.4 vị trí 2: Cầu Đầu 6 (Bóng 1) | Chu kỳ ăn 2 ngày"
+    },
+    "G5.5_1": {
+      "pos_raw": "G5.5 vị trí 1",
+      "role": "head",
+      "role_name": "Đầu",
+      "tag_label": "Đầu",
+      "digit": "3",
+      "cycle": 2,
+      "cycle_suffix": "Đầu",
+      "category": "Lót",
+      "label": "Cầu Đầu (2d)",
+      "color_type": "role_head",
+      "tooltip": "G5.5 vị trí 1: Cầu Đầu 3 (Bóng 8) | Chu kỳ ăn 2 ngày"
+    },
+    "G5.6_4": {
+      "pos_raw": "G5.6 vị trí 4",
+      "role": "head",
+      "role_name": "Đầu",
+      "tag_label": "Đầu",
+      "digit": "6",
+      "cycle": 2,
+      "cycle_suffix": "Đầu",
+      "category": "Lót",
+      "label": "Cầu Đầu (2d)",
+      "color_type": "role_head",
+      "tooltip": "G5.6 vị trí 4: Cầu Đầu 6 (Bóng 1) | Chu kỳ ăn 2 ngày"
+    },
+    "G7.4_1": {
+      "pos_raw": "G7.4 vị trí 1",
+      "role": "head",
+      "role_name": "Đầu",
+      "tag_label": "Đầu",
+      "digit": "7",
       "cycle": 1,
-      "cycle_suffix": "Đuôi",
+      "cycle_suffix": "Đầu",
       "category": "Theo dõi",
-      "label": "Cầu Đuôi (1d)",
-      "color_type": "role_tail",
-      "tooltip": "G5.5 vị trí 4: Cầu Đuôi 6 (Bóng 1) | Chu kỳ ăn 1 ngày"
+      "label": "Cầu Đầu (1d)",
+      "color_type": "role_head",
+      "tooltip": "G7.4 vị trí 1: Cầu Đầu 7 (Bóng 2) | Chu kỳ ăn 1 ngày"
     },
     "G7.4_2": {
       "pos_raw": "G7.4 vị trí 2",
@@ -227,6 +201,32 @@
       "label": "Cầu Đuôi (1d)",
       "color_type": "role_tail",
       "tooltip": "G7.4 vị trí 2: Cầu Đuôi 0 (Bóng 5) | Chu kỳ ăn 1 ngày"
+    },
+    "G5.5_4": {
+      "pos_raw": "G5.5 vị trí 4",
+      "role": "tail",
+      "role_name": "Đuôi",
+      "tag_label": "Đuôi",
+      "digit": "6",
+      "cycle": 1,
+      "cycle_suffix": "Đuôi",
+      "category": "Theo dõi",
+      "label": "Cầu Đuôi (1d)",
+      "color_type": "role_tail",
+      "tooltip": "G5.5 vị trí 4: Cầu Đuôi 6 (Bóng 1) | Chu kỳ ăn 1 ngày"
+    },
+    "G5.5_3": {
+      "pos_raw": "G5.5 vị trí 3",
+      "role": "head",
+      "role_name": "Đầu",
+      "tag_label": "Đầu",
+      "digit": "4",
+      "cycle": 3,
+      "cycle_suffix": "Đầu",
+      "category": "Chỉ đạo",
+      "label": "Cầu Đầu (3d)",
+      "color_type": "role_head",
+      "tooltip": "G5.5 vị trí 3: Cầu Đầu 4 (Bóng 9) | Chu kỳ ăn 3 ngày"
     }
   },
   "filled_count": 27,

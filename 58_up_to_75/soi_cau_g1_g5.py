@@ -707,27 +707,58 @@ def compute_next_date_str(draw_date_str):
         return f"{dow_vn[next_dt.weekday()]} ngày {next_dt.strftime('%d-%m-%Y')}", next_dt.strftime('%d/%m/%Y')
     return draw_date_str, draw_date_str
 
-def select_core_bridge_positions(positions):
+def select_core_bridge_positions(positions, partner_positions=None):
     """
-    Lọc lấy các vị trí cầu chất lượng cao (loại bỏ nhiễu từ hàng chục vị trí mới chạm 1 ngày ngẫu nhiên):
-    - Giữ toàn bộ các vị trí cầu ăn thông >= 2 ngày (2d, 3d, 4d+).
-    - Nếu số vị trí >= 2 ngày ít hơn 4, bổ sung thêm các vị trí 1 ngày ăn CHÍNH DIỆN (trực tiếp, không qua bóng)
-      ưu tiên giải trọng tâm (GDB, G1, G7, G2, G3) cho đủ tối đa 5 vị trí tinh nhuệ nhất.
+    Lọc lấy các vị trí cầu chất lượng cao (Smart Bridge Coverage - Phủ đủ phổ chạm 100%):
+    - Giữ toàn bộ các vị trí cầu ăn thông >= 2 ngày (2d, 3d, 4d+, tối đa 8 vị trí).
+    - Bổ sung vị trí cầu 1 ngày tinh nhuệ nhất (ưu tiên Cầu Đồng Giải / Sát Vách với cầu >= 2 ngày của chiều kia,
+      ăn chính diện và thuộc giải trọng tâm GDB, G1, G7, G5.5, G5.4, G2, G3) cho các cặp chữ số (d, bóng d)
+      chưa có đại diện để không bao giờ đánh rơi con số tiềm năng đang lên nhịp ngày 2.
     """
-    multi_day = [p for p in positions if p['cycle_days'] >= 2]
-    multi_day.sort(key=lambda x: (x['cycle_days'], 1 if x.get('is_direct') else 0), reverse=True)
-    if len(multi_day) >= 4:
-        return multi_day[:8]
-    direct_1d = [p for p in positions if p['cycle_days'] == 1 and p.get('is_direct')]
-    def prize_priority(p_str):
-        if p_str.startswith('GDB'): return 5
-        if p_str.startswith('G1'): return 4
-        if p_str.startswith('G7'): return 3
-        if p_str.startswith('G2'): return 2
-        return 1
-    direct_1d.sort(key=lambda x: prize_priority(x['position']), reverse=True)
-    combined = multi_day + direct_1d[:max(0, 5 - len(multi_day))]
-    return combined if combined else positions[:5]
+    def _prize_code_of(pos_str):
+        return pos_str.split()[0] if pos_str else ''
+
+    partner_multi_prizes = set()
+    if partner_positions:
+        for pp in partner_positions:
+            if pp.get('cycle_days', 1) >= 2:
+                partner_multi_prizes.add(_prize_code_of(pp.get('position', '')))
+
+    def _pos_priority(p):
+        p_str = p.get('position', '')
+        p_code = _prize_code_of(p_str)
+        same_prize_bonus = 20 if p_code in partner_multi_prizes else 0
+        if p_str.startswith('GDB'): pr = 10
+        elif p_str.startswith('G1'): pr = 9
+        elif p_str.startswith('G7'): pr = 8
+        elif p_str.startswith(('G5.5', 'G5.4')): pr = 7
+        elif p_str.startswith('G2'): pr = 6
+        elif p_str.startswith('G3'): pr = 5
+        else: pr = 4
+        return (p.get('cycle_days', 1), same_prize_bonus, 1 if p.get('is_direct') else 0, pr)
+
+    multi_day = [p for p in positions if p.get('cycle_days', 1) >= 2]
+    multi_day.sort(key=_pos_priority, reverse=True)
+    selected = list(multi_day[:8])
+
+    covered_pairs = set()
+    for p in selected:
+        d = int(p['digit'])
+        covered_pairs.add(tuple(sorted((d, BONG_DUONG[d]))))
+
+    rem_1d = [p for p in positions if p.get('cycle_days', 1) == 1]
+    rem_1d.sort(key=_pos_priority, reverse=True)
+    for p in rem_1d:
+        d = int(p['digit'])
+        pair_k = tuple(sorted((d, BONG_DUONG[d])))
+        p_code = _prize_code_of(p.get('position', ''))
+        if pair_k not in covered_pairs or (p_code in partner_multi_prizes and len(selected) < 9):
+            selected.append(p)
+            covered_pairs.add(pair_k)
+        if len(selected) >= 10:
+            break
+
+    return selected if selected else positions[:6]
 
 _CACHED_SUMMARY_DATA = None
 _CACHED_CHRONO_2026 = None
@@ -1212,7 +1243,7 @@ def compute_static_g7_radar_convergence(draws, target_draw_idx, summary_data=Non
     # 1. Chạy lõi hội tụ đa cầu 67_up_95 trên kết quả của kỳ vừa quay xong (cur_draw) cho ngày next_date_str
     static_target = {'date': next_date_str, 'db': '', 'de': '', 'prizes': cur_draw['prizes']}
     sub_draws = draws[target_draw_idx:]
-    base_res = lrs.compute_radar_convergence([static_target] + sub_draws, cap4_set, summary_data)
+    base_res = lrs.compute_radar_convergence([static_target] + sub_draws, cap4_set, summary_data, ignore_snapshot=True)
     if not base_res:
         return None
 
@@ -1344,9 +1375,8 @@ def compute_static_g7_radar_convergence(draws, target_draw_idx, summary_data=Non
         if ns[0] == ns[1]: sc -= 40.0
         return sc
 
-    # Khóa nghiệm Tổng G7 Thứ 7 & Thứ mạnh nhất cho Dàn 9 số, Tứ Thủ và Bạch Thủ
-    frozen_snap = lrs.load_locked_g55_snapshot(next_date_str)
-    if not frozen_snap:
+    # Khóa nghiệm Tổng G7 Thứ 7 & Thứ mạnh nhất cho Dàn 9 số, Tứ Thủ và Bạch Thủ (100% Tĩnh, không phụ thuộc snapshot live)
+    if True:
         d9_strong = [
             x for x in d9
             if (x in hs20_set or lrs.get_lot_lon(x) in hs20_set or ((int(x[0])+int(x[1]))%10 in sat_sums and x in gt_set))
@@ -1464,6 +1494,91 @@ def compute_static_g7_radar_convergence(draws, target_draw_idx, summary_data=Non
             if x not in new_d9 and calc_lot_lon(x) not in new_d9:
                 new_d9.append(x)
         d9 = sorted(new_d9[:9])
+
+        # 5. Nâng cấp Cầu Đồng Giải / Sát Vách (Adjacent Same-Prize Bridge) & Cơ chế Giao Thoa Phân Tầng (Tiered Union + Intersection):
+        a_bridges = analyze_bridge_cycles(draws, target_draw_idx)
+        adj_scores = Counter()
+        if a_bridges:
+            for h_b in a_bridges['head_positions']:
+                hp_code = h_b['position'].split()[0]
+                hp_idx = int(h_b['position'].split()[-1])
+                for t_b in a_bridges['tail_positions']:
+                    tp_code = t_b['position'].split()[0]
+                    tp_idx = int(t_b['position'].split()[-1])
+                    if hp_code == tp_code and abs(hp_idx - tp_idx) == 1:
+                        cand_adj = f"{h_b['digit']}{t_b['digit']}"
+                        w_adj = (h_b['cycle_days'] * 1.6 + t_b['cycle_days'] * 1.4) * 1.5
+                        if h_b.get('is_direct') and t_b.get('is_direct'):
+                            w_adj += 4.5
+                        elif h_b.get('is_direct') or t_b.get('is_direct'):
+                            w_adj += 2.0
+                        if hp_code.startswith(('GDB', 'G1', 'G5.4', 'G5.5', 'G7')):
+                            w_adj += 3.0
+                        adj_scores[cand_adj] += w_adj
+
+        union_sums = set(sat_sums) | set(dow_top2_sums)
+        inter_sums = set(sat_sums) & set(dow_top2_sums)
+        d9_cur_set = set(d9)
+        valid_adj = []
+        for cand_adj, w_sc in adj_scores.items():
+            if cand_adj == cur_de or cand_adj[0] == cand_adj[1]:
+                continue
+            rev_adj = calc_lot_lon(cand_adj)
+            csum_adj = (int(cand_adj[0]) + int(cand_adj[1])) % 10
+            if (cand_adj in cap4_set or rev_adj in cap4_set) and (csum_adj in union_sums or cand_adj in dow_giao_thoa_set or rev_adj in dow_giao_thoa_set):
+                total_w = w_sc * 10.0
+                if csum_adj in inter_sums:
+                    total_w += 35.0
+                elif csum_adj in dow_top2_sums:
+                    total_w += 25.0
+                elif csum_adj in sat_sums:
+                    total_w += 20.0
+                if cand_adj in dow_giao_thoa_set or rev_adj in dow_giao_thoa_set:
+                    total_w += 30.0
+                if cand_adj in cap4_set:
+                    total_w += 15.0
+                if cand_adj in d9_cur_set or rev_adj in d9_cur_set:
+                    total_w += 35.0
+                valid_adj.append((cand_adj, total_w, w_sc))
+        valid_adj.sort(key=lambda x: x[1], reverse=True)
+
+        # Khi tập Tổng G7 Thứ 7 và Tổng G7 Thứ Mạnh Nhất không giao nhau (inter_sums rỗng), ưu tiên số #1 Cầu Sát Vách Cùng Giải (total_w >= 210) lên Bạch Thủ:
+        if not inter_sums and valid_adj and valid_adj[0][1] >= 210.0:
+            bt = valid_adj[0][0]
+
+        adj_top = []
+        seen_adj = set()
+        for cand_adj, tw_adj, _ in valid_adj:
+            rev_adj = calc_lot_lon(cand_adj)
+            if cand_adj not in seen_adj and rev_adj not in seen_adj:
+                adj_top.append((cand_adj, tw_adj))
+                seen_adj.add(cand_adj)
+                seen_adj.add(rev_adj)
+            if len(adj_top) >= 2:
+                break
+
+        final_t4 = [bt]
+        for x in t4:
+            if len(final_t4) >= 4:
+                break
+            if x not in final_t4 and calc_lot_lon(x) not in final_t4:
+                final_t4.append(x)
+        if adj_top and len(final_t4) >= 2:
+            acand, atw = adj_top[0]
+            if acand not in final_t4 and calc_lot_lon(acand) not in final_t4 and atw >= 165.0:
+                weak_idx = min(range(1, len(final_t4)), key=lambda i: max(sc1_map.get(final_t4[i], 0), sc1_map.get(calc_lot_lon(final_t4[i]), 0)))
+                if max(sc1_map.get(final_t4[weak_idx], 0), sc1_map.get(calc_lot_lon(final_t4[weak_idx]), 0)) < 435.0:
+                    final_t4[weak_idx] = acand
+        t4 = final_t4[:4]
+
+        d9_ranked_now = sorted(d9, key=lambda x: max(sc1_map.get(x, 0), sc1_map.get(calc_lot_lon(x), 0)), reverse=True)
+        final_d9 = []
+        for x in t4 + d9_ranked_now[:6] + [a[0] for a in adj_top if a[1] >= 140.0] + d9_ranked_now:
+            if len(final_d9) >= 9:
+                break
+            if x not in final_d9 and calc_lot_lon(x) not in final_d9:
+                final_d9.append(x)
+        d9 = sorted(final_d9[:9])
     else:
         sc1_map = {f"{i:02d}": _cand_sat_dow_score(f"{i:02d}") for i in range(100)}
         sc2_map, _ = _compute_4_fixes_scores(draws, target_draw_idx)
@@ -1698,8 +1813,8 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
 
     all_head_positions = analysis['head_positions']
     all_tail_positions = analysis['tail_positions']
-    head_positions = select_core_bridge_positions(all_head_positions)
-    tail_positions = select_core_bridge_positions(all_tail_positions)
+    head_positions = select_core_bridge_positions(all_head_positions, all_tail_positions)
+    tail_positions = select_core_bridge_positions(all_tail_positions, all_head_positions)
 
     print("\n" + "-" * 82)
     print(f" BƯỚC 1: ĐỀ VỪA NỔ [{analysis['cur_date']}] & TẬP CHẠM ĐẦU / ĐUÔI DÒ CẦU")
@@ -1849,6 +1964,33 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
     dan_lot_display = [f"{x} (lót)" for x in dan_lot_list]
     all_100_scored = radar_sets['all_100_scored']
 
+    # Đồng bộ 100% các số chủ lực (Bạch Thủ, Song Thủ, Tứ Thủ, Dàn 9 Số & Số Đảo) vào bảng found_numbers (table_5cols)
+    core_union_nums = list(dict.fromkeys([top_1, lot_lon] + list(top_4_nums) + list(dan_9_so_calc) + list(dan_9_dao_calc)))
+    for c_num in core_union_nums:
+        if c_num and len(c_num) == 2 and c_num not in unique_numbers_map:
+            best_h = next((p for p in all_head_positions if c_num[0] in (p['digit'], p['digit_bong'])), None)
+            best_t = next((p for p in all_tail_positions if c_num[1] in (p['digit'], p['digit_bong'])), None)
+            c_cyc = best_h['cycle_days'] if best_h else 2
+            d_cyc = best_t['cycle_days'] if best_t else 2
+            p_cyc = max(c_cyc, d_cyc)
+            new_item = {
+                'num': c_num,
+                'c_digit': c_num[0],
+                'd_digit': c_num[1],
+                'c_cycle': c_cyc,
+                'd_cycle': d_cyc,
+                'cycle_days': p_cyc,
+                'category': "Chỉ đạo" if p_cyc >= 3 else "Lót",
+                'cat_label': f"✅ CHỈ ĐẠO ({p_cyc} ngày)" if p_cyc >= 3 else "Hội tụ Tổng G7 Thứ 7 & Thứ Mạnh Nhất",
+                'weight': 1.0,
+                'combo_type': "chính diện",
+                'score': all_100_scored.get(c_num, {}).get('final_score', 150.0),
+                'h_pos': best_h['position'] if best_h else "Cầu G7 Thứ 7",
+                't_pos': best_t['position'] if best_t else "Cầu Thứ Mạnh Nhất"
+            }
+            unique_numbers_map[c_num] = new_item
+            found_numbers.append(new_item)
+
     for item in found_numbers:
         n = item['num']
         item['ai_score'] = ai_scores.get(n, 5.0)
@@ -1858,8 +2000,16 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
         item['in_cap4_str'] = "Có" if item['in_cap4'] else "Không"
         if n == top_1:
             item['top_rank'] = "👑 Top 1 (Bạch thủ)"
+        elif n == lot_lon and n not in top_4_nums:
+            item['top_rank'] = "🛡️ Top 2 (Số đảo BT)"
         elif n in top_4_nums:
             item['top_rank'] = "🔥 Top 4 (Tứ thủ)"
+        elif n in dan_9_so_calc:
+            item['top_rank'] = "⭐ Top 9 (Dàn 9 số)"
+        elif n in dan_9_dao_calc:
+            item['top_rank'] = "🔄 Số Đảo (Dàn 9 đảo)"
+        elif n in dan_ngay1_tinhtuy:
+            item['top_rank'] = "💎 Tinh Túy N1"
         elif item['in_cap4']:
             item['top_rank'] = "🛡️ Lót hợp lệ"
         else:
@@ -1867,10 +2017,14 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
 
     def sort_key(x):
         tier = 0
-        if "Top 1" in x['top_rank']: tier = 4
-        elif "Top 4" in x['top_rank']: tier = 3
-        elif "Lót hợp lệ" in x['top_rank']: tier = 2
-        else: tier = 1
+        if "Top 1" in x['top_rank']: tier = 7
+        elif "Top 2" in x['top_rank']: tier = 6
+        elif "Top 4" in x['top_rank']: tier = 5
+        elif "Top 9" in x['top_rank']: tier = 4
+        elif "Số Đảo" in x['top_rank']: tier = 3
+        elif "Tinh Túy" in x['top_rank']: tier = 2
+        elif "Lót hợp lệ" in x['top_rank']: tier = 1
+        else: tier = 0
         return (tier, x['cycle_days'], x.get('final_score', 0))
 
     found_numbers.sort(key=sort_key, reverse=True)
@@ -2131,8 +2285,8 @@ def analyze_and_verify_single_draw(draws, pred_for_idx=0, all_draws_for_ai=None)
         return None
 
     cur_draw = draws[base_idx]
-    head_positions = select_core_bridge_positions(analysis['head_positions'])
-    tail_positions = select_core_bridge_positions(analysis['tail_positions'])
+    head_positions = select_core_bridge_positions(analysis['head_positions'], analysis['tail_positions'])
+    tail_positions = select_core_bridge_positions(analysis['tail_positions'], analysis['head_positions'])
 
     all_pairs = []
     for h in head_positions:
