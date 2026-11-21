@@ -1,6 +1,6 @@
 {
-  "total_days": 320,
-  "last_date": "Thứ Sáu ngày 20-11-2026",
+  "total_days": 321,
+  "last_date": "Thứ Bảy ngày 21-11-2026",
   "last_week_number": 47,
   "top_weekly_selected": [
     "g7_4",
@@ -33,7 +33,6 @@
   "window_stats": {
     "30": {
       "freq": {
-        "63": 1,
         "14": 2,
         "67": 1,
         "32": 1,
@@ -60,7 +59,8 @@
         "65": 1,
         "15": 1,
         "78": 1,
-        "60": 1
+        "60": 1,
+        "04": 1
       },
       "g7_ranking": [
         {
@@ -75,23 +75,23 @@
         },
         {
           "position": "G7_1",
-          "hits": 7,
-          "rate": 23.3
+          "hits": 8,
+          "rate": 26.7
         },
         {
           "position": "G7_2",
-          "hits": 5,
-          "rate": 16.7
+          "hits": 6,
+          "rate": 20.0
         }
       ]
     },
     "60": {
       "freq": {
-        "32": 3,
         "22": 1,
         "06": 1,
         "96": 1,
         "65": 2,
+        "32": 2,
         "73": 1,
         "15": 2,
         "51": 3,
@@ -132,13 +132,19 @@
         "25": 1,
         "03": 1,
         "78": 1,
-        "60": 1
+        "60": 1,
+        "04": 1
       },
       "g7_ranking": [
         {
           "position": "G7_1",
-          "hits": 17,
-          "rate": 28.3
+          "hits": 18,
+          "rate": 30.0
+        },
+        {
+          "position": "G7_2",
+          "hits": 15,
+          "rate": 25.0
         },
         {
           "position": "G7_3",
@@ -149,17 +155,11 @@
           "position": "G7_4",
           "hits": 15,
           "rate": 25.0
-        },
-        {
-          "position": "G7_2",
-          "hits": 14,
-          "rate": 23.3
         }
       ]
     },
     "90": {
       "freq": {
-        "13": 1,
         "38": 3,
         "17": 2,
         "80": 1,
@@ -176,7 +176,7 @@
         "35": 2,
         "90": 2,
         "87": 2,
-        "04": 1,
+        "04": 2,
         "81": 1,
         "52": 1,
         "51": 4,
@@ -220,7 +220,7 @@
       },
       "g7_ranking": [
         {
-          "position": "G7_3",
+          "position": "G7_1",
           "hits": 22,
           "rate": 24.4
         },
@@ -230,14 +230,14 @@
           "rate": 24.4
         },
         {
-          "position": "G7_1",
+          "position": "G7_2",
           "hits": 21,
           "rate": 23.3
         },
         {
-          "position": "G7_2",
-          "hits": 20,
-          "rate": 22.2
+          "position": "G7_3",
+          "hits": 21,
+          "rate": 23.3
         }
       ]
     }
@@ -352,14 +352,14 @@
       "inter_rate": 54.3
     },
     "Thứ Sáu": {
-      "evals": 46,
+      "evals": 47,
       "g7": {
         "g7_1": {
-          "td": 1,
+          "td": 2,
           "b": 3
         },
         "g7_2": {
-          "td": 3,
+          "td": 4,
           "b": 5
         },
         "g7_3": {
@@ -371,12 +371,12 @@
           "b": 9
         }
       },
-      "cham_hits": 39,
-      "cham_rate": 84.8,
+      "cham_hits": 40,
+      "cham_rate": 85.1,
       "goc_hits": 6,
-      "goc_rate": 13.0,
-      "inter_hits": 20,
-      "inter_rate": 43.5
+      "goc_rate": 12.8,
+      "inter_hits": 21,
+      "inter_rate": 44.7
     },
     "Thứ Bảy": {
       "evals": 46,
@@ -434,22 +434,22 @@
     }
   },
   "overall_adv_stats": {
-    "cham_hits": 268,
+    "cham_hits": 269,
     "goc_hits": 71,
-    "inter_hits": 149,
+    "inter_hits": 150,
     "stl_goc_hits": 120,
     "stl_goc_total_nhay": 152,
-    "goc_lo_total_nhay": 1753,
-    "inter_lo_total_nhay": 4243,
-    "total_evals": 319
+    "goc_lo_total_nhay": 1755,
+    "inter_lo_total_nhay": 4253,
+    "total_evals": 320
   },
   "overall_g7_stats": {
     "g7_1": {
-      "td": 26,
+      "td": 27,
       "b": 34
     },
     "g7_2": {
-      "td": 25,
+      "td": 26,
       "b": 34
     },
     "g7_3": {
@@ -7479,110 +7479,184 @@
       "hit_stl_goc": "1 nháy 🎯",
       "hit_goc_lo": "9 nháy",
       "hit_inter_lo": "14 nháy"
+    },
+    {
+      "stt": 320,
+      "date": "Thứ Sáu ngày 20-11-2026",
+      "dow_name": "Thứ Sáu",
+      "g7_1": "68",
+      "g7_2": "95",
+      "g7_3": "46",
+      "g7_4": "19",
+      "chams": "145689",
+      "sums": "T0, T4, T5, T9",
+      "corner_sum": "T5-B0",
+      "inter_size": "31 con",
+      "next_date": "Thứ Bảy ngày 21-11-2026",
+      "next_de": "04",
+      "hit_cham": "TRÚNG",
+      "hit_goc": "KHÔNG",
+      "hit_inter": "TRÚNG",
+      "stl_goc_pair": "69 - 96",
+      "hit_stl_goc": "0 nháy",
+      "hit_goc_lo": "2 nháy",
+      "hit_inter_lo": "10 nháy"
     }
   ],
   "g7_lo_predictions": {
-    "stl_goc_next": "69 - 96",
-    "btl_goc_next": "69",
+    "stl_goc_next": "51 - 15",
+    "btl_goc_next": "51",
     "stl_goc_hits": 120,
-    "stl_goc_rate": 37.62,
+    "stl_goc_rate": 37.5,
     "stl_goc_total_nhay": 152,
-    "goc_lo_total_nhay": 1753,
-    "inter_lo_total_nhay": 4243,
+    "goc_lo_total_nhay": 1755,
+    "inter_lo_total_nhay": 4253,
     "top_lo_g7_moc_chung": [
       {
-        "number": "14",
-        "score": 47.0,
+        "number": "51",
+        "score": 48.0,
         "source": "G7 & Ma Trận Consensus"
       },
       {
-        "number": "46",
-        "score": 47.0,
-        "source": "G7 & Ma Trận Consensus"
-      },
-      {
-        "number": "54",
-        "score": 47.0,
-        "source": "G7 & Ma Trận Consensus"
-      },
-      {
-        "number": "59",
+        "number": "15",
         "score": 44.0,
+        "source": "G7 & Ma Trận Consensus"
+      },
+      {
+        "number": "65",
+        "score": 44.0,
+        "source": "G7 & Ma Trận Consensus"
+      },
+      {
+        "number": "29",
+        "score": 43.0,
         "source": "G7 & Ma Trận Consensus"
       }
     ]
   },
   "suggested_g7_cham": [
+    0,
     1,
     4,
     5,
     6,
-    8,
-    9
+    7
   ],
   "suggested_sums": [
-    0,
-    4,
-    5,
-    9
+    1,
+    2,
+    6,
+    7
   ],
   "top_20_consensus": [
     {
-      "number": "14",
-      "score": 47.0,
-      "tong": "Tổng 5",
-      "is_cham_g7": "CÓ",
-      "in_pool": true,
-      "cham_g7": true,
-      "f30": 2,
-      "f60": 2,
-      "f90": 2,
-      "nhip": 13,
-      "rank": 1
-    },
-    {
-      "number": "46",
-      "score": 47.0,
-      "tong": "Tổng 0",
-      "is_cham_g7": "CÓ",
-      "in_pool": true,
-      "cham_g7": true,
-      "f30": 2,
-      "f60": 2,
-      "f90": 2,
-      "nhip": 16,
-      "rank": 2
-    },
-    {
-      "number": "54",
-      "score": 47.0,
-      "tong": "Tổng 9",
+      "number": "51",
+      "score": 48.0,
+      "tong": "Tổng 6",
       "is_cham_g7": "CÓ",
       "in_pool": true,
       "cham_g7": true,
       "f30": 1,
       "f60": 3,
-      "f90": 3,
+      "f90": 4,
       "nhip": 8,
-      "rank": 3
+      "rank": 1
     },
     {
-      "number": "59",
+      "number": "15",
       "score": 44.0,
-      "tong": "Tổng 4",
+      "tong": "Tổng 6",
       "is_cham_g7": "CÓ",
       "in_pool": true,
       "cham_g7": true,
       "f30": 1,
       "f60": 2,
       "f90": 2,
-      "nhip": 21,
+      "nhip": 3,
+      "rank": 2
+    },
+    {
+      "number": "65",
+      "score": 44.0,
+      "tong": "Tổng 1",
+      "is_cham_g7": "CÓ",
+      "in_pool": true,
+      "cham_g7": true,
+      "f30": 1,
+      "f60": 2,
+      "f90": 2,
+      "nhip": 4,
+      "rank": 3
+    },
+    {
+      "number": "29",
+      "score": 43.0,
+      "tong": "Tổng 1",
+      "is_cham_g7": "KHÔNG",
+      "in_pool": true,
+      "cham_g7": false,
+      "f30": 2,
+      "f60": 2,
+      "f90": 3,
+      "nhip": 10,
       "rank": 4
     },
     {
-      "number": "91",
+      "number": "01",
       "score": 41.0,
-      "tong": "Tổng 0",
+      "tong": "Tổng 1",
+      "is_cham_g7": "CÓ",
+      "in_pool": true,
+      "cham_g7": true,
+      "f30": 1,
+      "f60": 1,
+      "f90": 1,
+      "nhip": 23,
+      "rank": 5
+    },
+    {
+      "number": "02",
+      "score": 41.0,
+      "tong": "Tổng 2",
+      "is_cham_g7": "CÓ",
+      "in_pool": true,
+      "cham_g7": true,
+      "f30": 1,
+      "f60": 1,
+      "f90": 1,
+      "nhip": 16,
+      "rank": 6
+    },
+    {
+      "number": "25",
+      "score": 41.0,
+      "tong": "Tổng 7",
+      "is_cham_g7": "CÓ",
+      "in_pool": true,
+      "cham_g7": true,
+      "f30": 1,
+      "f60": 1,
+      "f90": 1,
+      "nhip": 6,
+      "rank": 7
+    },
+    {
+      "number": "57",
+      "score": 41.0,
+      "tong": "Tổng 2",
+      "is_cham_g7": "CÓ",
+      "in_pool": true,
+      "cham_g7": true,
+      "f30": 1,
+      "f60": 1,
+      "f90": 1,
+      "nhip": 21,
+      "rank": 8
+    },
+    {
+      "number": "75",
+      "score": 41.0,
+      "tong": "Tổng 2",
       "is_cham_g7": "CÓ",
       "in_pool": true,
       "cham_g7": true,
@@ -7590,261 +7664,261 @@
       "f60": 1,
       "f90": 1,
       "nhip": 24,
-      "rank": 5
-    },
-    {
-      "number": "72",
-      "score": 37.0,
-      "tong": "Tổng 9",
-      "is_cham_g7": "KHÔNG",
-      "in_pool": true,
-      "cham_g7": false,
-      "f30": 1,
-      "f60": 1,
-      "f90": 2,
-      "nhip": 11,
-      "rank": 6
-    },
-    {
-      "number": "77",
-      "score": 36.0,
-      "tong": "Tổng 4",
-      "is_cham_g7": "KHÔNG",
-      "in_pool": true,
-      "cham_g7": false,
-      "f30": 1,
-      "f60": 1,
-      "f90": 1,
-      "nhip": 14,
-      "rank": 7
-    },
-    {
-      "number": "78",
-      "score": 36.0,
-      "tong": "Tổng 5",
-      "is_cham_g7": "CÓ",
-      "in_pool": true,
-      "cham_g7": true,
-      "f30": 1,
-      "f60": 1,
-      "f90": 1,
-      "nhip": 1,
-      "rank": 8
-    },
-    {
-      "number": "28",
-      "score": 31.0,
-      "tong": "Tổng 0",
-      "is_cham_g7": "CÓ",
-      "in_pool": true,
-      "cham_g7": true,
-      "f30": 1,
-      "f60": 1,
-      "f90": 1,
-      "nhip": 26,
       "rank": 9
     },
     {
-      "number": "63",
-      "score": 31.0,
-      "tong": "Tổng 9",
-      "is_cham_g7": "CÓ",
-      "in_pool": true,
-      "cham_g7": true,
-      "f30": 0,
-      "f60": 2,
-      "f90": 2,
-      "nhip": 30,
-      "rank": 10
-    },
-    {
-      "number": "32",
-      "score": 30.0,
-      "tong": "Tổng 5",
+      "number": "83",
+      "score": 39.0,
+      "tong": "Tổng 1",
       "is_cham_g7": "KHÔNG",
       "in_pool": true,
       "cham_g7": false,
       "f30": 1,
       "f60": 2,
-      "f90": 3,
-      "nhip": 27,
+      "f90": 2,
+      "nhip": 11,
+      "rank": 10
+    },
+    {
+      "number": "60",
+      "score": 37.0,
+      "tong": "Tổng 6",
+      "is_cham_g7": "CÓ",
+      "in_pool": true,
+      "cham_g7": true,
+      "f30": 1,
+      "f60": 1,
+      "f90": 2,
+      "nhip": 1,
       "rank": 11
     },
     {
-      "number": "87",
-      "score": 29.0,
-      "tong": "Tổng 5",
-      "is_cham_g7": "CÓ",
+      "number": "93",
+      "score": 36.0,
+      "tong": "Tổng 2",
+      "is_cham_g7": "KHÔNG",
       "in_pool": true,
-      "cham_g7": true,
-      "f30": 0,
+      "cham_g7": false,
+      "f30": 1,
       "f60": 1,
-      "f90": 2,
-      "nhip": 39,
+      "f90": 1,
+      "nhip": 7,
       "rank": 12
     },
     {
-      "number": "90",
+      "number": "42",
+      "score": 32.0,
+      "tong": "Tổng 6",
+      "is_cham_g7": "CÓ",
+      "in_pool": true,
+      "cham_g7": true,
+      "f30": 0,
+      "f60": 2,
+      "f90": 3,
+      "nhip": 34,
+      "rank": 13
+    },
+    {
+      "number": "61",
       "score": 29.0,
-      "tong": "Tổng 9",
+      "tong": "Tổng 7",
       "is_cham_g7": "CÓ",
       "in_pool": true,
       "cham_g7": true,
       "f30": 0,
       "f60": 1,
       "f90": 2,
-      "nhip": 32,
-      "rank": 13
-    },
-    {
-      "number": "09",
-      "score": 28.0,
-      "tong": "Tổng 9",
-      "is_cham_g7": "CÓ",
-      "in_pool": true,
-      "cham_g7": true,
-      "f30": 0,
-      "f60": 1,
-      "f90": 1,
-      "nhip": 31,
+      "nhip": 49,
       "rank": 14
     },
     {
-      "number": "18",
+      "number": "66",
+      "score": 29.0,
+      "tong": "Tổng 2",
+      "is_cham_g7": "CÓ",
+      "in_pool": true,
+      "cham_g7": true,
+      "f30": 0,
+      "f60": 1,
+      "f90": 2,
+      "nhip": 37,
+      "rank": 15
+    },
+    {
+      "number": "06",
       "score": 28.0,
-      "tong": "Tổng 9",
+      "tong": "Tổng 6",
       "is_cham_g7": "CÓ",
       "in_pool": true,
       "cham_g7": true,
       "f30": 0,
       "f60": 1,
       "f90": 1,
-      "nhip": 38,
-      "rank": 15
+      "nhip": 59,
+      "rank": 16
     },
     {
-      "number": "29",
+      "number": "56",
       "score": 28.0,
       "tong": "Tổng 1",
+      "is_cham_g7": "CÓ",
+      "in_pool": true,
+      "cham_g7": true,
+      "f30": 0,
+      "f60": 1,
+      "f90": 1,
+      "nhip": 36,
+      "rank": 17
+    },
+    {
+      "number": "46",
+      "score": 27.0,
+      "tong": "Tổng 0",
       "is_cham_g7": "CÓ",
       "in_pool": false,
       "cham_g7": true,
       "f30": 2,
       "f60": 2,
-      "f90": 3,
-      "nhip": 9,
-      "rank": 16
+      "f90": 2,
+      "nhip": 17,
+      "rank": 18
     },
     {
-      "number": "51",
-      "score": 28.0,
-      "tong": "Tổng 6",
+      "number": "54",
+      "score": 27.0,
+      "tong": "Tổng 9",
       "is_cham_g7": "CÓ",
       "in_pool": false,
       "cham_g7": true,
       "f30": 1,
       "f60": 3,
-      "f90": 4,
-      "nhip": 7,
-      "rank": 17
-    },
-    {
-      "number": "96",
-      "score": 28.0,
-      "tong": "Tổng 5",
-      "is_cham_g7": "CÓ",
-      "in_pool": true,
-      "cham_g7": true,
-      "f30": 0,
-      "f60": 1,
-      "f90": 1,
-      "nhip": 57,
-      "rank": 18
-    },
-    {
-      "number": "04",
-      "score": 26.0,
-      "tong": "Tổng 4",
-      "is_cham_g7": "CÓ",
-      "in_pool": true,
-      "cham_g7": true,
-      "f30": 0,
-      "f60": 0,
-      "f90": 1,
-      "nhip": 72,
+      "f90": 3,
+      "nhip": 9,
       "rank": 19
     },
     {
-      "number": "45",
+      "number": "11",
       "score": 26.0,
-      "tong": "Tổng 9",
+      "tong": "Tổng 2",
       "is_cham_g7": "CÓ",
       "in_pool": true,
       "cham_g7": true,
       "f30": 0,
       "f60": 0,
       "f90": 1,
-      "nhip": 85,
+      "nhip": 79,
       "rank": 20
     }
   ],
   "top_10_ha_so": [
     {
-      "number": "14",
-      "score": 47.0,
-      "tong": "Tổng 5",
-      "is_cham_g7": "CÓ",
-      "in_pool": true,
-      "cham_g7": true,
-      "f30": 2,
-      "f60": 2,
-      "f90": 2,
-      "nhip": 13,
-      "rank": 1
-    },
-    {
-      "number": "46",
-      "score": 47.0,
-      "tong": "Tổng 0",
-      "is_cham_g7": "CÓ",
-      "in_pool": true,
-      "cham_g7": true,
-      "f30": 2,
-      "f60": 2,
-      "f90": 2,
-      "nhip": 16,
-      "rank": 2
-    },
-    {
-      "number": "54",
-      "score": 47.0,
-      "tong": "Tổng 9",
+      "number": "51",
+      "score": 48.0,
+      "tong": "Tổng 6",
       "is_cham_g7": "CÓ",
       "in_pool": true,
       "cham_g7": true,
       "f30": 1,
       "f60": 3,
-      "f90": 3,
+      "f90": 4,
       "nhip": 8,
-      "rank": 3
+      "rank": 1
     },
     {
-      "number": "59",
+      "number": "15",
       "score": 44.0,
-      "tong": "Tổng 4",
+      "tong": "Tổng 6",
       "is_cham_g7": "CÓ",
       "in_pool": true,
       "cham_g7": true,
       "f30": 1,
       "f60": 2,
       "f90": 2,
-      "nhip": 21,
+      "nhip": 3,
+      "rank": 2
+    },
+    {
+      "number": "65",
+      "score": 44.0,
+      "tong": "Tổng 1",
+      "is_cham_g7": "CÓ",
+      "in_pool": true,
+      "cham_g7": true,
+      "f30": 1,
+      "f60": 2,
+      "f90": 2,
+      "nhip": 4,
+      "rank": 3
+    },
+    {
+      "number": "29",
+      "score": 43.0,
+      "tong": "Tổng 1",
+      "is_cham_g7": "KHÔNG",
+      "in_pool": true,
+      "cham_g7": false,
+      "f30": 2,
+      "f60": 2,
+      "f90": 3,
+      "nhip": 10,
       "rank": 4
     },
     {
-      "number": "91",
+      "number": "01",
       "score": 41.0,
-      "tong": "Tổng 0",
+      "tong": "Tổng 1",
+      "is_cham_g7": "CÓ",
+      "in_pool": true,
+      "cham_g7": true,
+      "f30": 1,
+      "f60": 1,
+      "f90": 1,
+      "nhip": 23,
+      "rank": 5
+    },
+    {
+      "number": "02",
+      "score": 41.0,
+      "tong": "Tổng 2",
+      "is_cham_g7": "CÓ",
+      "in_pool": true,
+      "cham_g7": true,
+      "f30": 1,
+      "f60": 1,
+      "f90": 1,
+      "nhip": 16,
+      "rank": 6
+    },
+    {
+      "number": "25",
+      "score": 41.0,
+      "tong": "Tổng 7",
+      "is_cham_g7": "CÓ",
+      "in_pool": true,
+      "cham_g7": true,
+      "f30": 1,
+      "f60": 1,
+      "f90": 1,
+      "nhip": 6,
+      "rank": 7
+    },
+    {
+      "number": "57",
+      "score": 41.0,
+      "tong": "Tổng 2",
+      "is_cham_g7": "CÓ",
+      "in_pool": true,
+      "cham_g7": true,
+      "f30": 1,
+      "f60": 1,
+      "f90": 1,
+      "nhip": 21,
+      "rank": 8
+    },
+    {
+      "number": "75",
+      "score": 41.0,
+      "tong": "Tổng 2",
       "is_cham_g7": "CÓ",
       "in_pool": true,
       "cham_g7": true,
@@ -7852,131 +7926,131 @@
       "f60": 1,
       "f90": 1,
       "nhip": 24,
-      "rank": 5
-    },
-    {
-      "number": "72",
-      "score": 37.0,
-      "tong": "Tổng 9",
-      "is_cham_g7": "KHÔNG",
-      "in_pool": true,
-      "cham_g7": false,
-      "f30": 1,
-      "f60": 1,
-      "f90": 2,
-      "nhip": 11,
-      "rank": 6
-    },
-    {
-      "number": "77",
-      "score": 36.0,
-      "tong": "Tổng 4",
-      "is_cham_g7": "KHÔNG",
-      "in_pool": true,
-      "cham_g7": false,
-      "f30": 1,
-      "f60": 1,
-      "f90": 1,
-      "nhip": 14,
-      "rank": 7
-    },
-    {
-      "number": "78",
-      "score": 36.0,
-      "tong": "Tổng 5",
-      "is_cham_g7": "CÓ",
-      "in_pool": true,
-      "cham_g7": true,
-      "f30": 1,
-      "f60": 1,
-      "f90": 1,
-      "nhip": 1,
-      "rank": 8
-    },
-    {
-      "number": "28",
-      "score": 31.0,
-      "tong": "Tổng 0",
-      "is_cham_g7": "CÓ",
-      "in_pool": true,
-      "cham_g7": true,
-      "f30": 1,
-      "f60": 1,
-      "f90": 1,
-      "nhip": 26,
       "rank": 9
     },
     {
-      "number": "63",
-      "score": 31.0,
-      "tong": "Tổng 9",
-      "is_cham_g7": "CÓ",
+      "number": "83",
+      "score": 39.0,
+      "tong": "Tổng 1",
+      "is_cham_g7": "KHÔNG",
       "in_pool": true,
-      "cham_g7": true,
-      "f30": 0,
+      "cham_g7": false,
+      "f30": 1,
       "f60": 2,
       "f90": 2,
-      "nhip": 30,
+      "nhip": 11,
       "rank": 10
     }
   ],
   "lucky26_matrix_100": [
     {
-      "number": "14",
-      "score": 47.0,
-      "tong": "Tổng 5",
-      "is_cham_g7": "CÓ",
-      "in_pool": true,
-      "cham_g7": true,
-      "f30": 2,
-      "f60": 2,
-      "f90": 2,
-      "nhip": 13,
-      "rank": 1
-    },
-    {
-      "number": "46",
-      "score": 47.0,
-      "tong": "Tổng 0",
-      "is_cham_g7": "CÓ",
-      "in_pool": true,
-      "cham_g7": true,
-      "f30": 2,
-      "f60": 2,
-      "f90": 2,
-      "nhip": 16,
-      "rank": 2
-    },
-    {
-      "number": "54",
-      "score": 47.0,
-      "tong": "Tổng 9",
+      "number": "51",
+      "score": 48.0,
+      "tong": "Tổng 6",
       "is_cham_g7": "CÓ",
       "in_pool": true,
       "cham_g7": true,
       "f30": 1,
       "f60": 3,
-      "f90": 3,
+      "f90": 4,
       "nhip": 8,
-      "rank": 3
+      "rank": 1
     },
     {
-      "number": "59",
+      "number": "15",
       "score": 44.0,
-      "tong": "Tổng 4",
+      "tong": "Tổng 6",
       "is_cham_g7": "CÓ",
       "in_pool": true,
       "cham_g7": true,
       "f30": 1,
       "f60": 2,
       "f90": 2,
-      "nhip": 21,
+      "nhip": 3,
+      "rank": 2
+    },
+    {
+      "number": "65",
+      "score": 44.0,
+      "tong": "Tổng 1",
+      "is_cham_g7": "CÓ",
+      "in_pool": true,
+      "cham_g7": true,
+      "f30": 1,
+      "f60": 2,
+      "f90": 2,
+      "nhip": 4,
+      "rank": 3
+    },
+    {
+      "number": "29",
+      "score": 43.0,
+      "tong": "Tổng 1",
+      "is_cham_g7": "KHÔNG",
+      "in_pool": true,
+      "cham_g7": false,
+      "f30": 2,
+      "f60": 2,
+      "f90": 3,
+      "nhip": 10,
       "rank": 4
     },
     {
-      "number": "91",
+      "number": "01",
       "score": 41.0,
-      "tong": "Tổng 0",
+      "tong": "Tổng 1",
+      "is_cham_g7": "CÓ",
+      "in_pool": true,
+      "cham_g7": true,
+      "f30": 1,
+      "f60": 1,
+      "f90": 1,
+      "nhip": 23,
+      "rank": 5
+    },
+    {
+      "number": "02",
+      "score": 41.0,
+      "tong": "Tổng 2",
+      "is_cham_g7": "CÓ",
+      "in_pool": true,
+      "cham_g7": true,
+      "f30": 1,
+      "f60": 1,
+      "f90": 1,
+      "nhip": 16,
+      "rank": 6
+    },
+    {
+      "number": "25",
+      "score": 41.0,
+      "tong": "Tổng 7",
+      "is_cham_g7": "CÓ",
+      "in_pool": true,
+      "cham_g7": true,
+      "f30": 1,
+      "f60": 1,
+      "f90": 1,
+      "nhip": 6,
+      "rank": 7
+    },
+    {
+      "number": "57",
+      "score": 41.0,
+      "tong": "Tổng 2",
+      "is_cham_g7": "CÓ",
+      "in_pool": true,
+      "cham_g7": true,
+      "f30": 1,
+      "f60": 1,
+      "f90": 1,
+      "nhip": 21,
+      "rank": 8
+    },
+    {
+      "number": "75",
+      "score": 41.0,
+      "tong": "Tổng 2",
       "is_cham_g7": "CÓ",
       "in_pool": true,
       "cham_g7": true,
@@ -7984,220 +8058,155 @@
       "f60": 1,
       "f90": 1,
       "nhip": 24,
-      "rank": 5
-    },
-    {
-      "number": "72",
-      "score": 37.0,
-      "tong": "Tổng 9",
-      "is_cham_g7": "KHÔNG",
-      "in_pool": true,
-      "cham_g7": false,
-      "f30": 1,
-      "f60": 1,
-      "f90": 2,
-      "nhip": 11,
-      "rank": 6
-    },
-    {
-      "number": "77",
-      "score": 36.0,
-      "tong": "Tổng 4",
-      "is_cham_g7": "KHÔNG",
-      "in_pool": true,
-      "cham_g7": false,
-      "f30": 1,
-      "f60": 1,
-      "f90": 1,
-      "nhip": 14,
-      "rank": 7
-    },
-    {
-      "number": "78",
-      "score": 36.0,
-      "tong": "Tổng 5",
-      "is_cham_g7": "CÓ",
-      "in_pool": true,
-      "cham_g7": true,
-      "f30": 1,
-      "f60": 1,
-      "f90": 1,
-      "nhip": 1,
-      "rank": 8
-    },
-    {
-      "number": "28",
-      "score": 31.0,
-      "tong": "Tổng 0",
-      "is_cham_g7": "CÓ",
-      "in_pool": true,
-      "cham_g7": true,
-      "f30": 1,
-      "f60": 1,
-      "f90": 1,
-      "nhip": 26,
       "rank": 9
     },
     {
-      "number": "63",
-      "score": 31.0,
-      "tong": "Tổng 9",
-      "is_cham_g7": "CÓ",
-      "in_pool": true,
-      "cham_g7": true,
-      "f30": 0,
-      "f60": 2,
-      "f90": 2,
-      "nhip": 30,
-      "rank": 10
-    },
-    {
-      "number": "32",
-      "score": 30.0,
-      "tong": "Tổng 5",
+      "number": "83",
+      "score": 39.0,
+      "tong": "Tổng 1",
       "is_cham_g7": "KHÔNG",
       "in_pool": true,
       "cham_g7": false,
       "f30": 1,
       "f60": 2,
-      "f90": 3,
-      "nhip": 27,
+      "f90": 2,
+      "nhip": 11,
+      "rank": 10
+    },
+    {
+      "number": "60",
+      "score": 37.0,
+      "tong": "Tổng 6",
+      "is_cham_g7": "CÓ",
+      "in_pool": true,
+      "cham_g7": true,
+      "f30": 1,
+      "f60": 1,
+      "f90": 2,
+      "nhip": 1,
       "rank": 11
     },
     {
-      "number": "87",
-      "score": 29.0,
-      "tong": "Tổng 5",
-      "is_cham_g7": "CÓ",
+      "number": "93",
+      "score": 36.0,
+      "tong": "Tổng 2",
+      "is_cham_g7": "KHÔNG",
       "in_pool": true,
-      "cham_g7": true,
-      "f30": 0,
+      "cham_g7": false,
+      "f30": 1,
       "f60": 1,
-      "f90": 2,
-      "nhip": 39,
+      "f90": 1,
+      "nhip": 7,
       "rank": 12
     },
     {
-      "number": "90",
+      "number": "42",
+      "score": 32.0,
+      "tong": "Tổng 6",
+      "is_cham_g7": "CÓ",
+      "in_pool": true,
+      "cham_g7": true,
+      "f30": 0,
+      "f60": 2,
+      "f90": 3,
+      "nhip": 34,
+      "rank": 13
+    },
+    {
+      "number": "61",
       "score": 29.0,
-      "tong": "Tổng 9",
+      "tong": "Tổng 7",
       "is_cham_g7": "CÓ",
       "in_pool": true,
       "cham_g7": true,
       "f30": 0,
       "f60": 1,
       "f90": 2,
-      "nhip": 32,
-      "rank": 13
-    },
-    {
-      "number": "09",
-      "score": 28.0,
-      "tong": "Tổng 9",
-      "is_cham_g7": "CÓ",
-      "in_pool": true,
-      "cham_g7": true,
-      "f30": 0,
-      "f60": 1,
-      "f90": 1,
-      "nhip": 31,
+      "nhip": 49,
       "rank": 14
     },
     {
-      "number": "18",
+      "number": "66",
+      "score": 29.0,
+      "tong": "Tổng 2",
+      "is_cham_g7": "CÓ",
+      "in_pool": true,
+      "cham_g7": true,
+      "f30": 0,
+      "f60": 1,
+      "f90": 2,
+      "nhip": 37,
+      "rank": 15
+    },
+    {
+      "number": "06",
       "score": 28.0,
-      "tong": "Tổng 9",
+      "tong": "Tổng 6",
       "is_cham_g7": "CÓ",
       "in_pool": true,
       "cham_g7": true,
       "f30": 0,
       "f60": 1,
       "f90": 1,
-      "nhip": 38,
-      "rank": 15
+      "nhip": 59,
+      "rank": 16
     },
     {
-      "number": "29",
+      "number": "56",
       "score": 28.0,
       "tong": "Tổng 1",
+      "is_cham_g7": "CÓ",
+      "in_pool": true,
+      "cham_g7": true,
+      "f30": 0,
+      "f60": 1,
+      "f90": 1,
+      "nhip": 36,
+      "rank": 17
+    },
+    {
+      "number": "46",
+      "score": 27.0,
+      "tong": "Tổng 0",
       "is_cham_g7": "CÓ",
       "in_pool": false,
       "cham_g7": true,
       "f30": 2,
       "f60": 2,
-      "f90": 3,
-      "nhip": 9,
-      "rank": 16
+      "f90": 2,
+      "nhip": 17,
+      "rank": 18
     },
     {
-      "number": "51",
-      "score": 28.0,
-      "tong": "Tổng 6",
+      "number": "54",
+      "score": 27.0,
+      "tong": "Tổng 9",
       "is_cham_g7": "CÓ",
       "in_pool": false,
       "cham_g7": true,
       "f30": 1,
       "f60": 3,
-      "f90": 4,
-      "nhip": 7,
-      "rank": 17
-    },
-    {
-      "number": "96",
-      "score": 28.0,
-      "tong": "Tổng 5",
-      "is_cham_g7": "CÓ",
-      "in_pool": true,
-      "cham_g7": true,
-      "f30": 0,
-      "f60": 1,
-      "f90": 1,
-      "nhip": 57,
-      "rank": 18
-    },
-    {
-      "number": "04",
-      "score": 26.0,
-      "tong": "Tổng 4",
-      "is_cham_g7": "CÓ",
-      "in_pool": true,
-      "cham_g7": true,
-      "f30": 0,
-      "f60": 0,
-      "f90": 1,
-      "nhip": 72,
+      "f90": 3,
+      "nhip": 9,
       "rank": 19
     },
     {
-      "number": "45",
+      "number": "11",
       "score": 26.0,
-      "tong": "Tổng 9",
+      "tong": "Tổng 2",
       "is_cham_g7": "CÓ",
       "in_pool": true,
       "cham_g7": true,
       "f30": 0,
       "f60": 0,
       "f90": 1,
-      "nhip": 85,
+      "nhip": 79,
       "rank": 20
     },
     {
-      "number": "68",
+      "number": "52",
       "score": 26.0,
-      "tong": "Tổng 4",
-      "is_cham_g7": "CÓ",
-      "in_pool": true,
-      "cham_g7": true,
-      "f30": 0,
-      "f60": 0,
-      "f90": 1,
-      "nhip": 84,
-      "rank": 21
-    },
-    {
-      "number": "81",
-      "score": 26.0,
-      "tong": "Tổng 9",
+      "tong": "Tổng 7",
       "is_cham_g7": "CÓ",
       "in_pool": true,
       "cham_g7": true,
@@ -8205,51 +8214,12 @@
       "f60": 0,
       "f90": 1,
       "nhip": 71,
-      "rank": 22
+      "rank": 21
     },
     {
-      "number": "05",
+      "number": "07",
       "score": 25.0,
-      "tong": "Tổng 5",
-      "is_cham_g7": "CÓ",
-      "in_pool": true,
-      "cham_g7": true,
-      "f30": 0,
-      "f60": 0,
-      "f90": 0,
-      "nhip": 165,
-      "rank": 23
-    },
-    {
-      "number": "13",
-      "score": 25.0,
-      "tong": "Tổng 4",
-      "is_cham_g7": "CÓ",
-      "in_pool": true,
-      "cham_g7": true,
-      "f30": 0,
-      "f60": 0,
-      "f90": 0,
-      "nhip": 90,
-      "rank": 24
-    },
-    {
-      "number": "19",
-      "score": 25.0,
-      "tong": "Tổng 0",
-      "is_cham_g7": "CÓ",
-      "in_pool": true,
-      "cham_g7": true,
-      "f30": 0,
-      "f60": 0,
-      "f90": 0,
-      "nhip": 128,
-      "rank": 25
-    },
-    {
-      "number": "31",
-      "score": 25.0,
-      "tong": "Tổng 4",
+      "tong": "Tổng 7",
       "is_cham_g7": "CÓ",
       "in_pool": true,
       "cham_g7": true,
@@ -8257,129 +8227,51 @@
       "f60": 0,
       "f90": 0,
       "nhip": 999,
-      "rank": 26
+      "rank": 22
     },
     {
-      "number": "36",
+      "number": "10",
       "score": 25.0,
-      "tong": "Tổng 9",
+      "tong": "Tổng 1",
       "is_cham_g7": "CÓ",
       "in_pool": true,
       "cham_g7": true,
       "f30": 0,
       "f60": 0,
       "f90": 0,
-      "nhip": 151,
-      "rank": 27
+      "nhip": 113,
+      "rank": 23
     },
     {
-      "number": "40",
+      "number": "16",
       "score": 25.0,
-      "tong": "Tổng 4",
+      "tong": "Tổng 7",
       "is_cham_g7": "CÓ",
       "in_pool": true,
       "cham_g7": true,
       "f30": 0,
       "f60": 0,
       "f90": 0,
-      "nhip": 197,
-      "rank": 28
+      "nhip": 118,
+      "rank": 24
     },
     {
-      "number": "41",
+      "number": "20",
       "score": 25.0,
-      "tong": "Tổng 5",
+      "tong": "Tổng 2",
       "is_cham_g7": "CÓ",
       "in_pool": true,
       "cham_g7": true,
       "f30": 0,
       "f60": 0,
       "f90": 0,
-      "nhip": 198,
-      "rank": 29
+      "nhip": 225,
+      "rank": 25
     },
     {
-      "number": "50",
+      "number": "24",
       "score": 25.0,
-      "tong": "Tổng 5",
-      "is_cham_g7": "CÓ",
-      "in_pool": true,
-      "cham_g7": true,
-      "f30": 0,
-      "f60": 0,
-      "f90": 0,
-      "nhip": 176,
-      "rank": 30
-    },
-    {
-      "number": "55",
-      "score": 25.0,
-      "tong": "Tổng 0",
-      "is_cham_g7": "CÓ",
-      "in_pool": true,
-      "cham_g7": true,
-      "f30": 0,
-      "f60": 0,
-      "f90": 0,
-      "nhip": 154,
-      "rank": 31
-    },
-    {
-      "number": "64",
-      "score": 25.0,
-      "tong": "Tổng 0",
-      "is_cham_g7": "CÓ",
-      "in_pool": true,
-      "cham_g7": true,
-      "f30": 0,
-      "f60": 0,
-      "f90": 0,
-      "nhip": 201,
-      "rank": 32
-    },
-    {
-      "number": "69",
-      "score": 25.0,
-      "tong": "Tổng 5",
-      "is_cham_g7": "CÓ",
-      "in_pool": true,
-      "cham_g7": true,
-      "f30": 0,
-      "f60": 0,
-      "f90": 0,
-      "nhip": 190,
-      "rank": 33
-    },
-    {
-      "number": "82",
-      "score": 25.0,
-      "tong": "Tổng 0",
-      "is_cham_g7": "CÓ",
-      "in_pool": true,
-      "cham_g7": true,
-      "f30": 0,
-      "f60": 0,
-      "f90": 0,
-      "nhip": 227,
-      "rank": 34
-    },
-    {
-      "number": "86",
-      "score": 25.0,
-      "tong": "Tổng 4",
-      "is_cham_g7": "CÓ",
-      "in_pool": true,
-      "cham_g7": true,
-      "f30": 0,
-      "f60": 0,
-      "f90": 0,
-      "nhip": 299,
-      "rank": 35
-    },
-    {
-      "number": "95",
-      "score": 25.0,
-      "tong": "Tổng 4",
+      "tong": "Tổng 6",
       "is_cham_g7": "CÓ",
       "in_pool": true,
       "cham_g7": true,
@@ -8387,58 +8279,188 @@
       "f60": 0,
       "f90": 0,
       "nhip": 246,
+      "rank": 26
+    },
+    {
+      "number": "34",
+      "score": 25.0,
+      "tong": "Tổng 7",
+      "is_cham_g7": "CÓ",
+      "in_pool": true,
+      "cham_g7": true,
+      "f30": 0,
+      "f60": 0,
+      "f90": 0,
+      "nhip": 114,
+      "rank": 27
+    },
+    {
+      "number": "43",
+      "score": 25.0,
+      "tong": "Tổng 7",
+      "is_cham_g7": "CÓ",
+      "in_pool": true,
+      "cham_g7": true,
+      "f30": 0,
+      "f60": 0,
+      "f90": 0,
+      "nhip": 94,
+      "rank": 28
+    },
+    {
+      "number": "47",
+      "score": 25.0,
+      "tong": "Tổng 1",
+      "is_cham_g7": "CÓ",
+      "in_pool": true,
+      "cham_g7": true,
+      "f30": 0,
+      "f60": 0,
+      "f90": 0,
+      "nhip": 110,
+      "rank": 29
+    },
+    {
+      "number": "48",
+      "score": 25.0,
+      "tong": "Tổng 2",
+      "is_cham_g7": "CÓ",
+      "in_pool": true,
+      "cham_g7": true,
+      "f30": 0,
+      "f60": 0,
+      "f90": 0,
+      "nhip": 213,
+      "rank": 30
+    },
+    {
+      "number": "70",
+      "score": 25.0,
+      "tong": "Tổng 7",
+      "is_cham_g7": "CÓ",
+      "in_pool": true,
+      "cham_g7": true,
+      "f30": 0,
+      "f60": 0,
+      "f90": 0,
+      "nhip": 123,
+      "rank": 31
+    },
+    {
+      "number": "74",
+      "score": 25.0,
+      "tong": "Tổng 1",
+      "is_cham_g7": "CÓ",
+      "in_pool": true,
+      "cham_g7": true,
+      "f30": 0,
+      "f60": 0,
+      "f90": 0,
+      "nhip": 295,
+      "rank": 32
+    },
+    {
+      "number": "79",
+      "score": 25.0,
+      "tong": "Tổng 6",
+      "is_cham_g7": "CÓ",
+      "in_pool": true,
+      "cham_g7": true,
+      "f30": 0,
+      "f60": 0,
+      "f90": 0,
+      "nhip": 106,
+      "rank": 33
+    },
+    {
+      "number": "84",
+      "score": 25.0,
+      "tong": "Tổng 2",
+      "is_cham_g7": "CÓ",
+      "in_pool": true,
+      "cham_g7": true,
+      "f30": 0,
+      "f60": 0,
+      "f90": 0,
+      "nhip": 158,
+      "rank": 34
+    },
+    {
+      "number": "97",
+      "score": 25.0,
+      "tong": "Tổng 6",
+      "is_cham_g7": "CÓ",
+      "in_pool": true,
+      "cham_g7": true,
+      "f30": 0,
+      "f60": 0,
+      "f90": 0,
+      "nhip": 138,
+      "rank": 35
+    },
+    {
+      "number": "14",
+      "score": 24.0,
+      "tong": "Tổng 5",
+      "is_cham_g7": "CÓ",
+      "in_pool": false,
+      "cham_g7": true,
+      "f30": 1,
+      "f60": 2,
+      "f90": 2,
+      "nhip": 14,
       "rank": 36
     },
     {
-      "number": "22",
+      "number": "38",
       "score": 24.0,
-      "tong": "Tổng 4",
+      "tong": "Tổng 1",
       "is_cham_g7": "KHÔNG",
       "in_pool": true,
       "cham_g7": false,
       "f30": 0,
       "f60": 1,
       "f90": 2,
-      "nhip": 59,
+      "nhip": 35,
       "rank": 37
     },
     {
-      "number": "65",
+      "number": "59",
       "score": 24.0,
-      "tong": "Tổng 1",
+      "tong": "Tổng 4",
       "is_cham_g7": "CÓ",
       "in_pool": false,
       "cham_g7": true,
       "f30": 1,
       "f60": 2,
       "f90": 2,
-      "nhip": 3,
+      "nhip": 22,
       "rank": 38
     },
     {
-      "number": "83",
-      "score": 24.0,
-      "tong": "Tổng 1",
-      "is_cham_g7": "CÓ",
-      "in_pool": false,
-      "cham_g7": true,
-      "f30": 1,
-      "f60": 2,
-      "f90": 2,
-      "nhip": 10,
-      "rank": 39
-    },
-    {
-      "number": "73",
+      "number": "39",
       "score": 23.0,
-      "tong": "Tổng 0",
+      "tong": "Tổng 2",
       "is_cham_g7": "KHÔNG",
       "in_pool": true,
       "cham_g7": false,
       "f30": 0,
       "f60": 1,
       "f90": 1,
-      "nhip": 54,
+      "nhip": 44,
+      "rank": 39
+    },
+    {
+      "number": "88",
+      "score": 23.0,
+      "tong": "Tổng 6",
+      "is_cham_g7": "KHÔNG",
+      "in_pool": true,
+      "cham_g7": false,
+      "f30": 0,
+      "f60": 1,
+      "f90": 1,
+      "nhip": 45,
       "rank": 40
     },
     {
@@ -8451,52 +8473,26 @@
       "f30": 1,
       "f60": 1,
       "f90": 2,
-      "nhip": 19,
+      "nhip": 20,
       "rank": 41
     },
     {
-      "number": "21",
+      "number": "72",
       "score": 22.0,
-      "tong": "Tổng 3",
+      "tong": "Tổng 9",
       "is_cham_g7": "CÓ",
       "in_pool": false,
       "cham_g7": true,
       "f30": 1,
       "f60": 1,
       "f90": 2,
-      "nhip": 25,
+      "nhip": 12,
       "rank": 42
     },
     {
-      "number": "37",
-      "score": 22.0,
-      "tong": "Tổng 0",
-      "is_cham_g7": "KHÔNG",
-      "in_pool": true,
-      "cham_g7": false,
-      "f30": 0,
-      "f60": 0,
-      "f90": 2,
-      "nhip": 76,
-      "rank": 43
-    },
-    {
-      "number": "01",
+      "number": "03",
       "score": 21.0,
-      "tong": "Tổng 1",
-      "is_cham_g7": "CÓ",
-      "in_pool": false,
-      "cham_g7": true,
-      "f30": 1,
-      "f60": 1,
-      "f90": 1,
-      "nhip": 22,
-      "rank": 44
-    },
-    {
-      "number": "25",
-      "score": 21.0,
-      "tong": "Tổng 7",
+      "tong": "Tổng 3",
       "is_cham_g7": "CÓ",
       "in_pool": false,
       "cham_g7": true,
@@ -8504,7 +8500,7 @@
       "f60": 1,
       "f90": 1,
       "nhip": 5,
-      "rank": 45
+      "rank": 43
     },
     {
       "number": "26",
@@ -8516,65 +8512,39 @@
       "f30": 1,
       "f60": 1,
       "f90": 1,
-      "nhip": 12,
+      "nhip": 13,
+      "rank": 44
+    },
+    {
+      "number": "77",
+      "score": 21.0,
+      "tong": "Tổng 4",
+      "is_cham_g7": "CÓ",
+      "in_pool": false,
+      "cham_g7": true,
+      "f30": 1,
+      "f60": 1,
+      "f90": 1,
+      "nhip": 15,
+      "rank": 45
+    },
+    {
+      "number": "91",
+      "score": 21.0,
+      "tong": "Tổng 0",
+      "is_cham_g7": "CÓ",
+      "in_pool": false,
+      "cham_g7": true,
+      "f30": 1,
+      "f60": 1,
+      "f90": 1,
+      "nhip": 25,
       "rank": 46
     },
     {
-      "number": "57",
-      "score": 21.0,
-      "tong": "Tổng 2",
-      "is_cham_g7": "CÓ",
-      "in_pool": false,
-      "cham_g7": true,
-      "f30": 1,
-      "f60": 1,
-      "f90": 1,
-      "nhip": 20,
-      "rank": 47
-    },
-    {
-      "number": "75",
-      "score": 21.0,
-      "tong": "Tổng 2",
-      "is_cham_g7": "CÓ",
-      "in_pool": false,
-      "cham_g7": true,
-      "f30": 1,
-      "f60": 1,
-      "f90": 1,
-      "nhip": 23,
-      "rank": 48
-    },
-    {
-      "number": "93",
-      "score": 21.0,
-      "tong": "Tổng 2",
-      "is_cham_g7": "CÓ",
-      "in_pool": false,
-      "cham_g7": true,
-      "f30": 1,
-      "f60": 1,
-      "f90": 1,
-      "nhip": 6,
-      "rank": 49
-    },
-    {
-      "number": "00",
+      "number": "33",
       "score": 20.0,
-      "tong": "Tổng 0",
-      "is_cham_g7": "KHÔNG",
-      "in_pool": true,
-      "cham_g7": false,
-      "f30": 0,
-      "f60": 0,
-      "f90": 0,
-      "nhip": 115,
-      "rank": 50
-    },
-    {
-      "number": "23",
-      "score": 20.0,
-      "tong": "Tổng 5",
+      "tong": "Tổng 6",
       "is_cham_g7": "KHÔNG",
       "in_pool": true,
       "cham_g7": false,
@@ -8582,38 +8552,51 @@
       "f60": 0,
       "f90": 0,
       "nhip": 92,
-      "rank": 51
+      "rank": 47
     },
     {
-      "number": "27",
+      "number": "89",
       "score": 20.0,
-      "tong": "Tổng 9",
+      "tong": "Tổng 7",
       "is_cham_g7": "KHÔNG",
       "in_pool": true,
       "cham_g7": false,
       "f30": 0,
       "f60": 0,
       "f90": 0,
-      "nhip": 307,
-      "rank": 52
+      "nhip": 136,
+      "rank": 48
     },
     {
-      "number": "15",
-      "score": 19.0,
-      "tong": "Tổng 6",
-      "is_cham_g7": "CÓ",
-      "in_pool": false,
-      "cham_g7": true,
-      "f30": 1,
-      "f60": 2,
-      "f90": 2,
-      "nhip": 2,
-      "rank": 53
+      "number": "92",
+      "score": 20.0,
+      "tong": "Tổng 1",
+      "is_cham_g7": "KHÔNG",
+      "in_pool": true,
+      "cham_g7": false,
+      "f30": 0,
+      "f60": 0,
+      "f90": 0,
+      "nhip": 196,
+      "rank": 49
     },
     {
-      "number": "60",
+      "number": "98",
+      "score": 20.0,
+      "tong": "Tổng 7",
+      "is_cham_g7": "KHÔNG",
+      "in_pool": true,
+      "cham_g7": false,
+      "f30": 0,
+      "f60": 0,
+      "f90": 0,
+      "nhip": 999,
+      "rank": 50
+    },
+    {
+      "number": "04",
       "score": 17.0,
-      "tong": "Tổng 6",
+      "tong": "Tổng 4",
       "is_cham_g7": "CÓ",
       "in_pool": false,
       "cham_g7": true,
@@ -8621,46 +8604,33 @@
       "f60": 1,
       "f90": 2,
       "nhip": 0,
-      "rank": 54
+      "rank": 51
     },
     {
-      "number": "02",
+      "number": "78",
       "score": 16.0,
-      "tong": "Tổng 2",
-      "is_cham_g7": "KHÔNG",
-      "in_pool": false,
-      "cham_g7": false,
-      "f30": 1,
-      "f60": 1,
-      "f90": 1,
-      "nhip": 15,
-      "rank": 55
-    },
-    {
-      "number": "03",
-      "score": 16.0,
-      "tong": "Tổng 3",
-      "is_cham_g7": "KHÔNG",
-      "in_pool": false,
-      "cham_g7": false,
-      "f30": 1,
-      "f60": 1,
-      "f90": 1,
-      "nhip": 4,
-      "rank": 56
-    },
-    {
-      "number": "42",
-      "score": 12.0,
-      "tong": "Tổng 6",
+      "tong": "Tổng 5",
       "is_cham_g7": "CÓ",
       "in_pool": false,
       "cham_g7": true,
-      "f30": 0,
-      "f60": 2,
-      "f90": 3,
-      "nhip": 33,
-      "rank": 57
+      "f30": 1,
+      "f60": 1,
+      "f90": 1,
+      "nhip": 2,
+      "rank": 52
+    },
+    {
+      "number": "21",
+      "score": 12.0,
+      "tong": "Tổng 3",
+      "is_cham_g7": "CÓ",
+      "in_pool": false,
+      "cham_g7": true,
+      "f30": 1,
+      "f60": 1,
+      "f90": 2,
+      "nhip": 26,
+      "rank": 53
     },
     {
       "number": "67",
@@ -8672,21 +8642,34 @@
       "f30": 1,
       "f60": 1,
       "f90": 2,
-      "nhip": 28,
-      "rank": 58
+      "nhip": 29,
+      "rank": 54
     },
     {
-      "number": "38",
-      "score": 10.0,
-      "tong": "Tổng 1",
+      "number": "63",
+      "score": 11.0,
+      "tong": "Tổng 9",
       "is_cham_g7": "CÓ",
       "in_pool": false,
       "cham_g7": true,
       "f30": 0,
-      "f60": 1,
+      "f60": 2,
+      "f90": 2,
+      "nhip": 31,
+      "rank": 55
+    },
+    {
+      "number": "32",
+      "score": 10.0,
+      "tong": "Tổng 5",
+      "is_cham_g7": "KHÔNG",
+      "in_pool": false,
+      "cham_g7": false,
+      "f30": 1,
+      "f60": 2,
       "f90": 3,
-      "nhip": 34,
-      "rank": 59
+      "nhip": 28,
+      "rank": 56
     },
     {
       "number": "35",
@@ -8698,47 +8681,34 @@
       "f30": 0,
       "f60": 1,
       "f90": 2,
-      "nhip": 42,
-      "rank": 60
+      "nhip": 43,
+      "rank": 57
     },
     {
-      "number": "61",
+      "number": "87",
       "score": 9.0,
-      "tong": "Tổng 7",
+      "tong": "Tổng 5",
       "is_cham_g7": "CÓ",
       "in_pool": false,
       "cham_g7": true,
       "f30": 0,
       "f60": 1,
       "f90": 2,
-      "nhip": 48,
-      "rank": 61
+      "nhip": 40,
+      "rank": 58
     },
     {
-      "number": "66",
+      "number": "90",
       "score": 9.0,
-      "tong": "Tổng 2",
+      "tong": "Tổng 9",
       "is_cham_g7": "CÓ",
       "in_pool": false,
       "cham_g7": true,
       "f30": 0,
       "f60": 1,
       "f90": 2,
-      "nhip": 36,
-      "rank": 62
-    },
-    {
-      "number": "06",
-      "score": 8.0,
-      "tong": "Tổng 6",
-      "is_cham_g7": "CÓ",
-      "in_pool": false,
-      "cham_g7": true,
-      "f30": 0,
-      "f60": 1,
-      "f90": 1,
-      "nhip": 58,
-      "rank": 63
+      "nhip": 33,
+      "rank": 59
     },
     {
       "number": "08",
@@ -8750,21 +8720,34 @@
       "f30": 0,
       "f60": 1,
       "f90": 1,
-      "nhip": 50,
-      "rank": 64
+      "nhip": 51,
+      "rank": 60
     },
     {
-      "number": "39",
+      "number": "09",
       "score": 8.0,
-      "tong": "Tổng 2",
+      "tong": "Tổng 9",
       "is_cham_g7": "CÓ",
       "in_pool": false,
       "cham_g7": true,
       "f30": 0,
       "f60": 1,
       "f90": 1,
-      "nhip": 43,
-      "rank": 65
+      "nhip": 32,
+      "rank": 61
+    },
+    {
+      "number": "18",
+      "score": 8.0,
+      "tong": "Tổng 9",
+      "is_cham_g7": "CÓ",
+      "in_pool": false,
+      "cham_g7": true,
+      "f30": 0,
+      "f60": 1,
+      "f90": 1,
+      "nhip": 39,
+      "rank": 62
     },
     {
       "number": "53",
@@ -8776,34 +8759,47 @@
       "f30": 0,
       "f60": 1,
       "f90": 1,
-      "nhip": 41,
+      "nhip": 42,
+      "rank": 63
+    },
+    {
+      "number": "73",
+      "score": 8.0,
+      "tong": "Tổng 0",
+      "is_cham_g7": "CÓ",
+      "in_pool": false,
+      "cham_g7": true,
+      "f30": 0,
+      "f60": 1,
+      "f90": 1,
+      "nhip": 55,
+      "rank": 64
+    },
+    {
+      "number": "96",
+      "score": 8.0,
+      "tong": "Tổng 5",
+      "is_cham_g7": "CÓ",
+      "in_pool": false,
+      "cham_g7": true,
+      "f30": 0,
+      "f60": 1,
+      "f90": 1,
+      "nhip": 58,
+      "rank": 65
+    },
+    {
+      "number": "37",
+      "score": 7.0,
+      "tong": "Tổng 0",
+      "is_cham_g7": "CÓ",
+      "in_pool": false,
+      "cham_g7": true,
+      "f30": 0,
+      "f60": 0,
+      "f90": 2,
+      "nhip": 77,
       "rank": 66
-    },
-    {
-      "number": "56",
-      "score": 8.0,
-      "tong": "Tổng 1",
-      "is_cham_g7": "CÓ",
-      "in_pool": false,
-      "cham_g7": true,
-      "f30": 0,
-      "f60": 1,
-      "f90": 1,
-      "nhip": 35,
-      "rank": 67
-    },
-    {
-      "number": "88",
-      "score": 8.0,
-      "tong": "Tổng 6",
-      "is_cham_g7": "CÓ",
-      "in_pool": false,
-      "cham_g7": true,
-      "f30": 0,
-      "f60": 1,
-      "f90": 1,
-      "nhip": 44,
-      "rank": 68
     },
     {
       "number": "44",
@@ -8815,21 +8811,8 @@
       "f30": 0,
       "f60": 0,
       "f90": 2,
-      "nhip": 65,
-      "rank": 69
-    },
-    {
-      "number": "11",
-      "score": 6.0,
-      "tong": "Tổng 2",
-      "is_cham_g7": "CÓ",
-      "in_pool": false,
-      "cham_g7": true,
-      "f30": 0,
-      "f60": 0,
-      "f90": 1,
-      "nhip": 78,
-      "rank": 70
+      "nhip": 66,
+      "rank": 67
     },
     {
       "number": "12",
@@ -8841,21 +8824,47 @@
       "f30": 0,
       "f60": 0,
       "f90": 1,
-      "nhip": 62,
-      "rank": 71
+      "nhip": 63,
+      "rank": 68
     },
     {
-      "number": "52",
+      "number": "28",
       "score": 6.0,
-      "tong": "Tổng 7",
+      "tong": "Tổng 0",
+      "is_cham_g7": "KHÔNG",
+      "in_pool": false,
+      "cham_g7": false,
+      "f30": 1,
+      "f60": 1,
+      "f90": 1,
+      "nhip": 27,
+      "rank": 69
+    },
+    {
+      "number": "45",
+      "score": 6.0,
+      "tong": "Tổng 9",
       "is_cham_g7": "CÓ",
       "in_pool": false,
       "cham_g7": true,
       "f30": 0,
       "f60": 0,
       "f90": 1,
-      "nhip": 70,
-      "rank": 72
+      "nhip": 86,
+      "rank": 70
+    },
+    {
+      "number": "68",
+      "score": 6.0,
+      "tong": "Tổng 4",
+      "is_cham_g7": "CÓ",
+      "in_pool": false,
+      "cham_g7": true,
+      "f30": 0,
+      "f60": 0,
+      "f90": 1,
+      "nhip": 85,
+      "rank": 71
     },
     {
       "number": "80",
@@ -8867,112 +8876,151 @@
       "f30": 0,
       "f60": 0,
       "f90": 1,
-      "nhip": 87,
-      "rank": 73
+      "nhip": 88,
+      "rank": 72
     },
     {
-      "number": "99",
+      "number": "81",
       "score": 6.0,
-      "tong": "Tổng 8",
+      "tong": "Tổng 9",
       "is_cham_g7": "CÓ",
       "in_pool": false,
       "cham_g7": true,
       "f30": 0,
       "f60": 0,
       "f90": 1,
-      "nhip": 68,
+      "nhip": 72,
+      "rank": 73
+    },
+    {
+      "number": "00",
+      "score": 5.0,
+      "tong": "Tổng 0",
+      "is_cham_g7": "CÓ",
+      "in_pool": false,
+      "cham_g7": true,
+      "f30": 0,
+      "f60": 0,
+      "f90": 0,
+      "nhip": 116,
       "rank": 74
     },
     {
-      "number": "10",
+      "number": "05",
       "score": 5.0,
-      "tong": "Tổng 1",
+      "tong": "Tổng 5",
       "is_cham_g7": "CÓ",
       "in_pool": false,
       "cham_g7": true,
       "f30": 0,
       "f60": 0,
       "f90": 0,
-      "nhip": 112,
+      "nhip": 166,
       "rank": 75
     },
     {
-      "number": "16",
+      "number": "13",
       "score": 5.0,
-      "tong": "Tổng 7",
+      "tong": "Tổng 4",
       "is_cham_g7": "CÓ",
       "in_pool": false,
       "cham_g7": true,
       "f30": 0,
       "f60": 0,
       "f90": 0,
-      "nhip": 117,
+      "nhip": 91,
       "rank": 76
     },
     {
-      "number": "24",
+      "number": "19",
       "score": 5.0,
-      "tong": "Tổng 6",
+      "tong": "Tổng 0",
       "is_cham_g7": "CÓ",
       "in_pool": false,
       "cham_g7": true,
       "f30": 0,
       "f60": 0,
       "f90": 0,
-      "nhip": 245,
+      "nhip": 129,
       "rank": 77
     },
     {
-      "number": "34",
+      "number": "27",
       "score": 5.0,
-      "tong": "Tổng 7",
+      "tong": "Tổng 9",
       "is_cham_g7": "CÓ",
       "in_pool": false,
       "cham_g7": true,
       "f30": 0,
       "f60": 0,
       "f90": 0,
-      "nhip": 113,
+      "nhip": 308,
       "rank": 78
     },
     {
-      "number": "43",
+      "number": "30",
       "score": 5.0,
-      "tong": "Tổng 7",
+      "tong": "Tổng 3",
       "is_cham_g7": "CÓ",
       "in_pool": false,
       "cham_g7": true,
       "f30": 0,
       "f60": 0,
       "f90": 0,
-      "nhip": 93,
+      "nhip": 276,
       "rank": 79
     },
     {
-      "number": "47",
+      "number": "31",
       "score": 5.0,
-      "tong": "Tổng 1",
+      "tong": "Tổng 4",
       "is_cham_g7": "CÓ",
       "in_pool": false,
       "cham_g7": true,
       "f30": 0,
       "f60": 0,
       "f90": 0,
-      "nhip": 109,
+      "nhip": 999,
       "rank": 80
     },
     {
-      "number": "48",
+      "number": "36",
       "score": 5.0,
-      "tong": "Tổng 2",
+      "tong": "Tổng 9",
       "is_cham_g7": "CÓ",
       "in_pool": false,
       "cham_g7": true,
       "f30": 0,
       "f60": 0,
       "f90": 0,
-      "nhip": 212,
+      "nhip": 152,
       "rank": 81
+    },
+    {
+      "number": "40",
+      "score": 5.0,
+      "tong": "Tổng 4",
+      "is_cham_g7": "CÓ",
+      "in_pool": false,
+      "cham_g7": true,
+      "f30": 0,
+      "f60": 0,
+      "f90": 0,
+      "nhip": 198,
+      "rank": 82
+    },
+    {
+      "number": "41",
+      "score": 5.0,
+      "tong": "Tổng 5",
+      "is_cham_g7": "CÓ",
+      "in_pool": false,
+      "cham_g7": true,
+      "f30": 0,
+      "f60": 0,
+      "f90": 0,
+      "nhip": 199,
+      "rank": 83
     },
     {
       "number": "49",
@@ -8984,8 +9032,34 @@
       "f30": 0,
       "f60": 0,
       "f90": 0,
-      "nhip": 259,
-      "rank": 82
+      "nhip": 260,
+      "rank": 84
+    },
+    {
+      "number": "50",
+      "score": 5.0,
+      "tong": "Tổng 5",
+      "is_cham_g7": "CÓ",
+      "in_pool": false,
+      "cham_g7": true,
+      "f30": 0,
+      "f60": 0,
+      "f90": 0,
+      "nhip": 177,
+      "rank": 85
+    },
+    {
+      "number": "55",
+      "score": 5.0,
+      "tong": "Tổng 0",
+      "is_cham_g7": "CÓ",
+      "in_pool": false,
+      "cham_g7": true,
+      "f30": 0,
+      "f60": 0,
+      "f90": 0,
+      "nhip": 155,
+      "rank": 86
     },
     {
       "number": "58",
@@ -8998,7 +9072,7 @@
       "f60": 0,
       "f90": 0,
       "nhip": 999,
-      "rank": 83
+      "rank": 87
     },
     {
       "number": "62",
@@ -9010,8 +9084,34 @@
       "f30": 0,
       "f60": 0,
       "f90": 0,
-      "nhip": 296,
-      "rank": 84
+      "nhip": 297,
+      "rank": 88
+    },
+    {
+      "number": "64",
+      "score": 5.0,
+      "tong": "Tổng 0",
+      "is_cham_g7": "CÓ",
+      "in_pool": false,
+      "cham_g7": true,
+      "f30": 0,
+      "f60": 0,
+      "f90": 0,
+      "nhip": 202,
+      "rank": 89
+    },
+    {
+      "number": "69",
+      "score": 5.0,
+      "tong": "Tổng 5",
+      "is_cham_g7": "CÓ",
+      "in_pool": false,
+      "cham_g7": true,
+      "f30": 0,
+      "f60": 0,
+      "f90": 0,
+      "nhip": 191,
+      "rank": 90
     },
     {
       "number": "71",
@@ -9023,21 +9123,8 @@
       "f30": 0,
       "f60": 0,
       "f90": 0,
-      "nhip": 138,
-      "rank": 85
-    },
-    {
-      "number": "74",
-      "score": 5.0,
-      "tong": "Tổng 1",
-      "is_cham_g7": "CÓ",
-      "in_pool": false,
-      "cham_g7": true,
-      "f30": 0,
-      "f60": 0,
-      "f90": 0,
-      "nhip": 294,
-      "rank": 86
+      "nhip": 139,
+      "rank": 91
     },
     {
       "number": "76",
@@ -9049,34 +9136,8 @@
       "f30": 0,
       "f60": 0,
       "f90": 0,
-      "nhip": 210,
-      "rank": 87
-    },
-    {
-      "number": "79",
-      "score": 5.0,
-      "tong": "Tổng 6",
-      "is_cham_g7": "CÓ",
-      "in_pool": false,
-      "cham_g7": true,
-      "f30": 0,
-      "f60": 0,
-      "f90": 0,
-      "nhip": 105,
-      "rank": 88
-    },
-    {
-      "number": "84",
-      "score": 5.0,
-      "tong": "Tổng 2",
-      "is_cham_g7": "CÓ",
-      "in_pool": false,
-      "cham_g7": true,
-      "f30": 0,
-      "f60": 0,
-      "f90": 0,
-      "nhip": 157,
-      "rank": 89
+      "nhip": 211,
+      "rank": 92
     },
     {
       "number": "85",
@@ -9088,34 +9149,21 @@
       "f30": 0,
       "f60": 0,
       "f90": 0,
-      "nhip": 134,
-      "rank": 90
-    },
-    {
-      "number": "89",
-      "score": 5.0,
-      "tong": "Tổng 7",
-      "is_cham_g7": "CÓ",
-      "in_pool": false,
-      "cham_g7": true,
-      "f30": 0,
-      "f60": 0,
-      "f90": 0,
       "nhip": 135,
-      "rank": 91
+      "rank": 93
     },
     {
-      "number": "92",
+      "number": "86",
       "score": 5.0,
-      "tong": "Tổng 1",
+      "tong": "Tổng 4",
       "is_cham_g7": "CÓ",
       "in_pool": false,
       "cham_g7": true,
       "f30": 0,
       "f60": 0,
       "f90": 0,
-      "nhip": 195,
-      "rank": 92
+      "nhip": 300,
+      "rank": 94
     },
     {
       "number": "94",
@@ -9127,98 +9175,72 @@
       "f30": 0,
       "f60": 0,
       "f90": 0,
-      "nhip": 131,
-      "rank": 93
-    },
-    {
-      "number": "97",
-      "score": 5.0,
-      "tong": "Tổng 6",
-      "is_cham_g7": "CÓ",
-      "in_pool": false,
-      "cham_g7": true,
-      "f30": 0,
-      "f60": 0,
-      "f90": 0,
-      "nhip": 137,
-      "rank": 94
-    },
-    {
-      "number": "98",
-      "score": 5.0,
-      "tong": "Tổng 7",
-      "is_cham_g7": "CÓ",
-      "in_pool": false,
-      "cham_g7": true,
-      "f30": 0,
-      "f60": 0,
-      "f90": 0,
-      "nhip": 999,
+      "nhip": 132,
       "rank": 95
     },
     {
-      "number": "07",
-      "score": 0.0,
-      "tong": "Tổng 7",
-      "is_cham_g7": "KHÔNG",
+      "number": "95",
+      "score": 5.0,
+      "tong": "Tổng 4",
+      "is_cham_g7": "CÓ",
       "in_pool": false,
-      "cham_g7": false,
+      "cham_g7": true,
       "f30": 0,
       "f60": 0,
       "f90": 0,
-      "nhip": 999,
+      "nhip": 247,
       "rank": 96
     },
     {
-      "number": "20",
-      "score": 0.0,
-      "tong": "Tổng 2",
+      "number": "22",
+      "score": 2.0,
+      "tong": "Tổng 4",
       "is_cham_g7": "KHÔNG",
       "in_pool": false,
       "cham_g7": false,
       "f30": 0,
       "f60": 0,
-      "f90": 0,
-      "nhip": 224,
+      "f90": 2,
+      "nhip": 60,
       "rank": 97
     },
     {
-      "number": "30",
-      "score": 0.0,
-      "tong": "Tổng 3",
+      "number": "99",
+      "score": 1.0,
+      "tong": "Tổng 8",
       "is_cham_g7": "KHÔNG",
       "in_pool": false,
       "cham_g7": false,
       "f30": 0,
       "f60": 0,
-      "f90": 0,
-      "nhip": 275,
+      "f90": 1,
+      "nhip": 69,
       "rank": 98
     },
     {
-      "number": "33",
+      "number": "23",
       "score": 0.0,
-      "tong": "Tổng 6",
+      "tong": "Tổng 5",
       "is_cham_g7": "KHÔNG",
       "in_pool": false,
       "cham_g7": false,
       "f30": 0,
       "f60": 0,
       "f90": 0,
-      "nhip": 91,
+      "nhip": 93,
       "rank": 99
     },
     {
-      "number": "70",
+      "number": "82",
       "score": 0.0,
-      "tong": "Tổng 7",
+      "tong": "Tổng 0",
       "is_cham_g7": "KHÔNG",
       "in_pool": false,
       "cham_g7": false,
       "f30": 0,
       "f60": 0,
       "f90": 0,
-      "nhip": 122,
+      "nhip": 228,
       "rank": 100
     }
   ],
@@ -9257,7 +9279,7 @@
     },
     {
       "head": "Đầu 0",
-      "freq": 24
+      "freq": 25
     },
     {
       "head": "Đầu 7",
@@ -9266,11 +9288,11 @@
   ],
   "tail_freq_2026": [
     {
-      "tail": "Đuôi 3",
-      "freq": 38
+      "tail": "Đuôi 4",
+      "freq": 39
     },
     {
-      "tail": "Đuôi 4",
+      "tail": "Đuôi 3",
       "freq": 38
     },
     {
@@ -9316,8 +9338,8 @@
       "freq": 41
     },
     {
-      "head": "Đầu 0",
-      "freq": 24
+      "head": "Đầu 7",
+      "freq": 23
     }
   ],
   "top_predicted_tails": [
@@ -9340,7 +9362,7 @@
       {
         "total_score": 16.5,
         "freq_30d": 6,
-        "nhip": 5,
+        "nhip": 6,
         "penalty": 0.0,
         "recovery_bonus": 4.5,
         "cycle_bonus": 0.0,
@@ -9350,29 +9372,17 @@
     [
       "5",
       {
-        "total_score": 12.5,
+        "total_score": 11.0,
         "freq_30d": 4,
-        "nhip": 7,
+        "nhip": 8,
         "penalty": 0.0,
-        "recovery_bonus": 4.5,
-        "cycle_bonus": 0.0,
-        "status_label": "Ngưỡng Phục Hồi 🔥"
+        "recovery_bonus": 0.0,
+        "cycle_bonus": 3.0,
+        "status_label": "Nhịp Vàng Chu Kỳ 🎯"
       }
     ],
     [
-      "0",
-      {
-        "total_score": 10.5,
-        "freq_30d": 3,
-        "nhip": 4,
-        "penalty": 0.0,
-        "recovery_bonus": 4.5,
-        "cycle_bonus": 0.0,
-        "status_label": "Ngưỡng Phục Hồi 🔥"
-      }
-    ],
-    [
-      "1",
+      "7",
       {
         "total_score": 7.0,
         "freq_30d": 4,
@@ -9388,7 +9398,7 @@
       {
         "total_score": 7.0,
         "freq_30d": 2,
-        "nhip": 6,
+        "nhip": 7,
         "penalty": 0.0,
         "recovery_bonus": 3.0,
         "cycle_bonus": 0.0,
@@ -9396,15 +9406,15 @@
       }
     ],
     [
-      "7",
+      "1",
       {
-        "total_score": 5.5,
-        "freq_30d": 4,
-        "nhip": 1,
-        "penalty": 2.5,
+        "total_score": 6.0,
+        "freq_30d": 3,
+        "nhip": 3,
+        "penalty": 0.0,
         "recovery_bonus": 0.0,
         "cycle_bonus": 0.0,
-        "status_label": "Bão Hòa (Mới Ra)"
+        "status_label": "Bình Thường"
       }
     ],
     [
@@ -9412,7 +9422,7 @@
       {
         "total_score": 5.0,
         "freq_30d": 1,
-        "nhip": 10,
+        "nhip": 11,
         "penalty": 0.0,
         "recovery_bonus": 0.0,
         "cycle_bonus": 3.0,
@@ -9420,11 +9430,23 @@
       }
     ],
     [
+      "0",
+      {
+        "total_score": 4.0,
+        "freq_30d": 4,
+        "nhip": 0,
+        "penalty": 4.0,
+        "recovery_bonus": 0.0,
+        "cycle_bonus": 0.0,
+        "status_label": "Bão Hòa (Mới Ra)"
+      }
+    ],
+    [
       "4",
       {
         "total_score": 4.0,
         "freq_30d": 2,
-        "nhip": 16,
+        "nhip": 17,
         "penalty": 0.0,
         "recovery_bonus": 0.0,
         "cycle_bonus": 0.0,
@@ -9434,10 +9456,10 @@
     [
       "6",
       {
-        "total_score": 2.0,
+        "total_score": 3.5,
         "freq_30d": 3,
-        "nhip": 0,
-        "penalty": 4.0,
+        "nhip": 1,
+        "penalty": 2.5,
         "recovery_bonus": 0.0,
         "cycle_bonus": 0.0,
         "status_label": "Bão Hòa (Mới Ra)"
@@ -9448,7 +9470,7 @@
       {
         "total_score": 0.0,
         "freq_30d": 1,
-        "nhip": 27,
+        "nhip": 28,
         "penalty": 2.0,
         "recovery_bonus": 0.0,
         "cycle_bonus": 0.0,
@@ -9460,13 +9482,13 @@
     [
       "1",
       {
-        "total_score": 12.5,
+        "total_score": 11.0,
         "freq_30d": 4,
-        "nhip": 7,
+        "nhip": 8,
         "penalty": 0.0,
-        "recovery_bonus": 4.5,
-        "cycle_bonus": 0.0,
-        "status_label": "Ngưỡng Phục Hồi 🔥"
+        "recovery_bonus": 0.0,
+        "cycle_bonus": 3.0,
+        "status_label": "Nhịp Vàng Chu Kỳ 🎯"
       }
     ],
     [
@@ -9474,7 +9496,7 @@
       {
         "total_score": 11.0,
         "freq_30d": 4,
-        "nhip": 14,
+        "nhip": 15,
         "penalty": 0.0,
         "recovery_bonus": 0.0,
         "cycle_bonus": 3.0,
@@ -9486,7 +9508,7 @@
       {
         "total_score": 10.5,
         "freq_30d": 3,
-        "nhip": 4,
+        "nhip": 5,
         "penalty": 0.0,
         "recovery_bonus": 4.5,
         "cycle_bonus": 0.0,
@@ -9498,19 +9520,7 @@
       {
         "total_score": 9.0,
         "freq_30d": 3,
-        "nhip": 11,
-        "penalty": 0.0,
-        "recovery_bonus": 0.0,
-        "cycle_bonus": 3.0,
-        "status_label": "Nhịp Vàng Chu Kỳ 🎯"
-      }
-    ],
-    [
-      "4",
-      {
-        "total_score": 9.0,
-        "freq_30d": 3,
-        "nhip": 8,
+        "nhip": 12,
         "penalty": 0.0,
         "recovery_bonus": 0.0,
         "cycle_bonus": 3.0,
@@ -9522,7 +9532,7 @@
       {
         "total_score": 9.0,
         "freq_30d": 3,
-        "nhip": 12,
+        "nhip": 13,
         "penalty": 0.0,
         "recovery_bonus": 0.0,
         "cycle_bonus": 3.0,
@@ -9534,7 +9544,7 @@
       {
         "total_score": 9.0,
         "freq_30d": 3,
-        "nhip": 9,
+        "nhip": 10,
         "penalty": 0.0,
         "recovery_bonus": 0.0,
         "cycle_bonus": 3.0,
@@ -9544,10 +9554,10 @@
     [
       "5",
       {
-        "total_score": 7.0,
+        "total_score": 8.0,
         "freq_30d": 4,
-        "nhip": 2,
-        "penalty": 1.0,
+        "nhip": 3,
+        "penalty": 0.0,
         "recovery_bonus": 0.0,
         "cycle_bonus": 0.0,
         "status_label": "Bình Thường"
@@ -9556,10 +9566,22 @@
     [
       "8",
       {
-        "total_score": 1.5,
+        "total_score": 3.0,
         "freq_30d": 2,
-        "nhip": 1,
-        "penalty": 2.5,
+        "nhip": 2,
+        "penalty": 1.0,
+        "recovery_bonus": 0.0,
+        "cycle_bonus": 0.0,
+        "status_label": "Bình Thường"
+      }
+    ],
+    [
+      "4",
+      {
+        "total_score": 2.0,
+        "freq_30d": 3,
+        "nhip": 0,
+        "penalty": 4.0,
         "recovery_bonus": 0.0,
         "cycle_bonus": 0.0,
         "status_label": "Bão Hòa (Mới Ra)"
@@ -9568,10 +9590,10 @@
     [
       "0",
       {
-        "total_score": -2.0,
+        "total_score": -0.5,
         "freq_30d": 1,
-        "nhip": 0,
-        "penalty": 4.0,
+        "nhip": 1,
+        "penalty": 2.5,
         "recovery_bonus": 0.0,
         "cycle_bonus": 0.0,
         "status_label": "Bão Hòa (Mới Ra)"
@@ -12768,290 +12790,238 @@
       "tail": "Đuôi 0",
       "pred_nums": "00, 01, 03, 04, 05, 06, 10, 13, 14, 15, 17, 18, 19, 23, 24, 25, 26, 27, 28, 29, 32, 33, 37, 38, 41, 42, 46, 47, 50, 51, 54, 55, 56, 57, 59, 60, 63, 64, 65, 67, 68, 69, 72, 73, 74, 75, 77, 78, 79, 81, 82, 83, 86, 87, 88, 91, 92, 93, 96, 97",
       "result": "TRÚNG 🎯"
+    },
+    {
+      "stt": 320,
+      "date": "Thứ Sáu ngày 20-11-2026",
+      "db": "06804",
+      "de": "04",
+      "head": "Đầu 0",
+      "tail": "Đuôi 4",
+      "pred_nums": "00, 01, 02, 03, 04, 05, 06, 08, 09, 13, 14, 15, 16, 17, 18, 19, 22, 23, 25, 26, 28, 29, 31, 32, 36, 37, 39, 40, 41, 45, 46, 50, 51, 54, 55, 57, 59, 61, 63, 64, 65, 66, 67, 68, 69, 72, 73, 75, 77, 78, 81, 82, 83, 86, 87, 90, 91, 93, 95, 96",
+      "result": "TRÚNG 🎯"
     }
   ],
-  "total_hits_2026": 196,
-  "hit_rate_2026": 61.44,
+  "total_hits_2026": 197,
+  "hit_rate_2026": 61.56,
   "frame_stats": {
     "1": {
-      "hits": 196,
-      "evals": 319,
-      "rate": 61.44
+      "hits": 197,
+      "evals": 320,
+      "rate": 61.56
     },
     "2": {
       "hits": 241,
-      "evals": 317,
-      "rate": 76.03
+      "evals": 318,
+      "rate": 75.79
     },
     "3": {
-      "hits": 265,
-      "evals": 317,
-      "rate": 83.6
+      "hits": 266,
+      "evals": 318,
+      "rate": 83.65
     }
   },
   "adaptive_frame": {
-    "last_completed_date": "Thứ Sáu ngày 20-11-2026",
-    "last_completed_de": "60",
+    "last_completed_date": "Thứ Bảy ngày 21-11-2026",
+    "last_completed_de": "04",
     "hit_n1_latest": true,
     "current_active_day": 1,
-    "last_result": "Kỳ gần nhất (Thứ Sáu ngày 20-11-2026) Đề về 60: 🎯 ĐÃ TRÚNG N1 → RESET CHUYỂN CHU KỲ MỚI",
+    "last_result": "Kỳ gần nhất (Thứ Bảy ngày 21-11-2026) Đề về 04: 🎯 ĐÃ TRÚNG N1 → RESET CHUYỂN CHU KỲ MỚI",
     "status_badge": "ĐÃ TRÚNG N1 → RESET CẦU MỚI",
     "dan_n1": [
-      "00",
       "01",
       "02",
       "03",
       "04",
-      "05",
       "06",
-      "08",
+      "07",
       "09",
+      "10",
+      "11",
       "13",
-      "14",
       "15",
       "16",
-      "17",
       "18",
-      "19",
+      "20",
       "22",
-      "23",
+      "24",
       "25",
-      "26",
-      "28",
+      "27",
       "29",
       "31",
-      "32",
+      "34",
       "36",
-      "37",
+      "38",
       "39",
       "40",
-      "41",
+      "42",
+      "43",
       "45",
-      "46",
-      "50",
+      "47",
+      "48",
       "51",
+      "52",
       "54",
-      "55",
+      "56",
       "57",
       "59",
+      "60",
       "61",
       "63",
-      "64",
       "65",
       "66",
-      "67",
       "68",
-      "69",
+      "70",
       "72",
-      "73",
+      "74",
       "75",
       "77",
-      "78",
+      "79",
       "81",
-      "82",
       "83",
+      "84",
       "86",
-      "87",
+      "88",
+      "89",
       "90",
-      "91",
+      "92",
       "93",
       "95",
-      "96"
+      "97",
+      "98"
     ],
     "dan_n2": [
       "01",
       "02",
-      "03",
-      "04",
-      "05",
+      "06",
+      "07",
       "09",
-      "13",
-      "14",
-      "16",
+      "15",
       "18",
-      "19",
-      "23",
       "25",
-      "28",
-      "31",
-      "32",
-      "36",
-      "37",
-      "39",
-      "40",
-      "41",
+      "29",
+      "42",
       "45",
-      "46",
-      "54",
-      "57",
-      "59",
-      "63",
-      "68",
-      "72",
-      "73",
-      "75",
-      "81",
-      "87",
-      "90",
-      "91",
-      "96"
-    ],
-    "dan_n3": [
-      "00",
-      "14",
-      "23",
-      "28",
-      "37",
-      "39",
-      "40",
-      "41",
-      "45",
-      "46",
-      "50",
       "51",
+      "52",
       "54",
-      "55",
+      "56",
       "57",
       "59",
+      "60",
       "61",
       "63",
-      "64",
+      "65",
       "66",
-      "68",
-      "69",
+      "70",
       "72",
-      "73",
+      "74",
       "75",
       "77",
-      "78",
-      "81",
-      "82",
-      "86",
-      "87",
+      "79",
+      "83",
+      "84",
+      "89",
       "90",
-      "91",
+      "92",
       "93",
-      "95",
-      "96"
+      "97",
+      "98"
     ],
-    "bt_n1": "32",
+    "dan_n3": [
+      "01",
+      "04",
+      "06",
+      "09",
+      "10",
+      "11",
+      "15",
+      "16",
+      "18",
+      "20",
+      "22",
+      "24",
+      "27",
+      "29",
+      "34",
+      "38",
+      "39",
+      "42",
+      "43",
+      "45",
+      "47",
+      "48",
+      "57",
+      "61",
+      "63",
+      "65",
+      "70",
+      "72",
+      "74",
+      "75",
+      "77",
+      "84",
+      "89",
+      "90",
+      "93",
+      "98"
+    ],
+    "bt_n1": "51",
     "tt_n1": [
-      "32",
-      "46",
-      "14",
-      "28"
+      "51",
+      "72",
+      "65",
+      "57"
     ],
     "d9_n1": [
-      "23",
-      "57",
-      "01",
-      "03",
-      "32",
-      "46",
-      "14",
-      "28",
-      "37"
-    ],
-    "bt_n2": "32",
-    "tt_n2": [
-      "32",
-      "46",
-      "14",
-      "28"
-    ],
-    "d9_n2": [
-      "23",
-      "57",
-      "01",
-      "03",
-      "32",
-      "46",
-      "14",
-      "28",
-      "37"
-    ],
-    "bt_n3": "57",
-    "tt_n3": [
-      "57",
-      "96",
-      "72",
-      "91"
-    ],
-    "d9_n3": [
-      "23",
       "51",
       "57",
-      "96",
+      "77",
       "72",
-      "91",
-      "87",
       "75",
-      "73"
+      "65",
+      "54",
+      "56",
+      "90"
     ],
-    "stl_pair": "19, 46",
+    "bt_n2": "51",
+    "tt_n2": [
+      "51",
+      "72",
+      "65",
+      "57"
+    ],
+    "d9_n2": [
+      "51",
+      "57",
+      "77",
+      "72",
+      "75",
+      "65",
+      "54",
+      "56",
+      "90"
+    ],
+    "bt_n3": "72",
+    "tt_n3": [
+      "72",
+      "65",
+      "20",
+      "75"
+    ],
+    "d9_n3": [
+      "27",
+      "57",
+      "77",
+      "72",
+      "75",
+      "65",
+      "20",
+      "34",
+      "43"
+    ],
+    "stl_pair": "04, 11",
     "date_to_dan60_map": {
-      "Chủ nhật ngày 23-08-2026": [
-        "00",
-        "01",
-        "03",
-        "04",
-        "05",
-        "06",
-        "09",
-        "10",
-        "12",
-        "13",
-        "14",
-        "15",
-        "18",
-        "19",
-        "21",
-        "22",
-        "23",
-        "24",
-        "26",
-        "27",
-        "28",
-        "29",
-        "30",
-        "31",
-        "32",
-        "33",
-        "36",
-        "38",
-        "39",
-        "40",
-        "41",
-        "42",
-        "43",
-        "44",
-        "45",
-        "47",
-        "50",
-        "51",
-        "54",
-        "56",
-        "59",
-        "60",
-        "63",
-        "65",
-        "67",
-        "68",
-        "72",
-        "74",
-        "77",
-        "78",
-        "79",
-        "81",
-        "83",
-        "86",
-        "90",
-        "91",
-        "92",
-        "95",
-        "96",
-        "97"
-      ],
       "Thứ hai ngày 24-08-2026": [
         "00",
         "01",
@@ -18569,47 +18539,71 @@
         "93",
         "96",
         "97"
+      ],
+      "Thứ Bảy ngày 21-11-2026": [
+        "00",
+        "01",
+        "02",
+        "03",
+        "04",
+        "05",
+        "06",
+        "08",
+        "09",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "22",
+        "23",
+        "25",
+        "26",
+        "28",
+        "29",
+        "31",
+        "32",
+        "36",
+        "37",
+        "39",
+        "40",
+        "41",
+        "45",
+        "46",
+        "50",
+        "51",
+        "54",
+        "55",
+        "57",
+        "59",
+        "61",
+        "63",
+        "64",
+        "65",
+        "66",
+        "67",
+        "68",
+        "69",
+        "72",
+        "73",
+        "75",
+        "77",
+        "78",
+        "81",
+        "82",
+        "83",
+        "86",
+        "87",
+        "90",
+        "91",
+        "93",
+        "95",
+        "96"
       ]
     },
     "date_to_dan_n2_map": {
-      "Thứ bảy ngày 22-08-2026": [
-        "03",
-        "08",
-        "09",
-        "12",
-        "17",
-        "18",
-        "21",
-        "26",
-        "29",
-        "30",
-        "35",
-        "38",
-        "39",
-        "44",
-        "47",
-        "49",
-        "51",
-        "53",
-        "54",
-        "58",
-        "60",
-        "62",
-        "65",
-        "67",
-        "71",
-        "76",
-        "79",
-        "80",
-        "81",
-        "83",
-        "85",
-        "92",
-        "94",
-        "96",
-        "98",
-        "99"
-      ],
       "Chủ nhật ngày 23-08-2026": [
         "01",
         "03",
@@ -21991,6 +21985,44 @@
         "93",
         "95",
         "98"
+      ],
+      "Thứ Sáu ngày 20-11-2026": [
+        "01",
+        "05",
+        "06",
+        "10",
+        "14",
+        "15",
+        "19",
+        "23",
+        "24",
+        "25",
+        "27",
+        "28",
+        "29",
+        "32",
+        "33",
+        "37",
+        "38",
+        "41",
+        "42",
+        "46",
+        "47",
+        "51",
+        "54",
+        "56",
+        "57",
+        "65",
+        "72",
+        "73",
+        "74",
+        "75",
+        "83",
+        "87",
+        "88",
+        "91",
+        "93",
+        "96"
       ]
     }
   },
@@ -51792,60 +51824,154 @@
         "15",
         "75"
       ]
+    },
+    {
+      "stt": 318,
+      "start_date": "Thứ Tư ngày 18-11-2026",
+      "date_n1": "Thứ Năm ngày 19-11-2026",
+      "date_n2": "Thứ Sáu ngày 20-11-2026",
+      "date_n3": "Thứ Bảy ngày 21-11-2026",
+      "de_n1": "78",
+      "hit_n1": "Không",
+      "de_n2": "60",
+      "hit_n2": "Không",
+      "de_n3": "04",
+      "hit_n3": "Trúng",
+      "stl_pair": "01, 15",
+      "stl_hit": "TRƯỢT ❌",
+      "frame_result": "TRÚNG N3 (Siêu Lọc 🎯)",
+      "pred_n1": "01, 02, 03, 04, 06, 07, 09, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 25, 26, 27, 29, 31, 34, 36, 38, 39, 40, 43, 45, 48, 51, 52, 54, 56, 57, 58, 59, 61, 63, 65, 66, 67, 68, 70, 71, 72, 75, 77, 81, 83, 84, 85, 86, 88, 89, 90, 93, 95, 98",
+      "pred_n2": "01, 05, 06, 10, 14, 15, 19, 23, 24, 25, 27, 28, 29, 32, 33, 37, 38, 41, 42, 46, 47, 51, 54, 56, 57, 65, 72, 73, 74, 75, 83, 87, 88, 91, 93, 96",
+      "pred_n3": "01, 02, 03, 04, 09, 13, 14, 16, 18, 23, 25, 28, 31, 32, 36, 37, 39, 40, 45, 46, 51, 54, 57, 59, 61, 63, 68, 72, 75, 81, 86, 90, 91, 93, 95, 96",
+      "sz_n1": 60,
+      "sz_n2": 36,
+      "sz_n3": 36,
+      "bt_n1": "57",
+      "tt_n1": [
+        "57",
+        "72",
+        "21",
+        "59"
+      ],
+      "d9_n1": [
+        "51",
+        "59",
+        "57",
+        "21",
+        "29",
+        "27",
+        "71",
+        "77",
+        "75"
+      ],
+      "bt_n2": "14",
+      "tt_n2": [
+        "14",
+        "51",
+        "38",
+        "29"
+      ],
+      "d9_n2": [
+        "27",
+        "24",
+        "51",
+        "57",
+        "54",
+        "41",
+        "47",
+        "14",
+        "15"
+      ],
+      "bt_n3": "14",
+      "tt_n3": [
+        "14",
+        "32",
+        "57",
+        "09"
+      ],
+      "d9_n3": [
+        "23",
+        "51",
+        "57",
+        "01",
+        "03",
+        "14",
+        "32",
+        "09",
+        "04"
+      ],
+      "active_bt": "14",
+      "active_tt": [
+        "14",
+        "32",
+        "57",
+        "09"
+      ],
+      "active_d9": [
+        "23",
+        "51",
+        "57",
+        "01",
+        "03",
+        "14",
+        "32",
+        "09",
+        "04"
+      ]
     }
   ],
   "frame3_summary": {
-    "total_frames": 317,
+    "total_frames": 318,
     "n1_hits": 195,
     "n2_hits": 46,
-    "n3_hits": 24,
+    "n3_hits": 25,
     "n2_super_hits": 46,
-    "n3_super_hits": 24,
-    "n2_n3_super_hits": 70,
-    "n2_n3_super_rate": 22.08,
-    "n2_n3_super_rate_when_miss_n1": 57.38,
+    "n3_super_hits": 25,
+    "n2_n3_super_hits": 71,
+    "n2_n3_super_rate": 22.33,
+    "n2_n3_super_rate_when_miss_n1": 57.72,
     "stl_hits": 19,
-    "stl_rate": 5.99,
-    "total_frame_hits": 265,
-    "frame_hit_rate": 83.6,
+    "stl_rate": 5.97,
+    "total_frame_hits": 266,
+    "frame_hit_rate": 83.65,
     "frame_misses": 52,
-    "frame_miss_rate": 16.4
+    "frame_miss_rate": 16.35
   },
   "top3_dau_duoi_summary": {
-    "total_evals": 319,
-    "total_f3_evals": 317,
-    "head_hits_1day": 94,
-    "head_rate_1day": 29.47,
+    "total_evals": 320,
+    "total_f3_evals": 318,
+    "head_hits_1day": 95,
+    "head_rate_1day": 29.69,
     "tail_hits_1day": 80,
-    "tail_rate_1day": 25.08,
+    "tail_rate_1day": 25.0,
     "combined_hits_1day": 23,
-    "combined_rate_1day": 7.21,
-    "either_hits_1day": 151,
-    "either_rate_1day": 47.34,
-    "f3_head_hits": 215,
-    "f3_head_rate": 67.82,
+    "combined_rate_1day": 7.19,
+    "either_hits_1day": 152,
+    "either_rate_1day": 47.5,
+    "f3_head_hits": 216,
+    "f3_head_rate": 67.92,
     "f3_tail_hits": 187,
-    "f3_tail_rate": 58.99,
+    "f3_tail_rate": 58.81,
     "f3_combined_hits": 70,
-    "f3_combined_rate": 22.08,
-    "top4_head_hits_1day": 125,
-    "top4_head_rate_1day": 39.18,
+    "f3_combined_rate": 22.01,
+    "top4_head_hits_1day": 126,
+    "top4_head_rate_1day": 39.38,
     "top4_tail_hits_1day": 107,
-    "top4_tail_rate_1day": 33.54,
+    "top4_tail_rate_1day": 33.44,
     "top4_comb_hits_1day": 42,
-    "top4_comb_rate_1day": 13.17,
-    "f3_top4_head_rate": 78.55,
-    "f3_top4_tail_rate": 72.24,
-    "f3_top4_comb_rate": 36.28,
-    "top5_head_hits_1day": 156,
-    "top5_head_rate_1day": 48.9,
-    "top5_tail_hits_1day": 137,
-    "top5_tail_rate_1day": 42.95,
-    "top5_comb_hits_1day": 65,
-    "top5_comb_rate_1day": 20.38,
-    "f3_top5_head_rate": 86.75,
-    "f3_top5_tail_rate": 80.76,
-    "f3_top5_comb_rate": 51.74
+    "top4_comb_rate_1day": 13.12,
+    "f3_top4_head_rate": 78.62,
+    "f3_top4_tail_rate": 72.33,
+    "f3_top4_comb_rate": 36.48,
+    "top5_head_hits_1day": 157,
+    "top5_head_rate_1day": 49.06,
+    "top5_tail_hits_1day": 138,
+    "top5_tail_rate_1day": 43.12,
+    "top5_comb_hits_1day": 66,
+    "top5_comb_rate_1day": 20.62,
+    "f3_top5_head_rate": 86.79,
+    "f3_top5_tail_rate": 80.82,
+    "f3_top5_comb_rate": 51.89
   },
   "history_top3_dau_duoi_records": [
     {
@@ -56632,14 +56758,29 @@
       "pred_9_nums": "21, 24, 27, 41, 44, 47, 51, 54, 57",
       "result_combined_1day": "TRƯỢT ❌",
       "result_combined_3day": "TRƯỢT KHUNG ❌"
+    },
+    {
+      "stt": 320,
+      "date": "Thứ Sáu ngày 20-11-2026",
+      "db": "06804",
+      "de": "04",
+      "head": "0",
+      "tail": "4",
+      "pred_heads": "2, 5, 0",
+      "result_head_1day": "TRÚNG 🎯",
+      "pred_tails": "1, 7, 3",
+      "result_tail_1day": "TRƯỢT ❌",
+      "pred_9_nums": "01, 03, 07, 21, 23, 27, 51, 53, 57",
+      "result_combined_1day": "TRƯỢT ❌",
+      "result_combined_3day": "TRƯỢT KHUNG ❌"
     }
   ],
   "head_digit_performance": [
     {
       "digit": "0",
-      "recs": 62,
-      "hits": 3,
-      "rate": 4.84
+      "recs": 63,
+      "hits": 4,
+      "rate": 6.35
     },
     {
       "digit": "1",
@@ -56649,9 +56790,9 @@
     },
     {
       "digit": "2",
-      "recs": 103,
+      "recs": 104,
       "hits": 11,
-      "rate": 10.68
+      "rate": 10.58
     },
     {
       "digit": "3",
@@ -56667,9 +56808,9 @@
     },
     {
       "digit": "5",
-      "recs": 129,
+      "recs": 130,
       "hits": 16,
-      "rate": 12.4
+      "rate": 12.31
     },
     {
       "digit": "6",
@@ -56705,9 +56846,9 @@
     },
     {
       "digit": "1",
-      "recs": 110,
+      "recs": 111,
       "hits": 9,
-      "rate": 8.18
+      "rate": 8.11
     },
     {
       "digit": "2",
@@ -56717,9 +56858,9 @@
     },
     {
       "digit": "3",
-      "recs": 122,
+      "recs": 123,
       "hits": 9,
-      "rate": 7.38
+      "rate": 7.32
     },
     {
       "digit": "4",
@@ -56741,9 +56882,9 @@
     },
     {
       "digit": "7",
-      "recs": 124,
+      "recs": 125,
       "hits": 14,
-      "rate": 11.29
+      "rate": 11.2
     },
     {
       "digit": "8",
@@ -56760,246 +56901,246 @@
   ],
   "top_20_3d": [
     {
-      "number_3d": "014",
+      "number_3d": "051",
       "cang_3d": 0,
-      "de_2d": "14",
-      "score": 56.4
+      "de_2d": "51",
+      "score": 57.6
     },
     {
-      "number_3d": "214",
+      "number_3d": "251",
       "cang_3d": 2,
-      "de_2d": "14",
-      "score": 56.4
+      "de_2d": "51",
+      "score": 57.6
     },
     {
-      "number_3d": "414",
+      "number_3d": "451",
       "cang_3d": 4,
-      "de_2d": "14",
-      "score": 56.4
+      "de_2d": "51",
+      "score": 57.6
     },
     {
-      "number_3d": "514",
+      "number_3d": "551",
       "cang_3d": 5,
-      "de_2d": "14",
-      "score": 56.4
+      "de_2d": "51",
+      "score": 57.6
     },
     {
-      "number_3d": "714",
+      "number_3d": "751",
       "cang_3d": 7,
-      "de_2d": "14",
-      "score": 56.4
+      "de_2d": "51",
+      "score": 57.6
     },
     {
-      "number_3d": "046",
+      "number_3d": "015",
       "cang_3d": 0,
-      "de_2d": "46",
-      "score": 56.4
+      "de_2d": "15",
+      "score": 52.8
     },
     {
-      "number_3d": "246",
+      "number_3d": "215",
       "cang_3d": 2,
-      "de_2d": "46",
-      "score": 56.4
+      "de_2d": "15",
+      "score": 52.8
     },
     {
-      "number_3d": "446",
+      "number_3d": "415",
       "cang_3d": 4,
-      "de_2d": "46",
-      "score": 56.4
+      "de_2d": "15",
+      "score": 52.8
     },
     {
-      "number_3d": "546",
+      "number_3d": "515",
       "cang_3d": 5,
-      "de_2d": "46",
-      "score": 56.4
+      "de_2d": "15",
+      "score": 52.8
     },
     {
-      "number_3d": "746",
+      "number_3d": "715",
       "cang_3d": 7,
-      "de_2d": "46",
-      "score": 56.4
+      "de_2d": "15",
+      "score": 52.8
     },
     {
-      "number_3d": "054",
+      "number_3d": "065",
       "cang_3d": 0,
-      "de_2d": "54",
-      "score": 56.4
+      "de_2d": "65",
+      "score": 52.8
     },
     {
-      "number_3d": "254",
+      "number_3d": "265",
       "cang_3d": 2,
-      "de_2d": "54",
-      "score": 56.4
+      "de_2d": "65",
+      "score": 52.8
     },
     {
-      "number_3d": "454",
+      "number_3d": "465",
       "cang_3d": 4,
-      "de_2d": "54",
-      "score": 56.4
+      "de_2d": "65",
+      "score": 52.8
     },
     {
-      "number_3d": "554",
+      "number_3d": "565",
       "cang_3d": 5,
-      "de_2d": "54",
-      "score": 56.4
+      "de_2d": "65",
+      "score": 52.8
     },
     {
-      "number_3d": "754",
+      "number_3d": "765",
       "cang_3d": 7,
-      "de_2d": "54",
-      "score": 56.4
+      "de_2d": "65",
+      "score": 52.8
     },
     {
-      "number_3d": "059",
+      "number_3d": "029",
       "cang_3d": 0,
-      "de_2d": "59",
-      "score": 52.8
+      "de_2d": "29",
+      "score": 51.6
     },
     {
-      "number_3d": "259",
+      "number_3d": "229",
       "cang_3d": 2,
-      "de_2d": "59",
-      "score": 52.8
+      "de_2d": "29",
+      "score": 51.6
     },
     {
-      "number_3d": "459",
+      "number_3d": "429",
       "cang_3d": 4,
-      "de_2d": "59",
-      "score": 52.8
+      "de_2d": "29",
+      "score": 51.6
     },
     {
-      "number_3d": "559",
+      "number_3d": "529",
       "cang_3d": 5,
-      "de_2d": "59",
-      "score": 52.8
+      "de_2d": "29",
+      "score": 51.6
     },
     {
-      "number_3d": "759",
+      "number_3d": "729",
       "cang_3d": 7,
-      "de_2d": "59",
-      "score": 52.8
+      "de_2d": "29",
+      "score": 51.6
     }
   ],
   "top_20_4d": [
     {
-      "number_4d": "0014",
+      "number_4d": "0051",
       "cang_4d": 0,
-      "num_3d": "014",
-      "score": 62.0
+      "num_3d": "051",
+      "score": 63.4
     },
     {
-      "number_4d": "2014",
+      "number_4d": "2051",
       "cang_4d": 2,
-      "num_3d": "014",
-      "score": 62.0
+      "num_3d": "051",
+      "score": 63.4
     },
     {
-      "number_4d": "0214",
+      "number_4d": "0251",
       "cang_4d": 0,
-      "num_3d": "214",
-      "score": 62.0
+      "num_3d": "251",
+      "score": 63.4
     },
     {
-      "number_4d": "2214",
+      "number_4d": "2251",
       "cang_4d": 2,
-      "num_3d": "214",
-      "score": 62.0
+      "num_3d": "251",
+      "score": 63.4
     },
     {
-      "number_4d": "0414",
+      "number_4d": "0451",
       "cang_4d": 0,
-      "num_3d": "414",
-      "score": 62.0
+      "num_3d": "451",
+      "score": 63.4
     },
     {
-      "number_4d": "2414",
+      "number_4d": "2451",
       "cang_4d": 2,
-      "num_3d": "414",
-      "score": 62.0
+      "num_3d": "451",
+      "score": 63.4
     },
     {
-      "number_4d": "0514",
+      "number_4d": "0551",
       "cang_4d": 0,
-      "num_3d": "514",
-      "score": 62.0
+      "num_3d": "551",
+      "score": 63.4
     },
     {
-      "number_4d": "2514",
+      "number_4d": "2551",
       "cang_4d": 2,
-      "num_3d": "514",
-      "score": 62.0
+      "num_3d": "551",
+      "score": 63.4
     },
     {
-      "number_4d": "0714",
+      "number_4d": "0751",
       "cang_4d": 0,
-      "num_3d": "714",
-      "score": 62.0
+      "num_3d": "751",
+      "score": 63.4
     },
     {
-      "number_4d": "2714",
+      "number_4d": "2751",
       "cang_4d": 2,
-      "num_3d": "714",
-      "score": 62.0
+      "num_3d": "751",
+      "score": 63.4
     },
     {
-      "number_4d": "0046",
+      "number_4d": "0015",
       "cang_4d": 0,
-      "num_3d": "046",
-      "score": 62.0
+      "num_3d": "015",
+      "score": 58.1
     },
     {
-      "number_4d": "2046",
+      "number_4d": "2015",
       "cang_4d": 2,
-      "num_3d": "046",
-      "score": 62.0
+      "num_3d": "015",
+      "score": 58.1
     },
     {
-      "number_4d": "0246",
+      "number_4d": "0215",
       "cang_4d": 0,
-      "num_3d": "246",
-      "score": 62.0
+      "num_3d": "215",
+      "score": 58.1
     },
     {
-      "number_4d": "2246",
+      "number_4d": "2215",
       "cang_4d": 2,
-      "num_3d": "246",
-      "score": 62.0
+      "num_3d": "215",
+      "score": 58.1
     },
     {
-      "number_4d": "0446",
+      "number_4d": "0415",
       "cang_4d": 0,
-      "num_3d": "446",
-      "score": 62.0
+      "num_3d": "415",
+      "score": 58.1
     },
     {
-      "number_4d": "2446",
+      "number_4d": "2415",
       "cang_4d": 2,
-      "num_3d": "446",
-      "score": 62.0
+      "num_3d": "415",
+      "score": 58.1
     },
     {
-      "number_4d": "0546",
+      "number_4d": "0515",
       "cang_4d": 0,
-      "num_3d": "546",
-      "score": 62.0
+      "num_3d": "515",
+      "score": 58.1
     },
     {
-      "number_4d": "2546",
+      "number_4d": "2515",
       "cang_4d": 2,
-      "num_3d": "546",
-      "score": 62.0
+      "num_3d": "515",
+      "score": 58.1
     },
     {
-      "number_4d": "0746",
+      "number_4d": "0715",
       "cang_4d": 0,
-      "num_3d": "746",
-      "score": 62.0
+      "num_3d": "715",
+      "score": 58.1
     },
     {
-      "number_4d": "2746",
+      "number_4d": "2715",
       "cang_4d": 2,
-      "num_3d": "746",
-      "score": 62.0
+      "num_3d": "715",
+      "score": 58.1
     }
   ],
   "history_3d_4d_records": [
@@ -60830,6 +60971,18 @@
       "result_3d_matrix": "TRƯỢT ❌",
       "pred_4d_top20": "... (200 số)",
       "result_4d": "TRƯỢT ❌"
+    },
+    {
+      "stt": 320,
+      "date": "Thứ Sáu ngày 20-11-2026",
+      "db": "06804",
+      "actual_3d": "804",
+      "actual_4d": "6804",
+      "pred_3d_top20": "001, 014, 015, 017, 021, 025, 026, 028, 029, 042... (100 số)",
+      "result_3d_top20": "TRƯỢT ❌",
+      "result_3d_matrix": "TRƯỢT ❌",
+      "pred_4d_top20": "... (200 số)",
+      "result_4d": "TRƯỢT ❌"
     }
   ],
   "dow_model": {
@@ -60895,7 +61048,7 @@
         }
       },
       "4": {
-        "total_evals": 46,
+        "total_evals": 47,
         "ranking": [
           "g7_3",
           "g7_4",
@@ -60904,9 +61057,9 @@
         ],
         "hits_map": {
           "g7_3": 15,
-          "g7_2": 8,
+          "g7_2": 9,
           "g7_4": 11,
-          "g7_1": 4
+          "g7_1": 5
         }
       },
       "5": {
@@ -73325,7 +73478,7 @@
         ],
         "hit_1d": "TRƯỢT ❌",
         "hit_ha_so": "TRƯỢT ❌",
-        "res_f3": "TRƯỢT KHUNG ❌"
+        "res_f3": "TRÚNG N2 🎯"
       },
       {
         "stt": 319,
@@ -73365,6 +73518,45 @@
         "hit_1d": "TRÚNG N1 🎯",
         "hit_ha_so": "TRƯỢT ❌",
         "res_f3": "TRƯỢT KHUNG ❌"
+      },
+      {
+        "stt": 320,
+        "date": "Thứ Bảy ngày 21-11-2026",
+        "dow_name": "Thứ Sáu",
+        "db": "06804",
+        "de": "04",
+        "g7_top2": "G7.1, G7.4",
+        "target_sums_str": "Tổng 0, Tổng 2, Tổng 4, Tổng 5, Tổng 7, Tổng 9",
+        "cham_str": "01345689",
+        "corner_str": "Tổng 5-Bóng 0",
+        "dan_size": 59,
+        "dan_str": "00, 02, 04, 05, 07, 09, 11, 13, 14, 16, 18, 19, 20, 22, 23, 25, 28, 31, 32, 34, 36, 37, 39, 40, 41, 43, 45, 46, 48, 50, 52, 54, 55, 57, 59, 61, 63, 64, 66, 68, 69, 70, 72, 73, 75, 77, 78, 81, 82, 84, 86, 87, 89, 90, 91, 93, 95, 96, 98",
+        "dan_ha_so_str": "04, 09, 14, 18, 28, 32, 37, 45, 46, 54, 59, 63, 68, 73, 78, 81, 87, 90, 91, 96",
+        "dan_ha_so_ranked": [
+          "04",
+          "09",
+          "14",
+          "18",
+          "28",
+          "32",
+          "37",
+          "45",
+          "46",
+          "54",
+          "59",
+          "63",
+          "68",
+          "73",
+          "78",
+          "81",
+          "87",
+          "90",
+          "91",
+          "96"
+        ],
+        "hit_1d": "TRÚNG N1 🎯",
+        "hit_ha_so": "TRÚNG HỎA LỰC 🎯",
+        "res_f3": "TRƯỢT KHUNG ❌"
       }
     ],
     "dow_summary_stats": {
@@ -73377,12 +73569,12 @@
         "tot_ha_sz": 920
       },
       "4": {
-        "evals": 46,
-        "hits_1d": 27,
-        "hits_ha_so": 9,
+        "evals": 47,
+        "hits_1d": 28,
+        "hits_ha_so": 10,
         "hits_f3": 45,
-        "tot_dan_sz": 2866,
-        "tot_ha_sz": 916
+        "tot_dan_sz": 2925,
+        "tot_ha_sz": 936
       },
       "5": {
         "evals": 46,
@@ -73420,156 +73612,183 @@
         "evals": 45,
         "hits_1d": 24,
         "hits_ha_so": 7,
-        "hits_f3": 44,
+        "hits_f3": 45,
         "tot_dan_sz": 2763,
         "tot_ha_sz": 900
       }
     },
-    "hits_1d_total": 193,
-    "hits_ha_so_total": 56,
-    "hits_f3_total": 312,
-    "total_dan_sz_all": 19844,
-    "total_ha_sz_all": 6364,
-    "total_evals": 319,
-    "next_dow_name": "Thứ Bảy",
+    "hits_1d_total": 194,
+    "hits_ha_so_total": 57,
+    "hits_f3_total": 313,
+    "total_dan_sz_all": 19903,
+    "total_ha_sz_all": 6384,
+    "total_evals": 320,
+    "next_dow_name": "Chủ Nhật",
     "top2_next_g": [
       "g7_1",
-      "g7_4"
+      "g7_2"
     ],
     "next_target_sums": [
       0,
+      1,
       2,
-      4,
       5,
-      7,
-      9
+      6,
+      7
     ],
     "next_cham_set": [
       0,
       1,
-      3,
+      2,
       4,
       5,
       6,
-      8,
+      7,
       9
     ],
-    "corner_sum_next": 5,
-    "corner_bong_next": 0,
+    "corner_sum_next": 6,
+    "corner_bong_next": 1,
     "next_dan_giao_thoa": [
       "00",
+      "01",
       "02",
       "04",
       "05",
+      "06",
       "07",
       "09",
+      "10",
       "11",
-      "13",
       "14",
+      "15",
       "16",
       "18",
       "19",
       "20",
       "22",
       "23",
+      "24",
       "25",
       "28",
-      "31",
+      "29",
       "32",
       "34",
-      "36",
       "37",
+      "38",
       "39",
-      "40",
       "41",
+      "42",
       "43",
       "45",
       "46",
+      "47",
       "48",
       "50",
+      "51",
       "52",
       "54",
       "55",
+      "56",
       "57",
       "59",
+      "60",
       "61",
       "63",
       "64",
+      "65",
       "66",
-      "68",
       "69",
       "70",
       "72",
       "73",
+      "74",
       "75",
       "77",
       "78",
-      "81",
+      "79",
       "82",
+      "83",
       "84",
-      "86",
       "87",
+      "88",
       "89",
       "90",
       "91",
+      "92",
       "93",
-      "95",
       "96",
+      "97",
       "98"
     ],
     "next_dan_ha_so": [
+      "01",
       "04",
+      "06",
       "09",
-      "14",
+      "15",
       "18",
-      "28",
-      "32",
-      "37",
+      "22",
+      "29",
+      "42",
       "45",
-      "46",
+      "51",
       "54",
+      "56",
       "59",
+      "60",
       "63",
-      "68",
-      "73",
-      "78",
-      "81",
-      "87",
-      "90",
-      "91",
-      "96"
+      "65",
+      "72",
+      "77",
+      "90"
     ],
     "scored_next_dan": [
       [
-        "14",
-        19.0
+        "15",
+        24.5
       ],
       [
-        "46",
-        19.0
+        "65",
+        24.5
+      ],
+      [
+        "29",
+        20.0
+      ],
+      [
+        "51",
+        19.5
+      ],
+      [
+        "60",
+        19.5
       ],
       [
         "54",
         18.5
       ],
       [
-        "78",
-        18.5
+        "04",
+        17.5
       ],
       [
-        "32",
-        11.5
+        "72",
+        13.5
+      ],
+      [
+        "77",
+        12.5
       ],
       [
         "59",
         10.5
       ],
       [
-        "28",
-        7.5
+        "42",
+        8.0
       ],
       [
-        "91",
+        "01",
         7.5
       ],
       [
@@ -73577,12 +73796,12 @@
         7.0
       ],
       [
-        "87",
+        "90",
         5.0
       ],
       [
-        "90",
-        5.0
+        "06",
+        4.0
       ],
       [
         "09",
@@ -73593,20 +73812,12 @@
         4.0
       ],
       [
-        "73",
+        "56",
         4.0
       ],
       [
-        "96",
-        4.0
-      ],
-      [
-        "37",
+        "22",
         3.0
-      ],
-      [
-        "04",
-        2.0
       ],
       [
         "45",
@@ -73621,11 +73832,7 @@
         2.0
       ],
       [
-        "00",
-        1.0
-      ],
-      [
-        "05",
+        "10",
         1.0
       ],
       [
@@ -73633,11 +73840,11 @@
         1.0
       ],
       [
-        "19",
+        "24",
         1.0
       ],
       [
-        "23",
+        "27",
         1.0
       ],
       [
@@ -73653,27 +73860,15 @@
         1.0
       ],
       [
-        "41",
+        "47",
         1.0
       ],
       [
-        "50",
+        "74",
         1.0
       ],
       [
-        "55",
-        1.0
-      ],
-      [
-        "64",
-        1.0
-      ],
-      [
-        "69",
-        1.0
-      ],
-      [
-        "82",
+        "79",
         1.0
       ],
       [
@@ -73681,111 +73876,119 @@
         1.0
       ],
       [
+        "92",
+        1.0
+      ],
+      [
         "95",
+        1.0
+      ],
+      [
+        "97",
         1.0
       ]
     ],
     "num_nhip_full": {
-      "00": 115,
-      "01": 22,
-      "02": 15,
-      "03": 4,
-      "04": 72,
-      "05": 165,
-      "06": 58,
+      "00": 116,
+      "01": 23,
+      "02": 16,
+      "03": 5,
+      "04": 0,
+      "05": 166,
+      "06": 59,
       "07": 999,
-      "08": 50,
-      "09": 31,
-      "10": 112,
-      "11": 78,
-      "12": 62,
-      "13": 90,
-      "14": 13,
-      "15": 2,
-      "16": 117,
-      "17": 19,
-      "18": 38,
-      "19": 128,
-      "20": 224,
-      "21": 25,
-      "22": 59,
-      "23": 92,
-      "24": 245,
-      "25": 5,
-      "26": 12,
-      "27": 307,
-      "28": 26,
-      "29": 9,
-      "30": 275,
+      "08": 51,
+      "09": 32,
+      "10": 113,
+      "11": 79,
+      "12": 63,
+      "13": 91,
+      "14": 14,
+      "15": 3,
+      "16": 118,
+      "17": 20,
+      "18": 39,
+      "19": 129,
+      "20": 225,
+      "21": 26,
+      "22": 60,
+      "23": 93,
+      "24": 246,
+      "25": 6,
+      "26": 13,
+      "27": 308,
+      "28": 27,
+      "29": 10,
+      "30": 276,
       "31": 999,
-      "32": 27,
-      "33": 91,
-      "34": 113,
-      "35": 42,
-      "36": 151,
-      "37": 76,
-      "38": 34,
-      "39": 43,
-      "40": 197,
-      "41": 198,
-      "42": 33,
-      "43": 93,
-      "44": 65,
-      "45": 85,
-      "46": 16,
-      "47": 109,
-      "48": 212,
-      "49": 259,
-      "50": 176,
-      "51": 7,
-      "52": 70,
-      "53": 41,
-      "54": 8,
-      "55": 154,
-      "56": 35,
-      "57": 20,
+      "32": 28,
+      "33": 92,
+      "34": 114,
+      "35": 43,
+      "36": 152,
+      "37": 77,
+      "38": 35,
+      "39": 44,
+      "40": 198,
+      "41": 199,
+      "42": 34,
+      "43": 94,
+      "44": 66,
+      "45": 86,
+      "46": 17,
+      "47": 110,
+      "48": 213,
+      "49": 260,
+      "50": 177,
+      "51": 8,
+      "52": 71,
+      "53": 42,
+      "54": 9,
+      "55": 155,
+      "56": 36,
+      "57": 21,
       "58": 999,
-      "59": 21,
-      "60": 0,
-      "61": 48,
-      "62": 296,
-      "63": 30,
-      "64": 201,
-      "65": 3,
-      "66": 36,
-      "67": 28,
-      "68": 84,
-      "69": 190,
-      "70": 122,
-      "71": 138,
-      "72": 11,
-      "73": 54,
-      "74": 294,
-      "75": 23,
-      "76": 210,
-      "77": 14,
-      "78": 1,
-      "79": 105,
-      "80": 87,
-      "81": 71,
-      "82": 227,
-      "83": 10,
-      "84": 157,
-      "85": 134,
-      "86": 299,
-      "87": 39,
-      "88": 44,
-      "89": 135,
-      "90": 32,
-      "91": 24,
-      "92": 195,
-      "93": 6,
-      "94": 131,
-      "95": 246,
-      "96": 57,
-      "97": 137,
+      "59": 22,
+      "60": 1,
+      "61": 49,
+      "62": 297,
+      "63": 31,
+      "64": 202,
+      "65": 4,
+      "66": 37,
+      "67": 29,
+      "68": 85,
+      "69": 191,
+      "70": 123,
+      "71": 139,
+      "72": 12,
+      "73": 55,
+      "74": 295,
+      "75": 24,
+      "76": 211,
+      "77": 15,
+      "78": 2,
+      "79": 106,
+      "80": 88,
+      "81": 72,
+      "82": 228,
+      "83": 11,
+      "84": 158,
+      "85": 135,
+      "86": 300,
+      "87": 40,
+      "88": 45,
+      "89": 136,
+      "90": 33,
+      "91": 25,
+      "92": 196,
+      "93": 7,
+      "94": 132,
+      "95": 247,
+      "96": 58,
+      "97": 138,
       "98": 999,
-      "99": 68
+      "99": 69
     }
   }
 }
