@@ -667,7 +667,6 @@ def get_dynamic_dan60_for_date(target_date_str, summary_data):
     return list(DEFAULT_60_N1)
 
 
-def compute_radar_convergence(sub_draws, cap4_set, summary_data=None, enable_rescue=True):
 def compute_radar_convergence(sub_draws, cap4_set, summary_data=None, enable_rescue=True, ignore_snapshot=False):
     """
     Lõi Thuật Toán Hội Tụ Đa Cầu (Multi-Bridge Density Convergence):
@@ -1800,7 +1799,6 @@ def compute_radar_convergence(sub_draws, cap4_set, summary_data=None, enable_res
         top_4 = t4
 
         # Khôi phục bản chụp đóng băng lúc 18h23 (nếu ngày này đã được khóa sổ G5.5 trước đó)
-        frozen_snap = load_locked_g55_snapshot(target_draw.get('date', ''))
         frozen_snap = None if ignore_snapshot else load_locked_g55_snapshot(target_draw.get('date', ''))
         if frozen_snap and frozen_snap.get('top_1'):
             top_1 = frozen_snap['top_1']

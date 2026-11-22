@@ -1,317 +1,303 @@
 {
   "khung_3_ngay": {
     "tong_quan": {
-      "tong_khung": 43,
-      "trung_n1": 33,
+      "tong_khung": 41,
+      "trung_n1": 30,
       "trung_n2": 3,
-      "trung_n3": 3,
+      "trung_n3": 4,
       "truot_khung": 4,
-      "ty_le_n1": 76.7,
-      "ty_le_n2": 7.0,
-      "ty_le_n3": 7.0,
-      "ty_le_truot": 9.3
+      "ty_le_n1": 73.2,
+      "ty_le_n2": 7.3,
+      "ty_le_n3": 9.8,
+      "ty_le_truot": 9.8
     },
     "lich_su": [
       {
-        "khung_stt": 43,
+        "khung_stt": 41,
+        "ngay": "21/11/2026",
+        "de": "04",
+        "ket_qua": "trung_n3",
+        "ghi_chu": "Trúng N3 ngày 3 ✅ (Dàn 40s Cơ hội cuối)"
+      },
+      {
+        "khung_stt": 40,
+        "ngay": "18/11/2026",
+        "de": "15",
+        "ket_qua": "trung_n1",
+        "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
+      },
+      {
+        "khung_stt": 39,
         "ngay": "17/11/2026",
         "de": "65",
         "ket_qua": "trung_n1",
         "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
       },
       {
-        "khung_stt": 42,
+        "khung_stt": 38,
         "ngay": "16/11/2026",
         "de": "03",
         "ket_qua": "trung_n3",
         "ghi_chu": "Trúng N3 ngày 3 ✅ (Dàn 40s Cơ hội cuối)"
       },
       {
-        "khung_stt": 41,
+        "khung_stt": 37,
         "ngay": "13/11/2026",
         "de": "51",
         "ket_qua": "trung_n1",
         "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
       },
       {
-        "khung_stt": 40,
+        "khung_stt": 36,
         "ngay": "12/11/2026",
         "de": "54",
         "ket_qua": "trung_n1",
         "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
       },
       {
-        "khung_stt": 39,
+        "khung_stt": 35,
         "ngay": "11/11/2026",
         "de": "29",
         "ket_qua": "trung_n1",
         "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
       },
       {
-        "khung_stt": 38,
+        "khung_stt": 34,
         "ngay": "10/11/2026",
         "de": "83",
         "ket_qua": "trung_n1",
         "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
       },
       {
-        "khung_stt": 37,
+        "khung_stt": 33,
         "ngay": "09/11/2026",
         "de": "72",
         "ket_qua": "trung_n1",
         "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
       },
       {
-        "khung_stt": 36,
+        "khung_stt": 32,
         "ngay": "08/11/2026",
         "de": "26",
         "ket_qua": "truot_khung",
         "ghi_chu": "Trượt khung 3 ngày ❌"
       },
       {
-        "khung_stt": 35,
+        "khung_stt": 31,
         "ngay": "05/11/2026",
         "de": "02",
         "ket_qua": "truot_khung",
         "ghi_chu": "Trượt khung 3 ngày ❌"
       },
       {
-        "khung_stt": 34,
+        "khung_stt": 30,
         "ngay": "02/11/2026",
         "de": "29",
         "ket_qua": "trung_n1",
         "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
       },
       {
-        "khung_stt": 33,
+        "khung_stt": 29,
         "ngay": "01/11/2026",
         "de": "17",
         "ket_qua": "trung_n1",
         "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
       },
       {
-        "khung_stt": 32,
+        "khung_stt": 28,
         "ngay": "31/10/2026",
         "de": "57",
         "ket_qua": "trung_n1",
         "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
       },
       {
-        "khung_stt": 31,
+        "khung_stt": 27,
         "ngay": "30/10/2026",
         "de": "59",
         "ket_qua": "trung_n1",
         "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
       },
       {
-        "khung_stt": 30,
+        "khung_stt": 26,
         "ngay": "29/10/2026",
         "de": "01",
         "ket_qua": "trung_n2",
         "ghi_chu": "Trúng N2 ngày 2 ✅ (Dàn 42s Mở rộng)"
       },
       {
-        "khung_stt": 29,
+        "khung_stt": 25,
         "ngay": "27/10/2026",
         "de": "91",
         "ket_qua": "trung_n1",
         "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
       },
       {
-        "khung_stt": 28,
+        "khung_stt": 24,
         "ngay": "26/10/2026",
         "de": "21",
         "ket_qua": "trung_n1",
         "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
       },
       {
-        "khung_stt": 27,
+        "khung_stt": 23,
         "ngay": "25/10/2026",
         "de": "28",
         "ket_qua": "trung_n1",
         "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
       },
       {
-        "khung_stt": 26,
+        "khung_stt": 22,
         "ngay": "24/10/2026",
         "de": "32",
         "ket_qua": "trung_n1",
         "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
       },
       {
-        "khung_stt": 25,
+        "khung_stt": 21,
         "ngay": "23/10/2026",
         "de": "67",
         "ket_qua": "trung_n2",
         "ghi_chu": "Trúng N2 ngày 2 ✅ (Dàn 42s Mở rộng)"
       },
       {
-        "khung_stt": 24,
+        "khung_stt": 20,
         "ngay": "21/10/2026",
         "de": "63",
         "ket_qua": "trung_n3",
         "ghi_chu": "Trúng N3 ngày 3 ✅ (Dàn 40s Cơ hội cuối)"
       },
       {
-        "khung_stt": 23,
+        "khung_stt": 19,
         "ngay": "18/10/2026",
         "de": "42",
         "ket_qua": "trung_n1",
         "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
       },
       {
-        "khung_stt": 22,
+        "khung_stt": 18,
         "ngay": "17/10/2026",
         "de": "38",
         "ket_qua": "truot_khung",
         "ghi_chu": "Trượt khung 3 ngày ❌"
       },
       {
-        "khung_stt": 21,
+        "khung_stt": 17,
         "ngay": "14/10/2026",
         "de": "59",
         "ket_qua": "trung_n1",
         "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
       },
       {
-        "khung_stt": 20,
+        "khung_stt": 16,
         "ngay": "13/10/2026",
         "de": "18",
         "ket_qua": "trung_n1",
         "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
       },
       {
-        "khung_stt": 19,
+        "khung_stt": 15,
         "ngay": "12/10/2026",
         "de": "87",
         "ket_qua": "trung_n1",
         "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
       },
       {
-        "khung_stt": 18,
+        "khung_stt": 14,
         "ngay": "11/10/2026",
         "de": "63",
         "ket_qua": "trung_n1",
         "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
       },
       {
-        "khung_stt": 17,
+        "khung_stt": 13,
         "ngay": "10/10/2026",
         "de": "53",
         "ket_qua": "trung_n1",
         "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
       },
       {
-        "khung_stt": 16,
+        "khung_stt": 12,
         "ngay": "09/10/2026",
         "de": "35",
         "ket_qua": "trung_n1",
         "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
       },
       {
-        "khung_stt": 15,
+        "khung_stt": 11,
         "ngay": "08/10/2026",
         "de": "39",
         "ket_qua": "trung_n1",
         "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
       },
       {
-        "khung_stt": 14,
+        "khung_stt": 10,
         "ngay": "07/10/2026",
         "de": "88",
         "ket_qua": "truot_khung",
         "ghi_chu": "Trượt khung 3 ngày ❌"
       },
       {
-        "khung_stt": 13,
+        "khung_stt": 9,
         "ngay": "04/10/2026",
         "de": "51",
         "ket_qua": "trung_n1",
         "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
       },
       {
-        "khung_stt": 12,
+        "khung_stt": 8,
         "ngay": "03/10/2026",
         "de": "61",
         "ket_qua": "trung_n1",
         "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
       },
       {
-        "khung_stt": 11,
+        "khung_stt": 7,
         "ngay": "02/10/2026",
         "de": "83",
         "ket_qua": "trung_n1",
         "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
       },
       {
-        "khung_stt": 10,
+        "khung_stt": 6,
         "ngay": "01/10/2026",
         "de": "08",
         "ket_qua": "trung_n1",
         "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
       },
       {
-        "khung_stt": 9,
+        "khung_stt": 5,
         "ngay": "30/09/2026",
         "de": "42",
         "ket_qua": "trung_n1",
         "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
       },
       {
-        "khung_stt": 8,
+        "khung_stt": 4,
         "ngay": "29/09/2026",
         "de": "51",
         "ket_qua": "trung_n3",
         "ghi_chu": "Trúng N3 ngày 3 ✅ (Dàn 40s Cơ hội cuối)"
       },
       {
-        "khung_stt": 7,
+        "khung_stt": 3,
         "ngay": "26/09/2026",
         "de": "32",
         "ket_qua": "trung_n1",
         "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
       },
       {
-        "khung_stt": 6,
+        "khung_stt": 2,
         "ngay": "25/09/2026",
         "de": "65",
         "ket_qua": "trung_n1",
         "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
       },
       {
-        "khung_stt": 5,
+        "khung_stt": 1,
         "ngay": "24/09/2026",
         "de": "96",
         "ket_qua": "trung_n2",
         "ghi_chu": "Trúng N2 ngày 2 ✅ (Dàn 42s Mở rộng)"
-      },
-      {
-        "khung_stt": 4,
-        "ngay": "22/09/2026",
-        "de": "22",
-        "ket_qua": "trung_n1",
-        "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
-      },
-      {
-        "khung_stt": 3,
-        "ngay": "21/09/2026",
-        "de": "32",
-        "ket_qua": "trung_n1",
-        "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
-      },
-      {
-        "khung_stt": 2,
-        "ngay": "20/09/2026",
-        "de": "38",
-        "ket_qua": "trung_n1",
-        "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
-      },
-      {
-        "khung_stt": 1,
-        "ngay": "19/09/2026",
-        "de": "12",
-        "ket_qua": "trung_n1",
-        "ghi_chu": "Trúng N1 ngày 1 ✅ (Dàn 60s)"
       }
     ]
   },
@@ -322,14 +308,186 @@
       "ty_le_bach_thu_goc": 11.7,
       "trung_bach_thu": 8,
       "ty_le_bach_thu": 13.3,
-      "trung_tu_thu": 14,
-      "ty_le_tu_thu": 23.3,
-      "trung_dan_9": 25,
-      "ty_le_dan_9": 41.7,
-      "trung_lot": 48,
-      "ty_le_lot": 80.0
+      "trung_tu_thu": 12,
+      "ty_le_tu_thu": 20.0,
+      "trung_dan_9": 24,
+      "ty_le_dan_9": 40.0,
+      "trung_lot": 47,
+      "ty_le_lot": 78.3
     },
     "lich_su": [
+      {
+        "ngay": "21/11/2026",
+        "de": "04",
+        "top1": "18",
+        "song_thu": [
+          "18",
+          "81"
+        ],
+        "top4": [
+          "18",
+          "68",
+          "46",
+          "14"
+        ],
+        "dan_9": [
+          "13",
+          "14",
+          "18",
+          "28",
+          "37",
+          "46",
+          "63",
+          "68",
+          "96"
+        ],
+        "dan_9_dao": [
+          "31",
+          "41",
+          "81",
+          "82",
+          "73",
+          "64",
+          "36",
+          "86",
+          "69"
+        ],
+        "hit_bt_exact": false,
+        "hit_song_thu": false,
+        "hit_tu_thu": false,
+        "hit_dan_9": false,
+        "ket_qua": "trung_lot",
+        "ghi_chu": "🛡️ Trúng Dàn Số Lót N1 [04]"
+      },
+      {
+        "ngay": "20/11/2026",
+        "de": "60",
+        "top1": "42",
+        "song_thu": [
+          "42",
+          "24"
+        ],
+        "top4": [
+          "42",
+          "46",
+          "28",
+          "91"
+        ],
+        "dan_9": [
+          "06",
+          "14",
+          "28",
+          "29",
+          "32",
+          "42",
+          "46",
+          "57",
+          "91"
+        ],
+        "dan_9_dao": [
+          "60",
+          "41",
+          "82",
+          "92",
+          "23",
+          "24",
+          "64",
+          "75",
+          "19"
+        ],
+        "hit_bt_exact": false,
+        "hit_song_thu": false,
+        "hit_tu_thu": false,
+        "hit_dan_9": true,
+        "ket_qua": "trung_dan_9",
+        "ghi_chu": "⭐ Trúng Dàn 9 Số & Đảo [60]"
+      },
+      {
+        "ngay": "19/11/2026",
+        "de": "78",
+        "top1": "02",
+        "song_thu": [
+          "02",
+          "20"
+        ],
+        "top4": [
+          "02",
+          "57",
+          "93",
+          "63"
+        ],
+        "dan_9": [
+          "02",
+          "07",
+          "26",
+          "48",
+          "57",
+          "63",
+          "72",
+          "86",
+          "93"
+        ],
+        "dan_9_dao": [
+          "20",
+          "70",
+          "62",
+          "84",
+          "75",
+          "36",
+          "27",
+          "68",
+          "39"
+        ],
+        "hit_bt_exact": false,
+        "hit_song_thu": false,
+        "hit_tu_thu": false,
+        "hit_dan_9": false,
+        "ket_qua": "truot_truc_tiep",
+        "ghi_chu": "Trượt kỳ quay ❌"
+      },
+      {
+        "ngay": "18/11/2026",
+        "de": "15",
+        "top1": "12",
+        "song_thu": [
+          "12",
+          "21"
+        ],
+        "top4": [
+          "12",
+          "48",
+          "46",
+          "02"
+        ],
+        "dan_9": [
+          "02",
+          "03",
+          "08",
+          "12",
+          "17",
+          "25",
+          "46",
+          "48",
+          "70"
+        ],
+        "dan_9_dao": [
+          "20",
+          "30",
+          "80",
+          "21",
+          "71",
+          "52",
+          "64",
+          "84",
+          "07"
+        ],
+        "hit_bt_exact": false,
+        "hit_song_thu": false,
+        "hit_tu_thu": false,
+        "hit_dan_9": false,
+        "ket_qua": "trung_lot",
+        "ghi_chu": "🛡️ Trúng Dàn Số Lót N1 [15]"
+      },
       {
         "ngay": "17/11/2026",
         "de": "65",
@@ -2737,194 +2895,54 @@
         "hit_dan_9": false,
         "ket_qua": "truot_truc_tiep",
         "ghi_chu": "Trượt kỳ quay ❌"
-      },
-      {
-        "ngay": "22/09/2026",
-        "de": "22",
-        "top1": "87",
-        "song_thu": [
-          "87",
-          "78"
-        ],
-        "top4": [
-          "87",
-          "96",
-          "37",
-          "23"
-        ],
-        "dan_9": [
-          "16",
-          "19",
-          "23",
-          "28",
-          "37",
-          "50",
-          "64",
-          "87",
-          "96"
-        ],
-        "dan_9_dao": [
-          "61",
-          "91",
-          "32",
-          "82",
-          "73",
-          "05",
-          "46",
-          "78",
-          "69"
-        ],
-        "hit_bt_exact": false,
-        "hit_song_thu": false,
-        "hit_tu_thu": false,
-        "hit_dan_9": false,
-        "ket_qua": "trung_lot",
-        "ghi_chu": "🛡️ Trúng Dàn Số Lót N1 [22]"
-      },
-      {
-        "ngay": "21/09/2026",
-        "de": "32",
-        "top1": "17",
-        "song_thu": [
-          "17",
-          "71"
-        ],
-        "top4": [
-          "17",
-          "28",
-          "37",
-          "23"
-        ],
-        "dan_9": [
-          "17",
-          "19",
-          "21",
-          "23",
-          "26",
-          "28",
-          "37",
-          "58",
-          "78"
-        ],
-        "dan_9_dao": [
-          "71",
-          "91",
-          "12",
-          "32",
-          "62",
-          "82",
-          "73",
-          "85",
-          "87"
-        ],
-        "hit_bt_exact": false,
-        "hit_song_thu": false,
-        "hit_tu_thu": true,
-        "hit_dan_9": true,
-        "ket_qua": "trung_tu_thu",
-        "ghi_chu": "🔥 Trúng Tứ Thủ Top 4 [32]"
-      },
-      {
-        "ngay": "20/09/2026",
-        "de": "38",
-        "top1": "67",
-        "song_thu": [
-          "67",
-          "76"
-        ],
-        "top4": [
-          "67",
-          "38",
-          "37",
-          "28"
-        ],
-        "dan_9": [
-          "28",
-          "35",
-          "37",
-          "38",
-          "50",
-          "58",
-          "64",
-          "67",
-          "87"
-        ],
-        "dan_9_dao": [
-          "82",
-          "53",
-          "73",
-          "83",
-          "05",
-          "85",
-          "46",
-          "76",
-          "78"
-        ],
-        "hit_bt_exact": false,
-        "hit_song_thu": false,
-        "hit_tu_thu": true,
-        "hit_dan_9": true,
-        "ket_qua": "trung_tu_thu",
-        "ghi_chu": "🔥 Trúng Tứ Thủ Top 4 [38]"
-      },
-      {
-        "ngay": "19/09/2026",
-        "de": "12",
-        "top1": "23",
-        "song_thu": [
-          "23",
-          "32"
-        ],
-        "top4": [
-          "23",
-          "24",
-          "37",
-          "87"
-        ],
-        "dan_9": [
-          "13",
-          "23",
-          "24",
-          "29",
-          "37",
-          "38",
-          "74",
-          "81",
-          "87"
-        ],
-        "dan_9_dao": [
-          "31",
-          "32",
-          "42",
-          "92",
-          "73",
-          "83",
-          "47",
-          "18",
-          "78"
-        ],
-        "hit_bt_exact": false,
-        "hit_song_thu": false,
-        "hit_tu_thu": false,
-        "hit_dan_9": false,
-        "ket_qua": "trung_lot",
-        "ghi_chu": "🛡️ Trúng Dàn Số Lót N1 [12]"
       }
     ]
   },
   "dan_tinh_tuy_ngay_1": {
     "tong_quan": {
       "tong_ngay": 60,
-      "trung": 37,
-      "truot": 23,
-      "ty_le_trung": 61.7,
-      "ty_le_truot": 38.3,
-      "dan_tb": 45.2,
-      "chuoi_thong": 1
+      "trung": 38,
+      "truot": 22,
+      "ty_le_trung": 63.3,
+      "ty_le_truot": 36.7,
+      "dan_tb": 45.3,
+      "chuoi_thong": 2
     },
     "lich_su": [
       {
         "stt": 60,
+        "ngay": "21/11/2026",
+        "de": "04",
+        "so_luong": 46,
+        "ket_qua": "trung",
+        "ghi_chu": "Trúng Đề 04 ✅ (Dàn 46 số)"
+      },
+      {
+        "stt": 59,
+        "ngay": "20/11/2026",
+        "de": "60",
+        "so_luong": 45,
+        "ket_qua": "trung",
+        "ghi_chu": "Trúng Đề 60 ✅ (Dàn 45 số)"
+      },
+      {
+        "stt": 58,
+        "ngay": "19/11/2026",
+        "de": "78",
+        "so_luong": 47,
+        "ket_qua": "truot",
+        "ghi_chu": "Trượt Đề 78 ❌ (47 số)"
+      },
+      {
+        "stt": 57,
+        "ngay": "18/11/2026",
+        "de": "15",
+        "so_luong": 46,
+        "ket_qua": "trung",
+        "ghi_chu": "Trúng Đề 15 ✅ (Dàn 46 số)"
+      },
+      {
+        "stt": 56,
         "ngay": "17/11/2026",
         "de": "65",
         "so_luong": 46,
@@ -2932,7 +2950,7 @@
         "ghi_chu": "Trúng Đề 65 ✅ (Dàn 46 số)"
       },
       {
-        "stt": 59,
+        "stt": 55,
         "ngay": "16/11/2026",
         "de": "03",
         "so_luong": 46,
@@ -2940,7 +2958,7 @@
         "ghi_chu": "Trượt Đề 03 ❌ (46 số)"
       },
       {
-        "stt": 58,
+        "stt": 54,
         "ngay": "15/11/2026",
         "de": "25",
         "so_luong": 46,
@@ -2948,7 +2966,7 @@
         "ghi_chu": "Trượt Đề 25 ❌ (46 số)"
       },
       {
-        "stt": 57,
+        "stt": 53,
         "ngay": "14/11/2026",
         "de": "93",
         "so_luong": 45,
@@ -2956,7 +2974,7 @@
         "ghi_chu": "Trượt Đề 93 ❌ (45 số)"
       },
       {
-        "stt": 56,
+        "stt": 52,
         "ngay": "13/11/2026",
         "de": "51",
         "so_luong": 47,
@@ -2964,7 +2982,7 @@
         "ghi_chu": "Trúng Đề 51 ✅ (Dàn 47 số)"
       },
       {
-        "stt": 55,
+        "stt": 51,
         "ngay": "12/11/2026",
         "de": "54",
         "so_luong": 46,
@@ -2972,7 +2990,7 @@
         "ghi_chu": "Trúng Đề 54 ✅ (Dàn 46 số)"
       },
       {
-        "stt": 54,
+        "stt": 50,
         "ngay": "11/11/2026",
         "de": "29",
         "so_luong": 46,
@@ -2980,7 +2998,7 @@
         "ghi_chu": "Trúng Đề 29 ✅ (Dàn 46 số)"
       },
       {
-        "stt": 53,
+        "stt": 49,
         "ngay": "10/11/2026",
         "de": "83",
         "so_luong": 46,
@@ -2988,7 +3006,7 @@
         "ghi_chu": "Trúng Đề 83 ✅ (Dàn 46 số)"
       },
       {
-        "stt": 52,
+        "stt": 48,
         "ngay": "09/11/2026",
         "de": "72",
         "so_luong": 46,
@@ -2996,7 +3014,7 @@
         "ghi_chu": "Trúng Đề 72 ✅ (Dàn 46 số)"
       },
       {
-        "stt": 51,
+        "stt": 47,
         "ngay": "08/11/2026",
         "de": "26",
         "so_luong": 45,
@@ -3004,7 +3022,7 @@
         "ghi_chu": "Trúng Đề 26 ✅ (Dàn 45 số)"
       },
       {
-        "stt": 50,
+        "stt": 46,
         "ngay": "07/11/2026",
         "de": "14",
         "so_luong": 47,
@@ -3012,7 +3030,7 @@
         "ghi_chu": "Trúng Đề 14 ✅ (Dàn 47 số)"
       },
       {
-        "stt": 49,
+        "stt": 45,
         "ngay": "06/11/2026",
         "de": "77",
         "so_luong": 46,
@@ -3020,7 +3038,7 @@
         "ghi_chu": "Trượt Đề 77 ❌ (46 số)"
       },
       {
-        "stt": 48,
+        "stt": 44,
         "ngay": "05/11/2026",
         "de": "02",
         "so_luong": 45,
@@ -3028,7 +3046,7 @@
         "ghi_chu": "Trượt Đề 02 ❌ (45 số)"
       },
       {
-        "stt": 47,
+        "stt": 43,
         "ngay": "04/11/2026",
         "de": "46",
         "so_luong": 46,
@@ -3036,7 +3054,7 @@
         "ghi_chu": "Trượt Đề 46 ❌ (46 số)"
       },
       {
-        "stt": 46,
+        "stt": 42,
         "ngay": "03/11/2026",
         "de": "46",
         "so_luong": 45,
@@ -3044,7 +3062,7 @@
         "ghi_chu": "Trượt Đề 46 ❌ (45 số)"
       },
       {
-        "stt": 45,
+        "stt": 41,
         "ngay": "02/11/2026",
         "de": "29",
         "so_luong": 46,
@@ -3052,7 +3070,7 @@
         "ghi_chu": "Trượt Đề 29 ❌ (46 số)"
       },
       {
-        "stt": 44,
+        "stt": 40,
         "ngay": "01/11/2026",
         "de": "17",
         "so_luong": 45,
@@ -3060,7 +3078,7 @@
         "ghi_chu": "Trúng Đề 17 ✅ (Dàn 45 số)"
       },
       {
-        "stt": 43,
+        "stt": 39,
         "ngay": "31/10/2026",
         "de": "57",
         "so_luong": 46,
@@ -3068,7 +3086,7 @@
         "ghi_chu": "Trúng Đề 57 ✅ (Dàn 46 số)"
       },
       {
-        "stt": 42,
+        "stt": 38,
         "ngay": "30/10/2026",
         "de": "59",
         "so_luong": 45,
@@ -3076,7 +3094,7 @@
         "ghi_chu": "Trúng Đề 59 ✅ (Dàn 45 số)"
       },
       {
-        "stt": 41,
+        "stt": 37,
         "ngay": "29/10/2026",
         "de": "01",
         "so_luong": 44,
@@ -3084,7 +3102,7 @@
         "ghi_chu": "Trượt Đề 01 ❌ (44 số)"
       },
       {
-        "stt": 40,
+        "stt": 36,
         "ngay": "28/10/2026",
         "de": "75",
         "so_luong": 45,
@@ -3092,7 +3110,7 @@
         "ghi_chu": "Trượt Đề 75 ❌ (45 số)"
       },
       {
-        "stt": 39,
+        "stt": 35,
         "ngay": "27/10/2026",
         "de": "91",
         "so_luong": 44,
@@ -3100,7 +3118,7 @@
         "ghi_chu": "Trúng Đề 91 ✅ (Dàn 44 số)"
       },
       {
-        "stt": 38,
+        "stt": 34,
         "ngay": "26/10/2026",
         "de": "21",
         "so_luong": 46,
@@ -3108,7 +3126,7 @@
         "ghi_chu": "Trúng Đề 21 ✅ (Dàn 46 số)"
       },
       {
-        "stt": 37,
+        "stt": 33,
         "ngay": "25/10/2026",
         "de": "28",
         "so_luong": 45,
@@ -3116,7 +3134,7 @@
         "ghi_chu": "Trượt Đề 28 ❌ (45 số)"
       },
       {
-        "stt": 36,
+        "stt": 32,
         "ngay": "24/10/2026",
         "de": "32",
         "so_luong": 44,
@@ -3124,7 +3142,7 @@
         "ghi_chu": "Trúng Đề 32 ✅ (Dàn 44 số)"
       },
       {
-        "stt": 35,
+        "stt": 31,
         "ngay": "23/10/2026",
         "de": "67",
         "so_luong": 45,
@@ -3132,7 +3150,7 @@
         "ghi_chu": "Trúng Đề 67 ✅ (Dàn 45 số)"
       },
       {
-        "stt": 34,
+        "stt": 30,
         "ngay": "22/10/2026",
         "de": "14",
         "so_luong": 44,
@@ -3140,7 +3158,7 @@
         "ghi_chu": "Trượt Đề 14 ❌ (44 số)"
       },
       {
-        "stt": 33,
+        "stt": 29,
         "ngay": "21/10/2026",
         "de": "63",
         "so_luong": 44,
@@ -3148,7 +3166,7 @@
         "ghi_chu": "Trúng Đề 63 ✅ (Dàn 44 số)"
       },
       {
-        "stt": 32,
+        "stt": 28,
         "ngay": "20/10/2026",
         "de": "09",
         "so_luong": 45,
@@ -3156,7 +3174,7 @@
         "ghi_chu": "Trúng Đề 09 ✅ (Dàn 45 số)"
       },
       {
-        "stt": 31,
+        "stt": 27,
         "ngay": "19/10/2026",
         "de": "90",
         "so_luong": 45,
@@ -3164,7 +3182,7 @@
         "ghi_chu": "Trượt Đề 90 ❌ (45 số)"
       },
       {
-        "stt": 30,
+        "stt": 26,
         "ngay": "18/10/2026",
         "de": "42",
         "so_luong": 45,
@@ -3172,7 +3190,7 @@
         "ghi_chu": "Trúng Đề 42 ✅ (Dàn 45 số)"
       },
       {
-        "stt": 29,
+        "stt": 25,
         "ngay": "17/10/2026",
         "de": "38",
         "so_luong": 45,
@@ -3180,7 +3198,7 @@
         "ghi_chu": "Trúng Đề 38 ✅ (Dàn 45 số)"
       },
       {
-        "stt": 28,
+        "stt": 24,
         "ngay": "16/10/2026",
         "de": "56",
         "so_luong": 46,
@@ -3188,7 +3206,7 @@
         "ghi_chu": "Trượt Đề 56 ❌ (46 số)"
       },
       {
-        "stt": 27,
+        "stt": 23,
         "ngay": "15/10/2026",
         "de": "66",
         "so_luong": 45,
@@ -3196,7 +3214,7 @@
         "ghi_chu": "Trượt Đề 66 ❌ (45 số)"
       },
       {
-        "stt": 26,
+        "stt": 22,
         "ngay": "14/10/2026",
         "de": "59",
         "so_luong": 46,
@@ -3204,7 +3222,7 @@
         "ghi_chu": "Trúng Đề 59 ✅ (Dàn 46 số)"
       },
       {
-        "stt": 25,
+        "stt": 21,
         "ngay": "13/10/2026",
         "de": "18",
         "so_luong": 46,
@@ -3212,7 +3230,7 @@
         "ghi_chu": "Trúng Đề 18 ✅ (Dàn 46 số)"
       },
       {
-        "stt": 24,
+        "stt": 20,
         "ngay": "12/10/2026",
         "de": "87",
         "so_luong": 44,
@@ -3220,7 +3238,7 @@
         "ghi_chu": "Trúng Đề 87 ✅ (Dàn 44 số)"
       },
       {
-        "stt": 23,
+        "stt": 19,
         "ngay": "11/10/2026",
         "de": "63",
         "so_luong": 45,
@@ -3228,7 +3246,7 @@
         "ghi_chu": "Trúng Đề 63 ✅ (Dàn 45 số)"
       },
       {
-        "stt": 22,
+        "stt": 18,
         "ngay": "10/10/2026",
         "de": "53",
         "so_luong": 45,
@@ -3236,7 +3254,7 @@
         "ghi_chu": "Trượt Đề 53 ❌ (45 số)"
       },
       {
-        "stt": 21,
+        "stt": 17,
         "ngay": "09/10/2026",
         "de": "35",
         "so_luong": 45,
@@ -3244,7 +3262,7 @@
         "ghi_chu": "Trúng Đề 35 ✅ (Dàn 45 số)"
       },
       {
-        "stt": 20,
+        "stt": 16,
         "ngay": "08/10/2026",
         "de": "39",
         "so_luong": 46,
@@ -3252,7 +3270,7 @@
         "ghi_chu": "Trúng Đề 39 ✅ (Dàn 46 số)"
       },
       {
-        "stt": 19,
+        "stt": 15,
         "ngay": "07/10/2026",
         "de": "88",
         "so_luong": 45,
@@ -3260,7 +3278,7 @@
         "ghi_chu": "Trúng Đề 88 ✅ (Dàn 45 số)"
       },
       {
-        "stt": 18,
+        "stt": 14,
         "ngay": "06/10/2026",
         "de": "54",
         "so_luong": 46,
@@ -3268,7 +3286,7 @@
         "ghi_chu": "Trúng Đề 54 ✅ (Dàn 46 số)"
       },
       {
-        "stt": 17,
+        "stt": 13,
         "ngay": "05/10/2026",
         "de": "54",
         "so_luong": 44,
@@ -3276,7 +3294,7 @@
         "ghi_chu": "Trượt Đề 54 ❌ (44 số)"
       },
       {
-        "stt": 16,
+        "stt": 12,
         "ngay": "04/10/2026",
         "de": "51",
         "so_luong": 45,
@@ -3284,7 +3302,7 @@
         "ghi_chu": "Trúng Đề 51 ✅ (Dàn 45 số)"
       },
       {
-        "stt": 15,
+        "stt": 11,
         "ngay": "03/10/2026",
         "de": "61",
         "so_luong": 45,
@@ -3292,7 +3310,7 @@
         "ghi_chu": "Trúng Đề 61 ✅ (Dàn 45 số)"
       },
       {
-        "stt": 14,
+        "stt": 10,
         "ngay": "02/10/2026",
         "de": "83",
         "so_luong": 45,
@@ -3300,7 +3318,7 @@
         "ghi_chu": "Trượt Đề 83 ❌ (45 số)"
       },
       {
-        "stt": 13,
+        "stt": 9,
         "ngay": "01/10/2026",
         "de": "08",
         "so_luong": 46,
@@ -3308,7 +3326,7 @@
         "ghi_chu": "Trúng Đề 08 ✅ (Dàn 46 số)"
       },
       {
-        "stt": 12,
+        "stt": 8,
         "ngay": "30/09/2026",
         "de": "42",
         "so_luong": 45,
@@ -3316,7 +3334,7 @@
         "ghi_chu": "Trúng Đề 42 ✅ (Dàn 45 số)"
       },
       {
-        "stt": 11,
+        "stt": 7,
         "ngay": "29/09/2026",
         "de": "51",
         "so_luong": 45,
@@ -3324,7 +3342,7 @@
         "ghi_chu": "Trúng Đề 51 ✅ (Dàn 45 số)"
       },
       {
-        "stt": 10,
+        "stt": 6,
         "ngay": "28/09/2026",
         "de": "15",
         "so_luong": 47,
@@ -3332,7 +3350,7 @@
         "ghi_chu": "Trúng Đề 15 ✅ (Dàn 47 số)"
       },
       {
-        "stt": 9,
+        "stt": 5,
         "ngay": "27/09/2026",
         "de": "73",
         "so_luong": 44,
@@ -3340,7 +3358,7 @@
         "ghi_chu": "Trượt Đề 73 ❌ (44 số)"
       },
       {
-        "stt": 8,
+        "stt": 4,
         "ngay": "26/09/2026",
         "de": "32",
         "so_luong": 44,
@@ -3348,7 +3366,7 @@
         "ghi_chu": "Trúng Đề 32 ✅ (Dàn 44 số)"
       },
       {
-        "stt": 7,
+        "stt": 3,
         "ngay": "25/09/2026",
         "de": "65",
         "so_luong": 44,
@@ -3356,7 +3374,7 @@
         "ghi_chu": "Trượt Đề 65 ❌ (44 số)"
       },
       {
-        "stt": 6,
+        "stt": 2,
         "ngay": "24/09/2026",
         "de": "96",
         "so_luong": 44,
@@ -3364,44 +3382,12 @@
         "ghi_chu": "Trúng Đề 96 ✅ (Dàn 44 số)"
       },
       {
-        "stt": 5,
+        "stt": 1,
         "ngay": "23/09/2026",
         "de": "06",
         "so_luong": 45,
         "ket_qua": "truot",
         "ghi_chu": "Trượt Đề 06 ❌ (45 số)"
-      },
-      {
-        "stt": 4,
-        "ngay": "22/09/2026",
-        "de": "22",
-        "so_luong": 45,
-        "ket_qua": "truot",
-        "ghi_chu": "Trượt Đề 22 ❌ (45 số)"
-      },
-      {
-        "stt": 3,
-        "ngay": "21/09/2026",
-        "de": "32",
-        "so_luong": 45,
-        "ket_qua": "trung",
-        "ghi_chu": "Trúng Đề 32 ✅ (Dàn 45 số)"
-      },
-      {
-        "stt": 2,
-        "ngay": "20/09/2026",
-        "de": "38",
-        "so_luong": 45,
-        "ket_qua": "trung",
-        "ghi_chu": "Trúng Đề 38 ✅ (Dàn 45 số)"
-      },
-      {
-        "stt": 1,
-        "ngay": "19/09/2026",
-        "de": "12",
-        "so_luong": 44,
-        "ket_qua": "truot",
-        "ghi_chu": "Trượt Đề 12 ❌ (44 số)"
       }
     ]
   }

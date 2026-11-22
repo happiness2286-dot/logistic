@@ -111,6 +111,16 @@ def main():
     cleanup_git_state(BASE_LOGIC_DIR)
     cleanup_git_state(DIR_58_UP_75)
 
+    # Kiểm tra cú pháp py_compile trước khi chạy để đảm bảo không bị lỗi cú pháp do lưu đè
+    import py_compile
+    for py_f in ["crawl_and_analyze.py", "soi_cau_g1_g5.py", "live_radar_scanner.py"]:
+        full_py = os.path.join(BASE_LOGIC_DIR, py_f)
+        if os.path.exists(full_py):
+            try:
+                py_compile.compile(full_py, doraise=True)
+            except Exception as e_syn:
+                log(f"   [Cảnh báo Cú Pháp] {py_f} bị lỗi cú pháp ({e_syn})! Không commit file lỗi.")
+
     # BƯỚC 1: Chạy crawl_and_analyze.py
     step1_cmd = f'"{PYTHON_EXE}" crawl_and_analyze.py'
     ok1, out1 = run_step("Cào dữ liệu & Phân tích G7 Master", step1_cmd, BASE_LOGIC_DIR, timeout=180)
