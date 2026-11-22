@@ -359572,3 +359572,22 @@
 [2026-11-21 18:14:02] HOÀN TẤT PHIÊN GIÁM SÁT LIVE XSMB HÔM NAY!
 [2026-11-21 18:14:02] ======================================================================
 
+[2026-11-22 18:14:01] ======================================================================
+[2026-11-22 18:14:01] BẮT ĐẦU CHU TRÌNH GIÁM SÁT LIVE TRỰC TIẾP XSMB (18H14)
+[2026-11-22 18:14:01] ======================================================================
+[2026-11-22 18:14:01] -> KHỞI ĐỘNG TIẾN TRÌNH LIVE: Logic_G1_G5 (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)
+[2026-11-22 18:14:01] -> KHỞI ĐỘNG TIẾN TRÌNH LIVE: Radar_Scanner (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)
+[2026-11-22 18:14:01] [Logic_G1_G5] File "E:\DONG BO\New Ha GCCK\N\u0103m 2026\D\u1ef1 �n AI_ Antigravity\Logic\soi_cau_g1_g5.py", line 711
+e 671
+[2026-11-22 18:14:01] [Radar_Scanner] def compute_radar_convergence(sub_draws, cap4_set, summary_data=None, enable_rescue=True, ignore_snapshot=False):
+[2026-11-22 18:14:01] [Logic_G1_G5] def select_core_bridge_positions(positions, partner_positions=None):
+[2026-11-22 18:14:01] [Radar_Scanner] ^
+[2026-11-22 18:14:01] [Logic_G1_G5] ^
+[2026-11-22 18:14:01] [Radar_Scanner] IndentationError: expected an indented block after function definition on line 670
+[2026-11-22 18:14:01] [Logic_G1_G5] IndentationError: expected an indented block after function definition on line 710
+[2026-11-22 18:14:01] -> TIẾN TRÌNH Logic_G1_G5 KẾT THÚC VỚI MÃ: 1
+[2026-11-22 18:14:01] -> TIẾN TRÌNH Radar_Scanner KẾT THÚC VỚI MÃ: 1
+[2026-11-22 18:14:01] ======================================================================
+[2026-11-22 18:14:01] HOÀN TẤT PHIÊN GIÁM SÁT LIVE XSMB HÔM NAY!
+[2026-11-22 18:14:01] ======================================================================
+

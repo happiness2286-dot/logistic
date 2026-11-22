@@ -29,6 +29,9 @@ def get_set_20(g7_val):
 with open('data_2026.json', 'r', encoding='utf-8') as f:
     raw_data = json.load(f)
 
+
+    
+
 with open('analysis_summary.json', 'r', encoding='utf-8') as f:
     summary = json.load(f)
 
