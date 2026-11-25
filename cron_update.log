@@ -1340,3 +1340,31 @@ IndentationError:
 [2026-11-24 18:35:08] -> Đang chạy: Update Daily 58_up_to_75 (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\58_up_to_75)...
 [2026-11-24 18:35:15]    [Thành công] Update Daily 58_up_to_75
 [2026-11-24 18:35:15] -> Đang đồng bộ Git Cloud an toàn (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-11-24 18:35:26]    [Thành công] Git Push: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic
+[2026-11-24 18:35:26] -> Đang đồng bộ Git Cloud an toàn (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\58_up_to_75)...
+[2026-11-24 18:35:34]    [Thành công] Git Push sau khi Auto-Merge: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\58_up_to_75
+[2026-11-24 18:35:34] =================================================================
+[2026-11-24 18:35:34] HOÀN TẤT CHU TRÌNH TỰ ĐỘNG CẬP NHẬT XSMB HÀNG NGÀY!
+[2026-11-24 18:35:34] =================================================================
+
+[2026-11-25 18:35:01] =================================================================
+[2026-11-25 18:35:01] BẮT ĐẦU CHU TRÌNH AUTO-UPDATE XSMB 18H35 HÀNG NGÀY
+[2026-11-25 18:35:01] =================================================================
+[2026-11-25 18:35:01]    [Cảnh báo Cú Pháp] soi_cau_g1_g5.py bị lỗi cú pháp (Sorry: IndentationError: expected an indented block after function definition on line 710 (soi_cau_g1_g5.py, line 711))! Không commit file lỗi.
+[2026-11-25 18:35:01]    [Cảnh báo Cú Pháp] live_radar_scanner.py bị lỗi cú pháp (Sorry: IndentationError: expected an indented block after function definition on line 670 (live_radar_scanner.py, line 671))! Không commit file lỗi.
+[2026-11-25 18:35:01] -> Đang chạy: Cào dữ liệu & Phân tích G7 Master (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-11-25 18:35:07]    [Thành công] Cào dữ liệu & Phân tích G7 Master
+[2026-11-25 18:35:07] -> Đang chạy: Radar G.ĐB->G7 & Chốt Dự Đoán Ngày Hôm Sau (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-11-25 18:35:07]    [Cảnh báo] Radar G.ĐB->G7 & Chốt Dự Đoán Ngày Hôm Sau kết thúc với mã 1
+[2026-11-25 18:35:07]    Stderr: File "E:\DONG BO\New Ha GCCK\N\u0103m 2026\D\u1ef1 �n AI_ Antigravity\Logic\soi_cau_g1_g5.py", line 711
+    def select_core_bridge_positions(positions, partner_positions=None):
+    ^
+IndentationError:
+[2026-11-25 18:35:07] -> Đang chạy: Làm mới Live Radar Scanner State (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
+[2026-11-25 18:35:07]    [Cảnh báo] Làm mới Live Radar Scanner State kết thúc với mã 1
+[2026-11-25 18:35:07]    Stderr: File "E:\DONG BO\New Ha GCCK\N\u0103m 2026\D\u1ef1 �n AI_ Antigravity\Logic\live_radar_scanner.py", line 671
+    def compute_radar_convergence(sub_draws, cap4_set, summary_data=None, enable_rescue=Tru
+[2026-11-25 18:35:07] -> Đồng bộ các file sang repo 58_up_to_75 & New folder/Logic...
+[2026-11-25 18:35:07] -> Đang chạy: Update Daily 58_up_to_75 (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\58_up_to_75)...
+[2026-11-25 18:35:20]    [Thành công] Update Daily 58_up_to_75
+[2026-11-25 18:35:20] -> Đang đồng bộ Git Cloud an toàn (Thư mục: E:\DONG BO\New Ha GCCK\Năm 2026\Dự Án AI_ Antigravity\Logic)...
