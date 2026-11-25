@@ -707,33 +707,14 @@ def compute_next_date_str(draw_date_str):
         return f"{dow_vn[next_dt.weekday()]} ngày {next_dt.strftime('%d-%m-%Y')}", next_dt.strftime('%d/%m/%Y')
     return draw_date_str, draw_date_str
 
-def select_core_bridge_positions(positions):
 def select_core_bridge_positions(positions, partner_positions=None):
     """
-    Lọc lấy các vị trí cầu chất lượng cao (loại bỏ nhiễu từ hàng chục vị trí mới chạm 1 ngày ngẫu nhiên):
-    - Giữ toàn bộ các vị trí cầu ăn thông >= 2 ngày (2d, 3d, 4d+).
-    - Nếu số vị trí >= 2 ngày ít hơn 4, bổ sung thêm các vị trí 1 ngày ăn CHÍNH DIỆN (trực tiếp, không qua bóng)
-      ưu tiên giải trọng tâm (GDB, G1, G7, G2, G3) cho đủ tối đa 5 vị trí tinh nhuệ nhất.
     Lọc lấy các vị trí cầu chất lượng cao (Smart Bridge Coverage - Phủ đủ phổ chạm 100%):
     - Giữ toàn bộ các vị trí cầu ăn thông >= 2 ngày (2d, 3d, 4d+, tối đa 8 vị trí).
     - Bổ sung vị trí cầu 1 ngày tinh nhuệ nhất (ưu tiên Cầu Đồng Giải / Sát Vách với cầu >= 2 ngày của chiều kia,
       ăn chính diện và thuộc giải trọng tâm GDB, G1, G7, G5.5, G5.4, G2, G3) cho các cặp chữ số (d, bóng d)
       chưa có đại diện để không bao giờ đánh rơi con số tiềm năng đang lên nhịp ngày 2.
     """
-    multi_day = [p for p in positions if p['cycle_days'] >= 2]
-    multi_day.sort(key=lambda x: (x['cycle_days'], 1 if x.get('is_direct') else 0), reverse=True)
-    if len(multi_day) >= 4:
-        return multi_day[:8]
-    direct_1d = [p for p in positions if p['cycle_days'] == 1 and p.get('is_direct')]
-    def prize_priority(p_str):
-        if p_str.startswith('GDB'): return 5
-        if p_str.startswith('G1'): return 4
-        if p_str.startswith('G7'): return 3
-        if p_str.startswith('G2'): return 2
-        return 1
-    direct_1d.sort(key=lambda x: prize_priority(x['position']), reverse=True)
-    combined = multi_day + direct_1d[:max(0, 5 - len(multi_day))]
-    return combined if combined else positions[:5]
     def _prize_code_of(pos_str):
         return pos_str.split()[0] if pos_str else ''
 
@@ -1262,7 +1243,6 @@ def compute_static_g7_radar_convergence(draws, target_draw_idx, summary_data=Non
     # 1. Chạy lõi hội tụ đa cầu 67_up_95 trên kết quả của kỳ vừa quay xong (cur_draw) cho ngày next_date_str
     static_target = {'date': next_date_str, 'db': '', 'de': '', 'prizes': cur_draw['prizes']}
     sub_draws = draws[target_draw_idx:]
-    base_res = lrs.compute_radar_convergence([static_target] + sub_draws, cap4_set, summary_data)
     base_res = lrs.compute_radar_convergence([static_target] + sub_draws, cap4_set, summary_data, ignore_snapshot=True)
     if not base_res:
         return None
@@ -1395,9 +1375,6 @@ def compute_static_g7_radar_convergence(draws, target_draw_idx, summary_data=Non
         if ns[0] == ns[1]: sc -= 40.0
         return sc
 
-    # Khóa nghiệm Tổng G7 Thứ 7 & Thứ mạnh nhất cho Dàn 9 số, Tứ Thủ và Bạch Thủ
-    frozen_snap = lrs.load_locked_g55_snapshot(next_date_str)
-    if not frozen_snap:
     # Khóa nghiệm Tổng G7 Thứ 7 & Thứ mạnh nhất cho Dàn 9 số, Tứ Thủ và Bạch Thủ (100% Tĩnh, không phụ thuộc snapshot live)
     if True:
         d9_strong = [
@@ -1836,8 +1813,6 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
 
     all_head_positions = analysis['head_positions']
     all_tail_positions = analysis['tail_positions']
-    head_positions = select_core_bridge_positions(all_head_positions)
-    tail_positions = select_core_bridge_positions(all_tail_positions)
     head_positions = select_core_bridge_positions(all_head_positions, all_tail_positions)
     tail_positions = select_core_bridge_positions(all_tail_positions, all_head_positions)
 
@@ -2042,10 +2017,6 @@ def run_pipeline(target_draw_idx=0, cap4_csv=DEFAULT_CAP4_CSV, custom_cap4=None,
 
     def sort_key(x):
         tier = 0
-        if "Top 1" in x['top_rank']: tier = 4
-        elif "Top 4" in x['top_rank']: tier = 3
-        elif "Lót hợp lệ" in x['top_rank']: tier = 2
-        else: tier = 1
         if "Top 1" in x['top_rank']: tier = 7
         elif "Top 2" in x['top_rank']: tier = 6
         elif "Top 4" in x['top_rank']: tier = 5
@@ -2314,8 +2285,6 @@ def analyze_and_verify_single_draw(draws, pred_for_idx=0, all_draws_for_ai=None)
         return None
 
     cur_draw = draws[base_idx]
-    head_positions = select_core_bridge_positions(analysis['head_positions'])
-    tail_positions = select_core_bridge_positions(analysis['tail_positions'])
     head_positions = select_core_bridge_positions(analysis['head_positions'], analysis['tail_positions'])
     tail_positions = select_core_bridge_positions(analysis['tail_positions'], analysis['head_positions'])
 

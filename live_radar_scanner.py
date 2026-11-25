@@ -138,10 +138,9 @@ def send_telegram_alert(message_text):
             return False
         token = str(cfg['bot_token']).strip()
         chat_id = str(cfg['chat_id']).strip()
-        # KHÓA AN TOÀN TUYỆT ĐỐI: Chỉ cho phép gửi duy nhất vào Chat ID cá nhân của Hoàng Ngọc Hà (5422717407)
-        # Tuyệt đối chặn mọi Chat ID khác hoặc Group ID để không bao giờ gửi nhầm sang người khác
-        if chat_id != "5422717407":
-            print(f"[!] CHẶN AN TOÀN: Từ chối gửi Telegram tới chat_id lạ ({chat_id}). Chỉ gửi duy nhất cho 5422717407.")
+        # KHÓA AN TOÀN TUYỆT ĐỐI: Chỉ cho phép gửi vào Chat ID cá nhân của Nguyễn Trung Đông - NV02 (7154329103) hoặc 5422717407
+        if chat_id not in ("7154329103", "5422717407"):
+            print(f"[!] CHẶN AN TOÀN: Từ chối gửi Telegram tới chat_id lạ ({chat_id}).")
             return False
         url = f"https://api.telegram.org/bot{token}/sendMessage"
         payload = {
@@ -667,7 +666,6 @@ def get_dynamic_dan60_for_date(target_date_str, summary_data):
     return list(DEFAULT_60_N1)
 
 
-def compute_radar_convergence(sub_draws, cap4_set, summary_data=None, enable_rescue=True):
 def compute_radar_convergence(sub_draws, cap4_set, summary_data=None, enable_rescue=True, ignore_snapshot=False):
     """
     Lõi Thuật Toán Hội Tụ Đa Cầu (Multi-Bridge Density Convergence):
@@ -1800,7 +1798,6 @@ def compute_radar_convergence(sub_draws, cap4_set, summary_data=None, enable_res
         top_4 = t4
 
         # Khôi phục bản chụp đóng băng lúc 18h23 (nếu ngày này đã được khóa sổ G5.5 trước đó)
-        frozen_snap = load_locked_g55_snapshot(target_draw.get('date', ''))
         frozen_snap = None if ignore_snapshot else load_locked_g55_snapshot(target_draw.get('date', ''))
         if frozen_snap and frozen_snap.get('top_1'):
             top_1 = frozen_snap['top_1']

@@ -64,7 +64,7 @@ def main():
     log("BẮT ĐẦU CHU TRÌNH GIÁM SÁT LIVE TRỰC TIẾP XSMB (18H14)")
     log("=" * 70)
 
-    # Tự động dọn dẹp cặn Git trước phiên live
+    # Tự động dọn dẹp cặn Git & Tự Chữa Lành (Auto-Heal) trước phiên live
     try:
         subprocess.run("git rebase --abort", cwd=BASE_LOGIC_DIR, shell=True, capture_output=True)
         subprocess.run("git merge --abort", cwd=BASE_LOGIC_DIR, shell=True, capture_output=True)
@@ -73,6 +73,25 @@ def main():
             os.remove(lock_file)
     except Exception:
         pass
+
+    import py_compile
+    import shutil
+    backup_dir = os.path.join(BASE_LOGIC_DIR, ".clean_backup")
+    os.makedirs(backup_dir, exist_ok=True)
+    for py_f in ["soi_cau_g1_g5.py", "live_radar_scanner.py"]:
+        full_py = os.path.join(BASE_LOGIC_DIR, py_f)
+        bkp_py = os.path.join(backup_dir, py_f)
+        if os.path.exists(full_py):
+            try:
+                py_compile.compile(full_py, doraise=True)
+                shutil.copy2(full_py, bkp_py)
+            except Exception as e_syn:
+                log(f"[Cảnh báo Cú Pháp] {py_f} bị lỗi ({e_syn})! Đang Tự Chữa Lành...")
+                if os.path.exists(bkp_py):
+                    shutil.copy2(bkp_py, full_py)
+                else:
+                    subprocess.run(f'git checkout 7361ffe -- "{py_f}"', cwd=BASE_LOGIC_DIR, shell=True, capture_output=True)
+                log(f"[✓ Auto-Heal] Đã khôi phục bản sạch cho {py_f}!")
 
     threads = []
 

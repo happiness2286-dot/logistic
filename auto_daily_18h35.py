@@ -111,15 +111,36 @@ def main():
     cleanup_git_state(BASE_LOGIC_DIR)
     cleanup_git_state(DIR_58_UP_75)
 
-    # Kiểm tra cú pháp py_compile trước khi chạy để đảm bảo không bị lỗi cú pháp do lưu đè
+    # Cơ chế TỰ CHỮA LÀNH (Auto-Heal) 3 Lớp trước khi chạy để chống lỗi Auto-Save / Sync ghi đè
     import py_compile
-    for py_f in ["crawl_and_analyze.py", "soi_cau_g1_g5.py", "live_radar_scanner.py"]:
+    backup_dir = os.path.join(BASE_LOGIC_DIR, ".clean_backup")
+    os.makedirs(backup_dir, exist_ok=True)
+    for py_f in ["crawl_and_analyze.py", "soi_cau_g1_g5.py", "live_radar_scanner.py", "export_excel.py"]:
         full_py = os.path.join(BASE_LOGIC_DIR, py_f)
+        bkp_py = os.path.join(backup_dir, py_f)
         if os.path.exists(full_py):
             try:
                 py_compile.compile(full_py, doraise=True)
+                shutil.copy2(full_py, bkp_py)
             except Exception as e_syn:
-                log(f"   [Cảnh báo Cú Pháp] {py_f} bị lỗi cú pháp ({e_syn})! Không commit file lỗi.")
+                log(f"   [Cảnh báo Cú Pháp] {py_f} bị lỗi cú pháp ({e_syn})! Đang kích hoạt Tự Chữa Lành (Auto-Heal)...")
+                healed = False
+                if os.path.exists(bkp_py):
+                    try:
+                        shutil.copy2(bkp_py, full_py)
+                        py_compile.compile(full_py, doraise=True)
+                        healed = True
+                        log(f"   [✓ Auto-Heal] Đã khôi phục {py_f} thành công từ .clean_backup!")
+                    except Exception:
+                        healed = False
+                if not healed:
+                    subprocess.run(f'git checkout 7361ffe -- "{py_f}"', cwd=BASE_LOGIC_DIR, shell=True, capture_output=True)
+                    try:
+                        py_compile.compile(full_py, doraise=True)
+                        shutil.copy2(full_py, bkp_py)
+                        log(f"   [✓ Auto-Heal] Đã khôi phục {py_f} thành công từ commit chuẩn 7361ffe!")
+                    except Exception as e2:
+                        log(f"   [!] Không thể khôi phục {py_f}: {e2}")
 
     # BƯỚC 1: Chạy crawl_and_analyze.py
     step1_cmd = f'"{PYTHON_EXE}" crawl_and_analyze.py'
