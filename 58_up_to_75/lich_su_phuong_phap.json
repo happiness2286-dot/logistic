@@ -305,10 +305,53 @@
       "ty_le_tu_thu": 21.7,
       "trung_dan_9": 26,
       "ty_le_dan_9": 43.3,
-      "trung_lot": 47,
-      "ty_le_lot": 78.3
+      "trung_lot": 48,
+      "ty_le_lot": 80.0
     },
     "lich_su": [
+      {
+        "ngay": "26/11/2026",
+        "de": "21",
+        "top1": "01",
+        "song_thu": [
+          "01",
+          "10"
+        ],
+        "top4": [
+          "01",
+          "25",
+          "15",
+          "29"
+        ],
+        "dan_9": [
+          "01",
+          "15",
+          "24",
+          "25",
+          "29",
+          "43",
+          "48",
+          "57",
+          "93"
+        ],
+        "dan_9_dao": [
+          "10",
+          "51",
+          "42",
+          "52",
+          "92",
+          "34",
+          "84",
+          "75",
+          "39"
+        ],
+        "hit_bt_exact": false,
+        "hit_song_thu": false,
+        "hit_tu_thu": false,
+        "hit_dan_9": false,
+        "ket_qua": "trung_lot",
+        "ghi_chu": "🛡️ Trúng Dàn Số Lót N1 [21]"
+      },
       {
         "ngay": "25/11/2026",
         "de": "02",
@@ -2845,63 +2888,28 @@
         "hit_dan_9": true,
         "ket_qua": "trung_tu_thu",
         "ghi_chu": "🔥 Trúng Tứ Thủ Top 4 [15]"
-      },
-      {
-        "ngay": "27/09/2026",
-        "de": "73",
-        "top1": "29",
-        "song_thu": [
-          "29",
-          "92"
-        ],
-        "top4": [
-          "29",
-          "72",
-          "04",
-          "09"
-        ],
-        "dan_9": [
-          "02",
-          "04",
-          "09",
-          "13",
-          "29",
-          "68",
-          "72",
-          "81",
-          "95"
-        ],
-        "dan_9_dao": [
-          "20",
-          "40",
-          "90",
-          "31",
-          "92",
-          "86",
-          "27",
-          "18",
-          "59"
-        ],
-        "hit_bt_exact": false,
-        "hit_song_thu": false,
-        "hit_tu_thu": false,
-        "hit_dan_9": false,
-        "ket_qua": "truot_truc_tiep",
-        "ghi_chu": "Trượt kỳ quay ❌"
       }
     ]
   },
   "dan_tinh_tuy_ngay_1": {
     "tong_quan": {
       "tong_ngay": 60,
-      "trung": 38,
-      "truot": 22,
-      "ty_le_trung": 63.3,
-      "ty_le_truot": 36.7,
+      "trung": 39,
+      "truot": 21,
+      "ty_le_trung": 65.0,
+      "ty_le_truot": 35.0,
       "dan_tb": 45.4,
-      "chuoi_thong": 1
+      "chuoi_thong": 2
     },
     "lich_su": [
+      {
+        "stt": 61,
+        "ngay": "26/11/2026",
+        "de": "21",
+        "so_luong": 46,
+        "ket_qua": "trung",
+        "ghi_chu": "Trúng Đề 21 ✅ (Dàn 46 số)"
+      },
       {
         "stt": 60,
         "ngay": "25/11/2026",
@@ -3373,14 +3381,6 @@
         "so_luong": 47,
         "ket_qua": "trung",
         "ghi_chu": "Trúng Đề 15 ✅ (Dàn 47 số)"
-      },
-      {
-        "stt": 1,
-        "ngay": "27/09/2026",
-        "de": "73",
-        "so_luong": 44,
-        "ket_qua": "truot",
-        "ghi_chu": "Trượt Đề 73 ❌ (44 số)"
       }
     ]
   }
